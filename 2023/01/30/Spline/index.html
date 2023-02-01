@@ -20,9 +20,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 <meta property="article:published_time" content="2023-01-30T09:21:56.265Z">
-<meta property="article:modified_time" content="2023-01-31T08:24:41.552Z">
+<meta property="article:modified_time" content="2023-02-01T04:22:31.621Z">
 <meta property="article:author" content="AmazingHao">
-<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Spline">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 
@@ -146,7 +146,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 1022 个字)
+                    7 分钟 读完 (大约 1023 个字)
                 </span>
                 
                 
@@ -164,6 +164,8 @@
 <li>利用样条函数拟合散点，做表面拟合，e.g. 构建mesh或者其他光滑的表面。</li>
 <li>[路径规划][<a href="https://zhuanlan.zhihu.com/p/159192419]中使用样条线对A*算法进行优化，得到更加平滑的路径。">https://zhuanlan.zhihu.com/p/159192419]中使用样条线对A*算法进行优化，得到更加平滑的路径。</a></li>
 </ul>
+<a id="more"></a>
+
 <h3 id="相关术语-1"><a href="#相关术语-1" class="headerlink" title="相关术语^1"></a>相关术语<a href="https://xiaoxingchen.github.io/2020/03/02/bspline_in_so3/">^1</a></h3><p>​        大白话来说，B样条曲线其实就是分段多项式，每个分段内的函数又由每个分段内多个子函数（基函数）叠加而成，不同基函数之间有不同的占比。处于高阶的基函数又由相邻分段节点处的低阶基函数得到，由此形成一个递归的过程。B-spline曲线就是每个控制点乘以自己对应的权重系数函数（基函数），然后再求和，控制点是后期指定的，权重函数是预先定义好的，只跟阶数有关，与控制点无关。</p>
 <table>
 <thead>
@@ -239,7 +241,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Math/" rel="tag">Math</a>
+                    <a class="has-link-grey -link" href="/tags/Spline/" rel="tag">Spline</a>
                 </div>
             </div>
         </div>
@@ -331,7 +333,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </a>
                 </div>
@@ -454,12 +456,20 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">写作工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
             <span class="level-start">
                 <span class="level-item">实用工具</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">11</span>
+                <span class="level-item tag">10</span>
             </span>
         </a></li>
             </ul>
@@ -472,7 +482,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/Math/" style="font-size: 10px;">Math</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/OpenCV-FFMPEG/" style="font-size: 10px;">OpenCV FFMPEG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a> <a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 10px;">开发</a>
+        <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/OpenCV-FFMPEG/" style="font-size: 10px;">OpenCV FFMPEG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/Spline/" style="font-size: 10px;">Spline</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a> <a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 10px;">开发</a>
     </div>
 </div>
     
@@ -710,13 +720,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Math/">
-                        <span class="tag">Math</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/OSG/">
                         <span class="tag">OSG</span>
                         <span class="tag is-grey">1</span>
@@ -740,6 +743,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/ROS/">
                         <span class="tag">ROS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Spline/">
+                        <span class="tag">Spline</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1005,13 +1015,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Math/">
-                        <span class="tag">Math</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/OSG/">
                         <span class="tag">OSG</span>
                         <span class="tag is-grey">1</span>
@@ -1035,6 +1038,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/ROS/">
                         <span class="tag">ROS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Spline/">
+                        <span class="tag">Spline</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>

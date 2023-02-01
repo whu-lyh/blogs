@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 <meta property="article:published_time" content="2020-02-22T07:38:32.000Z">
-<meta property="article:modified_time" content="2021-01-12T09:51:20.710Z">
+<meta property="article:modified_time" content="2023-02-01T04:20:20.504Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -139,14 +139,14 @@
                 <time class="level-item has-text-grey" datetime="2020-02-22T07:38:32.000Z">2020-02-22</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                <a class="has-link-grey -link" href="/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">写作工具</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    11 分钟 读完 (大约 1630 个字)
+                    11 分钟 读完 (大约 1712 个字)
                 </span>
                 
                 
@@ -181,7 +181,7 @@
 <ol>
 <li>找到Hexo下的_config.yml里的post_asset_folder，把这个选项从false改成true。   </li>
 <li>安装一个Hexo的插件<code>npm install hexo-asset-image --save</code> 即可。      <h2 id="环境配置好后就可以开始写博客记录工作生活啦"><a href="#环境配置好后就可以开始写博客记录工作生活啦" class="headerlink" title="环境配置好后就可以开始写博客记录工作生活啦"></a>环境配置好后就可以开始写博客记录工作生活啦</h2><h3 id="首先创建一个新的博客"><a href="#首先创建一个新的博客" class="headerlink" title="首先创建一个新的博客"></a>首先创建一个新的博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new <span class="hljs-string">"My New Post"</span><br></code></pre></td></tr></table></figure>
-&emsp;&emsp; 本地文件夹中会出现一个名为“My New Post.md”的文档，如果在上述Hexo配置过程中开启了本地图片加载功能,则还会生成一个同名的文件夹，用来存放在.md文档中要上传的照片<br>另外使用命令还会自动在md文档中生成一些头文件，如下，可以更好地帮助构建Hexo界面上的文档显示。   <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">postName</span> <span class="hljs-comment">#文章页面上的显示名称，一般是中文</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020</span><span class="hljs-number">-02</span><span class="hljs-number">-28</span> <span class="hljs-number">23</span><span class="hljs-string">:38:32</span> <span class="hljs-comment">#文章生成时间</span><br><span class="hljs-attr">categories:</span> <span class="hljs-string">默认分类</span> <span class="hljs-comment">#分类</span><br><span class="hljs-attr">tags:</span> <span class="hljs-string">[tag1,tag2,tag3]</span> <span class="hljs-comment">#文章标签，可空，多标签请用格式=</span><br><span class="hljs-attr">description:</span> <span class="hljs-string">附加一段文章摘要，字数最好在140字以内，会出现在meta的description里面</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
+&emsp;&emsp; 本地文件夹中会出现一个名为“My New Post.md”的文档，如果在上述Hexo配置过程中开启了本地图片加载功能,则还会生成一个同名的文件夹，用来存放在.md文档中要上传的照片<pre><code>另外使用命令还会自动在md文档中生成一些头文件，如下，可以更好地帮助构建Hexo界面上的文档显示。 新建文档时手动就该就行，自定义文件头的位置位于：/scaffolds/post.md`。如果是直接新建md文件，则只能手动拷贝一个合适的头文件到新建文档的最前面，就能正常显示了。</code></pre><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">postName</span> <span class="hljs-comment">#文章页面上的显示名称，一般是中文</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020</span><span class="hljs-number">-02</span><span class="hljs-number">-28</span> <span class="hljs-number">23</span><span class="hljs-string">:38:32</span> <span class="hljs-comment">#文章生成时间</span><br><span class="hljs-attr">categories:</span> <span class="hljs-string">默认分类</span> <span class="hljs-comment">#分类</span><br><span class="hljs-attr">tags:</span> <span class="hljs-string">[tag1,tag2,tag3]</span> <span class="hljs-comment">#文章标签，可空，多标签请用格式=</span><br><span class="hljs-attr">description:</span> <span class="hljs-string">附加一段文章摘要，字数最好在140字以内，会出现在meta的description里面</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
 <h3 id="博客预览"><a href="#博客预览" class="headerlink" title="博客预览"></a>博客预览</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo server (hexo -s)<br></code></pre></td></tr></table></figure>
 通过在浏览器中打开 <a href="http://localhost:4000/">http://localhost:4000/</a> , 即可预览到刚刚创建好的博客内容，如有问题，可立马修改。   <h3 id="生成Hexo文档"><a href="#生成Hexo文档" class="headerlink" title="生成Hexo文档"></a>生成Hexo文档</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo generate (hexo -g)<br></code></pre></td></tr></table></figure>
 <h3 id="部署到远程服务器上"><a href="#部署到远程服务器上" class="headerlink" title="部署到远程服务器上"></a>部署到远程服务器上</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo deploy (hexo -d)<br></code></pre></td></tr></table></figure>
@@ -195,6 +195,7 @@
 <ol>
 <li><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">小茗同学</a>   </li>
 <li><a href="https://blog.csdn.net/sinat_37781304/article/details/82729029">fangzh的个人博客</a></li>
+<li><a href="https://godweiyang.com/2018/04/13/hexo-blog/">韦阳的博客</a></li>
 </ol>
 
         </div>
@@ -295,7 +296,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </a>
                 </div>
@@ -418,12 +419,20 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">写作工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
             <span class="level-start">
                 <span class="level-item">实用工具</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">11</span>
+                <span class="level-item tag">10</span>
             </span>
         </a></li>
             </ul>
@@ -436,7 +445,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/Math/" style="font-size: 10px;">Math</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/OpenCV-FFMPEG/" style="font-size: 10px;">OpenCV FFMPEG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a> <a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 10px;">开发</a>
+        <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/OpenCV-FFMPEG/" style="font-size: 10px;">OpenCV FFMPEG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/Spline/" style="font-size: 10px;">Spline</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a> <a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 10px;">开发</a>
     </div>
 </div>
     
@@ -674,13 +683,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Math/">
-                        <span class="tag">Math</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/OSG/">
                         <span class="tag">OSG</span>
                         <span class="tag is-grey">1</span>
@@ -704,6 +706,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/ROS/">
                         <span class="tag">ROS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Spline/">
+                        <span class="tag">Spline</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -969,13 +978,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/Math/">
-                        <span class="tag">Math</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/OSG/">
                         <span class="tag">OSG</span>
                         <span class="tag is-grey">1</span>
@@ -999,6 +1001,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/ROS/">
                         <span class="tag">ROS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Spline/">
+                        <span class="tag">Spline</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
