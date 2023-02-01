@@ -8,19 +8,17 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>关于控制点检核的一些思考 - AmazingHao&#39;s Free Space</title>
+<title>分类: 开源库 - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="使用地面控制点检核ALS点云精度任务描述​        使用地面布设的外业控制点GCP来检核ALS点云条带平差之后的绝对位置精度。 ​        通过观察，有一部分控制点是在平面区域采集的，有一些是在边缘比较锋利的区域采集的。 目前存在的问题​        本身ALS点云就比较稀疏，再加上GCP也是离散的布设的，导致很难找到对应同名关系，想要找到对应位置的值就只能通过内插来实现。 ​">
-<meta property="og:type" content="article">
-<meta property="og:title" content="关于控制点检核的一些思考">
-<meta property="og:url" content="http://whu-lyh.github.io.com/2023/01/29/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/index.html">
+    <meta name="description" content="Recording the knowledge about the world">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AmazingHao&#39;s Free Space">
+<meta property="og:url" content="http://whu-lyh.github.io.com/categories/%E5%BC%80%E6%BA%90%E5%BA%93/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="使用地面控制点检核ALS点云精度任务描述​        使用地面布设的外业控制点GCP来检核ALS点云条带平差之后的绝对位置精度。 ​        通过观察，有一部分控制点是在平面区域采集的，有一些是在边缘比较锋利的区域采集的。 目前存在的问题​        本身ALS点云就比较稀疏，再加上GCP也是离散的布设的，导致很难找到对应同名关系，想要找到对应位置的值就只能通过内插来实现。 ​">
+<meta property="og:description" content="Recording the knowledge about the world">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
-<meta property="article:published_time" content="2023-01-29T02:11:14.862Z">
-<meta property="article:modified_time" content="2023-02-01T03:39:20.989Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Fire">
 <meta name="twitter:card" content="summary">
@@ -80,7 +78,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="关于控制点检核的一些思考" height="28">
+                <img src="/images/logo.svg" alt="AmazingHao&#39;s Free Space" height="28">
             
             </a>
         </div>
@@ -129,20 +127,36 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/categories">分类</a></li>
+            
+            <li class="is-active"><a href="#" aria-current="page">开源库</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2023-01-29T02:11:14.862Z">2023-01-29</time>
+                <time class="level-item has-text-grey" datetime="2020-06-11T11:24:21.000Z">2020-06-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
+                </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    11 分钟 读完 (大约 1710 个字)
+                    7 分钟 读完 (大约 985 个字)
                 </span>
                 
                 
@@ -151,108 +165,22 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                关于控制点检核的一些思考
+                <a class="has-link-black-ter" href="/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">pcl中的体素滤波</a>
             
         </h1>
         <div class="content">
-            <h1 id="使用地面控制点检核ALS点云精度"><a href="#使用地面控制点检核ALS点云精度" class="headerlink" title="使用地面控制点检核ALS点云精度"></a>使用地面控制点检核ALS点云精度</h1><h2 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h2><p>​        使用地面布设的外业控制点GCP来检核ALS点云条带平差之后的绝对位置精度。</p>
-<p>​        通过观察，有一部分控制点是在平面区域采集的，有一些是在边缘比较锋利的区域采集的。</p>
-<h2 id="目前存在的问题"><a href="#目前存在的问题" class="headerlink" title="目前存在的问题"></a>目前存在的问题</h2><p>​        本身ALS点云就比较稀疏，再加上GCP也是离散的布设的，导致很难找到对应同名关系，想要找到对应位置的值就只能通过内插来实现。</p>
-<p>​        内插方法有很多，但是直接在ALS里面内插不是很现实，可以考虑转成<strong>格网</strong>，mesh的形式，然后基于新的数据表达方式再内插。例如可以用arcgis生成DTM，DEM，内插到高分辨率，然后再采样点和GCP做计算。</p>
-<a id="more"></a>
-
-<h2 id="相关方法"><a href="#相关方法" class="headerlink" title="相关方法"></a>相关方法</h2><h3 id="A-Quantitative-Assessment-of-LIDAR-Data-Accuracy-1"><a href="#A-Quantitative-Assessment-of-LIDAR-Data-Accuracy-1" class="headerlink" title="A Quantitative Assessment of LIDAR Data Accuracy[^1]"></a>A Quantitative Assessment of LIDAR Data Accuracy[^1]</h3><p>​        文章里面的高程和平面精度是分开计算的。</p>
-<ul>
-<li><p>对于高程精度<br>首先只能选择平面上的控制点。GCP是有规律线性分布的方式布设的，因此作者就选择1m范围内的点作为领域点，然后拟合平面，计算高程方向上的偏差。</p>
-</li>
-<li><p>对于平面精度</p>
-<p>由于对应关系不好确定，采用两个曲线先平移后相交的方式确定对应关系。首先找到地面控制点一定半径内的点作为候选对应同名点，然后绘制曲线，通过在东(北)方向以0.01$m$平移曲线，找到和GCP最吻合的位置（好像是逐位置计算误差，找到误差最小的就以对应时刻的步长作为偏移量），就说明找到了ALS和GCP之间的同名关系。曲线绘制方式是，在东(北)方向和高程方向构成的平面中分别投影GCP和ALS点云，消除高度偏差之后，就可以得到两条大致重叠的曲线。</p>
-</li>
-<li><p>问题：</p>
-<p>依然确实存在平面点不对应的问题，导致精度计算出现问题。</p>
-<p>此外，要求GCP是线性分布的，不然没法计算曲线。对检核点的布设要求很高。</p>
-</li>
-</ul>
-<h3 id="Accuracy-of-ground-surface-interpolation-from-airborne-laser-scanning-ALS-data-in-dense-forest-cover-2"><a href="#Accuracy-of-ground-surface-interpolation-from-airborne-laser-scanning-ALS-data-in-dense-forest-cover-2" class="headerlink" title="Accuracy of ground surface interpolation from  airborne laser scanning (ALS) data in dense forest cover[^ 2]"></a>Accuracy of ground surface interpolation from  airborne laser scanning (ALS) data in dense forest cover[^ 2]</h3><p>​        DTM的精度取决于激光系统测量值的精度和准确度、点云滤波的精度（因为需要滤除地面点才能做DTM），以及需要内插来解决空洞问题。其中内插精度为影响DTM精度第二主要因素，因此文章主要是想在森林密集的区域，通过比较生成的DTM的精度来进一步验证9种内插方式的精度。涉及到的内插方式有：==反距离加权、最近邻、自然内插、Delauney三角网、多层-B-Spline、三次样条、Thin-Plate Spline、Thin-Plate Spline by TIN、克里金插值法==。对比方法为使用cross-validation的方式，将预测值与真值GT做差，计算偏差和RMSE。</p>
-<table>
-<thead>
-<tr>
-<th align="center">方法</th>
-<th align="center">简介</th>
-<th>方法实现</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">IDW:反距离权重</td>
-<td align="center">距离越近的点，值越相近</td>
-<td>ArcGIS</td>
-</tr>
-<tr>
-<td align="center">NeN:最近邻域</td>
-<td align="center">首先构建Thiessen多边形，直接将处于多边形内的点全部都赋予参考点的值</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">NN:自然邻域[^ 3]</td>
-<td align="center">首先构建Thiessen多边形，根据上采样点的位置更新多边形，用多边形的中心，后续每个点的插入进来更新多边形，动态变化</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">Delauney Triangulation:狄罗妮三角化</td>
-<td align="center">构建TIN，得益于三角网的构建，将落在三角网内的点，用线性内插或者是多项式内插的方式来采样值，base点是三角网的格网点</td>
-<td>ArcGIS</td>
-</tr>
-<tr>
-<td align="center">MBA:多尺度-B-Spline[^ 4]</td>
-<td align="center">构建层级的B-Spline</td>
-<td>==MBA库==：<a href="https://github.com/SINTEF-Geometry/MBA" title="Original and old version of C++ Implementation">SINTEF</a>,<a href="https://github.com/ddemidov/mba" title="With C++11 header-only and Python API">ddemidov</a></td>
-</tr>
-<tr>
-<td align="center">Cubic Spline:三次样条[^ 5]</td>
-<td align="center">基于三次Spline函数</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">Thin-Plate Spline[^ 6]</td>
-<td align="center">基于三次Spline的2D泛化形式</td>
-<td>GDAL</td>
-</tr>
-<tr>
-<td align="center">Thin-Plate Spline by TIN</td>
-<td align="center">在TIN构建的三角网内构建TPS，实现内插</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">Kriging:克里金</td>
-<td align="center">构建semi-variogram，然后计算一些地理相关的参数，实现空间相关的内插</td>
-<td>ArcGIS</td>
-</tr>
-</tbody></table>
-<p>​        <strong>结论</strong>：内插方法的精度和想要生成的DTM的分辨率有关，DTM分辨率越低，内插精度越差，但是不同内插方法之间的RMSE在点云密度、熵密度、地面坡度等因素下变化不明显。<strong>NN</strong>和<strong>Spline</strong>类的方法总体精度相近，但是NN的方法不需要额外的输入，而且效率要比样条线的高一些。</p>
-<p>​        其中：</p>
-<ul>
-<li><p>反距离权重的精度最低。同时NeN、克里金插值方法受到点密度和陡峭坡度地形影响大，精度会降低。</p>
-</li>
-<li><p>样条线类的方法得到的表面更加平滑，也接近真值，不同函数之间的RMSE均比较小，适用于崎岖的地形=坡度大、陡峭的地方。不同的样条基函数之间没有明显差异。反倒是越复杂计算时间越长。</p>
-</li>
-<li><p>只有克里金插值方法受熵密度的影响大，其他方法由于测试数据的问题，并不能得出很充分的相关关系。</p>
-</li>
-<li><p>NN，DT，Spline-based 方法受到地面点密度、地面坡度变化的影响小。</p>
-</li>
-</ul>
-<h3 id="点云表面拟合"><a href="#点云表面拟合" class="headerlink" title="点云表面拟合"></a>点云表面拟合</h3><ul>
-<li><a href="https://github.com/SINTEF-Geometry/MBA" title="Original and old version of C++ Implementation">SINTEF</a>，实现了文献 [^4] 中的多尺度样条曲线表面拟合，但是代码比较老了，需要额外编译，除了代码框架复杂一些，编译不是问题。</li>
-<li><a href="https://github.com/ddemidov/mba" title="With C++11 header-only and Python API">ddemidov</a>: 基于C++11做了一个文献 [^4] 新的版本，实现了adaptive 的MBA，开发了python的API，并且是header-only的方式，方便使用。</li>
-</ul>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[^1]: Elaksher A, Ali T, Alharthy A. A Quantitative Assessment of LIDAR Data Accuracy[J]. Remote Sensing, 2023, 15(2): 442.<br>[^ 2]: Cățeanu M, Ciubotaru A. Accuracy of ground surface interpolation from  airborne laser scanning (ALS) data in dense forest cover[J]. ISPRS  International Journal of Geo-Information, 2020, 9(4): 224.<br>[^ 3]: A brief description of natural neighbour interpolation<br>[^ 4]: Lee S, Wolberg G, Shin S Y. Scattered  data interpolation with multilevel B-splines[J]. IEEE transactions on  visualization and computer graphics, 1997, 3(3): 228-244.<br>[^ 5]: Haber J, Zeilfelder F, Davydov O, et  al. Smooth approximation and rendering of large scattered data  sets[C]//Proceedings Visualization, 2001. VIS’01. IEEE, 2001: 341-571.<br>[^ 6]: Donato G, Belongie S. Approximate thin plate spline mappings[C]//Computer Vision—ECCV 2002: 7th European  Conference on Computer Vision Copenhagen, Denmark, May 28–31, 2002  Proceedings, Part III 7. Springer Berlin Heidelberg, 2002: 21-31.</p>
-
+            <h3 id="体素滤波"><a href="#体素滤波" class="headerlink" title="体素滤波"></a>体素滤波</h3><p>&emsp;&emsp;Voxel滤波作为一种很常见的滤波方法，但是其PCL内部代码却值得学习，因此今天转载一篇关于pcl中实现的体素滤波的方法。<br>基本上参考博客：<a href="https://blog.csdn.net/u013630299/article/details/105661194">https://blog.csdn.net/u013630299/article/details/105661194</a></p>
         </div>
         
         
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
-        <div class="social-share"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
-<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
         
     </div>
 </div>
@@ -261,30 +189,62 @@
 
 
 
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2023/01/30/Spline/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Spline探秘</span>
-            </a>
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-11T10:57:49.000Z">2020-03-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 分钟 读完 (大约 153 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/03/11/OSG%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB/">OSG中的坐标系</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="OSG中的坐标系和OpenGL中的坐标系"><a href="#OSG中的坐标系和OpenGL中的坐标系" class="headerlink" title="OSG中的坐标系和OpenGL中的坐标系"></a>OSG中的坐标系和OpenGL中的坐标系</h3><p>OSG中采用四元数表示旋转：<code>osg::Quat(angle to rotate, rotate around axis);</code><br>///<strong><em><br>///Q quaternion </em> P quaternion means that first conduct a rotation P,Second conduct a rotation Q, means a fusion about two rotations with a multiplication operation<br>///*</strong><br>&emsp;&emsp;The osg coordinate definition as left-hand coordinate which is right-front-up(x-y-z) and<br>the OpenGL coordinate definition also as left-hand coordinate which is right-up-behind(x-y-z), z axis is pointer to outside the screen<br>The OSG default viewport is along down direction, so heading is rotate to be equal to the y positive direction, rotate axis is x axis </p>
         </div>
         
         
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2023/01/16/ROS%20basic%20manager/">
-                <span class="level-item">ROS basic usage and manager</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2020/03/11/OSG%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB/#more">阅读更多</a>
+                </div>
+            </div>
         </div>
+        
         
     </div>
 </div>
 
 
 
-<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+
+
+
+
+
 </div>
                 
 
@@ -342,7 +302,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            3
+                            7
                         </p>
                     </a>
                 </div>
@@ -354,7 +314,7 @@
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
-                            11
+                            12
                         </p>
                     </a>
                 </div>
@@ -465,6 +425,14 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
+        <a class="level is-marginless" href="/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
+            <span class="level-start">
+                <span class="level-item">专业应用</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
             <span class="level-start">
                 <span class="level-item">写作工具</span>
@@ -478,7 +446,31 @@
                 <span class="level-item">实用工具</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">10</span>
+                <span class="level-item tag">7</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
+            <span class="level-start">
+                <span class="level-item">开源库</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E6%97%A5%E5%B8%B8%E5%BA%94%E7%94%A8-%EF%BC%8C%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">日常应用 ，实用工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">科研神器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li>
             </ul>
@@ -491,7 +483,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/OpenCV-FFMPEG/" style="font-size: 10px;">OpenCV FFMPEG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/Spline/" style="font-size: 10px;">Spline</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a> <a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 10px;">开发</a>
+        <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/OSG%EF%BC%8CGeometics/" style="font-size: 10px;">OSG，Geometics</a> <a href="/tags/OpenCV-FFMPEG/" style="font-size: 10px;">OpenCV FFMPEG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/Spline/" style="font-size: 10px;">Spline</a> <a href="/tags/Spline-Point-Cloud/" style="font-size: 10px;">Spline, Point Cloud</a> <a href="/tags/VS/" style="font-size: 10px;">VS</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a>
     </div>
 </div>
     
@@ -503,6 +495,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2023/02/01/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="关于控制点检核的一些思考">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-01T05:08:07.827Z">2023-02-01</time></div>
+                    <a href="/2023/02/01/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -518,25 +529,6 @@
                     <a href="/2023/01/30/Spline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spline探秘</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/MathUtilities/">MathUtilities</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2023/01/29/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="关于控制点检核的一些思考">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-01-29T02:11:14.862Z">2023-01-29</time></div>
-                    <a href="/2023/01/29/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
-                    <p class="is-size-7 is-uppercase">
-                        
                     </p>
                 </div>
             </div>
@@ -611,12 +603,23 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/archives/2023/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2023/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2023</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -729,8 +732,8 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/OSG/">
-                        <span class="tag">OSG</span>
+                    <a class="tags has-addons" href="/tags/OSG%EF%BC%8CGeometics/">
+                        <span class="tag">OSG，Geometics</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -764,15 +767,22 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/WindowsScript/">
-                        <span class="tag">WindowsScript</span>
+                    <a class="tags has-addons" href="/tags/Spline-Point-Cloud/">
+                        <span class="tag">Spline, Point Cloud</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/%E5%BC%80%E5%8F%91/">
-                        <span class="tag">开发</span>
+                    <a class="tags has-addons" href="/tags/VS/">
+                        <span class="tag">VS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WindowsScript/">
+                        <span class="tag">WindowsScript</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -801,6 +811,25 @@
         
         <article class="media">
             
+            <a href="/2023/02/01/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="关于控制点检核的一些思考">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-01T05:08:07.827Z">2023-02-01</time></div>
+                    <a href="/2023/02/01/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2023/01/30/Spline/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Spline探秘">
@@ -813,25 +842,6 @@
                     <a href="/2023/01/30/Spline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Spline探秘</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/MathUtilities/">MathUtilities</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2023/01/29/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="关于控制点检核的一些思考">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-01-29T02:11:14.862Z">2023-01-29</time></div>
-                    <a href="/2023/01/29/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
-                    <p class="is-size-7 is-uppercase">
-                        
                     </p>
                 </div>
             </div>
@@ -906,12 +916,23 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/archives/2023/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/archives/2023/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2023</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1024,8 +1045,8 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/OSG/">
-                        <span class="tag">OSG</span>
+                    <a class="tags has-addons" href="/tags/OSG%EF%BC%8CGeometics/">
+                        <span class="tag">OSG，Geometics</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1059,15 +1080,22 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/WindowsScript/">
-                        <span class="tag">WindowsScript</span>
+                    <a class="tags has-addons" href="/tags/Spline-Point-Cloud/">
+                        <span class="tag">Spline, Point Cloud</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/%E5%BC%80%E5%8F%91/">
-                        <span class="tag">开发</span>
+                    <a class="tags has-addons" href="/tags/VS/">
+                        <span class="tag">VS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/WindowsScript/">
+                        <span class="tag">WindowsScript</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1089,7 +1117,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="关于控制点检核的一些思考" height="28">
+                    <img src="/images/logo.svg" alt="AmazingHao&#39;s Free Space" height="28">
                 
                 </a>
                 <p class="is-size-7">
