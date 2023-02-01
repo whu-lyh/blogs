@@ -8,29 +8,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>分类 - AmazingHao&#39;s Free Space</title>
+<title>标签: Math - AmazingHao&#39;s Free Space</title>
 
 
     <meta name="description" content="Recording the knowledge about the world">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AmazingHao&#39;s Free Space">
-<meta property="og:url" content="http://whu-lyh.github.io.com/categories/index.html">
+<meta property="og:url" content="http://whu-lyh.github.io.com/tags/Math/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
 <meta property="og:description" content="Recording the knowledge about the world">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 <meta property="article:author" content="AmazingHao">
-<meta property="article:tag" content="Docker">
-<meta property="article:tag" content="MarkDown">
-<meta property="article:tag" content="OSG">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="ROS">
-<meta property="article:tag" content="开发">
-<meta property="article:tag" content="WindowsScript">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="Math">
-<meta property="article:tag" content="PCL">
-<meta property="article:tag" content="OpenCV FFMPEG">
+<meta property="article:tag" content="Fire">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 
@@ -102,7 +92,7 @@
                 <a class="navbar-item"
                 href="/archives">Archives</a>
                 
-                <a class="navbar-item is-active"
+                <a class="navbar-item"
                 href="/categories">Categories</a>
                 
                 <a class="navbar-item"
@@ -137,35 +127,136 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-<div class="card widget">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                分类
-            </h3>
-            <ul class="menu-list">
-            <li>
-        <a class="level is-marginless" href="/categories/MathUtilities/">
-            <span class="level-start">
-                <span class="level-item">MathUtilities</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
-            <span class="level-start">
-                <span class="level-item">实用工具</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">11</span>
-            </span>
-        </a></li>
-            </ul>
-        </div>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">标签</a></li>
+            <li class="is-active"><a href="#" aria-current="page">Math</a></li>
+        </ul>
+        </nav>
     </div>
-</div></div>
+</div>
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2023-01-30T09:21:56.265Z">2023-01-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/MathUtilities/">MathUtilities</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1022 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2023/01/30/Spline/">Spline探秘</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="B-Spline（-Basic-Spline）"><a href="#B-Spline（-Basic-Spline）" class="headerlink" title="B-Spline（=Basic Spline）"></a>B-Spline（=Basic Spline）</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><ul>
+<li>需要利用样条函数拟合时相连续的数据，e.g. IMU data。</li>
+<li>利用样条函数拟合散点，做表面拟合，e.g. 构建mesh或者其他光滑的表面。</li>
+<li>[路径规划][<a href="https://zhuanlan.zhihu.com/p/159192419]中使用样条线对A*算法进行优化，得到更加平滑的路径。">https://zhuanlan.zhihu.com/p/159192419]中使用样条线对A*算法进行优化，得到更加平滑的路径。</a></li>
+</ul>
+<h3 id="相关术语-1"><a href="#相关术语-1" class="headerlink" title="相关术语^1"></a>相关术语<a href="https://xiaoxingchen.github.io/2020/03/02/bspline_in_so3/">^1</a></h3><p>​        大白话来说，B样条曲线其实就是分段多项式，每个分段内的函数又由每个分段内多个子函数（基函数）叠加而成，不同基函数之间有不同的占比。处于高阶的基函数又由相邻分段节点处的低阶基函数得到，由此形成一个递归的过程。B-spline曲线就是每个控制点乘以自己对应的权重系数函数（基函数），然后再求和，控制点是后期指定的，权重函数是预先定义好的，只跟阶数有关，与控制点无关。</p>
+<table>
+<thead>
+<tr>
+<th align="center">Terminologies</th>
+<th align="center">Notation</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Independent Variable</td>
+<td align="center">$t$</td>
+<td>In state estimation, the independent variable is time $t$.</td>
+</tr>
+<tr>
+<td align="center">Order（阶）</td>
+<td align="center">$n$</td>
+<td>Same as the order of final polynomial, the highest exponent. For instance, $f(x) = 3x^3$ has an order of 4.</td>
+</tr>
+<tr>
+<td align="center">Degree（次）</td>
+<td align="center">$p$</td>
+<td>Same as the degree of final polynomial, the highest exponent. For instance, $f(x) = 3x^3$ has an degree of 3.</td>
+</tr>
+<tr>
+<td align="center">Segment Index</td>
+<td align="center">$i$</td>
+<td>A B-Spline is combined with piecewise polynomial, each piece is a segment.</td>
+</tr>
+<tr>
+<td align="center">Knot Vector</td>
+<td align="center">$k$</td>
+<td>The connect knot, or joint, between every piece of polynomial segment. ==Knot vector lies in the axis of independent variable $t$==.</td>
+</tr>
+<tr>
+<td align="center">Basis Function</td>
+<td align="center">$B_{i,p}(t)$</td>
+<td>In the expression, $i$ is the index of polynomial segment, $p$ is the degree of the basis function.</td>
+</tr>
+<tr>
+<td align="center">Control Points</td>
+<td align="center">$C_i$</td>
+<td>Also named as coefficients. Control points are used to describe the weight of each piece of polynomial segment.</td>
+</tr>
+</tbody></table>
+<h3 id="直观图例"><a href="#直观图例" class="headerlink" title="直观图例"></a>直观图例</h3><p>​        下图很直观的表达了B样条曲线的形成过程。</p>
+<p>​        例如一般的基函数如$B_{1,0}(t)$所示，为0阶基函数在第一段的表达，基函数只有在$K_i$处的相应为0.0，其他均为1.0，因此表现出一个反脉冲的形式。</p>
+<p><img src="/2023/01/30/Spline/viz_basis_function.svg" alt="viz_basis_function"></p>
+<p>&lt;\src  \src &gt;</p>
+<p>Figure.1 Iterative composition of basis functions. Each segment of basis function $B_{i,p}(t)$ is composed by its adjacent basis functions in lower degree, which are $B_{i,p-1}(t)$ and $B_{i + 1,p-1}(t)$.  While basis functions in degree 0 are unit square wave signals.</p>
+<p>[py_code][./spline/viz_basis_function.py]</p>
+<p><img src="/2023/01/30/Spline/viz_bspline.svg" alt></p>
+<p>Figure.2 The point $P_{0,2}$ of basis function $B_{0,2}(t)$ (degree 2 and segment 0), is evaluated by the weighted combination of $B_{0,1}(t)$ and $B_{1,1}(t)$. The weight of each component is defined by the distance between $P_{0,2}$ and its correspondent knot points.  As shown in the figure, the knot vector is $[0, 3, 6, 9]^T$.</p>
+<p>[py_code][./spline/viz_bspline.py]</p>
+<p><img src="/2023/01/30/Spline/viz_ctrlpt.svg" alt></p>
+<p>Figure.3 A B-Spline with degree 2, named $S_2(t)$ is generated by weighted combinations of all its basis functions. The weight comes from control points, which are $[1.2, 0.8, 1.1, 1.2, 1.1]$ in the figure. The brown dash lines show how control point affect the weight of basis function, these lines finally compose the brown spline. The knot vector is $[0, 1, 2, 3, 4, 5, 6, 7]^T$.</p>
+<p>[py_code][./spline/ctrlpts.py]</p>
+<h3 id="严格数学定义"><a href="#严格数学定义" class="headerlink" title="严格数学定义"></a>严格数学定义</h3><h4 id="中文表达"><a href="#中文表达" class="headerlink" title="中文表达"></a>中文表达</h4><h4 id="英文表达"><a href="#英文表达" class="headerlink" title="英文表达"></a>英文表达</h4><ul>
+<li>基函数的表达形式</li>
+</ul>
+<p>​        Let $K$ be a set of $m$ non-decreasing numbers, $k_0 \leq k_1 \leq … \leq k_{m-1}$. The $k_i$s are called knot vector, and the ==half-open interval== [$k_i,k_{i+1}$) the $i$-th knot span. Note that since some $k_i$s may be equal, some knot spans (knot span=$k_i \sim k_{i+1}$) may not exist. If the knots are ==equally spaced== (i.e. $k_{i+1}-k_i$ is a constant for $(0\leq  i  \leq m-1)$), the knot vector or the knot sequence is said ==uniform==; otherwise, it is non-uniform. The $i$-th B-spline basis function of degree $p$, written as $B_{i,p}(t)$, is defined recursively as follows:<br>$$<br>\begin{align}<br>\label{Cox-de Boor Recursion Formula}<br>B_{i,0}(t)&amp;= \left\{ \begin{array}{cc} 1 &amp; if \quad t_i \leq t \leq t_{i+1} \<br>0 &amp; otherwise \end{array} \right. \<br>B_{i,p}(t)&amp;=\frac{t-t_i}{t_{i+p}-t_i}B_{i,p-1}(t)+\frac{t_{i+p+1}-t}{t_{i+p+1}-t_{i+1}}B_{i+1,p-1}(t)<br>\end{align}<br>$$</p>
+<p>B-Spline 分为opened 和clamped两种，区别在于是否是B-Spline通过起始点和终止点。前者否，后者是。</p>
+<p>一些特性，阶数和次数之间的关系。</p>
+<p>公式1</p>
+<p>样条函数的表达形式</p>
+<p>对于函数来说，阶数和次数之间的关系</p>
+<p>样条曲线的可视化代码，2维度或者三维的</p>
+<p>多个样条函数进行交叉验证</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+</div>
                 
 
 

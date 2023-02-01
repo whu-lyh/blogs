@@ -8,29 +8,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>分类 - AmazingHao&#39;s Free Space</title>
+<title>linux command usage - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="Recording the knowledge about the world">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AmazingHao&#39;s Free Space">
-<meta property="og:url" content="http://whu-lyh.github.io.com/categories/index.html">
+    <meta name="description" content="主要记录Linux下的常用命令，以防忘记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux command usage">
+<meta property="og:url" content="http://whu-lyh.github.io.com/2020/05/07/linux-command-usage/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="Recording the knowledge about the world">
+<meta property="og:description" content="主要记录Linux下的常用命令，以防忘记">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
+<meta property="article:published_time" content="2020-05-07T02:37:44.000Z">
+<meta property="article:modified_time" content="2023-02-01T03:50:40.340Z">
 <meta property="article:author" content="AmazingHao">
-<meta property="article:tag" content="Docker">
-<meta property="article:tag" content="MarkDown">
-<meta property="article:tag" content="OSG">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="ROS">
-<meta property="article:tag" content="开发">
-<meta property="article:tag" content="WindowsScript">
 <meta property="article:tag" content="Linux">
-<meta property="article:tag" content="Math">
-<meta property="article:tag" content="PCL">
-<meta property="article:tag" content="OpenCV FFMPEG">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 
@@ -88,7 +80,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="AmazingHao&#39;s Free Space" height="28">
+                <img src="/images/logo.svg" alt="linux command usage" height="28">
             
             </a>
         </div>
@@ -102,7 +94,7 @@
                 <a class="navbar-item"
                 href="/archives">Archives</a>
                 
-                <a class="navbar-item is-active"
+                <a class="navbar-item"
                 href="/categories">Categories</a>
                 
                 <a class="navbar-item"
@@ -138,34 +130,99 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                分类
-            </h3>
-            <ul class="menu-list">
-            <li>
-        <a class="level is-marginless" href="/categories/MathUtilities/">
-            <span class="level-start">
-                <span class="level-item">MathUtilities</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
-            <span class="level-start">
-                <span class="level-item">实用工具</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">11</span>
-            </span>
-        </a></li>
-            </ul>
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-05-07T02:37:44.000Z">2020-05-07</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 84 个字)
+                </span>
+                
+                
+            </div>
         </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                linux command usage
+            
+        </h1>
+        <div class="content">
+            <h3 id="Common-Command"><a href="#Common-Command" class="headerlink" title="Common Command"></a>Common Command</h3><ol>
+<li><p>查看当前系统的版本   </p>
+<p><code>cat /etc/issue</code> 返回当前系统的版本名字和版本号   </p>
+</li>
+<li><p>查看当前所安装的软件   </p>
+<p><code>dpkg -l</code> 列出全部安装软件   </p>
+</li>
+<li><p>查看某软件安装路径   </p>
+<p><code>dpkg -L | grep ftp</code> 查看ftp的位置    </p>
+</li>
+<li><p>查看软件版本   </p>
+<p><code>aptitude show</code> 后面跟着软件名字   </p>
+</li>
+</ol>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Linux/" rel="tag">Linux</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
     </div>
-</div></div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">pcl中的体素滤波</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/21/WindowBat/">
+                <span class="level-item">WindowBat</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+</div>
                 
 
 
@@ -961,7 +1018,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="AmazingHao&#39;s Free Space" height="28">
+                    <img src="/images/logo.svg" alt="linux command usage" height="28">
                 
                 </a>
                 <p class="is-size-7">
