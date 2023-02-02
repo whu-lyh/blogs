@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 <meta property="article:published_time" content="2020-02-22T07:38:32.000Z">
-<meta property="article:modified_time" content="2023-02-02T09:57:26.116Z">
+<meta property="article:modified_time" content="2023-02-02T13:12:31.111Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -116,6 +116,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="搜索" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -128,7 +132,7 @@
     <br/>
     <center>
         <span id="jinrishici-sentence" style="font-size:17px"></span>
-        <span class="mtip" style="font-size:14px"></span>
+        
     </center>
     <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 
@@ -155,7 +159,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    12 分钟 读完 (大约 1747 个字)
+                    13 分钟 读完 (大约 1982 个字)
                 </span>
                 
                 
@@ -172,7 +176,6 @@
 <p>本博客将不会介绍git实用技巧而是着重于介绍在Windows上hexo的搭建及测试过程</p>
 <p>另外如果你充满好奇心的想尝试这一强大并有一个写博客的<font color="green">❤</font>，那么就请继续往下看。<a id="more"></a></p>
 <hr>
-<p>[TOC]</p>
 <h3 id="1、Node-js-安装"><a href="#1、Node-js-安装" class="headerlink" title="1、Node.js 安装"></a>1、Node.js 安装</h3><p>&emsp;&emsp;首先搭建hexo个人博客网站需要电脑中有Node.js环境，而Node.js即使是一个没有写过前端界面的人也可以完全傻瓜式安装完成的。参照官网下载对应版本<a href="https://nodejs.org/en/download/"><strong>Node.js</strong></a>。   </p>
 <div align="center"><img src="/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/Nodejs.png" width="50%" height="50%"></div>     
 
@@ -189,23 +192,29 @@
 </ul>
 <ol>
 <li>找到Hexo下的_config.yml里的post_asset_folder，把这个选项从false改成true。   </li>
-<li>安装一个Hexo的插件<code>npm install hexo-asset-image --save</code> 即可。      <h2 id="环境配置好后就可以开始写博客记录工作生活啦"><a href="#环境配置好后就可以开始写博客记录工作生活啦" class="headerlink" title="环境配置好后就可以开始写博客记录工作生活啦"></a>环境配置好后就可以开始写博客记录工作生活啦</h2><h3 id="首先创建一个新的博客"><a href="#首先创建一个新的博客" class="headerlink" title="首先创建一个新的博客"></a>首先创建一个新的博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new <span class="hljs-string">"My New Post"</span><br></code></pre></td></tr></table></figure>
+<li>安装一个Hexo的插件<code>npm install hexo-asset-image --save</code> 即可。      <h3 id="3、环境配置好后就可以开始写博客记录工作生活啦"><a href="#3、环境配置好后就可以开始写博客记录工作生活啦" class="headerlink" title="3、环境配置好后就可以开始写博客记录工作生活啦"></a>3、环境配置好后就可以开始写博客记录工作生活啦</h3><h4 id="3-1-首先创建一个新的博客"><a href="#3-1-首先创建一个新的博客" class="headerlink" title="3.1 首先创建一个新的博客"></a>3.1 首先创建一个新的博客</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new <span class="hljs-string">"My New Post"</span><br></code></pre></td></tr></table></figure>
 &emsp;&emsp; 本地文件夹中会出现一个名为“My New Post.md”的文档，如果在上述Hexo配置过程中开启了本地图片加载功能,则还会生成一个同名的文件夹，用来存放在.md文档中要上传的照片<pre><code>另外使用命令还会自动在md文档中生成一些头文件，如下，可以更好地帮助构建Hexo界面上的文档显示。 新建文档时手动就该就行，自定义文件头的位置位于：/scaffolds/post.md`。如果是直接新建md文件，则只能手动拷贝一个合适的头文件到新建文档的最前面，就能正常显示了。</code></pre><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">postName</span> <span class="hljs-comment">#文章页面上的显示名称，一般是中文</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020</span><span class="hljs-number">-02</span><span class="hljs-number">-28</span> <span class="hljs-number">23</span><span class="hljs-string">:38:32</span> <span class="hljs-comment">#文章生成时间</span><br><span class="hljs-attr">categories:</span> <span class="hljs-string">默认分类</span> <span class="hljs-comment">#分类</span><br><span class="hljs-attr">tags:</span> <span class="hljs-string">[tag1,tag2,tag3]</span> <span class="hljs-comment">#文章标签，可空，多标签请用格式=</span><br><span class="hljs-attr">description:</span> <span class="hljs-string">附加一段文章摘要，字数最好在140字以内，会出现在meta的description里面</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
-<h3 id="博客预览"><a href="#博客预览" class="headerlink" title="博客预览"></a>博客预览</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo server (hexo -s)<br></code></pre></td></tr></table></figure>
-通过在浏览器中打开 <a href="http://localhost:4000/">http://localhost:4000/</a> , 即可预览到刚刚创建好的博客内容，如有问题，可立马修改。   <h3 id="生成Hexo文档"><a href="#生成Hexo文档" class="headerlink" title="生成Hexo文档"></a>生成Hexo文档</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo generate (hexo -g)<br></code></pre></td></tr></table></figure>
-<h3 id="部署到远程服务器上"><a href="#部署到远程服务器上" class="headerlink" title="部署到远程服务器上"></a>部署到远程服务器上</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo deploy (hexo -d)<br></code></pre></td></tr></table></figure>
-打开对应的gitname.github.io即可查看博客啦。<h2 id="最后注意"><a href="#最后注意" class="headerlink" title="最后注意"></a>最后注意</h2></li>
+<h4 id="3-2-博客预览"><a href="#3-2-博客预览" class="headerlink" title="3.2 博客预览"></a>3.2 博客预览</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo server (hexo -s)<br></code></pre></td></tr></table></figure>
+通过在浏览器中打开 <a href="http://localhost:4000/">http://localhost:4000/</a> , 即可预览到刚刚创建好的博客内容，如有问题，可立马修改。   <h4 id="3-3-生成Hexo文档"><a href="#3-3-生成Hexo文档" class="headerlink" title="3.3 生成Hexo文档"></a>3.3 生成Hexo文档</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo generate (hexo -g)<br></code></pre></td></tr></table></figure>
+<h4 id="3-4-部署到远程服务器上"><a href="#3-4-部署到远程服务器上" class="headerlink" title="3.4 部署到远程服务器上"></a>3.4 部署到远程服务器上</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo deploy (hexo -d)<br></code></pre></td></tr></table></figure>
+打开对应的gitname.github.io即可查看博客啦。<h3 id="4、最后注意"><a href="#4、最后注意" class="headerlink" title="4、最后注意"></a>4、最后注意</h3></li>
 </ol>
 <ul>
 <li>Hexo每次deploy，generate之后会加原来的文档资料全部覆盖掉，因此为了便于找回之前的内容，方便进行版本管理<br>建议使用github进行文档和操作同步，即在本地博客目录下同时初始化一个git仓库，每次更新完博客之后，随手进行仓库的同步更新，这样的话，将会极大地方便后续博客管理。   </li>
-<li>当你将写好的MarkDown文章推送到Hexo的时候，会发现Hexo默认显示了全部的文档内容，这对于博客内容比较多的人来说，显然是不合适的，因此有一个解决方案是：<br>采用Html的语法，在合适的地方添加<br><code>&lt;!--more--&gt;</code>   </li>
-<li>在generate之前最好再清理一下本地缓存，以免由于缓存更新延迟造成“误会”<br><code>hexo clean</code>   <h2 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h2></li>
+<li>当你将写好的MarkDown文章推送到Hexo的时候，会发现Hexo默认显示了全部的文档内容，这对于博客内容比较多的人来说，显然是不合适的，因此有一个解决方案是：<br>采用Html的语法，在合适的地方添加 ，当然也可以在hexo中设置。<br><code>&lt;!--more--&gt;</code>   </li>
+<li>在generate之前最好再清理一下本地缓存，以免由于缓存更新延迟造成“误会”<br><code>hexo clean</code>   </li>
 </ul>
+<h3 id="5、问题记录"><a href="#5、问题记录" class="headerlink" title="5、问题记录"></a>5、问题记录</h3><p>​        我个人常见的一种操作是hexo结合typora一起写博客，这里记录遇到的一些问题和解决方案。</p>
 <ol>
+<li>Typora在写博客时可以手动添加目录，使用<code>[TOC]</code>，为了在hexo发布的时候页面也能显示目录，需要在md文件的头部添加<code>toc: true</code>的标注。但是经过hexo发布之后，目录无法显示，目前考虑是一个不兼容的问题。如果想在发布的时候自动显示就不要手动添加[TOC]标记了。</li>
+<li>Typora中的latex代码公式渲染出来非常漂亮，但是经过hexo发布之后公式就出现了排版错误的情况。</li>
+<li>Typora中使用markdown的语法进行脚注标记是正常的，但是hexo发布之后无法正常渲染。</li>
+</ol>
+<h3 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h3><ol>
 <li><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">小茗同学</a>   </li>
 <li><a href="https://blog.csdn.net/sinat_37781304/article/details/82729029">fangzh的个人博客</a></li>
 <li><a href="https://godweiyang.com/2018/04/13/hexo-blog/">韦阳的博客</a></li>
-<li><a href="https://annewqx.top/posts/65512/?nsukey=Ky9s%2BVwfoeIxBfNyS7TyLGKo9BSPWmG6AcQbnEXL9BKoN4AKFRf84H5Xc%2FwkRFTUp6m9SC80E5J2F4MCLvtqRpVFM37o0K1pYKV4pxKWvtT5AeqIbzUZcf5V4qiu58kzzz6PNTha2oG8w2EMgAMhXGEQTNAri4fGuaDM1KLMFQMtpljAfJ0m2uaL2P8ZNNDhLcmSl1SwyAP7RmTi2imwlg%3D%3D#Gulp%E5%8E%8B%E7%BC%A9">ICARUS美化</a></li>
+<li><a href="https://annewqx.top/posts/65512/?nsukey=Ky9s%2BVwfoeIxBfNyS7TyLGKo9BSPWmG6AcQbnEXL9BKoN4AKFRf84H5Xc%2FwkRFTUp6m9SC80E5J2F4MCLvtqRpVFM37o0K1pYKV4pxKWvtT5AeqIbzUZcf5V4qiu58kzzz6PNTha2oG8w2EMgAMhXGEQTNAri4fGuaDM1KLMFQMtpljAfJ0m2uaL2P8ZNNDhLcmSl1SwyAP7RmTi2imwlg%3D%3D#功能">ICARUS美化</a></li>
 </ol>
 
         </div>
@@ -319,7 +328,7 @@
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>China</span>
+                        <span>Wuhan, Chongqing, China</span>
                     </p>
                     
                 </div>
@@ -479,6 +488,66 @@
 </div>
     
         
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#1、Node-js-安装">
+        <span class="has-mr-6">1</span>
+        <span>1、Node.js 安装</span>
+        </a></li><li>
+        <a class="is-flex" href="#2、Hexo安装">
+        <span class="has-mr-6">2</span>
+        <span>2、Hexo安装</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#2-1-Hexo初始化">
+        <span class="has-mr-6">2.1</span>
+        <span>2.1 Hexo初始化</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-2-Hexo配置以及主题修改">
+        <span class="has-mr-6">2.2</span>
+        <span>2.2 Hexo配置以及主题修改</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#3、环境配置好后就可以开始写博客记录工作生活啦">
+        <span class="has-mr-6">3</span>
+        <span>3、环境配置好后就可以开始写博客记录工作生活啦</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#3-1-首先创建一个新的博客">
+        <span class="has-mr-6">3.1</span>
+        <span>3.1 首先创建一个新的博客</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-2-博客预览">
+        <span class="has-mr-6">3.2</span>
+        <span>3.2 博客预览</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-3-生成Hexo文档">
+        <span class="has-mr-6">3.3</span>
+        <span>3.3 生成Hexo文档</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-4-部署到远程服务器上">
+        <span class="has-mr-6">3.4</span>
+        <span>3.4 部署到远程服务器上</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#4、最后注意">
+        <span class="has-mr-6">4</span>
+        <span>4、最后注意</span>
+        </a></li><li>
+        <a class="is-flex" href="#5、问题记录">
+        <span class="has-mr-6">5</span>
+        <span>5、问题记录</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考博客">
+        <span class="has-mr-6">6</span>
+        <span>参考博客</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
     
     
     
@@ -1037,6 +1106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="/js/insight.js" defer></script>
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/insight.css">
+    
     
 	<!-- 雪花特效 -->
     <script type="text/javascript">

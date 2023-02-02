@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 <meta property="article:published_time" content="2020-02-28T16:39:56.000Z">
-<meta property="article:modified_time" content="2020-03-21T08:23:27.697Z">
+<meta property="article:modified_time" content="2023-02-02T13:12:37.280Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="MarkDown">
 <meta name="twitter:card" content="summary">
@@ -116,6 +116,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="搜索" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -128,7 +132,7 @@
     <br/>
     <center>
         <span id="jinrishici-sentence" style="font-size:17px"></span>
-        <span class="mtip" style="font-size:14px"></span>
+        
     </center>
     <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 
@@ -193,7 +197,7 @@
 </ul>
 </li>
 <li>整段缩进<br> &gt; 第一层<br> &gt;&gt; 第二层<br> &gt;&gt;&gt; 第三层  </li>
-<li>列表<br> - 第一行<br> - 第二行<br> * 第三行 *比-的行间距要大一些<br>2、插入图片    <ul>
+<li>列表<br> - 第一行<br> - 第二行<br> * 第三行 *比-的行间距要大一些<br> 2、插入图片    <ul>
 <li>插入本地图片<br><code>![name](url)</code><br>插入相对路径即可，但是想要作为博客上传到网络上时，就需要将对应的图片也上传，而且图片还不能太大，不然的话就会导致加载很慢而失败。 </li>
 <li>插入网络图片<br><code>![name2](url)</code>  直接跟着网络上的图片链接即可，如下：<br><code>![极地星光] (http://img0.dili360.com/ga/M01/02/D7/wKgBzFQ28e-AZ_M2AAHHuRnwnLQ779.jpg@!rw17)</code><br><img src="http://img0.dili360.com/ga/M01/02/D7/wKgBzFQ28e-AZ_M2AAHHuRnwnLQ779.jpg@!rw17" alt="极地星光">  </li>
 </ul>
@@ -215,25 +219,58 @@
 <li>用反引号<code>```</code> 将代码包起来  </li>
 </ul>
 <p>5、首行缩进<br>&emsp;&enmsp;原生MarkDown不支持首行缩进,采用斜两个\&emsp;\&emsp;来解决.<br>6、 字体变化   </p>
-<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs maxima">    *斜体文本*<br>    <span class="hljs-symbol">_</span>斜体文本<span class="hljs-symbol">_</span><br>    **粗体文本**<br>    <span class="hljs-symbol">__</span>粗体文本<span class="hljs-symbol">__</span><br>    ***粗斜体文本***<br>    ___粗斜体文本___<br>``` <br>&gt; 若要想文档更加绚烂点的话，就只能使用Html的格式来进行修改了   <br>+ &lt;<span class="hljs-built_in">font</span> face=<span class="hljs-string">"黑体"</span>&gt;我是黑体字&lt;/<span class="hljs-built_in">font</span>&gt;  <br>+ &lt;<span class="hljs-built_in">font</span> face=<span class="hljs-string">"微软雅黑"</span>&gt;我是微软雅黑&lt;/<span class="hljs-built_in">font</span>&gt;  <br>+ &lt;<span class="hljs-built_in">font</span> face=<span class="hljs-string">"STCAIYUN"</span>&gt;我是华文彩云&lt;/<span class="hljs-built_in">font</span>&gt;  <br>+ &lt;<span class="hljs-built_in">font</span> <span class="hljs-built_in">color</span>=red&gt;我是红色&lt;/<span class="hljs-built_in">font</span>&gt;  <br>+ &lt;<span class="hljs-built_in">font</span> <span class="hljs-built_in">color</span>=#<span class="hljs-number">008000</span>&gt;我是绿色&lt;/<span class="hljs-built_in">font</span>&gt;  <br>+ &lt;<span class="hljs-built_in">font</span> <span class="hljs-built_in">color</span>=Blue&gt;我是蓝色&lt;/<span class="hljs-built_in">font</span>&gt;  <br>+ &lt;<span class="hljs-built_in">font</span> size=<span class="hljs-number">5</span>&gt;我是尺寸&lt;/<span class="hljs-built_in">font</span>&gt;  <br>+ &lt;<span class="hljs-built_in">font</span> face=<span class="hljs-string">"黑体"</span> <span class="hljs-built_in">color</span>=green size=<span class="hljs-number">5</span>&gt;我是黑体，绿色，尺寸为<span class="hljs-number">5</span>&lt;/<span class="hljs-built_in">font</span>&gt;<br></code></pre></td></tr></table></figure>
-<p><font face="黑体">我是黑体字</font><br><font face="微软雅黑">我是微软雅黑</font><br><font face="STCAIYUN">我是华文彩云</font><br><font color="red">我是红色</font><br><font color="#008000">我是绿色</font><br><font color="Blue">我是蓝色</font><br><font size="5">我是尺寸</font><br><font face="黑体" color="green" size="5">我是黑体，绿色，尺寸为5</font></p>
-<pre><code>
-7、添加短划线     
-\~\~删除文字\~\~    
-8、添加表格   
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-emphasis">*斜体文本*</span><br><span class="hljs-emphasis">_斜体文本_</span><br><span class="hljs-strong">**粗体文本**</span><br><span class="hljs-strong">__粗体文本__</span><br><span class="hljs-strong">***粗斜体文本**</span>*<br><span class="hljs-strong">___粗斜体文本__</span>_<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>若要想文档更加绚烂点的话，就只能使用Html的格式来进行修改了   </p>
+</blockquote>
+<ul>
+<li><font face="黑体">我是黑体字</font>  </li>
+<li><font face="微软雅黑">我是微软雅黑</font>  </li>
+<li><font face="STCAIYUN">我是华文彩云</font>  </li>
+<li><font color="red">我是红色</font>  </li>
+<li><font color="#008000">我是绿色</font>  </li>
+<li><font color="Blue">我是蓝色</font>  </li>
+<li><font size="5">我是尺寸</font>  </li>
+<li><font face="黑体" color="green" size="5">我是黑体，绿色，尺寸为5</font>  </li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">face</span>=<span class="hljs-string">"黑体"</span>&gt;</span>我是黑体字<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">face</span>=<span class="hljs-string">"微软雅黑"</span>&gt;</span>我是微软雅黑<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">face</span>=<span class="hljs-string">"STCAIYUN"</span>&gt;</span>我是华文彩云<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">color</span>=<span class="hljs-string">red</span>&gt;</span>我是红色<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">color</span>=<span class="hljs-string">#008000</span>&gt;</span>我是绿色<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">color</span>=<span class="hljs-string">Blue</span>&gt;</span>我是蓝色<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">5</span>&gt;</span>我是尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">face</span>=<span class="hljs-string">"黑体"</span> <span class="hljs-attr">color</span>=<span class="hljs-string">green</span> <span class="hljs-attr">size</span>=<span class="hljs-string">5</span>&gt;</span>我是黑体，绿色，尺寸为5<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-| 左对齐 | 右对齐 | 居中对齐 |
-| :-     |     -: | :-     : |
-| 单元格 | 单元格 | 单元格 |
-| 单元格 | 单元格 | 单元格 | 
+<p>7、添加短划线<br>~~删除文字~~<br>8、添加表格   </p>
+<table>
+<thead>
+<tr>
+<th align="left">左对齐</th>
+<th align="right">右对齐</th>
+<th>居中对齐</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">单元格</td>
+<td align="right">单元格</td>
+<td>单元格</td>
+</tr>
+<tr>
+<td align="left">单元格</td>
+<td align="right">单元格</td>
+<td>单元格</td>
+</tr>
+</tbody></table>
+<p>9、公式&amp;图表<br>未探索，还需要进一步学习高级功能 <a href="https://www.runoob.com/markdown/md-advance.html">Markdown高级</a>  </p>
+<ul>
+<li>公式  <blockquote>
+<blockquote>
+<p>需要使用额外latex &amp; tex，然后自动渲染    </p>
+</blockquote>
+</blockquote>
+</li>
+<li>图表   <blockquote>
+<blockquote>
+<p>notepad+=中这两个功能好像支持的不是很好，目前没有测试成功。 </p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
 
-9、公式&amp;图表  
-未探索，还需要进一步学习高级功能 [Markdown高级](https://www.runoob.com/markdown/md-advance.html)  
-- 公式  
-&gt;&gt; 需要使用额外latex &amp; tex，然后自动渲染    
-- 图表   
-&gt;&gt; notepad+=中这两个功能好像支持的不是很好，目前没有测试成功。 
-</code></pre>
         </div>
         
            <div class="my_post_copyright">
@@ -249,7 +286,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io.com/2020/02/29/Markdown%E5%88%9D%E4%BD%93%E9%AA%8C/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2020-02-29</p>
-    <p><span>update time:</span>2020-03-21</p>
+    <p><span>update time:</span>2023-02-02</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -352,7 +389,7 @@
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>China</span>
+                        <span>Wuhan, Chongqing, China</span>
                     </p>
                     
                 </div>
@@ -512,6 +549,22 @@
 </div>
     
         
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#Markdown语言介绍">
+        <span class="has-mr-6">1</span>
+        <span>Markdown语言介绍</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
     
     
     
@@ -1070,6 +1123,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="/js/insight.js" defer></script>
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/insight.css">
+    
     
 	<!-- 雪花特效 -->
     <script type="text/javascript">
