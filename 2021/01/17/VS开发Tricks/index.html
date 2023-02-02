@@ -133,114 +133,19 @@
     <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 
     
+
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2021-01-17T09:34:39.000Z">2021-01-17</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 610 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                VS开发Tricks
-            
-        </h1>
-        <div class="content">
-            <hr>
-<h4 id="❤"><a href="#❤" class="headerlink" title="❤"></a><font color="green">❤</font></h4><hr>
-<h4 id="用户宏"><a href="#用户宏" class="headerlink" title="用户宏"></a>用户宏</h4><p>&emsp;&emsp;由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br>在属性管理器中选中任意配置环境中的<code>Microsoft.Cpp.x64.user</code>   ，弹出如下页面：<br><img src="/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/%E7%94%A8%E6%88%B7%E5%AE%8F.png" alt="用户宏"><br>用一个你知道的缩写来作为名字，e.g. ThirdParty，对应的本地路径作为值即可。<br>在后续其他工程使用时可以使用$(ThirdParty)来表示该本地路径。非常方便。   </p>
-<h6 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h6><p>也可以选择将其设置为开发环境，即在代码编译过程中会使用你定义好的路径中的环境进行链接。   </p>
-<a id="more"></a>
-<h5 id="生成事件"><a href="#生成事件" class="headerlink" title="生成事件"></a>生成事件</h5><p>&emsp;&emsp;本地开发前或者后，很可能需要自定义生成的可执行文件的路径，但是又不想修改系统默认生成的路径<code>$(SolutionDir)$(Platform)\$(Configuration)\</code><br>那么可以通过两种方式做到上述操作：   </p>
-<ul>
-<li>使用Cmake管理工程项目；（这里已经使用VS管理了，就先不介绍这种方法啊，具体可以参考CMake-practice这个文档）</li>
-<li>可以尝试使用 <strong>生成事件</strong>, 如下图所示：<br><img src="/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/%E7%94%9F%E6%88%90%E4%BA%8B%E4%BB%B6.jpg" alt="生成事件"><br>其实这里生成事件使用的就是Windows自带的DOS控制台<a href="https://whu-lyh.github.io/2020/03/21/WindowBat/">WindowsBat</a>的命令。   </li>
-</ul>
-<ol>
-<li>例如你要将本工程中的.h文件拷贝到上述自定义宏路径<code>$(ThirdParty)\include</code>下。 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">XCOPY <span class="hljs-string">"..\$(ProjectName).h"</span> <span class="hljs-string">"$(ThirdParty)\include"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span><br></code></pre></td></tr></table></figure></li>
-<li>再例如你要将本工程中生成的lib和dll文件分别拷贝到自定义的$(ThirdParty)\bin<code>和</code>$(ThirdParty)\lib`下    <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">XCOPY <span class="hljs-string">"..\x64\$(ProjectName).dll"</span> <span class="hljs-string">"$(ThirdParty)\bin"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span> &amp; XCOPY <span class="hljs-string">"..\x64\$(ProjectName).lib"</span> <span class="hljs-string">"$(ThirdParty)\lib"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span><br>XCOPY <span class="hljs-string">"..\x64\$(ProjectName)_d.dll"</span> <span class="hljs-string">"$(ThirdParty)\bin"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span> &amp; XCOPY <span class="hljs-string">"..\x64\$(ProjectName)_d.lib"</span> <span class="hljs-string">"$(ThirdParty)\lib"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span><br></code></pre></td></tr></table></figure>
-<h6 id="Tips-1"><a href="#Tips-1" class="headerlink" title="Tips"></a>Tips</h6>注意DOS命令如果写错会导致项目生成失败；<br>当你命令中路径出现错误，或者待处理的文件不存在时，也会导致生成失败；<br>当你的工程项目没有生成（源代码没有修改）时，上述生成事件命令也不会执行。   <h5 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h5></li>
-</ol>
-<ul>
-<li>调用堆栈</li>
-</ul>
-
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/VS/" rel="tag">VS</a>
-                </div>
-            </div>
-        </div>
-        
-        
-        
-        <div class="social-share"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
-<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
-        
-    </div>
-</div>
-
-
-
-
-
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Docker用法补充</span>
-            </a>
-        </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/">
-                <span class="level-item">Docker日常使用</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
-
-
-
-<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-</div>
                 
 
 
 
 
-<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-1 column-left is-sticky">
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-3 column-left is-sticky">
     
         
     
@@ -639,12 +544,146 @@ applyNight(isNight);
         <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5dbucqf8hsc&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
     
     
-        <div class="column-right-shadow is-hidden-widescreen ">
-        
-        </div>
-    
 </div>
 
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2021-01-17T09:34:39.000Z">2021-01-17</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 610 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                VS开发Tricks
+            
+        </h1>
+        <div class="content">
+            <hr>
+<h4 id="❤"><a href="#❤" class="headerlink" title="❤"></a><font color="green">❤</font></h4><hr>
+<h4 id="用户宏"><a href="#用户宏" class="headerlink" title="用户宏"></a>用户宏</h4><p>&emsp;&emsp;由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br>在属性管理器中选中任意配置环境中的<code>Microsoft.Cpp.x64.user</code>   ，弹出如下页面：<br><img src="/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/%E7%94%A8%E6%88%B7%E5%AE%8F.png" alt="用户宏"><br>用一个你知道的缩写来作为名字，e.g. ThirdParty，对应的本地路径作为值即可。<br>在后续其他工程使用时可以使用$(ThirdParty)来表示该本地路径。非常方便。   </p>
+<h6 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h6><p>也可以选择将其设置为开发环境，即在代码编译过程中会使用你定义好的路径中的环境进行链接。   </p>
+<a id="more"></a>
+<h5 id="生成事件"><a href="#生成事件" class="headerlink" title="生成事件"></a>生成事件</h5><p>&emsp;&emsp;本地开发前或者后，很可能需要自定义生成的可执行文件的路径，但是又不想修改系统默认生成的路径<code>$(SolutionDir)$(Platform)\$(Configuration)\</code><br>那么可以通过两种方式做到上述操作：   </p>
+<ul>
+<li>使用Cmake管理工程项目；（这里已经使用VS管理了，就先不介绍这种方法啊，具体可以参考CMake-practice这个文档）</li>
+<li>可以尝试使用 <strong>生成事件</strong>, 如下图所示：<br><img src="/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/%E7%94%9F%E6%88%90%E4%BA%8B%E4%BB%B6.jpg" alt="生成事件"><br>其实这里生成事件使用的就是Windows自带的DOS控制台<a href="https://whu-lyh.github.io/2020/03/21/WindowBat/">WindowsBat</a>的命令。   </li>
+</ul>
+<ol>
+<li>例如你要将本工程中的.h文件拷贝到上述自定义宏路径<code>$(ThirdParty)\include</code>下。 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">XCOPY <span class="hljs-string">"..\$(ProjectName).h"</span> <span class="hljs-string">"$(ThirdParty)\include"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span><br></code></pre></td></tr></table></figure></li>
+<li>再例如你要将本工程中生成的lib和dll文件分别拷贝到自定义的$(ThirdParty)\bin<code>和</code>$(ThirdParty)\lib`下    <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">XCOPY <span class="hljs-string">"..\x64\$(ProjectName).dll"</span> <span class="hljs-string">"$(ThirdParty)\bin"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span> &amp; XCOPY <span class="hljs-string">"..\x64\$(ProjectName).lib"</span> <span class="hljs-string">"$(ThirdParty)\lib"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span><br>XCOPY <span class="hljs-string">"..\x64\$(ProjectName)_d.dll"</span> <span class="hljs-string">"$(ThirdParty)\bin"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span> &amp; XCOPY <span class="hljs-string">"..\x64\$(ProjectName)_d.lib"</span> <span class="hljs-string">"$(ThirdParty)\lib"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span><br></code></pre></td></tr></table></figure>
+<h6 id="Tips-1"><a href="#Tips-1" class="headerlink" title="Tips"></a>Tips</h6>注意DOS命令如果写错会导致项目生成失败；<br>当你命令中路径出现错误，或者待处理的文件不存在时，也会导致生成失败；<br>当你的工程项目没有生成（源代码没有修改）时，上述生成事件命令也不会执行。   <h5 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h5></li>
+</ol>
+<ul>
+<li>调用堆栈</li>
+</ul>
+
+        </div>
+        
+           <div class="my_post_copyright">
+    <div style="text-align:center" class="menu-label">------ copyright ------</div>
+    <p style="text-align:center" class="menu-label"> 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank"><i class="fab fa-creative-commons" style="color:#29a329"></a></i> 许可协议</p>  
+
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <div class="has-text-grey is-size-7 is-block">
+    <p><span>title:</span><a href="/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/">VS开发Tricks</a></p>
+    <p><span>author:</span><a href="/">AmazingHao</a></p>
+    <p>
+        <span>link:</span><a href="/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/" title="VS开发Tricks - AmazingHao&#39;s Free Space">http://whu-lyh.github.io.com/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io.com/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/"  aria-label="复制成功！"></i></span>
+    </p>
+    <p><span>publish time:</span>2021-01-17</p>
+    <p><span>update time:</span>2023-02-01</p>
+    </div>
+</div>
+<!-- <ul class="post-copyright">
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io.com/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/">VS开发Tricks</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io.com">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io.com/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/">http://whu-lyh.github.io.com/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/</a></li>
+    <li><strong>发布时间：</strong>2021-01-17</li>
+    <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+    </li>
+</ul> -->
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+        clipboard.on('success', function(){
+            swal({   
+                title: "",   
+                text: '复制成功',
+                icon: "success", 
+                showConfirmButton: true
+            });
+         });
+    });  
+</script>
+        
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/VS/" rel="tag">VS</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Docker用法补充</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/">
+                <span class="level-item">Docker日常使用</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+</div>
                 
             </div>
         </div>
