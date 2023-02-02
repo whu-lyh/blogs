@@ -125,10 +125,19 @@
 </nav>
     <br/>
     <center>
-        <span id="jinrishici-sentence" style="font-size:17px"></span>
-        
+        <span id="jinrishici-sentence" style="font-size:14px"></span>
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <div id="poem_sentence"></div>
+        <div id="poem_info"></div>
+        <script type="text/javascript">
+          jinrishici.load(function(result) {
+            var sentence = document.querySelector("#poem_sentence")
+            var info = document.querySelector("#poem_info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = '------【' + result.data.origin.dynasty + '】' + result.data.origin.author + '《' + result.data.origin.title + '》'
+          });
+        </script>  
     </center>
-    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 
     
 
@@ -1451,7 +1460,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <link rel="stylesheet" href="/css/search.css">
 <link rel="stylesheet" href="/css/insight.css">
     
-    
+
 	<!-- 雪花特效 -->
     <script type="text/javascript">
       var windowWidth = $(window).width();
@@ -1459,5 +1468,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.write('<script type="text/javascript" src="/js/snow.js"><\/script>');
       }
     </script>
+
 </body>
 </html>
