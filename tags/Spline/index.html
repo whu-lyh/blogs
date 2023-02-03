@@ -173,7 +173,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    12 分钟 读完 (大约 1838 个字)
+                    14 分钟 读完 (大约 2045 个字)
                 </span>
                 
                 
@@ -230,7 +230,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 1023 个字)
+                    17 分钟 读完 (大约 2531 个字)
                 </span>
                 
                 
@@ -244,9 +244,10 @@
         </h1>
         <div class="content">
             <h2 id="B-Spline（-Basic-Spline）"><a href="#B-Spline（-Basic-Spline）" class="headerlink" title="B-Spline（=Basic Spline）"></a>B-Spline（=Basic Spline）</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><ul>
-<li>需要利用样条函数拟合时相连续的数据，e.g. IMU data。</li>
+<li>需要利用样条函数拟合<a href="https://github.com/whu-lyh/PoseSpline">时相连续的数据</a>，e.g. IMU data。</li>
 <li>利用样条函数拟合散点，做表面拟合，e.g. 构建mesh或者其他光滑的表面。</li>
 <li><a href="https://zhuanlan.zhihu.com/p/159192419">路径规划</a>中使用样条线对A*算法进行优化，得到更加平滑的路径。</li>
+<li>多传感器融合任务中，e.g.<a href="https://github.com/ethz-asl/kalibr.git">多传感器标定</a>时，为了内插任意时刻的状态，使用B-spline做内插。</li>
 </ul>
         </div>
         
