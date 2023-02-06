@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 <meta property="article:published_time" content="2020-02-22T07:38:32.000Z">
-<meta property="article:modified_time" content="2023-02-02T14:00:31.857Z">
+<meta property="article:modified_time" content="2023-02-06T09:02:29.602Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -166,7 +166,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    13 分钟 读完 (大约 2021 个字)
+                    15 分钟 读完 (大约 2223 个字)
                 </span>
                 
                 
@@ -187,6 +187,7 @@
 <div align="center"><img src="/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/Nodejs.png" width="50%" height="50%"></div>     
 
 <p>&emsp;&emsp;另外如果你想要进一步学习Node.js这个强大的服务器端的JavaScript绚丽技术以及体验高性能服务配置技术，请移步<a href="https://www.runoob.com/nodejs/nodejs-tutorial.html"><strong>这里</strong></a> ,一路Next安装即可。<br>最后在控制台或bash命令行上输入：<br><code>node --version(或node -v)</code><br>以查看Node.js版本来验证否配置完成。<br><img src="/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/Nodejs2.png" alt="nodejsTestVersion">   </p>
+<p>npm的install或者uninstall需要在安装Nodejs的目录下才能行，需要有package.json存在。</p>
 <h3 id="2、Hexo安装"><a href="#2、Hexo安装" class="headerlink" title="2、Hexo安装"></a>2、Hexo安装</h3><p>&emsp;&emsp;在安装Node.js的时候一般来说会自动安装一个叫做npm的软件安装程序，功能类似于python中的pip以及linux下的apt-get。<br>然后通过在本地路径打开命令行或git bash命令行，并输入：<br><code>npm install hexo-cli -g。</code><br>CLI = Command Line Interface为命令行界面。 </p>
 <h4 id="2-1-Hexo初始化"><a href="#2-1-Hexo初始化" class="headerlink" title="2.1 Hexo初始化"></a>2.1 Hexo初始化</h4><p>&emsp;&emsp;在本地找个合适的位置新建一个文件夹，作为Hexo博客存放的位置，这里名为NotesRecording<br>并在此文件夹下打开控制台或bash命令行，并输入:<br><code>hexo init NotesRecording</code><br>然后输入:<br><code>hexo --version</code><br>即可查看Hexo版本，如下:<img src="/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/hexo-v.jpg" alt="hexo-v"><br>这里采用了 <a href="https://github.com/ppoffice/hexo-theme-icarus"><strong>icarus</strong></a> 主题，因此和你现在能看到的可能有所出入。<br>在控制台或bash命令行输入：<br><code>npm install</code><br>新建完成后，指定文件夹目录下有：<br><img src="/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/notesrecording.jpg" alt="notesrecording"><br>node_modules: Hexo的依赖包<br>public：存放生成的页面,这些index.html都是要上传到服务器端的<br>scaffolds：生成文章的一些模板<br>source：用来存放编辑好的文章<br>themes：存放喜欢的主题，比如本文的 <a href="https://github.com/ppoffice/hexo-theme-icarus"><strong>icarus</strong></a><br>_config.yml: Hexo博客的配置文件<br>接着再运行：<br><code>hexo server</code><br>&emsp;&emsp;等待几秒之后，通过按照提示打开本地浏览器 <a href="http://localhost:4000/">http://localhost:4000/</a> 网址即可预览初始化好的Hexo博客界面。</p>
 <h4 id="2-2-Hexo配置以及主题修改"><a href="#2-2-Hexo配置以及主题修改" class="headerlink" title="2.2 Hexo配置以及主题修改"></a>2.2 Hexo配置以及主题修改</h4><ul>
@@ -210,7 +211,12 @@
 <li>Hexo每次deploy，generate之后会加原来的文档资料全部覆盖掉，因此为了便于找回之前的内容，方便进行版本管理<br>建议使用github进行文档和操作同步，即在本地博客目录下同时初始化一个git仓库，每次更新完博客之后，随手进行仓库的同步更新，这样的话，将会极大地方便后续博客管理。   </li>
 <li>当你将写好的MarkDown文章推送到Hexo的时候，会发现Hexo默认显示了全部的文档内容，这对于博客内容比较多的人来说，显然是不合适的，因此有一个解决方案是：<br>采用Html的语法，在合适的地方添加 ，当然也可以在hexo中设置。<br><code>&lt;!--more--&gt;</code>   </li>
 <li>在generate之前最好再清理一下本地缓存，以免由于缓存更新延迟造成“误会”<br><code>hexo clean</code>   </li>
+<li>如果出现下面的问题(在12.16.1版本上出现的非常频繁)，那么需要找到Nodejs的安装包，点击repair才能解决。</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">internal/modules/cjs/loader.js:985<br>  throw err;<br>  ^<br><br>Error: Cannot find module <span class="hljs-string">'D:\SoftWare\Nodejs\node_modules\npm\bin\npm-cli.js'</span><br>    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:982:15)<br>    at Function.Module._load (internal/modules/cjs/loader.js:864:27)<br>    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:74:12)<br>    at internal/main/run_main_module.js:18:47 &#123;<br>  code: <span class="hljs-string">'MODULE_NOT_FOUND'</span>,<br>  requireStack: []<br>&#125;<br>internal/modules/cjs/loader.js:985<br>  throw err;<br>  ^<br><br>Error: Cannot find module <span class="hljs-string">'D:\SoftWare\Nodejs\node_modules\npm\bin\npm-cli.js'</span><br>[90m    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:982:15)[39m<br>[90m    at Function.Module._load (internal/modules/cjs/loader.js:864:27)[39m<br>[90m    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:74:12)[39m<br>[90m    at internal/main/run_main_module.js:18:47[39m &#123;<br>  code: [32m<span class="hljs-string">'MODULE_NOT_FOUND'</span>[39m,<br>  requireStack: []<br></code></pre></td></tr></table></figure>
+
+
+
 <h3 id="5、问题记录"><a href="#5、问题记录" class="headerlink" title="5、问题记录"></a>5、问题记录</h3><p>​        我个人常见的一种操作是hexo结合typora一起写博客，这里记录遇到的一些问题和解决方案。</p>
 <ol>
 <li>Typora在写博客时可以手动添加目录，使用<code>[TOC]</code>，为了在hexo发布的时候页面也能显示目录，需要在md文件的头部添加<code>toc: true</code>的标注。但是经过hexo发布之后，目录无法显示，目前考虑是一个不兼容的问题。如果想在发布的时候自动显示就不要手动添加[TOC]标记了。</li>
@@ -240,7 +246,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io.com/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2020-02-22</p>
-    <p><span>update time:</span>2023-02-02</p>
+    <p><span>update time:</span>2023-02-06</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
