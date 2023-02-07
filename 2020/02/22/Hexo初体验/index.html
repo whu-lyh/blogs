@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 <meta property="article:published_time" content="2020-02-22T07:38:32.000Z">
-<meta property="article:modified_time" content="2023-02-07T06:56:53.495Z">
+<meta property="article:modified_time" content="2023-02-07T06:59:55.999Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -227,15 +227,17 @@
 <ul>
 <li>要么是$$符号无法识别，要么是渲染出来和本地渲染结果不一样。</li>
 </ul>
-<p>​        由于我的hexo+icarus的版本比较老了，目前一些比较新的解决方案均无法实现，找了好久，试了很多都不行，最后找到一个适用于我的解决方案：主要问题应该就是渲染的问题，$\LaTeX$代码写的应该没问题。首先npm uninstall卸载掉和math相关的所有库，e.g. hexo-math、hexo-filter-mathjax等，然后和官方的<a href="https://github.com/ppoffice/hexo-theme-icarus/blob/master/package.json">hexo-theme-icarus</a>比较，看看少了哪些dependencies，e.g. hexo-renderer-marked、hexo-renderer-stylus、hexo-renderer-inferno等。</p>
+<p>​        由于我的hexo+icarus的版本比较老了，目前一些比较新的解决方案均无法实现，找了好久，试了很多都不行，最后找到一个适用于我的解决方案：主要问题应该就是渲染的问题，$\LaTeX$代码写的应该没问题。首先<code>npm uninstall</code>卸载掉和math相关的所有库，e.g. hexo-math、hexo-filter-mathjax等，然后和官方的<a href="https://github.com/ppoffice/hexo-theme-icarus/blob/master/package.json">hexo-theme-icarus</a>比较，看看少了哪些dependencies，e.g. hexo-renderer-marked、hexo-renderer-stylus、hexo-renderer-inferno等。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-renderer-marked --save <span class="hljs-comment"># 原来icarus就是使用的marked作为渲染的</span><br>npm install hexo-renderer-ejs --save <span class="hljs-comment"># 似乎没用</span><br>npm install hexo-renderer-stylus --save <span class="hljs-comment"># 似乎没用</span><br>npm install hexo-renderer-inferno --save<br>npm install hexo-renderer-pandoc --save <span class="hljs-comment"># latex公式渲染之后，变得很奇怪，使用pandoc之后就和本地的一样了。</span><br></code></pre></td></tr></table></figure>
 
 <p>​        最后得到package.json如下：（让然也可能有一些没用的dependencies）吓得我赶紧保存下来。</p>
 <figure class="highlight Json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs Json">&#123;<br>  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"hexo-related"</span>,<br>  <span class="hljs-attr">"version"</span>: <span class="hljs-string">"1.0.0"</span>,<br>  <span class="hljs-attr">"description"</span>: <span class="hljs-string">""</span>,<br>  <span class="hljs-attr">"main"</span>: <span class="hljs-string">"index.js"</span>,<br>  <span class="hljs-attr">"dependencies"</span>: &#123;<br>    <span class="hljs-attr">"hexo-renderer-ejs"</span>: <span class="hljs-string">"^2.0.0"</span>,<br>    <span class="hljs-attr">"hexo-renderer-inferno"</span>: <span class="hljs-string">"^0.1.3"</span>,<br>    <span class="hljs-attr">"hexo-renderer-marked"</span>: <span class="hljs-string">"^6.0.0"</span>,<br>    <span class="hljs-attr">"hexo-renderer-pandoc"</span>: <span class="hljs-string">"^0.3.1"</span>,<br>    <span class="hljs-attr">"hexo-renderer-stylus"</span>: <span class="hljs-string">"^2.1.0"</span><br>  &#125;,<br>  <span class="hljs-attr">"devDependencies"</span>: &#123;&#125;,<br>  <span class="hljs-attr">"scripts"</span>: &#123;<br>    <span class="hljs-attr">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span><br>  &#125;,<br>  <span class="hljs-attr">"author"</span>: <span class="hljs-string">""</span>,<br>  <span class="hljs-attr">"license"</span>: <span class="hljs-string">"ISC"</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<ol>
-<li>Typora中使用markdown的语法进行脚注标记是正常的，但是hexo发布之后无法正常渲染。</li>
-<li>hexo中设置<strong>related_posts</strong>似乎在生成时有问题，但是不影响部署。（没解决，代码应该没什么问题）</li>
+<ol start="3">
+<li><p>Typora中使用markdown的语法进行脚注标记是正常的，但是hexo发布之后无法正常渲染。</p>
+</li>
+<li><p>hexo中设置<strong>related_posts</strong>似乎在生成时有问题，但是不影响部署。（没解决，代码应该没什么问题）</p>
+</li>
 </ol>
 <h3 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h3><ol>
 <li><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">小茗同学</a>   </li>
