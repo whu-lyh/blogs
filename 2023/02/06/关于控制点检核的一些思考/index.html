@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
 <meta property="article:published_time" content="2023-02-06T03:45:43.169Z">
-<meta property="article:modified_time" content="2023-02-07T07:58:11.683Z">
+<meta property="article:modified_time" content="2023-02-08T08:20:49.848Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Spline">
 <meta property="article:tag" content="Point Cloud">
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    19 分钟 读完 (大约 2866 个字)
+                    27 分钟 读完 (大约 4076 个字)
                 </span>
                 
                 
@@ -236,8 +236,8 @@
 </tr>
 <tr>
 <td align="center">Cubic Spline:三次样条[^ 5]</td>
-<td align="center">基于三次Spline函数</td>
-<td>GDAL</td>
+<td align="center">基于三次Spline函数实现表面近似</td>
+<td>GDAL,<a href="https://sourceforge.net/projects/saga-gis/" title="Conrad,O.,Bechtel,B.,Bock,M.,Dietrich,H.,Fischer,E.,Gerlitz,L.,Wehberg,J.,Wichmann,V.,andBoehner,J.(2015):SystemforAutomatedGeoscientificAnalyses(SAGA)v.2.1.4.Geosci.ModelDev.,8,1991-2007,doi:10.5194/gmd-8-1991-2015.">SAGA</a></td>
 </tr>
 <tr>
 <td align="center">Thin-Plate Spline[^ 6]</td>
@@ -247,7 +247,7 @@
 <tr>
 <td align="center">Thin-Plate Spline by TIN</td>
 <td align="center">在TIN构建的三角网内构建TPS，实现内插</td>
-<td></td>
+<td><a href="https://sourceforge.net/projects/saga-gis/" title="Conrad,O.,Bechtel,B.,Bock,M.,Dietrich,H.,Fischer,E.,Gerlitz,L.,Wehberg,J.,Wichmann,V.,andBoehner,J.(2015):SystemforAutomatedGeoscientificAnalyses(SAGA)v.2.1.4.Geosci.ModelDev.,8,1991-2007,doi:10.5194/gmd-8-1991-2015.">SAGA</a></td>
 </tr>
 <tr>
 <td align="center">Kriging:克里金</td>
@@ -267,7 +267,7 @@
 </li>
 </ul>
 <h3 id="Scattered-data-interpolation-with-multilevel-B-splines-4"><a href="#Scattered-data-interpolation-with-multilevel-B-splines-4" class="headerlink" title="Scattered  data interpolation with multilevel B-splines[^ 4]"></a>Scattered  data interpolation with multilevel B-splines[^ 4]</h3><h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><p>​        目的是从离散点云中实现点云表面拟合B-spline approximation (<strong>BA</strong>)。现有方法也有用B-spline的，但是依然受限于平滑性，时间复杂性，限定范围内的数据分布等的限制。因此本文提出使用层级的bicubic B-spline修正方法来逼近直接拟合B-spline，并且实现了最小的内存占用。本文是从Image morphing中借鉴过来的。</p>
-<h4 id="Basic-Idea"><a href="#Basic-Idea" class="headerlink" title="Basic Idea"></a>Basic Idea</h4><p>​        Let $\Phi_{ij}$ be the value of the $ij$-th control point on lattice $\Phi \in \Omega ^{(m+3) \times (n+3)}, \Omega = \{ (x,y)| 0 \leq x &lt;m, 0 \leq y &lt; n \}$, located at $(i,j)$ for $ i =-1,0,…,m+1$ and $j =-1,0,…,m+1$. The ==approximation function== $f$  is defined in terms of these control points by:<br>$$<br>f(x,y)=\Sigma_{k=0}^3\Sigma_{l=0}^3B_k(s)B_l(t)\sigma_{(i+k)(j+1)}<br>$$<br>where $(x,y)$ is a scattered point in $\Omega$,  $i=\lfloor x \rfloor -1,i=\lfloor y \rfloor-1,s= x-\lfloor x \rfloor$, and $t=y-\lfloor y \rfloor,t \in [0,1)$. $B_k,B_l$是均匀三次B-spline函数。</p>
+<h4 id="Basic-Idea"><a href="#Basic-Idea" class="headerlink" title="Basic Idea"></a>Basic Idea</h4><p>​        Let $\Phi_{ij}$ be the value of the $ij$-th control point on lattice $\Phi \in \Omega ^{(m+3) \times (n+3)}, \Omega = \{ (x,y)| 0 \leq x &lt;m, 0 \leq y &lt; n \}$, located at $(i,j)$ for $ i =-1,0,…,m+1$ and $j =-1,0,…,m+1$. The ==approximation function== $f$  is defined in terms of these control points by:<br>$$<br>f(x,y)=\Sigma_{k=0}^3\Sigma_{l=0}^3B_k(s)B_l(t)\sigma_{(i+k)(j+1)}<br>$$<br>where $(x,y)$ is a scattered point in $\Omega$,  $i=\lfloor x \rfloor -1,i=\lfloor y \rfloor-1,s= x-\lfloor x \rfloor$, and $t=y-\lfloor y \rfloor,t \in [0,1)$. $B_k,B_l$是均匀三次B-spline函数. 即 $f: \Omega \mapsto \mathbb{R}$表明了函数$f$将平面domain的点映射为一个表面。</p>
 <p>With this formulation, the problem of deriving function $f$ is reduced to solving for the control points in $\Phi$ that best approximate the scattered data in $P=\{(x_c,y_c,z_c)\}$.</p>
 <h4 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a>Methodology</h4><p>​        本文通过多层B-spline来实现表面近似任务中平滑性和准确性之间的平衡。使用控制顶点的层级性得到一系列的函数，通过求和实现近似。coarse的顶点提供粗略的近似，使用finer的顶点构成的函数来优化精度。</p>
 <p>​        那么使用B-spline来做数据拟合最终调整的是什么呢？根据B-pline的定义和<a href="http://whu-lyh.github.io.com/2023/01/30/Spline/">另一篇博客</a>可知。近似的目的就是要不断调整样条曲线中控制点的权值，使得能够最大限度的拟合所给的离散数据。理解这个很重要。控制点的位置是固定分布在domain的，也就是随着knot的。表面拟合的结果和控制点的分辨率是有关系的。</p>
@@ -280,10 +280,26 @@
 <p>​        作者提出首先在$\Omega$域内构建层级的控制点$\Phi_0,\Phi_1,…,\Phi_h$。相邻层间控制点数量比为1:2，首先在coarest的控制点$\Phi_0$上运行一次BA算法作为初始平滑近似$f_0$。这样会在一些散点上有较大的偏差，例如在点$P_1\{(x_1,y_1,z_1)\}$上存在较大的偏差$\Delta^1 z_c$(上标1表示是第一次近似得到的偏差)，用$\Delta^1 z_c$替换$z_1$，变成$P_1\{(x_1,y_1,\Delta^1 z_c)\}$。依次类推，用$f_0+f_1$可以得到一个更小的偏差$\Delta^2 z_c=Z_c-f_0(x_c,y_c)-f_1(x_c,y_c)$。那么从coarest的$\Phi_0$开始直到finer的控制点$\Phi_h$，最终的近似结果可以表示为$f=\Sigma_{k=0}^hf_k$，即一系列层级近似结果的叠加。只需要在全部的点上做一次分辨率低的近似就可以得到全局的形状。按照上述方案，就实现渐进式的平滑近似。时间复杂度是$\mathcal{O}=hp+\frac{4}{3}mn$，空间复杂度是$\mathcal{O}=p+\frac{4}{3}mn$，并且仍然可以实现$C^2$的平滑性。$mn$是domain的范围，是正整数。$p$是3D点。</p>
 <p>​        由上可知，需要不断的计算B-Spline函数，导致计算效率下降，作者因此提出一种局部B-Spline精化方法实现计算效率的提升。此外作者还根据数据分布提出一种自适应的分层方法。这里就先略了。重点关注前面。</p>
 <h4 id="相关实现"><a href="#相关实现" class="headerlink" title="相关实现"></a>相关实现</h4><ul>
-<li><a href="https://github.com/SINTEF-Geometry/MBA" title="Original and old version of C++ Implementation">SINTEF</a>，实现了文献 [^4] 中的多尺度样条曲线表面拟合，但是代码比较老了，需要额外编译，除了代码框架复杂一些，编译不是问题。</li>
-<li><a href="https://github.com/ddemidov/mba" title="With C++11 header-only and Python API">ddemidov</a>: 基于C++11做了一个文献 [^4] 新的版本，实现了adaptive 的MBA，开发了python的API，并且是header-only的方式，方便使用。根据官方提供的jupyter notebook的测试显示，两个库对于相同数据的内插结果之间并没有很大的误差。</li>
+<li><a href="https://github.com/SINTEF-Geometry/MBA" title="Original and old version of C++ Implementation">SINTEF</a>，实现了文献 [^ 4] 中的多尺度样条曲线表面拟合，但是代码比较老了，需要额外编译，除了代码框架复杂一些，编译不是问题。</li>
+<li><a href="https://github.com/ddemidov/mba" title="With C++11 header-only and Python API">ddemidov</a>: 基于C++11做了一个文献 [^ 4] 新的版本，实现了adaptive 的MBA，开发了python的API，并且是header-only的方式，方便使用。根据官方提供的jupyter notebook的测试显示，两个库对于相同数据的内插结果之间并没有很大的误差。</li>
 </ul>
-<h3 id="Smooth-Approximation-and-Rendering-of-Large-Scattered-Data-Sets-5"><a href="#Smooth-Approximation-and-Rendering-of-Large-Scattered-Data-Sets-5" class="headerlink" title="Smooth Approximation and Rendering of Large Scattered Data Sets[^ 5]"></a>Smooth Approximation and Rendering of Large Scattered Data Sets[^ 5]</h3><h3 id="Approximate-thin-plate-spline-mappings-6"><a href="#Approximate-thin-plate-spline-mappings-6" class="headerlink" title="Approximate thin plate spline mappings[^ 6]"></a>Approximate thin plate spline mappings[^ 6]</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[^ 1]: Elaksher A, Ali T, Alharthy A. A Quantitative Assessment of LIDAR Data Accuracy[J]. Remote Sensing, 2023, 15(2): 442.<br>[^ 2]: Cățeanu M, Ciubotaru A. Accuracy of ground surface interpolation from  airborne laser scanning (ALS) data in dense forest cover[J]. ISPRS  International Journal of Geo-Information, 2020, 9(4): 224.<br>[^ 3]: A brief description of natural neighbour interpolation<br>[^ 4]: Lee S, Wolberg G, Shin S Y. Scattered  data interpolation with multilevel B-splines[J]. IEEE transactions on  visualization and computer graphics, 1997, 3(3): 228-244.<br>[^ 5]: Haber J, Zeilfelder F, Davydov O, et  al. Smooth approximation and rendering of large scattered data  sets[C]//Proceedings Visualization, 2001. VIS’01. IEEE, 2001: 341-571.<br>[^ 6]: Donato G, Belongie S. Approximate thin plate spline mappings[C]//Computer Vision—ECCV 2002: 7th European  Conference on Computer Vision Copenhagen, Denmark, May 28–31, 2002  Proceedings, Part III 7. Springer Berlin Heidelberg, 2002: 21-31.</p>
+<h3 id="Smooth-Approximation-and-Rendering-of-Large-Scattered-Data-Sets-5"><a href="#Smooth-Approximation-and-Rendering-of-Large-Scattered-Data-Sets-5" class="headerlink" title="Smooth Approximation and Rendering of Large Scattered Data Sets[^ 5]"></a>Smooth Approximation and Rendering of Large Scattered Data Sets[^ 5]</h3><h4 id="Motivation-1"><a href="#Motivation-1" class="headerlink" title="Motivation"></a>Motivation</h4><p>​        表面拟合任务要求：近似程度要高、可视质量要好、适用于大数据量、高效、数值计算稳定、自适应性好以及算法简单易实现等。基于spline的方法有很多，e.g. NURBS要求数据分布均匀，存在依赖矩形的分布空间，近似误差大等问题。其他spline的方法，依赖三角网，而且对数据分布要求较高，还需要全局最小二乘近似等。Related Work写的不错。</p>
+<h4 id="Methodology-1"><a href="#Methodology-1" class="headerlink" title="Methodology"></a>Methodology</h4><p>​        本文提出一种两阶段方法实现表面美观、属性好的表面拟合方法。<strong>Step1</strong>：仅使用==局部==少量的数据点计算离散的最小二乘多边形段discrete least squares polynomial pieces，基于==SVD==构建了$Bernstein-B \’{e} zier$形式以根据实际点云分布空间初始多边形的次数。<strong>Step2</strong>：基于$C^1$连续条件结合相邻的三角化$Bezier$块直接得到剩余多边形段。算法不需要全局计算，不依赖三角网，不需要计算导数。</p>
+<p>​        基于$C^1$连续的bivariate <strong>cubic</strong> <strong>spline</strong>实现了大场景下散点的最优近似拟合。使用局部多边形最小二乘近似的方式来减少数据的局部差异和非均匀分布的问题。但是考虑到实际数据分布，算法使用的cubic spline的次数是自适应变化的。算法的复杂度是和点数成线性关系的。这里去掉了从数据生成三角网的过程，而算法在介绍的时候<em>依赖三角网</em>的生成。中间使用了LOD加速计算。</p>
+<p>​        最后使用了$Bernstein-B \’{e} zier$来评估和渲染spline。通过计算spline点和散点之间的单向$Housdorff$距离来评估质量。</p>
+<h4 id="结论-1"><a href="#结论-1" class="headerlink" title="结论"></a>结论</h4><ul>
+<li>点云越密，构建的多边形阶数越高。拟合误差最大为$m$级。</li>
+<li>在一块a Vpro/8 graphics board可以做到10FPS。</li>
+</ul>
+<h4 id="相关实现-1"><a href="#相关实现-1" class="headerlink" title="相关实现"></a>相关实现</h4><ul>
+<li><a href="https://sourceforge.net/projects/saga-gis/" title="Conrad,O.,Bechtel,B.,Bock,M.,Dietrich,H.,Fischer,E.,Gerlitz,L.,Wehberg,J.,Wichmann,V.,andBoehner,J.(2015):SystemforAutomatedGeoscientificAnalyses(SAGA)v.2.1.4.Geosci.ModelDev.,8,1991-2007,doi:10.5194/gmd-8-1991-2015.">SAGA</a>：SAGA - System for Automated Geoscientific Analyses - is a Geographic  Information System (GIS) software with immense capabilities for geodata  processing and analysis. SAGA is programmed in the object oriented C++  language and supports the implementation of new functions with a very  effective Application Programming Interface (API). Functions are  organised as <strong>modules in framework independent Module Libraries</strong> and can  be accessed via SAGA’s Graphical User Interface (GUI) or various  scripting environments (shell scripts, Python, R, …). 提供了编译好的可执行程序和源代码。针对内插方法，SAGA已经实现了<strong>B-spline Approximation、Cubic Spline Approximation、Multilevel B-Spline、Multilevel B-Spline (3D)、Multilevel B-Spline for Categories、Multilevel B-Spline form Grid Points、Thin Plate Spline、Thin Plate Spline (TIN)</strong>。包含了文章[^ 4]中提到的大部分算法。每种内插方法配有注释。简单测试之后发现确实和文章中提到的结论一致，起码效率方面表现相同。</li>
+</ul>
+<h3 id="Approximate-thin-plate-spline-mappings-6"><a href="#Approximate-thin-plate-spline-mappings-6" class="headerlink" title="Approximate thin plate spline mappings[^ 6]"></a>Approximate thin plate spline mappings[^ 6]</h3><p>​        Thin plate spline是一种常见的使用基函数实现从$\mathbb{R}^2$到$\mathbb{R}^2$坐标映射的方法。本身TPS是cubic spline的2D泛化形式，TPS模型包含一个仿射模型作为一个特例。TPS模型需要对一个超大的密集矩阵$p \times p$进行求逆，$p$是点数。为了减少求逆的运算量，提出了很多的改进方法，包括使用局部对应点集来估计全部对应关系的方法，本文结合高斯径向基网络领域中的相关方法来讨论基于这个思路的近似方法的优缺点。指出借鉴径向基函数的方法不满足principal warp分析[^ 8]的要求，因此借助经典矩阵补全技术进行完善。最后，作者讨论了一种使用全部近似基函数来近似目标集数据的方法，即$Nystor\ddot{o}m$近似法实现TPS映射。最后作者并总结了三种近似方法之间的优缺点：基于局部点采样并考虑全部目标集的方法的效果都不错，基于$Nystor\ddot{o}m$近似的方法不但可以实现principal warp 分析，同时在子集采样结果不好时表现出最优的性能。并用实验突出了在图像编辑方面的优势。</p>
+<ul>
+<li>数学有点啃不动。详见文章6和8。</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[^ 1]: Elaksher A, Ali T, Alharthy A. A Quantitative Assessment of LIDAR Data Accuracy[J]. Remote Sensing, 2023, 15(2): 442.<br>[^ 2]: Cățeanu M, Ciubotaru A. Accuracy of ground surface interpolation from  airborne laser scanning (ALS) data in dense forest cover[J]. ISPRS  International Journal of Geo-Information, 2020, 9(4): 224.<br>[^ 3]: A brief description of natural neighbour interpolation<br>[^ 4]: Lee S, Wolberg G, Shin S Y. Scattered  data interpolation with multilevel B-splines[J]. IEEE transactions on  visualization and computer graphics, 1997, 3(3): 228-244.<br>[^ 5]: Haber J, Zeilfelder F, Davydov O, et  al. Smooth approximation and rendering of large scattered data  sets[C]//Proceedings Visualization, 2001. VIS’01. IEEE, 2001: 341-571.<br>[^ 6]: Donato G, Belongie S. Approximate thin plate spline mappings[C]//Computer Vision—ECCV 2002: 7th European  Conference on Computer Vision Copenhagen, Denmark, May 28–31, 2002  Proceedings, Part III 7. Springer Berlin Heidelberg, 2002: 21-31.</p>
+<p>[^ 8]: Bookstein F L. Principal warps:  Thin-plate splines and the decomposition of deformations[J]. IEEE  Transactions on pattern analysis and machine intelligence, 1989, 11(6):  567-585.</p>
 
         </div>
         
@@ -300,7 +316,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io.com/2023/02/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2023-02-06</p>
-    <p><span>update time:</span>2023-02-07</p>
+    <p><span>update time:</span>2023-02-08</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
