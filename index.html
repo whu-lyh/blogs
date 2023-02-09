@@ -268,7 +268,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 13 个字)
+                    8 分钟 读完 (大约 1157 个字)
                 </span>
                 
                 
@@ -277,11 +277,50 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2023/02/09/Rotation-Average/">Rotation Average</a>
+                <a class="has-link-black-ter" href="/2023/02/09/Rotation-Average/">Rotation Averaging</a>
             
         </h1>
         <div class="content">
-            <h2 id="What-is-Rotation-Averaging"><a href="#What-is-Rotation-Averaging" class="headerlink" title="What is Rotation Averaging?"></a>What is Rotation Averaging?</h2><p>Calculate the average of a set of rotation matrices.</p>
+            <h2 id="What-is-Rotation-Averaging"><a href="#What-is-Rotation-Averaging" class="headerlink" title="What is Rotation Averaging?"></a>What is Rotation Averaging?</h2><h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem[^ 1]"></a>Problem[^ 1]</h3><p>Given a set of rotation matrices $C_i, i=\{1,2,…,n\}$, the average of them is ? <strong>Rotation Averaging</strong> is to calculate the average of a set of rotation matrices. Averaging is to get the <strong>best estimate</strong> of all rotations. (Single rotation averaging)</p>
+<p>Or equivalently, <strong>Rotation Averaging</strong> is the problem of estimating a set of $n$ unknown orientations $R_1,…,R_n \in SO(d)$ from noisy measurements $\bar{R} \in SO(d)$ of the relative rotations $R_i^{-1}R_j$ between them. (Multi rotation averaging)</p>
+<p>In practical the rotation averaging problem could be categoried into : Single rotation averaging、Multi rotation averaging and Conjugate rotation averaging.</p>
+<ul>
+<li>Single rotation averaging: for instance,</li>
+</ul>
+<blockquote>
+<p>used in the case where <strong>several measurements of a single rotation R are given</strong>. These may be for instance measurements of the orientation of an object, derived from measurements taken with different cameras in a <strong>calibrated network</strong>. If the measurements are noisy, they can be <strong>averaged to find a mean</strong>.</p>
+</blockquote>
+<ul>
+<li>Multi rotation averaging: for instance, </li>
+</ul>
+<blockquote>
+<p>estimate the rotation of camera in <strong>SFM</strong>. More practical applications in OpenMVG.</p>
+</blockquote>
+<ul>
+<li>conjugate rotation averaging: for instance, </li>
+</ul>
+<blockquote>
+<p><strong>hand-eye coordinate problem</strong>, that is, consider a robot manipulating some object, which is also observed by a stationary camera. The orientation of the object can be computed at each moment through knowledge of the geometry of the robot (for instance, joint angles). At the same time, the orientation of the object can be computed from the images taken from the camera. This gives two separate estimates of the orientation of the object (expressed as a rotation), but these are in <strong>different coordinate frames</strong>. By solving the conjugate rotation problem, one can compute the <strong>relationship</strong> between the robot and camera frames.</p>
+</blockquote>
+<p>For all these problems, <strong>Rotation Averaging</strong> is to find provably optimal and convergent solutions.</p>
+<h2 id="Rotation-Averaging-1-2"><a href="#Rotation-Averaging-1-2" class="headerlink" title="Rotation Averaging[^ 1][^ 2]"></a>Rotation Averaging[^ 1][^ 2]</h2><p>Assume the average rotation matrix is $\bar{C}$, The angle $\Delta \delta_i$ between $\bar{C}$ and $C_i$ , $C_i \mbox{ and }\bar{C} \in SO(3)$, could be calculated as followings:<br>$$<br>\Delta C_i=\bar{C}^TC_i<br>$$<br>The cosine value of $\Delta \delta_i$ is:<br>$$<br>\begin{align}<br>cos \Delta \delta_i &amp;= \frac{tr(\Delta C_i)-1}{2} \<br>&amp;=\frac{tr(\bar{C}^TC_i)-1}{2} \<br>\end{align}<br>$$<br>The sum of all cosine value of $\Delta \delta$, also known as $Karcher$ mean:<br>$$<br>\begin{align}<br>\Sigma_i^n cos \Delta \delta_i &amp;= \Sigma_i^n\frac{1}{2}(tr(\bar{C}^TC_i)-1) \<br>&amp;=\frac{1}{2} \Sigma_i^ntr(\bar{C}^TC_i)-\frac{n}{2}<br>\end{align}<br>$$<br>Minimize the sum of angles between  $\bar{C}$ and $C_i$ is to maximize $\Sigma_i^ntr(\bar{C}^TC_i)$. ==??? why minimize??? to get the best estimate==<br>$$<br>\begin{align}<br>\Sigma_i^ntr(\bar{C}^TC_i) &amp;= tr(\Sigma_i^n \bar{C}^TC_i) \<br>&amp;=tr( \bar{C}^T \Sigma_i^nC_i) \mbox{ // trace operator} \<br>&amp;=tr( \bar{C}^T U\Sigma V^T)  \mbox{ // why?}\<br>&amp;=tr(  V^T\bar{C}^T U\Sigma) \mbox{ // trace operator}<br>\end{align}<br>$$<br>where $V^T,U,\bar{C}^T$ are orthogonal matrices[^ 3].</p>
+<p>Then set $O=tr(V^T \bar{C}^T U)$， it is also orthogonal matrix.<br>$$<br>\begin{align}<br>tr(V^T\bar{C}^T U\Sigma) &amp;= tr(O \Sigma) \<br>&amp;= tr( \left[\begin{array}{ccc}<br>O_{11} &amp; O_{12} &amp; O_{13} \<br>O_{21} &amp; O_{22} &amp; O_{23} \<br>O_{31} &amp; O_{32} &amp; O_{33}<br>\end{array}<br>\right]<br>\left[\begin{array}{ccc}<br>\delta_{11} &amp;  &amp;  \<br> &amp; \delta_{22} &amp; \<br> &amp;  &amp; \delta_{33}<br>\end{array}<br>\right]<br>) \<br>&amp;= O_{11} \delta_1 + O_{22} \delta_2 + O_{33} \delta_3<br>\end{align}<br>$$<br>where $O$ is orthogonal matrix, means $\Sigma_{j=1}^3 O_{jk}^2=1, \mbox{ for} \quad k=1,2,3$. And the $O_{11} \leq 1,O_{22} \leq 1,O_{33} \leq 1$.</p>
+<p>Let $O_{11} = 1,O_{22} = 1,O_{33} = 1$, Then<br>$$<br>O=\left[\begin{array}{ccc}<br>1 &amp;  &amp;  \<br> &amp; 1 &amp; \<br> &amp;  &amp; 1<br>\end{array}<br>\right]<br>=I<br>$$<br>then $V^T \bar{C}^T U=I \Rightarrow \bar{C}^T=VU^T \Rightarrow \bar{C} =UV^T $.</p>
+<p>Then check the determinant of $UV^T$, which should be 1.<br>$$<br>\bar{C}=U \left[<br>\begin{array}{ccc}<br>1 &amp;  &amp;  \<br> &amp; 1 &amp; \<br> &amp;  &amp; det(UV^T)<br>\end{array}<br>\right] V^T \mbox{ // why?}<br>$$</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p><a href="https://github.com/openMVG/openMVG/blob/08ac7746d2b98318e9308fb4e6bb81509d7cd1b0/src/openMVG/multiview/rotation_averaging_test.cpp">OpenMVG</a> &amp; Ceres for LM optimization.</p>
+<p>Simplest toy code test:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// Rotation averaging in a triplet:</span><br><span class="hljs-comment">// 0_______2</span><br><span class="hljs-comment">//  \     /</span><br><span class="hljs-comment">//   \   /</span><br><span class="hljs-comment">//    \ /</span><br><span class="hljs-comment">//     1</span><br>TEST (rotation_averaging, RotationLeastSquare_3_Camera)<br>&#123;<br>  <span class="hljs-comment">//--</span><br>  <span class="hljs-comment">// Setup 3 camera that have a relative orientation of 120 degree</span><br>  <span class="hljs-comment">// Set Z axis as UP Vector for the rotation</span><br>  <span class="hljs-comment">// They are in the same plane and looking in O=&#123;0,0,0&#125;</span><br>  <span class="hljs-comment">//--</span><br>  <span class="hljs-keyword">const</span> Mat3 R01 = RotationAroundZ(<span class="hljs-number">2.</span>*M_PI/<span class="hljs-number">3.0</span>); <span class="hljs-comment">//120 degree</span><br>  <span class="hljs-keyword">const</span> Mat3 R12 = RotationAroundZ(<span class="hljs-number">2.</span>*M_PI/<span class="hljs-number">3.0</span>); <span class="hljs-comment">//120 degree</span><br>  <span class="hljs-keyword">const</span> Mat3 R20 = RotationAroundZ(<span class="hljs-number">2.</span>*M_PI/<span class="hljs-number">3.0</span>); <span class="hljs-comment">//120 degree</span><br><br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;RelativeRotation&gt; vec_relativeRotEstimate;<br>  vec_relativeRotEstimate.push_back(RelativeRotation(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>, R01));<br>  vec_relativeRotEstimate.push_back(RelativeRotation(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>, R12));<br>  vec_relativeRotEstimate.push_back(RelativeRotation(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>, R20));<br><br>  <span class="hljs-comment">//- Solve the global rotation estimation problem :</span><br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Mat3&gt; vec_globalR;<br>  <span class="hljs-comment">// More in header file</span><br>  L2RotationAveraging(<span class="hljs-number">3</span>, vec_relativeRotEstimate, vec_globalR);<br>  EXPECT_EQ(<span class="hljs-number">3</span>, vec_globalR.<span class="hljs-built_in">size</span>());<br>  <span class="hljs-comment">// Check that the loop is closing</span><br>  EXPECT_MATRIX_NEAR(Mat3::Identity(), (vec_globalR[<span class="hljs-number">0</span>]*vec_globalR[<span class="hljs-number">1</span>]*vec_globalR[<span class="hljs-number">2</span>]), <span class="hljs-number">1e-8</span>);<br><br>  <span class="hljs-comment">//--</span><br>  <span class="hljs-comment">// Check that the found relative rotation matrix give the expected rotation.</span><br>  <span class="hljs-comment">//  -&gt; the started relative rotation (used in the action matrix).</span><br>  <span class="hljs-comment">//// /!\ Translations are not checked they are 0 by default.</span><br>  <span class="hljs-comment">//--</span><br>  Mat3 R;<br>  Vec3 t, t0 = Vec3::Zero(), t1 = Vec3::Zero();<br>  RelativeCameraMotion(vec_globalR[<span class="hljs-number">0</span>], t0, vec_globalR[<span class="hljs-number">1</span>], t1, &amp;R, &amp;t);<br>  EXPECT_NEAR(<span class="hljs-number">0</span>, FrobeniusDistance( R01, R), <span class="hljs-number">1e-2</span>);<br><br>  RelativeCameraMotion(vec_globalR[<span class="hljs-number">1</span>], t0, vec_globalR[<span class="hljs-number">2</span>], t1, &amp;R, &amp;t);<br>  EXPECT_NEAR(<span class="hljs-number">0</span>, FrobeniusDistance( R12, R), <span class="hljs-number">1e-2</span>);<br><br>  RelativeCameraMotion(vec_globalR[<span class="hljs-number">2</span>], t0, vec_globalR[<span class="hljs-number">0</span>], t1, &amp;R, &amp;t);<br>  EXPECT_NEAR(<span class="hljs-number">0</span>, FrobeniusDistance( R20, R), <span class="hljs-number">1e-2</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Shonan-Rotation-Averaging-4"><a href="#Shonan-Rotation-Averaging-4" class="headerlink" title="Shonan Rotation Averaging[^ 4]"></a>Shonan Rotation Averaging[^ 4]</h2><p>This is a fast, simple, and elegant rotation averaging algorithm that is  guaranteed to recover globally optimal solutions under mild assumptions  on the measurement noise. The method employs semidefinite relaxation in  order to recover provably globally optimal solutions of the rotation  averaging problem.</p>
+<h3 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h3><p>Already inside GTSAM-4.1</p>
+<h2 id="RCD-Rotation-Coordinate-Descent-5"><a href="#RCD-Rotation-Coordinate-Descent-5" class="headerlink" title="RCD: Rotation Coordinate Descent[^ 5]"></a>RCD: Rotation Coordinate Descent[^ 5]</h2><p>RCD is a fast rotation averaging algorithm that achieves global optimality  under mild noise conditions on the noise level of the measurements.</p>
+<h3 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h3><p><a href="https://github.com/sfchng/Rotation_Coordinate_Descent">RCD</a></p>
+<h2 id="Hybrid-Rotation-Averaging-A-Fast-and-Robust-Rotation-Averaging-Approach-7"><a href="#Hybrid-Rotation-Averaging-A-Fast-and-Robust-Rotation-Averaging-Approach-7" class="headerlink" title="Hybrid Rotation Averaging: A Fast and Robust Rotation Averaging Approach[^ 7]"></a>Hybrid Rotation Averaging: A Fast and Robust Rotation Averaging Approach[^ 7]</h2><h3 id="Code-3"><a href="#Code-3" class="headerlink" title="Code"></a>Code</h3><p><a href="https://github.com/whu-lyh/GraphOptim">Graph Optimizer</a>: This library contains not only rotation averaging solvers, but also some popular methods in 3D vision, such as translation averaging,  clustering, etc. The library is designed to deal with large scale  optimization problems, and is easy to extend.</p>
+<h2 id="iRotAvg-6"><a href="#iRotAvg-6" class="headerlink" title="iRotAvg[^ 6]"></a>iRotAvg[^ 6]</h2><p>incrementally solves rotation averaging.</p>
+<h3 id="Code-4"><a href="#Code-4" class="headerlink" title="Code"></a>Code</h3><p><a href="https://github.com/ajparra/iRotAvg">iRotAvg</a></p>
+<h2 id="Diff"><a href="#Diff" class="headerlink" title="Diff"></a>Diff</h2><p>What is the difference between rotation averaging and SLAM ? Or status estimation? SLAM tries to estimate both translation and rotation,while rotation averaging estimate the optimal rotation only.</p>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p>rotation averaging used by Fast Point Transformer, is a post-process optimization scheme? Perhaps yes.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[^ 1]: Hartley R, Trumpf J, Dai Y, et al. Rotation averaging[J]. International journal of computer vision, 2013, 103: 267-305.<br>[^ 2]: <a href="https://www.cnblogs.com/JingeTU/p/16818609.html">https://www.cnblogs.com/JingeTU/p/16818609.html</a><br>[^ 3]: <a href="https://en.wikipedia.org/wiki/Orthogonal_matrix">https://en.wikipedia.org/wiki/Orthogonal_matrix</a><br>[^ 4]: Shonan Rotation Averaging: Global Optimality by Surfing $SO(p)^n$, ECCV 2020<br>[^ 5]: Rotation Coordinate Descent for Fast Globally Optimal Rotation Averaging, CVPR 2021<br>[^ 6]: Visual SLAM: Why bundle adjust?, ICRA 2019<br>[^ 7]: Hybrid Rotation Averaging: A Fast and Robust Rotation Averaging Approach, CVPR 2021</p>
 
         </div>
         
@@ -907,7 +946,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/Point-Cloud/" style="font-size: 10px;">Point Cloud</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/SLAM-B-Spline/" style="font-size: 10px;">SLAM, B-Spline</a> <a href="/tags/VS/" style="font-size: 10px;">VS</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a>
+        <a href="/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/Point-Cloud/" style="font-size: 10px;">Point Cloud</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/SLAM-B-Spline/" style="font-size: 10px;">SLAM,B-Spline</a> <a href="/tags/VS/" style="font-size: 10px;">VS</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a>
     </div>
 </div>
     
@@ -964,14 +1003,14 @@
             
             <a href="/2023/02/09/Rotation-Average/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Rotation Average">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Rotation Averaging">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:08:24.000Z">2023-02-09</time></div>
-                    <a href="/2023/02/09/Rotation-Average/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Rotation Average</a>
+                    <a href="/2023/02/09/Rotation-Average/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Rotation Averaging</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/MathUtilities/">MathUtilities</a>
                     </p>
@@ -1187,14 +1226,14 @@
             
             <a href="/2023/02/09/Rotation-Average/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Rotation Average">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Rotation Averaging">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:08:24.000Z">2023-02-09</time></div>
-                    <a href="/2023/02/09/Rotation-Average/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Rotation Average</a>
+                    <a href="/2023/02/09/Rotation-Average/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Rotation Averaging</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/MathUtilities/">MathUtilities</a>
                     </p>
