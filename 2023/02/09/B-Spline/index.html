@@ -14,17 +14,17 @@
     <meta name="description" content="介绍Spline的基础和相关的使用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="B-Spline探秘">
-<meta property="og:url" content="http://whu-lyh.github.io.com/2023/02/09/B-Spline/index.html">
+<meta property="og:url" content="http://whu-lyh.github.io/blog/2023/02/09/B-Spline/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
 <meta property="og:description" content="介绍Spline的基础和相关的使用">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
+<meta property="og:image" content="http://whu-lyh.github.io/blog/images/og_image.png">
 <meta property="article:published_time" content="2023-02-09T02:15:55.735Z">
 <meta property="article:modified_time" content="2023-02-10T02:08:46.880Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="B-Spline">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://whu-lyh.github.io.com/images/og_image.png">
+<meta name="twitter:image" content="http://whu-lyh.github.io/blog/images/og_image.png">
 
 
 
@@ -32,7 +32,7 @@
 
 
 
-<link rel="icon" href="/images/favicon.svg">
+<link rel="icon" href="/blog/images/favicon.svg">
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
@@ -56,7 +56,7 @@
 
     
     
-<link rel="stylesheet" href="/css/back-to-top.css">
+<link rel="stylesheet" href="/blog/css/back-to-top.css">
 
     
     
@@ -67,20 +67,20 @@
     
     
     
-    <link rel="stylesheet" href="/css/progressbar.css">
+    <link rel="stylesheet" href="/blog/css/progressbar.css">
 <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
     
 
 
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/blog/css/style.css">
 </head>
 <body class="is-3-column">
     <nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
-            <a class="navbar-item navbar-logo" href="/">
+            <a class="navbar-item navbar-logo" href="/blog/">
             
-                <img src="/images/logo.svg" alt="B-Spline探秘" height="28">
+                <img src="/blog/images/logo.svg" alt="B-Spline探秘" height="28">
             
             </a>
         </div>
@@ -89,19 +89,19 @@
             <div class="navbar-start">
                 
                 <a class="navbar-item"
-                href="/">Home</a>
+                href="/blog/">Home</a>
                 
                 <a class="navbar-item"
-                href="/archives">Archives</a>
+                href="/blog/archives">Archives</a>
                 
                 <a class="navbar-item"
-                href="/categories">Categories</a>
+                href="/blog/categories">Categories</a>
                 
                 <a class="navbar-item"
-                href="/tags">Tags</a>
+                href="/blog/tags">Tags</a>
                 
                 <a class="navbar-item"
-                href="/about">About</a>
+                href="/blog/about">About</a>
                 
             </div>
             
@@ -161,7 +161,7 @@
                 <time class="level-item has-text-grey" datetime="2023-02-09T02:15:55.735Z">2023-02-09</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/MathUtilities/">MathUtilities</a>
+                <a class="has-link-grey -link" href="/blog/categories/MathUtilities/">MathUtilities</a>
                 </div>
                 
                 
@@ -236,13 +236,13 @@
 </tbody></table>
 <h3 id="直观图例"><a href="#直观图例" class="headerlink" title="直观图例"></a>直观图例</h3><p>​        下图很直观的表达了B样条曲线的形成过程。注意这里的示意图都是按照<em>Cox-de Boor recursion formula</em>来实现的，因此零次样条线表现出一个反脉冲的形式。</p>
 <p>​        以一般的基函数如$B_{1,0}(t)$所示(蓝色)为例，为<strong>0次1阶基函数</strong>在第一段（属于[0,1)区间）的表达，基函数只有在$K_0,K_1$处的相应为0.0，其他均为1.0。</p>
-<div align="center"><img src="/2023/02/09/B-Spline/viz_basis_function.svg" width="100%" height="100%"></div>
+<div align="center"><img src="/blog/blog/2023/02/09/B-Spline/viz_basis_function.svg" width="100%" height="100%"></div>
 
 <p>Figure.1 Iterative composition of basis functions. Each segment of basis function $B_{i,p}(t)$ is composed by its adjacent basis functions in lower degree, which are $B_{i,p-1}(t)$ and $B_{i + 1,p-1}(t)$.  While basis functions in degree 0 are ==unit square wave signals==. <a href="./B-Spline/viz_basis_function.py">py_code</a></p>
-<div align="center"><img src="/2023/02/09/B-Spline/viz_bspline.svg" width="100%" height="100%"></div>
+<div align="center"><img src="/blog/blog/2023/02/09/B-Spline/viz_bspline.svg" width="100%" height="100%"></div>
 
 <p>Figure.2 The point $P_{0,2}$ of basis function $B_{0,2}(t)$ (order3, degree 2 and segment 0), is evaluated by the weighted combination of $B_{0,1}(t)$ and $B_{1,1}(t)$. The weight of each component is defined by the distance between $P_{0,2}$ and its correspondent knot points (or equivalently linear interpolation).  As shown in the figure, the knot vector is $[0, 3, 6, 9]^T$. <a href="./B-Spline/viz_bspline.py">py_code</a></p>
-<div align="center"><img src="/2023/02/09/B-Spline/viz_ctrlpt.svg" width="100%" height="100%"></div>
+<div align="center"><img src="/blog/blog/2023/02/09/B-Spline/viz_ctrlpt.svg" width="100%" height="100%"></div>
 
 <p>Figure.3 A B-Spline with degree 2, named $S_2(t)$ is generated by weighted combinations of all its basis functions. The weight comes from control points, which are $[1.2, 0.8, 1.1, 1.2, 1.1]$ in the figure. The brown dash lines show how control point affect the weight of basis function, these lines finally compose the brown spline. The knot vector is $[0, 1, 2, 3, 4, 5, 6, 7]^T$. <a href="./spline/ctrlpts.py">B-Spline</a></p>
 <h3 id="严格数学定义Cox-de-Boor-recursion-formula"><a href="#严格数学定义Cox-de-Boor-recursion-formula" class="headerlink" title="严格数学定义Cox-de Boor recursion formula"></a>严格数学定义<em>Cox-de Boor recursion formula</em></h3><h4 id="中文表达"><a href="#中文表达" class="headerlink" title="中文表达"></a>中文表达</h4><p>TODO</p>
@@ -279,11 +279,11 @@
 <li>A tool for interactive interpolation of splines. Select any points and visualize how different splines are modelled. <a href="https://github.com/absdnd/Interactive_Interpolation">对比不同曲线之间的差异</a>。带界面，推荐。</li>
 <li><a href="https://github.com/whu-lyh/B-spline-Curves-and-Surfaces">MATLAB版本</a>的绘制B-spline曲线和表面的。对于MATLAB用户来说非常好用。下面是两个实例结果，非常直观形象。就是拟合大数据的时候会比较慢。不过作为示意图够使用了。</li>
 </ul>
-<div align="center"><img src="/2023/02/09/B-Spline/B-spline Least Square Fitting.png" width="100%" height="100%"></div>
+<div align="center"><img src="/blog/blog/2023/02/09/B-Spline/B-spline Least Square Fitting.png" width="100%" height="100%"></div>
 
 <div align="center">使用不同次数的基函数对数据进行最小二乘拟合的结果</div>
 
-<div align="center"><img src="/2023/02/09/B-Spline/B-spline Least Square Fitting2.png" width="100%" height="100%"></div>
+<div align="center"><img src="/blog/blog/2023/02/09/B-Spline/B-spline Least Square Fitting2.png" width="100%" height="100%"></div>
 
 <div align="center">knot非均匀分布下分段多边形函数以及对应的B-Spline函数</div>
 
@@ -301,20 +301,20 @@
 
     <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
     <div class="has-text-grey is-size-7 is-block">
-    <p><span>title:</span><a href="/2023/02/09/B-Spline/">B-Spline探秘</a></p>
+    <p><span>title:</span><a href="/blog/2023/02/09/B-Spline/">B-Spline探秘</a></p>
     <p><span>author:</span><a href="/">AmazingHao</a></p>
     <p>
-        <span>link:</span><a href="/2023/02/09/B-Spline/" title="B-Spline探秘 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io.com/2023/02/09/B-Spline/</a>
-        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io.com/2023/02/09/B-Spline/"  aria-label="复制成功！"></i></span>
+        <span>link:</span><a href="/blog/2023/02/09/B-Spline/" title="B-Spline探秘 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blog/2023/02/09/B-Spline/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blog/2023/02/09/B-Spline/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2023-02-09</p>
     <p><span>update time:</span>2023-02-10</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
-    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io.com/2023/02/09/B-Spline/">B-Spline探秘</a></li>
-     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io.com">AmazingHao</a></li>
-    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io.com/2023/02/09/B-Spline/">http://whu-lyh.github.io.com/2023/02/09/B-Spline/</a></li>
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blog/2023/02/09/B-Spline/">B-Spline探秘</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blog">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blog/2023/02/09/B-Spline/">http://whu-lyh.github.io/blog/2023/02/09/B-Spline/</a></li>
     <li><strong>发布时间：</strong>2023-02-09</li>
     <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
     </li>
@@ -338,7 +338,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/B-Spline/" rel="tag">B-Spline</a>
+                    <a class="has-link-grey -link" href="/blog/tags/B-Spline/" rel="tag">B-Spline</a>
                 </div>
             </div>
         </div>
@@ -356,7 +356,7 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2023/02/25/Hdl_graph_slam/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blog/2023/02/25/Hdl_graph_slam/">
                 <i class="level-item fas fa-chevron-left"></i>
                 <span class="level-item">Hdl_graph_slam论文及代码解析_回环检测</span>
             </a>
@@ -364,7 +364,7 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2023/02/09/B-spline-Interpolation/">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2023/02/09/B-spline-Interpolation/">
                 <span class="level-item">B-spline Interpolation</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
@@ -396,7 +396,7 @@
                 <div>
                     
                     <figure class="image is-128x128 has-mb-6">
-                        <img class="" src="/images/Title_image.jpg" alt="AmazingHao">
+                        <img class="" src="/blog/images/Title_image.jpg" alt="AmazingHao">
                     </figure>
                     
                     <p class="is-size-4 is-block">
@@ -423,7 +423,7 @@
                     <p class="heading">
                         文章
                     </p>
-                    <a href="/archives">
+                    <a href="/blog/archives">
                         <p class="title has-text-weight-normal">
                             19
                         </p>
@@ -435,7 +435,7 @@
                     <p class="heading">
                         分类
                     </p>
-                    <a href="/categories">
+                    <a href="/blog/categories">
                         <p class="title has-text-weight-normal">
                             8
                         </p>
@@ -447,7 +447,7 @@
                     <p class="heading">
                         标签
                     </p>
-                    <a href="/tags">
+                    <a href="/blog/tags">
                         <p class="title has-text-weight-normal">
                             16
                         </p>
@@ -500,7 +500,7 @@
             </h3>
             <ul class="menu-list">
             <li>
-        <a class="level is-marginless" href="/categories/MathUtilities/">
+        <a class="level is-marginless" href="/blog/categories/MathUtilities/">
             <span class="level-start">
                 <span class="level-item">MathUtilities</span>
             </span>
@@ -508,7 +508,7 @@
                 <span class="level-item tag">2</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
+        <a class="level is-marginless" href="/blog/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
             <span class="level-start">
                 <span class="level-item">专业应用</span>
             </span>
@@ -516,7 +516,7 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+        <a class="level is-marginless" href="/blog/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
             <span class="level-start">
                 <span class="level-item">写作工具</span>
             </span>
@@ -524,7 +524,7 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+        <a class="level is-marginless" href="/blog/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
             <span class="level-start">
                 <span class="level-item">实用工具</span>
             </span>
@@ -532,7 +532,7 @@
                 <span class="level-item tag">8</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
+        <a class="level is-marginless" href="/blog/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
             <span class="level-start">
                 <span class="level-item">开源库</span>
             </span>
@@ -540,7 +540,7 @@
                 <span class="level-item tag">2</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E6%97%A5%E5%B8%B8%E5%BA%94%E7%94%A8/">
+        <a class="level is-marginless" href="/blog/categories/%E6%97%A5%E5%B8%B8%E5%BA%94%E7%94%A8/">
             <span class="level-start">
                 <span class="level-item">日常应用</span>
             </span>
@@ -548,7 +548,7 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
+        <a class="level is-marginless" href="/blog/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
             <span class="level-start">
                 <span class="level-item">科研神器</span>
             </span>
@@ -556,7 +556,7 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E7%AE%97%E6%B3%95/">
+        <a class="level is-marginless" href="/blog/categories/%E7%AE%97%E6%B3%95/">
             <span class="level-start">
                 <span class="level-item">算法</span>
             </span>
@@ -574,7 +574,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/B-Spline/" style="font-size: 20px;">B-Spline</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LiDAR-SLAM/" style="font-size: 20px;">LiDAR_SLAM</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/VS/" style="font-size: 10px;">VS</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a>
+        <a href="/blog/tags/B-Spline/" style="font-size: 20px;">B-Spline</a> <a href="/blog/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/blog/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blog/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blog/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blog/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/blog/tags/LiDAR-SLAM/" style="font-size: 20px;">LiDAR_SLAM</a> <a href="/blog/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/blog/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blog/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blog/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blog/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blog/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blog/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blog/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blog/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a>
     </div>
 </div>
     
@@ -659,18 +659,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/25/TrajectoryEstimation/" class="media-left">
+            <a href="/blog/2023/02/25/TrajectoryEstimation/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Kinematic mapping trajectory estimation">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="Kinematic mapping trajectory estimation">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-25T01:37:22.994Z">2023-02-25</time></div>
-                    <a href="/2023/02/25/TrajectoryEstimation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Kinematic mapping trajectory estimation</a>
+                    <a href="/blog/2023/02/25/TrajectoryEstimation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Kinematic mapping trajectory estimation</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                        <a class="has-link-grey -link" href="/blog/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     </p>
                 </div>
             </div>
@@ -678,18 +678,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/25/Hdl_graph_slam2/" class="media-left">
+            <a href="/blog/2023/02/25/Hdl_graph_slam2/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-25T01:34:27.622Z">2023-02-25</time></div>
-                    <a href="/2023/02/25/Hdl_graph_slam2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_后端优化</a>
+                    <a href="/blog/2023/02/25/Hdl_graph_slam2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_后端优化</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                        <a class="has-link-grey -link" href="/blog/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     </p>
                 </div>
             </div>
@@ -697,18 +697,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/25/Hdl_graph_slam/" class="media-left">
+            <a href="/blog/2023/02/25/Hdl_graph_slam/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-25T01:29:31.460Z">2023-02-25</time></div>
-                    <a href="/2023/02/25/Hdl_graph_slam/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_回环检测</a>
+                    <a href="/blog/2023/02/25/Hdl_graph_slam/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_回环检测</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                        <a class="has-link-grey -link" href="/blog/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     </p>
                 </div>
             </div>
@@ -716,18 +716,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/09/B-Spline/" class="media-left">
+            <a href="/blog/2023/02/09/B-Spline/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="B-Spline探秘">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="B-Spline探秘">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:15:55.735Z">2023-02-09</time></div>
-                    <a href="/2023/02/09/B-Spline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-Spline探秘</a>
+                    <a href="/blog/2023/02/09/B-Spline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-Spline探秘</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/MathUtilities/">MathUtilities</a>
+                        <a class="has-link-grey -link" href="/blog/categories/MathUtilities/">MathUtilities</a>
                     </p>
                 </div>
             </div>
@@ -735,18 +735,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/09/B-spline-Interpolation/" class="media-left">
+            <a href="/blog/2023/02/09/B-spline-Interpolation/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="B-spline Interpolation">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="B-spline Interpolation">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:13:29.000Z">2023-02-09</time></div>
-                    <a href="/2023/02/09/B-spline-Interpolation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-spline Interpolation</a>
+                    <a href="/blog/2023/02/09/B-spline-Interpolation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-spline Interpolation</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                        <a class="has-link-grey -link" href="/blog/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
                     </p>
                 </div>
             </div>
@@ -762,14 +762,20 @@
             related posts
         </h3>
          
-            <article class="media"> <a href="/2023/02/09/B-spline-Interpolation/" class="media-left">
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blog/2023/02/09/B-spline-Interpolation/" class="media-left">
                         <p class="image is-64x64">
-                            <img class="thumbnail" src="/images/thumbnail.svg" alt="B-spline Interpolation">
+                            <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="B-spline Interpolation">
                         </p>
                     </a><div class="media-content">
                     <div class="content">
                         <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:13:29.000Z">2023-02-09</time></div>
-                        <a href="/2023/02/09/B-spline-Interpolation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-spline Interpolation</a>
+                        <a href="/blog/2023/02/09/B-spline-Interpolation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-spline Interpolation</a>
                     </div>
                 </div>
             </article>
@@ -796,27 +802,21 @@
          
             
          
-            
-         
-            
-         
-            
-         
-            
-         
-            
-         
-            <article class="media"> <a href="/2023/02/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
+            <article class="media"> <a href="/blog/2023/02/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
                         <p class="image is-64x64">
-                            <img class="thumbnail" src="/images/thumbnail.svg" alt="关于控制点检核的一些思考">
+                            <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="关于控制点检核的一些思考">
                         </p>
                     </a><div class="media-content">
                     <div class="content">
                         <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-06T03:45:43.169Z">2023-02-06</time></div>
-                        <a href="/2023/02/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
+                        <a href="/blog/2023/02/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
          
             
         
@@ -833,7 +833,7 @@
         <ul class="menu-list">
         
         <li>
-            <a class="level is-marginless" href="/archives/2023/02/">
+            <a class="level is-marginless" href="/blog/archives/2023/02/">
                 <span class="level-start">
                     <span class="level-item">二月 2023</span>
                 </span>
@@ -844,7 +844,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2023/01/">
+            <a class="level is-marginless" href="/blog/archives/2023/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2023</span>
                 </span>
@@ -855,7 +855,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2021/01/">
+            <a class="level is-marginless" href="/blog/archives/2021/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2021</span>
                 </span>
@@ -866,7 +866,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/07/">
+            <a class="level is-marginless" href="/blog/archives/2020/07/">
                 <span class="level-start">
                     <span class="level-item">七月 2020</span>
                 </span>
@@ -877,7 +877,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/06/">
+            <a class="level is-marginless" href="/blog/archives/2020/06/">
                 <span class="level-start">
                     <span class="level-item">六月 2020</span>
                 </span>
@@ -888,7 +888,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/05/">
+            <a class="level is-marginless" href="/blog/archives/2020/05/">
                 <span class="level-start">
                     <span class="level-item">五月 2020</span>
                 </span>
@@ -899,7 +899,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/03/">
+            <a class="level is-marginless" href="/blog/archives/2020/03/">
                 <span class="level-start">
                     <span class="level-item">三月 2020</span>
                 </span>
@@ -910,7 +910,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/02/">
+            <a class="level is-marginless" href="/blog/archives/2020/02/">
                 <span class="level-start">
                     <span class="level-item">二月 2020</span>
                 </span>
@@ -939,9 +939,9 @@
     <div class="container">
         <div class="level">
             <div class="level-start has-text-centered-mobile">
-                <a class="footer-logo is-block has-mb-6" href="/">
+                <a class="footer-logo is-block has-mb-6" href="/blog/">
                 
-                    <img src="/images/logo.svg" alt="B-Spline探秘" height="28">
+                    <img src="/blog/images/logo.svg" alt="B-Spline探秘" height="28">
                 
                 </a>
                 <p class="is-size-7">
@@ -1043,7 +1043,7 @@
 <script>
 var IcarusThemeSettings = {
     site: {
-        url: 'http://whu-lyh.github.io.com',
+        url: 'http://whu-lyh.github.io/blog',
         external_link: {"enable":true,"exclude":[]}
     },
     article: {
@@ -1062,13 +1062,13 @@ var IcarusThemeSettings = {
 
 
 
-<script src="/js/animation.js"></script>
+<script src="/blog/js/animation.js"></script>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-<script src="/js/gallery.js" defer></script>
+<script src="/blog/js/gallery.js" defer></script>
 
 
 
@@ -1094,7 +1094,7 @@ var IcarusThemeSettings = {
 <a id="back-to-top" title="回到顶端" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
-<script src="/js/back-to-top.js" defer></script>
+<script src="/blog/js/back-to-top.js" defer></script>
 
 
 
@@ -1130,7 +1130,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<script src="/js/main.js" defer></script>
+<script src="/blog/js/main.js" defer></script>
 
     
     <div class="searchbox ins-search">
@@ -1154,14 +1154,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 TAGS: '标签',
                 UNTITLED: '(无标题)',
             },
-            CONTENT_URL: '/content.json',
+            CONTENT_URL: '/blog/content.json',
         };
         window.INSIGHT_CONFIG = INSIGHT_CONFIG;
     })(window);
 </script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
+<script src="/blog/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blog/css/search.css">
+<link rel="stylesheet" href="/blog/css/insight.css">
     
 
 	<!-- 雪花特效 -->

@@ -14,17 +14,17 @@
     <meta name="description" content="体素滤波&amp;emsp;&amp;emsp;Voxel滤波作为一种很常见的滤波方法，但是其PCL内部代码却值得学习，因此今天转载一篇关于pcl中实现的体素滤波的方法。基本上参考博客：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u013630299&#x2F;article&#x2F;details&#x2F;105661194">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pcl中的体素滤波">
-<meta property="og:url" content="http://whu-lyh.github.io.com/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/index.html">
+<meta property="og:url" content="http://whu-lyh.github.io/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
 <meta property="og:description" content="体素滤波&amp;emsp;&amp;emsp;Voxel滤波作为一种很常见的滤波方法，但是其PCL内部代码却值得学习，因此今天转载一篇关于pcl中实现的体素滤波的方法。基本上参考博客：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u013630299&#x2F;article&#x2F;details&#x2F;105661194">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://whu-lyh.github.io.com/images/og_image.png">
+<meta property="og:image" content="http://whu-lyh.github.io/blog/images/og_image.png">
 <meta property="article:published_time" content="2020-06-11T11:24:21.000Z">
 <meta property="article:modified_time" content="2023-02-01T05:11:22.233Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="PCL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://whu-lyh.github.io.com/images/og_image.png">
+<meta name="twitter:image" content="http://whu-lyh.github.io/blog/images/og_image.png">
 
 
 
@@ -32,7 +32,7 @@
 
 
 
-<link rel="icon" href="/images/favicon.svg">
+<link rel="icon" href="/blog/images/favicon.svg">
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
@@ -56,7 +56,7 @@
 
     
     
-<link rel="stylesheet" href="/css/back-to-top.css">
+<link rel="stylesheet" href="/blog/css/back-to-top.css">
 
     
     
@@ -67,20 +67,20 @@
     
     
     
-    <link rel="stylesheet" href="/css/progressbar.css">
+    <link rel="stylesheet" href="/blog/css/progressbar.css">
 <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
     
 
 
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/blog/css/style.css">
 </head>
 <body class="is-3-column">
     <nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
-            <a class="navbar-item navbar-logo" href="/">
+            <a class="navbar-item navbar-logo" href="/blog/">
             
-                <img src="/images/logo.svg" alt="pcl中的体素滤波" height="28">
+                <img src="/blog/images/logo.svg" alt="pcl中的体素滤波" height="28">
             
             </a>
         </div>
@@ -89,19 +89,19 @@
             <div class="navbar-start">
                 
                 <a class="navbar-item"
-                href="/">Home</a>
+                href="/blog/">Home</a>
                 
                 <a class="navbar-item"
-                href="/archives">Archives</a>
+                href="/blog/archives">Archives</a>
                 
                 <a class="navbar-item"
-                href="/categories">Categories</a>
+                href="/blog/categories">Categories</a>
                 
                 <a class="navbar-item"
-                href="/tags">Tags</a>
+                href="/blog/tags">Tags</a>
                 
                 <a class="navbar-item"
-                href="/about">About</a>
+                href="/blog/about">About</a>
                 
             </div>
             
@@ -157,7 +157,7 @@
                 <time class="level-item has-text-grey" datetime="2020-06-11T11:24:21.000Z">2020-06-11</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
+                <a class="has-link-grey -link" href="/blog/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
                 </div>
                 
                 
@@ -179,8 +179,8 @@
         <div class="content">
             <h3 id="体素滤波"><a href="#体素滤波" class="headerlink" title="体素滤波"></a>体素滤波</h3><p>&emsp;&emsp;Voxel滤波作为一种很常见的滤波方法，但是其PCL内部代码却值得学习，因此今天转载一篇关于pcl中实现的体素滤波的方法。<br>基本上参考博客：<a href="https://blog.csdn.net/u013630299/article/details/105661194">https://blog.csdn.net/u013630299/article/details/105661194</a></p>
 <a id="more"></a>
-<h4 id="Voxel-grid-h"><a href="#Voxel-grid-h" class="headerlink" title="Voxel_grid.h"></a>Voxel_grid.h</h4><p>&emsp;&emsp;需要添加头文件：<code>#include &lt;pcl/filters/voxel_grid.h&gt;</code><br><img src="/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/voxel_grid.png" alt="voxelgrid"><br><img src="https://img-blog.csdnimg.cn/20200421162454452.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" style="width: 1118px;"><br>&emsp;&emsp;必须保证Dx&gt;hx，Dy&gt;hy(这两个条件是必须)，第四步的时候是计算voxel空间索引.准确降采样就是在每个voxel索引里面取中值，或者随机取一个点，然后输出的点云就是降采样后的点云.<br>也就是说，下采样后的点云还是原始点云中的点？<br><font color="red"><strong>❤</strong></font> </p>
-<h4 id="Approximate-voxel-grid-h"><a href="#Approximate-voxel-grid-h" class="headerlink" title="Approximate_voxel_grid.h"></a>Approximate_voxel_grid.h</h4><p>&emsp;&emsp;需要添加头文件：<code>#include &lt;pcl/filters/approximate_voxel_grid.h&gt;</code> 核心源码也比较短，还有待研究。<br><img src="/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/approximate_voxel_grid.png" alt="approximatevoxelgrid"><br><img alt height="397" src="https://img-blog.csdnimg.cn/20200421163734565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" width="586"><br>&emsp;&emsp;和exact downsampling的前四步一样，先算出voxel的空间索引 ，然后通过<strong>哈希函数</strong>映射到对应的容器里面，这里假设有100个容器，按照图里面给的例子，以h%container作为hash函数映射的值，放到对应的容器里面，这样的话会出现什么情况呢，16,116对应的容器是一样的，而两个h对应的hx，hy，hz是不一样的，这就是哈希冲突。怎么处理哈希冲突呢？<br><img src="/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/hash_conflict.png" alt="voxelgrid"><br><img alt height="173" src="https://img-blog.csdnimg.cn/20200421170651371.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" width="579"><br>&emsp;&emsp;把原来容器里面的点全都取出来，清空，随机取其中的一个点作为输出，然后把新的点放进来，继续填容器的操作。相当于是拿了100个容器，一直从一堆点里面淘点，10000个点放到100个容器里面必然会有索引的冲突，一有冲突就把之前放进去的点拿出来，随机取一个点作为输出，清空，再往里面放新的点。    </p>
+<h4 id="Voxel-grid-h"><a href="#Voxel-grid-h" class="headerlink" title="Voxel_grid.h"></a>Voxel_grid.h</h4><p>&emsp;&emsp;需要添加头文件：<code>#include &lt;pcl/filters/voxel_grid.h&gt;</code><br><img src="/blog/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/voxel_grid.png" alt="voxelgrid"><br><img src="https://img-blog.csdnimg.cn/20200421162454452.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" style="width: 1118px;"><br>&emsp;&emsp;必须保证Dx&gt;hx，Dy&gt;hy(这两个条件是必须)，第四步的时候是计算voxel空间索引.准确降采样就是在每个voxel索引里面取中值，或者随机取一个点，然后输出的点云就是降采样后的点云.<br>也就是说，下采样后的点云还是原始点云中的点？<br><font color="red"><strong>❤</strong></font> </p>
+<h4 id="Approximate-voxel-grid-h"><a href="#Approximate-voxel-grid-h" class="headerlink" title="Approximate_voxel_grid.h"></a>Approximate_voxel_grid.h</h4><p>&emsp;&emsp;需要添加头文件：<code>#include &lt;pcl/filters/approximate_voxel_grid.h&gt;</code> 核心源码也比较短，还有待研究。<br><img src="/blog/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/approximate_voxel_grid.png" alt="approximatevoxelgrid"><br><img alt height="397" src="https://img-blog.csdnimg.cn/20200421163734565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" width="586"><br>&emsp;&emsp;和exact downsampling的前四步一样，先算出voxel的空间索引 ，然后通过<strong>哈希函数</strong>映射到对应的容器里面，这里假设有100个容器，按照图里面给的例子，以h%container作为hash函数映射的值，放到对应的容器里面，这样的话会出现什么情况呢，16,116对应的容器是一样的，而两个h对应的hx，hy，hz是不一样的，这就是哈希冲突。怎么处理哈希冲突呢？<br><img src="/blog/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/hash_conflict.png" alt="voxelgrid"><br><img alt height="173" src="https://img-blog.csdnimg.cn/20200421170651371.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" width="579"><br>&emsp;&emsp;把原来容器里面的点全都取出来，清空，随机取其中的一个点作为输出，然后把新的点放进来，继续填容器的操作。相当于是拿了100个容器，一直从一堆点里面淘点，10000个点放到100个容器里面必然会有索引的冲突，一有冲突就把之前放进去的点拿出来，随机取一个点作为输出，清空，再往里面放新的点。    </p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> PointT&gt; <span class="hljs-keyword">void</span><br>pcl::ApproximateVoxelGrid&lt;PointT&gt;::applyFilter (PointCloud &amp;output)<br>&#123;<br>  <span class="hljs-keyword">int</span> centroid_size = <span class="hljs-number">4</span>;<br>  <span class="hljs-keyword">if</span> (downsample_all_data_)<br>    centroid_size = boost::mpl::<span class="hljs-built_in">size</span>&lt;FieldList&gt;::value;<br><br>  <span class="hljs-comment">// ---[ RGB special case</span><br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;pcl::PCLPointField&gt; fields;<br>  <span class="hljs-keyword">int</span> rgba_index = <span class="hljs-number">-1</span>;<br>  rgba_index = pcl::getFieldIndex (*input_, <span class="hljs-string">"rgb"</span>, fields);<br>  <span class="hljs-keyword">if</span> (rgba_index == <span class="hljs-number">-1</span>)<br>    rgba_index = pcl::getFieldIndex (*input_, <span class="hljs-string">"rgba"</span>, fields);<br>  <span class="hljs-keyword">if</span> (rgba_index &gt;= <span class="hljs-number">0</span>)<br>  &#123;<br>    rgba_index = fields[rgba_index].offset;<br>    centroid_size += <span class="hljs-number">3</span>;<br>  &#125;<br><br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; histsize_; i++) <br>  &#123;<br>    history_[i].count = <span class="hljs-number">0</span>;<br>    history_[i].centroid = Eigen::VectorXf::Zero (centroid_size);<br>  &#125;<br>  Eigen::VectorXf scratch = Eigen::VectorXf::Zero (centroid_size);<br><br>  output.points.resize (input_-&gt;points.<span class="hljs-built_in">size</span> ());   <span class="hljs-comment">// size output for worst case</span><br>  <span class="hljs-keyword">size_t</span> op = <span class="hljs-number">0</span>;    <span class="hljs-comment">// output pointer</span><br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> cp = <span class="hljs-number">0</span>; cp &lt; input_-&gt;points.<span class="hljs-built_in">size</span> (); ++cp) <br>  &#123;<br>    <span class="hljs-keyword">int</span> ix = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">int</span>&gt; (<span class="hljs-built_in">floor</span> (input_-&gt;points[cp].x * inverse_leaf_size_[<span class="hljs-number">0</span>]));<br>    <span class="hljs-keyword">int</span> iy = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">int</span>&gt; (<span class="hljs-built_in">floor</span> (input_-&gt;points[cp].y * inverse_leaf_size_[<span class="hljs-number">1</span>]));<br>    <span class="hljs-keyword">int</span> iz = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">int</span>&gt; (<span class="hljs-built_in">floor</span> (input_-&gt;points[cp].z * inverse_leaf_size_[<span class="hljs-number">2</span>]));<br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> hash = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>&gt; ((ix * <span class="hljs-number">7171</span> + iy * <span class="hljs-number">3079</span> + iz * <span class="hljs-number">4231</span>) &amp; (histsize_ - <span class="hljs-number">1</span>));<br>    he *hhe = &amp;history_[hash];<br>    <span class="hljs-keyword">if</span> (hhe-&gt;count &amp;&amp; ((ix != hhe-&gt;ix) || (iy != hhe-&gt;iy) || (iz != hhe-&gt;iz))) <br>    &#123;<br>      <span class="hljs-built_in">flush</span> (output, op++, hhe, rgba_index, centroid_size);<br>      hhe-&gt;count = <span class="hljs-number">0</span>;<br>      hhe-&gt;centroid.setZero ();<span class="hljs-comment">// = Eigen::VectorXf::Zero (centroid_size);</span><br>    &#125;<br>    hhe-&gt;ix = ix;<br>    hhe-&gt;iy = iy;<br>    hhe-&gt;iz = iz;<br>    hhe-&gt;count++;<br><br>    <span class="hljs-comment">// Unpack the point into scratch, then accumulate</span><br>    <span class="hljs-comment">// ---[ RGB special case</span><br>    <span class="hljs-keyword">if</span> (rgba_index &gt;= <span class="hljs-number">0</span>)<br>    &#123;<br>      <span class="hljs-comment">// fill r/g/b data</span><br>      pcl::RGB rgb;<br>      <span class="hljs-built_in">memcpy</span> (&amp;rgb, (<span class="hljs-keyword">reinterpret_cast</span>&lt;<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *&gt; (&amp;input_-&gt;points[cp])) + rgba_index, <span class="hljs-keyword">sizeof</span> (RGB));<br>      scratch[centroid_size<span class="hljs-number">-3</span>] = rgb.r;<br>      scratch[centroid_size<span class="hljs-number">-2</span>] = rgb.g;<br>      scratch[centroid_size<span class="hljs-number">-1</span>] = rgb.b;<br>    &#125;<br>    pcl::for_each_type &lt;FieldList&gt; (xNdCopyPointEigenFunctor &lt;PointT&gt; (input_-&gt;points[cp], scratch));<br>    hhe-&gt;centroid += scratch;<br>  &#125;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; histsize_; i++) <br>  &#123;<br>    he *hhe = &amp;history_[i];<br>    <span class="hljs-keyword">if</span> (hhe-&gt;count)<br>      <span class="hljs-built_in">flush</span> (output, op++, hhe, rgba_index, centroid_size);<br>  &#125;<br>  output.points.resize (op);<br>  output.<span class="hljs-built_in">width</span> = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">uint32_t</span>&gt; (output.points.<span class="hljs-built_in">size</span> ());<br>  output.<span class="hljs-built_in">height</span>       = <span class="hljs-number">1</span>;                    <span class="hljs-comment">// downsampling breaks the organized structure</span><br>  output.is_dense     = <span class="hljs-literal">false</span>;                 <span class="hljs-comment">// we filter out invalid points</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p><font color="blue"><strong>❤</strong></font><br>&emsp;&emsp;为什么Dx必须&gt;hx,后面的y也一样，Dx其实就是x的进位，h的表达式类似于hx<em>1+hy</em>10+hz<em>10</em>10，如果Dx=x了那必然会出现不同范围的点指到同一个索引h里面，譬如假设Dx=10，hx可以等于10，以（hx，hy）作为坐标的话，（0,1）和（10,0）在同一个voxel里面，显然这是不对的。   </p>
 <h5 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h5><p>我之前得到的voxel采样之后就不是原来的点云了，这个假设是怎么来的？</p>
@@ -193,20 +193,20 @@
 
     <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
     <div class="has-text-grey is-size-7 is-block">
-    <p><span>title:</span><a href="/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">pcl中的体素滤波</a></p>
+    <p><span>title:</span><a href="/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">pcl中的体素滤波</a></p>
     <p><span>author:</span><a href="/">AmazingHao</a></p>
     <p>
-        <span>link:</span><a href="/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" title="pcl中的体素滤波 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io.com/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/</a>
-        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io.com/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/"  aria-label="复制成功！"></i></span>
+        <span>link:</span><a href="/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" title="pcl中的体素滤波 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2020-06-11</p>
     <p><span>update time:</span>2023-02-01</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
-    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io.com/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">pcl中的体素滤波</a></li>
-     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io.com">AmazingHao</a></li>
-    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io.com/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">http://whu-lyh.github.io.com/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/</a></li>
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">pcl中的体素滤波</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blog">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">http://whu-lyh.github.io/blog/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/</a></li>
     <li><strong>发布时间：</strong>2020-06-11</li>
     <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
     </li>
@@ -230,7 +230,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/PCL/" rel="tag">PCL</a>
+                    <a class="has-link-grey -link" href="/blog/tags/PCL/" rel="tag">PCL</a>
                 </div>
             </div>
         </div>
@@ -248,7 +248,7 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blog/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/">
                 <i class="level-item fas fa-chevron-left"></i>
                 <span class="level-item">Docker日常使用</span>
             </a>
@@ -256,7 +256,7 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/07/linux-command-usage/">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2020/05/07/linux-command-usage/">
                 <span class="level-item">linux command usage</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
@@ -288,7 +288,7 @@
                 <div>
                     
                     <figure class="image is-128x128 has-mb-6">
-                        <img class="" src="/images/Title_image.jpg" alt="AmazingHao">
+                        <img class="" src="/blog/images/Title_image.jpg" alt="AmazingHao">
                     </figure>
                     
                     <p class="is-size-4 is-block">
@@ -315,7 +315,7 @@
                     <p class="heading">
                         文章
                     </p>
-                    <a href="/archives">
+                    <a href="/blog/archives">
                         <p class="title has-text-weight-normal">
                             19
                         </p>
@@ -327,7 +327,7 @@
                     <p class="heading">
                         分类
                     </p>
-                    <a href="/categories">
+                    <a href="/blog/categories">
                         <p class="title has-text-weight-normal">
                             8
                         </p>
@@ -339,7 +339,7 @@
                     <p class="heading">
                         标签
                     </p>
-                    <a href="/tags">
+                    <a href="/blog/tags">
                         <p class="title has-text-weight-normal">
                             16
                         </p>
@@ -392,7 +392,7 @@
             </h3>
             <ul class="menu-list">
             <li>
-        <a class="level is-marginless" href="/categories/MathUtilities/">
+        <a class="level is-marginless" href="/blog/categories/MathUtilities/">
             <span class="level-start">
                 <span class="level-item">MathUtilities</span>
             </span>
@@ -400,7 +400,7 @@
                 <span class="level-item tag">2</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
+        <a class="level is-marginless" href="/blog/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
             <span class="level-start">
                 <span class="level-item">专业应用</span>
             </span>
@@ -408,7 +408,7 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+        <a class="level is-marginless" href="/blog/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
             <span class="level-start">
                 <span class="level-item">写作工具</span>
             </span>
@@ -416,7 +416,7 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+        <a class="level is-marginless" href="/blog/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
             <span class="level-start">
                 <span class="level-item">实用工具</span>
             </span>
@@ -424,7 +424,7 @@
                 <span class="level-item tag">8</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
+        <a class="level is-marginless" href="/blog/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
             <span class="level-start">
                 <span class="level-item">开源库</span>
             </span>
@@ -432,7 +432,7 @@
                 <span class="level-item tag">2</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E6%97%A5%E5%B8%B8%E5%BA%94%E7%94%A8/">
+        <a class="level is-marginless" href="/blog/categories/%E6%97%A5%E5%B8%B8%E5%BA%94%E7%94%A8/">
             <span class="level-start">
                 <span class="level-item">日常应用</span>
             </span>
@@ -440,7 +440,7 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
+        <a class="level is-marginless" href="/blog/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
             <span class="level-start">
                 <span class="level-item">科研神器</span>
             </span>
@@ -448,7 +448,7 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li><li>
-        <a class="level is-marginless" href="/categories/%E7%AE%97%E6%B3%95/">
+        <a class="level is-marginless" href="/blog/categories/%E7%AE%97%E6%B3%95/">
             <span class="level-start">
                 <span class="level-item">算法</span>
             </span>
@@ -466,7 +466,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/B-Spline/" style="font-size: 20px;">B-Spline</a> <a href="/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/LiDAR-SLAM/" style="font-size: 20px;">LiDAR_SLAM</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/tags/VS/" style="font-size: 10px;">VS</a> <a href="/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a>
+        <a href="/blog/tags/B-Spline/" style="font-size: 20px;">B-Spline</a> <a href="/blog/tags/Docker/" style="font-size: 20px;">Docker</a> <a href="/blog/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blog/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blog/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blog/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/blog/tags/LiDAR-SLAM/" style="font-size: 20px;">LiDAR_SLAM</a> <a href="/blog/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/blog/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blog/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blog/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blog/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blog/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blog/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blog/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blog/tags/WindowsScript/" style="font-size: 10px;">WindowsScript</a>
     </div>
 </div>
     
@@ -491,18 +491,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/25/TrajectoryEstimation/" class="media-left">
+            <a href="/blog/2023/02/25/TrajectoryEstimation/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Kinematic mapping trajectory estimation">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="Kinematic mapping trajectory estimation">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-25T01:37:22.994Z">2023-02-25</time></div>
-                    <a href="/2023/02/25/TrajectoryEstimation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Kinematic mapping trajectory estimation</a>
+                    <a href="/blog/2023/02/25/TrajectoryEstimation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Kinematic mapping trajectory estimation</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                        <a class="has-link-grey -link" href="/blog/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     </p>
                 </div>
             </div>
@@ -510,18 +510,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/25/Hdl_graph_slam2/" class="media-left">
+            <a href="/blog/2023/02/25/Hdl_graph_slam2/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-25T01:34:27.622Z">2023-02-25</time></div>
-                    <a href="/2023/02/25/Hdl_graph_slam2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_后端优化</a>
+                    <a href="/blog/2023/02/25/Hdl_graph_slam2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_后端优化</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                        <a class="has-link-grey -link" href="/blog/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     </p>
                 </div>
             </div>
@@ -529,18 +529,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/25/Hdl_graph_slam/" class="media-left">
+            <a href="/blog/2023/02/25/Hdl_graph_slam/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-25T01:29:31.460Z">2023-02-25</time></div>
-                    <a href="/2023/02/25/Hdl_graph_slam/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_回环检测</a>
+                    <a href="/blog/2023/02/25/Hdl_graph_slam/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_回环检测</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                        <a class="has-link-grey -link" href="/blog/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     </p>
                 </div>
             </div>
@@ -548,18 +548,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/09/B-Spline/" class="media-left">
+            <a href="/blog/2023/02/09/B-Spline/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="B-Spline探秘">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="B-Spline探秘">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:15:55.735Z">2023-02-09</time></div>
-                    <a href="/2023/02/09/B-Spline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-Spline探秘</a>
+                    <a href="/blog/2023/02/09/B-Spline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-Spline探秘</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/MathUtilities/">MathUtilities</a>
+                        <a class="has-link-grey -link" href="/blog/categories/MathUtilities/">MathUtilities</a>
                     </p>
                 </div>
             </div>
@@ -567,18 +567,18 @@
         
         <article class="media">
             
-            <a href="/2023/02/09/B-spline-Interpolation/" class="media-left">
+            <a href="/blog/2023/02/09/B-spline-Interpolation/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="B-spline Interpolation">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="B-spline Interpolation">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:13:29.000Z">2023-02-09</time></div>
-                    <a href="/2023/02/09/B-spline-Interpolation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-spline Interpolation</a>
+                    <a href="/blog/2023/02/09/B-spline-Interpolation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-spline Interpolation</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                        <a class="has-link-grey -link" href="/blog/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
                     </p>
                 </div>
             </div>
@@ -645,7 +645,7 @@
         <ul class="menu-list">
         
         <li>
-            <a class="level is-marginless" href="/archives/2023/02/">
+            <a class="level is-marginless" href="/blog/archives/2023/02/">
                 <span class="level-start">
                     <span class="level-item">二月 2023</span>
                 </span>
@@ -656,7 +656,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2023/01/">
+            <a class="level is-marginless" href="/blog/archives/2023/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2023</span>
                 </span>
@@ -667,7 +667,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2021/01/">
+            <a class="level is-marginless" href="/blog/archives/2021/01/">
                 <span class="level-start">
                     <span class="level-item">一月 2021</span>
                 </span>
@@ -678,7 +678,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/07/">
+            <a class="level is-marginless" href="/blog/archives/2020/07/">
                 <span class="level-start">
                     <span class="level-item">七月 2020</span>
                 </span>
@@ -689,7 +689,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/06/">
+            <a class="level is-marginless" href="/blog/archives/2020/06/">
                 <span class="level-start">
                     <span class="level-item">六月 2020</span>
                 </span>
@@ -700,7 +700,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/05/">
+            <a class="level is-marginless" href="/blog/archives/2020/05/">
                 <span class="level-start">
                     <span class="level-item">五月 2020</span>
                 </span>
@@ -711,7 +711,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/03/">
+            <a class="level is-marginless" href="/blog/archives/2020/03/">
                 <span class="level-start">
                     <span class="level-item">三月 2020</span>
                 </span>
@@ -722,7 +722,7 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2020/02/">
+            <a class="level is-marginless" href="/blog/archives/2020/02/">
                 <span class="level-start">
                     <span class="level-item">二月 2020</span>
                 </span>
@@ -751,9 +751,9 @@
     <div class="container">
         <div class="level">
             <div class="level-start has-text-centered-mobile">
-                <a class="footer-logo is-block has-mb-6" href="/">
+                <a class="footer-logo is-block has-mb-6" href="/blog/">
                 
-                    <img src="/images/logo.svg" alt="pcl中的体素滤波" height="28">
+                    <img src="/blog/images/logo.svg" alt="pcl中的体素滤波" height="28">
                 
                 </a>
                 <p class="is-size-7">
@@ -855,7 +855,7 @@
 <script>
 var IcarusThemeSettings = {
     site: {
-        url: 'http://whu-lyh.github.io.com',
+        url: 'http://whu-lyh.github.io/blog',
         external_link: {"enable":true,"exclude":[]}
     },
     article: {
@@ -874,13 +874,13 @@ var IcarusThemeSettings = {
 
 
 
-<script src="/js/animation.js"></script>
+<script src="/blog/js/animation.js"></script>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-<script src="/js/gallery.js" defer></script>
+<script src="/blog/js/gallery.js" defer></script>
 
 
 
@@ -906,7 +906,7 @@ var IcarusThemeSettings = {
 <a id="back-to-top" title="回到顶端" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
-<script src="/js/back-to-top.js" defer></script>
+<script src="/blog/js/back-to-top.js" defer></script>
 
 
 
@@ -942,7 +942,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<script src="/js/main.js" defer></script>
+<script src="/blog/js/main.js" defer></script>
 
     
     <div class="searchbox ins-search">
@@ -966,14 +966,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 TAGS: '标签',
                 UNTITLED: '(无标题)',
             },
-            CONTENT_URL: '/content.json',
+            CONTENT_URL: '/blog/content.json',
         };
         window.INSIGHT_CONFIG = INSIGHT_CONFIG;
     })(window);
 </script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
+<script src="/blog/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blog/css/search.css">
+<link rel="stylesheet" href="/blog/css/insight.css">
     
 
 	<!-- 雪花特效 -->
