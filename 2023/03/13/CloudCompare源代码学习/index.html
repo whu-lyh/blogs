@@ -8,21 +8,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>B-spline Interpolation - AmazingHao&#39;s Free Space</title>
+<title>CloudCompare源代码学习 - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="KalibrKalibr中使用了B-spline实现位姿的内插，进而完成相机和IMU之间的时间同步标定。">
+    <meta name="description" content="目的想使用一下CloudCompare自带的八叉树，替换掉nanoflann。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="B-spline Interpolation">
-<meta property="og:url" content="http://whu-lyh.github.io/blogs/2023/02/09/B-spline-Interpolation/index.html">
+<meta property="og:title" content="CloudCompare源代码学习">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="KalibrKalibr中使用了B-spline实现位姿的内插，进而完成相机和IMU之间的时间同步标定。">
+<meta property="og:description" content="目的想使用一下CloudCompare自带的八叉树，替换掉nanoflann。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
-<meta property="article:published_time" content="2023-02-09T02:13:29.000Z">
-<meta property="article:modified_time" content="2023-02-09T07:32:00.278Z">
+<meta property="article:published_time" content="2023-03-13T11:58:06.000Z">
+<meta property="article:modified_time" content="2023-03-13T12:02:19.567Z">
 <meta property="article:author" content="AmazingHao">
-<meta property="article:tag" content="B-Spline">
+<meta property="article:tag" content="Fire">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 
@@ -80,7 +80,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/blogs/">
             
-                <img src="/blogs/images/logo.svg" alt="B-spline Interpolation" height="28">
+                <img src="/blogs/images/logo.svg" alt="CloudCompare源代码学习" height="28">
             
             </a>
         </div>
@@ -158,17 +158,13 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2023-02-09T02:13:29.000Z">2023-02-09</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                </div>
+                <time class="level-item has-text-grey" datetime="2023-03-13T11:58:06.000Z">2023-03-13</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 35 个字)
+                    10 分钟 读完 (大约 1433 个字)
                 </span>
                 
                 
@@ -177,12 +173,47 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                B-spline Interpolation
+                CloudCompare源代码学习
             
         </h1>
         <div class="content">
-            <h1 id="Kalibr"><a href="#Kalibr" class="headerlink" title="Kalibr"></a>Kalibr</h1><p>Kalibr中使用了B-spline实现位姿的内插，进而完成相机和IMU之间的时间同步标定。</p>
-<a id="more"></a>
+            <h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>想使用一下CloudCompare自带的八叉树，替换掉nanoflann。</p>
+<a id="more"></a> 
+
+<h2 id="nanoflann返回值出现异常"><a href="#nanoflann返回值出现异常" class="headerlink" title="nanoflann返回值出现异常"></a>nanoflann返回值出现异常</h2><p>​        用于最邻近搜索，在radiussearch下，如果能找到最近点，那么确实找到的是最近点，如果找不到最近点，那么就会出现问题，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++">nanoflann::KdTreeFLANN&lt;PB::pmPointXYZ&gt;::Ptr kdtree = <span class="hljs-built_in">std</span>::make_shared&lt;nanoflann::KdTreeFLANN&lt;PB::pmPointXYZ&gt;&gt;();<br><span class="hljs-keyword">if</span> (!kdtree) &#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cerr</span> &lt;&lt; <span class="hljs-string">"KD tree build failed!"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;<br>    <span class="hljs-keyword">return</span>;<br>&#125;<br>kdtree-&gt;setInputCloud(cloud);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; checkcorrs.<span class="hljs-built_in">size</span>(); ++i) &#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; searchIndexes;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;SCALAR_TYPE&gt; distances;<br>    SCALAR_TYPE *search_pt = <span class="hljs-keyword">new</span> SCALAR_TYPE[<span class="hljs-number">3</span>];<br>    search_pt[<span class="hljs-number">0</span>] = checkcorrs[i].x;<br>    search_pt[<span class="hljs-number">1</span>] = checkcorrs[i].y;<br>    search_pt[<span class="hljs-number">2</span>] = checkcorrs[i].z;<br>    kdtree-&gt;radiusSearch(search_pt, <span class="hljs-number">2.0</span>, searchIndexes, distances);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>​        在for循环中，每次更新query的点坐标，然后试图从点云中返回其最近的2.0m范围内的点，如果query点周围没有符合条件的点，那么就会返回上一次for循环的值。详见<a href="https://github.com/jlblancoc/nanoflann/issues/196">issue</a>。</p>
+<h2 id="使用CloudCompare自带的Octree"><a href="#使用CloudCompare自带的Octree" class="headerlink" title="使用CloudCompare自带的Octree"></a>使用CloudCompare自带的Octree</h2><ul>
+<li>核心为直接接入cc内部的octree实现最近点的索引，位于<code>#include &lt;DgmOctree.h&gt;</code>，这样检索速度大大加快。过程如下：</li>
+</ul>
+<ol>
+<li>首先找到当前选中哪些entity，此时需要引用主窗口的头文件并获取全局静态变量<code>#include &lt;mainwindow.h&gt;</code>；</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">const</span> ccHObject::Container &amp;selectedEntities = MainWindow::TheInstance()-&gt;getSelectedEntities();<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>遍历每个选中的entity，并将其转换为点云类型，需要<code>#include &lt;ccHObjectCaster.h&gt;</code>头文件；</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span> (ccHObject* ent : selectedEntities)<br>&#123;<br>	ccPointCloud* pc = ccHObjectCaster::ToPointCloud(ent);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>获取ccPointCloud点云类中的八叉树索引，如果未构建，则重新构建；</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++">ccOctree::Shared octree = pc-&gt;getOctree();<br><span class="hljs-keyword">if</span> (!octree)<br>&#123;<br>    octree = pc-&gt;computeOctree();<br>    <span class="hljs-keyword">if</span> (!octree)<br>    &#123;<br>    	ccLog::LogMessage(QString::fromLocal8Bit(<span class="hljs-string">"索引构建失败，"</span>) + ent-&gt;getName(), ccLog::LOG_ERROR);<br>    	<span class="hljs-keyword">continue</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>开始索引，测试了有两种方式，一种是使用<code>DgmOctree</code>的<code>findNeighborsInASphereStartingFromCell</code>，另一种是使用<code>DgmOctree</code>的<code>getPointsInSphericalNeighbourhood</code>。这里的<code>PointCoordinateType</code>是cc内部定义的数值变量的类型，默认为float型。检索出来的邻域点存放在<code>CCLib::DgmOctree::NeighboursSet</code>中，通过源码可以看出就是描述点信息的vector向量。需要注意的是，这两个方式都需要提前知道八叉树的层级，通过<code>octree-&gt;findBestLevelForAGivenNeighbourhoodSizeExtraction</code>得到当前半径下需要在哪一层level做检索。<code>NearestNeighboursSphericalSearchStruct</code>中的参数设置没搞明白，就先不用了。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++">PointCoordinateType search_radius = <span class="hljs-number">1.0</span>;<br><span class="hljs-comment">// @1</span><br><span class="hljs-comment">//CCLib::DgmOctree::NearestNeighboursSphericalSearchStruct nnsss;</span><br><span class="hljs-comment">//nnsss.queryPoint = search_pt;</span><br><span class="hljs-comment">//CCLib::DgmOctree::NeighboursSet neighbour_pts = nnsss.pointsInNeighbourhood;</span><br><span class="hljs-comment">//int ret_pt_num = octree-&gt;findNeighborsInASphereStartingFromCell(nnsss, search_radius, true);</span><br><span class="hljs-comment">// @2</span><br><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> level = octree-&gt;findBestLevelForAGivenNeighbourhoodSizeExtraction(search_radius);<br>CCVector3 search_pt = CCVector3(checkcorrs[i].ctrl_pt.x + global_offset.x,checkcorrs[i].ctrl_pt.y + global_offset.y, checkcorrs[i].ctrl_pt.z + global_offset.z);<br>CCLib::DgmOctree::NeighboursSet neighbour_pts;         <br><span class="hljs-keyword">int</span> ret_pt_num = octree-&gt;getPointsInSphericalNeighbourhood(search_pt, search_radius, neighbour_pts, level);<br></code></pre></td></tr></table></figure>
+
+<p>​        使用cc自带的八叉树之后，发现检索速度非常快（由于八叉树cell分区的原因，虽然返回的值可能不准确，但足够用了）。部分核心代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// qCC_db</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ccHObjectCaster.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ccPointCloud.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;DgmOctree.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mainwindow.h&gt;</span></span><br><span class="hljs-comment">// 控制点类</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ControlPoint</span> :</span> <span class="hljs-keyword">public</span> CCVector3d<br>&#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> gcp_name; <span class="hljs-comment">// gcp name</span><br>    <span class="hljs-keyword">int</span> id; <span class="hljs-comment">// gcp index</span><br>    <span class="hljs-comment">// operator &lt;&lt; overwrite</span><br>    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">friend</span> <span class="hljs-built_in">std</span>::ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(<span class="hljs-built_in">std</span>::ostream &amp;os, <span class="hljs-keyword">const</span> ControlPoint &amp;pt) &#123;<br>        os &lt;&lt; <span class="hljs-built_in">std</span>::setprecision(<span class="hljs-number">10</span>) &lt;&lt; <span class="hljs-string">"gcp_name: "</span> &lt;&lt; pt.gcp_name<br>            &lt;&lt; <span class="hljs-string">", x = "</span> &lt;&lt; pt.x &lt;&lt; <span class="hljs-string">" , y = "</span> &lt;&lt; pt.y &lt;&lt; <span class="hljs-string">" , z = "</span> &lt;&lt; pt.z;<br>        <span class="hljs-keyword">return</span> os;<br>    &#125;<br>&#125;;<br><span class="hljs-keyword">typedef</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;ControlPoint&gt; ControlPointVec;<br><span class="hljs-comment">// 同名点类</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">HomonymPoint</span> :</span> <span class="hljs-keyword">public</span> CCVector3d<br>&#123;<br>    <span class="hljs-keyword">double</span> gps_time; <span class="hljs-comment">// gpstime from origin las point cloud file</span><br>    HomonymPoint() :CCVector3d(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>), gps_time(<span class="hljs-number">0.0</span>) &#123;&#125;<br>    <span class="hljs-comment">// container stores the nearest points located inside a certain radius for coordinate interpolation</span><br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;P2M::BaseType::Point3D&gt; nearest_pts;<br>    HomonymPoint(<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> x_, <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> y_, <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> z_)<br>        :CCVector3d(x_, y_, z_), gps_time(<span class="hljs-number">0.0</span>)<br>    &#123;&#125;<br>    <span class="hljs-comment">// operator &lt;&lt; overwrite</span><br>    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">friend</span> <span class="hljs-built_in">std</span>::ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(<span class="hljs-built_in">std</span>::ostream &amp;os, <span class="hljs-keyword">const</span> HomonymPoint &amp;pt)<br>    &#123;<br>        os &lt;&lt; <span class="hljs-built_in">std</span>::setprecision(<span class="hljs-number">10</span>) &lt;&lt; <span class="hljs-string">"Correspondence point gps time stamp: "</span> &lt;&lt; pt.gps_time<br>            &lt;&lt; <span class="hljs-string">", x = "</span> &lt;&lt; pt.x &lt;&lt; <span class="hljs-string">" , y = "</span> &lt;&lt; pt.y &lt;&lt; <span class="hljs-string">" , z = "</span> &lt;&lt; pt.z;<br>        <span class="hljs-keyword">return</span> os;<br>    &#125;<br>&#125;;<br><span class="hljs-keyword">typedef</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;HomonymPoint&gt; HomonymPointVec;<br><span class="hljs-comment">// 对应关系类</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">checkCorrespondence</span><br>&#123;</span><br>    <span class="hljs-keyword">int</span> id;<br>    ControlPoint ctrl_pt;<br>    HomonymPoint corr_pt;<br>    <span class="hljs-keyword">bool</span> isChecked;<br>    <span class="hljs-comment">// for point cloud surface fitting, Coordinates of data points.</span><br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;mba::<span class="hljs-built_in">point</span>&lt;2&gt;&gt; coo;<br>    <span class="hljs-comment">// Data values.</span><br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">double</span>&gt; val;<br>    <span class="hljs-comment">// statistic info</span><br>    <span class="hljs-keyword">float</span> dist;<br>    <span class="hljs-keyword">float</span> dist_x;<br>    <span class="hljs-keyword">float</span> dist_y;<br>    <span class="hljs-keyword">float</span> dist_z;<br>&#125;;<br><span class="hljs-keyword">typedef</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;checkCorrespondence&gt; checkCorrespondences;<br><span class="hljs-comment">// get local part of ALS point cloud</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">getCorrespondPoints</span><span class="hljs-params">(checkCorrespondences &amp;checkcorrs, CCVector3d &amp;global_offset)</span><br></span>&#123;<br>    <span class="hljs-keyword">const</span> ccHObject::Container &amp;selectedEntities = MainWindow::TheInstance()-&gt;getSelectedEntities();<br>    <span class="hljs-keyword">if</span> (selectedEntities.empty())<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    <span class="hljs-comment">// global shift check, note that offset may be incorrected</span><br>    <span class="hljs-keyword">const</span> ccShiftedObject* shifted = ccHObjectCaster::ToShifted(selectedEntities[<span class="hljs-number">0</span>]);<br>    <span class="hljs-keyword">if</span> (shifted)<br>    &#123;<br>        global_offset = shifted-&gt;getGlobalShift();<br>    &#125;<br>    <span class="hljs-keyword">for</span> (ccHObject* ent : selectedEntities)<br>    &#123;<br>        ccPointCloud* pc = ccHObjectCaster::ToPointCloud(ent);<br>        <span class="hljs-keyword">if</span> (!pc)<br>        &#123;<br>            ccLog::LogMessage(QString::fromLocal8Bit(<span class="hljs-string">"未选中有效点云，"</span>) + ent-&gt;getName(), ccLog::LOG_ERROR);<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        ccOctree::Shared octree = pc-&gt;getOctree();<br>        <span class="hljs-keyword">if</span> (!octree)<br>        &#123;<br>            octree = pc-&gt;computeOctree();<br>            <span class="hljs-keyword">if</span> (!octree)<br>            &#123;<br>                ccLog::LogMessage(QString::fromLocal8Bit(<span class="hljs-string">"索引构建失败，"</span>) + ent-&gt;getName(), ccLog::LOG_ERROR);<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>        &#125;<br>        Q_ASSERT(octree != <span class="hljs-literal">nullptr</span>);<br>        <span class="hljs-comment">//CCLib::DgmOctree::NearestNeighboursSphericalSearchStruct nnsss;</span><br>        PointCoordinateType search_radius = <span class="hljs-number">1.0</span>;<br>        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> level = octree-&gt;findBestLevelForAGivenNeighbourhoodSizeExtraction(search_radius);<br>        <span class="hljs-comment">// find correspondence and calculate</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; checkcorrs.<span class="hljs-built_in">size</span>(); ++i) <br>        &#123;<br>            CCVector3 search_pt = CCVector3(checkcorrs[i].ctrl_pt.x + global_offset.x,<br>                checkcorrs[i].ctrl_pt.y + global_offset.y, checkcorrs[i].ctrl_pt.z + global_offset.z);<br>            <span class="hljs-comment">//nnsss.queryPoint = search_pt;</span><br>            <span class="hljs-comment">//int ret_pt_num = octree-&gt;findNeighborsInASphereStartingFromCell(nnsss, search_radius, true);</span><br>            <span class="hljs-comment">//CCLib::DgmOctree::NeighboursSet neighbour_pts = nnsss.pointsInNeighbourhood;</span><br>            CCLib::DgmOctree::NeighboursSet neighbour_pts;         <br>            <span class="hljs-keyword">int</span> ret_pt_num = octree-&gt;getPointsInSphericalNeighbourhood(search_pt, search_radius, neighbour_pts, level);<br>            <span class="hljs-keyword">if</span> (ret_pt_num &lt; <span class="hljs-number">1</span>)<br>                <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-comment">// get the nearest point</span><br>            <span class="hljs-keyword">if</span> (neighbour_pts[<span class="hljs-number">0</span>].squareDistd &lt; checkcorrs[i].dist)<br>            &#123;<br>                <span class="hljs-keyword">const</span> CCVector3 *ret_pt0 = neighbour_pts[<span class="hljs-number">0</span>].<span class="hljs-built_in">point</span>;<br>                checkcorrs[i].corr_pt = HomonymPoint(ret_pt0-&gt;x - global_offset.x, ret_pt0-&gt;y - global_offset.y, ret_pt0-&gt;z - global_offset.z);<br>            &#125;<br>            <span class="hljs-comment">// get the set of neighbour pts</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> pt: neighbour_pts)<br>            &#123;<br>                checkcorrs[i].isChecked = <span class="hljs-literal">true</span>;<br>                <span class="hljs-keyword">const</span> CCVector3 *ret_pt = pt.<span class="hljs-built_in">point</span>;              <br>                <span class="hljs-comment">// copy to fitting data container</span><br>                checkcorrs[i].coo.push_back(mba::<span class="hljs-built_in">point</span>&lt;<span class="hljs-number">2</span>&gt;&#123;ret_pt-&gt;x, ret_pt-&gt;y&#125;);<br>                checkcorrs[i].val.emplace_back(ret_pt-&gt;z);<br>            &#125; <br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br><span class="hljs-comment">// interpolate the height value based on nearest points</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">interpolateCoordinate</span><span class="hljs-params">(checkCorrespondence &amp;corr, <span class="hljs-keyword">const</span> CCVector3d &amp;global_offset)</span><br></span>&#123;<br>    <span class="hljs-comment">// get coarse boundary</span><br>    <span class="hljs-keyword">double</span> minx = <span class="hljs-number">0.0</span>, maxx = <span class="hljs-number">0.0</span>, miny = <span class="hljs-number">0.0</span>, maxy = <span class="hljs-number">0.0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> pt : corr.coo)<br>    &#123;<br>        minx = (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">min</span>)(minx, pt[<span class="hljs-number">0</span>]);<br>        maxx = (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">max</span>)(maxx, pt[<span class="hljs-number">0</span>]);<br>        miny = (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">min</span>)(miny, pt[<span class="hljs-number">1</span>]);<br>        maxy = (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">max</span>)(maxy, pt[<span class="hljs-number">1</span>]);<br>    &#125;<br>    mba::<span class="hljs-built_in">point</span>&lt;<span class="hljs-number">2</span>&gt; lo = &#123; minx - <span class="hljs-number">3.0</span>, miny - <span class="hljs-number">3.0</span> &#125;;<br>    mba::<span class="hljs-built_in">point</span>&lt;<span class="hljs-number">2</span>&gt; hi = &#123; maxx + <span class="hljs-number">3.0</span>, maxy + <span class="hljs-number">3.0</span> &#125;;<br>    <span class="hljs-comment">// Initial grid size.</span><br>    mba::index&lt;<span class="hljs-number">2</span>&gt; grid = &#123; <span class="hljs-number">5</span>, <span class="hljs-number">5</span> &#125;;<br>    <span class="hljs-function">mba::MBA&lt;2&gt; <span class="hljs-title">interp</span><span class="hljs-params">(lo, hi, grid, corr.coo, corr.val)</span></span>;<br>    <span class="hljs-comment">// residual between gt and measurement</span><br>    corr.corr_pt.z = interp(mba::<span class="hljs-built_in">point</span>&lt;<span class="hljs-number">2</span>&gt;&#123;corr.ctrl_pt.x + global_offset.x, corr.ctrl_pt.y + global_offset.y&#125;);<br>    corr.dist_z = corr.ctrl_pt.z - corr.corr_pt.z;<br>&#125;<br><span class="hljs-comment">// for interpolating the position of target gcp points</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">qualityCheck</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> &amp;gcp_path, <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> &amp;output_path)</span><br></span>&#123;<br>    <span class="hljs-keyword">namespace</span> PB = P2M::BaseType;<br>    <span class="hljs-comment">// load gcps</span><br>    <span class="hljs-keyword">if</span> (!P2M::Util::FileUtility::FileExist(output_path)) &#123;<br>        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cerr</span> &lt;&lt; <span class="hljs-string">"Output Path: "</span> &lt;&lt; output_path &lt;&lt; <span class="hljs-string">" doesn't exist!"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    checkCorrespondences checkcorrs;<br>    <span class="hljs-function">CCVector3d <span class="hljs-title">global_offset</span><span class="hljs-params">(<span class="hljs-number">0.0</span>,<span class="hljs-number">0.0</span>,<span class="hljs-number">0.0</span>)</span></span>;<br>    <span class="hljs-comment">// load check gcp points</span><br>    loadGcpFile(gcp_path, checkcorrs, global_offset);<br>    <span class="hljs-comment">// get loca part of ALS point clouds</span><br>    getCorrespondPoints(checkcorrs, global_offset);<br>    <span class="hljs-comment">// get height difference based on surface fitting</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;checkcorr : checkcorrs)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (checkcorr.isChecked)<br>        &#123;<br>            interpolateCoordinate(checkcorr, global_offset);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
 
         </div>
         
@@ -192,21 +223,21 @@
 
     <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
     <div class="has-text-grey is-size-7 is-block">
-    <p><span>title:</span><a href="/blogs/2023/02/09/B-spline-Interpolation/">B-spline Interpolation</a></p>
+    <p><span>title:</span><a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/">CloudCompare源代码学习</a></p>
     <p><span>author:</span><a href="/">AmazingHao</a></p>
     <p>
-        <span>link:</span><a href="/blogs/2023/02/09/B-spline-Interpolation/" title="B-spline Interpolation - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2023/02/09/B-spline-Interpolation/</a>
-        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2023/02/09/B-spline-Interpolation/"  aria-label="复制成功！"></i></span>
+        <span>link:</span><a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" title="CloudCompare源代码学习 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/"  aria-label="复制成功！"></i></span>
     </p>
-    <p><span>publish time:</span>2023-02-09</p>
-    <p><span>update time:</span>2023-02-09</p>
+    <p><span>publish time:</span>2023-03-13</p>
+    <p><span>update time:</span>2023-03-13</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
-    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2023/02/09/B-spline-Interpolation/">B-spline Interpolation</a></li>
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/">CloudCompare源代码学习</a></li>
      <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
-    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2023/02/09/B-spline-Interpolation/">http://whu-lyh.github.io/blogs/2023/02/09/B-spline-Interpolation/</a></li>
-    <li><strong>发布时间：</strong>2023-02-09</li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/">http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/</a></li>
+    <li><strong>发布时间：</strong>2023-03-13</li>
     <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
     </li>
 </ul> -->
@@ -225,15 +256,6 @@
 </script>
         
         
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/blogs/tags/B-Spline/" rel="tag">B-Spline</a>
-                </div>
-            </div>
-        </div>
-        
         
         
     </div>
@@ -246,17 +268,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/blogs/2023/02/09/B-Spline/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">B-Spline探秘</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2023/02/09/Rotation-Average/">
-                <span class="level-item">Rotation Average</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2023/03/13/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/">
+                <span class="level-item">ALS数据采集成果制作要求</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -480,10 +495,18 @@
                 <h3 class="menu-label">
                     目录
                 </h3>
-                <ul class="menu-list"><li>
-        <a class="is-flex" href="#Kalibr">
-        <span class="has-mr-6">1</span>
-        <span>Kalibr</span>
+                <ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#目的">
+        <span class="has-mr-6">1.1</span>
+        <span>目的</span>
+        </a></li></ul><li>
+        <a class="is-flex" href="#nanoflann返回值出现异常">
+        <span class="has-mr-6">2</span>
+        <span>nanoflann返回值出现异常</span>
+        </a></li><li>
+        <a class="is-flex" href="#使用CloudCompare自带的Octree">
+        <span class="has-mr-6">3</span>
+        <span>使用CloudCompare自带的Octree</span>
         </a></li></ul>
             </div>
         </div>
@@ -603,17 +626,7 @@
          
             
          
-            <article class="media"> <a href="/blogs/2023/02/09/B-Spline/" class="media-left">
-                        <p class="image is-64x64">
-                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="B-Spline探秘">
-                        </p>
-                    </a><div class="media-content">
-                    <div class="content">
-                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:15:55.735Z">2023-02-09</time></div>
-                        <a href="/blogs/2023/02/09/B-Spline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-Spline探秘</a>
-                    </div>
-                </div>
-            </article>
+            
          
             
          
@@ -655,17 +668,7 @@
          
             
          
-            <article class="media"> <a href="/blogs/2023/02/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
-                        <p class="image is-64x64">
-                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="关于控制点检核的一些思考">
-                        </p>
-                    </a><div class="media-content">
-                    <div class="content">
-                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-06T03:45:43.169Z">2023-02-06</time></div>
-                        <a href="/blogs/2023/02/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
-                    </div>
-                </div>
-            </article>
+            
         
     </div>
 </div>
@@ -799,7 +802,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/blogs/">
                 
-                    <img src="/blogs/images/logo.svg" alt="B-spline Interpolation" height="28">
+                    <img src="/blogs/images/logo.svg" alt="CloudCompare源代码学习" height="28">
                 
                 </a>
                 <p class="is-size-7">
