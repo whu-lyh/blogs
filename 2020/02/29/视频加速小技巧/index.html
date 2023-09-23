@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2020-02-29T04:38:33.000Z">
-<meta property="article:modified_time" content="2023-04-26T13:16:32.853Z">
+<meta property="article:modified_time" content="2023-09-23T15:10:37.985Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="FFMPEG">
 <meta name="twitter:card" content="summary">
@@ -240,12 +240,13 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><img src="./%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/0000000007-l.png" alt=""></td>
-<td align="center"><img src="./%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/0000000007-r.png" alt=""></td>
+<td align="center"><img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/0000000007-l.png" class=""></td>
+<td align="center"><img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/0000000007-r.png" class=""></td>
 </tr>
 </tbody></table>
 <p>the returned joined image (./dual_fisheye_image.png) is as followings:</p>
-<p><img src="./%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/dual_fisheye_image.png" alt=""></p>
+<img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/dual_fisheye_image.png" class="">
+
 <h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ul>
 <li><a href="https://stackoverflow.com/questions/24604689/how-to-join-two-images-into-one-with-ffmpeg">joint two images into one</a>:+1:</li>
 </ul>
@@ -255,7 +256,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./ffmpeg -i .\dual_fisheye_image.png -vf v360=dfisheye:e:ih_fov=185:iv_fov=185:yaw=-90 -y ./equirectangle_image.png<br></code></pre></td></tr></table></figure>
 
 <p>185 is the image FOV.</p>
-<p><img src="./%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/equirectangle_image.png" alt=""></p>
+{% asset_img equirectangle_image.png  %}
+
 <h4 id="References-1"><a href="#References-1" class="headerlink" title="References"></a>References</h4><ul>
 <li><a href="https://stackoverflow.com/questions/37796911/is-there-a-fisheye-or-dual-fisheye-to-equirectangular-filter-for-ffmpeg">fisheye to equirectangular image</a> (<strong>Recommanded</strong>:+1::+1::+1:)</li>
 <li><a href="https://stackoverflow.com/questions/68114739/unable-to-convert-dual-fisheye-image-to-equirectangular-image-using-ffmpeg-packa">similar as upper</a> for yaw angle setting demonstration.</li>
@@ -312,7 +314,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2020-02-29</p>
-    <p><span>update time:</span>2023-04-26</p>
+    <p><span>update time:</span>2023-09-23</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -453,7 +455,7 @@
                     </p>
                     <a href="/blogs/tags">
                         <p class="title has-text-weight-normal">
-                            22
+                            21
                         </p>
                     </a>
                 </div>
@@ -570,7 +572,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 16.67px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 16.67px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/PointCloud/" style="font-size: 10px;">PointCloud</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 13.33px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 13.33px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 16.67px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 16.67px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 13.33px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 13.33px;">鱼眼图像</a>
     </div>
 </div>
     

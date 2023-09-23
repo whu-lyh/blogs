@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2021-01-17T09:34:39.000Z">
-<meta property="article:modified_time" content="2023-09-21T09:10:41.368Z">
+<meta property="article:modified_time" content="2023-09-23T15:04:50.760Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="VS">
 <meta name="twitter:card" content="summary">
@@ -181,13 +181,16 @@
             
         </h1>
         <div class="content">
-            <h4 id="用户宏"><a href="#用户宏" class="headerlink" title="用户宏"></a>用户宏</h4><p>&emsp;&emsp;由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br>在属性管理器中选中任意配置环境中的<code>Microsoft.Cpp.x64.user</code>   ，弹出如下页面：<br><img src="./VS%E5%BC%80%E5%8F%91Tricks/%E7%94%A8%E6%88%B7%E5%AE%8F.png" alt="用户宏"><br>用一个你知道的缩写来作为名字，e.g. ThirdParty，对应的本地路径作为值即可。<br>在后续其他工程使用时可以使用$(ThirdParty)来表示该本地路径。非常方便。   </p>
+            <h4 id="用户宏"><a href="#用户宏" class="headerlink" title="用户宏"></a>用户宏</h4><p>&emsp;&emsp;由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br>在属性管理器中选中任意配置环境中的<code>Microsoft.Cpp.x64.user</code>   ，弹出如下页面：</p>
+<img src="/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/%E7%94%A8%E6%88%B7%E5%AE%8F.png" class="" title="用户宏">    
+<p>用一个你知道的缩写来作为名字，e.g. ThirdParty，对应的本地路径作为值即可。<br>在后续其他工程使用时可以使用$(ThirdParty)来表示该本地路径。非常方便。   </p>
 <h6 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h6><p>也可以选择将其设置为开发环境，即在代码编译过程中会使用你定义好的路径中的环境进行链接。   </p>
 <a id="more"></a>
 <h5 id="生成事件"><a href="#生成事件" class="headerlink" title="生成事件"></a>生成事件</h5><p>&emsp;&emsp;本地开发前或者后，很可能需要自定义生成的可执行文件的路径，但是又不想修改系统默认生成的路径<code>$(SolutionDir)$(Platform)\$(Configuration)\</code><br>那么可以通过两种方式做到上述操作：   </p>
 <ul>
 <li>使用Cmake管理工程项目；（这里已经使用VS管理了，就先不介绍这种方法啊，具体可以参考CMake-practice这个文档）</li>
-<li>可以尝试使用 <strong>生成事件</strong>, 如下图所示：<br><img src="./VS%E5%BC%80%E5%8F%91Tricks/%E7%94%9F%E6%88%90%E4%BA%8B%E4%BB%B6.jpg" alt="生成事件"><br>其实这里生成事件使用的就是Windows自带的DOS控制台<a href="https://whu-lyh.github.io/2020/03/21/WindowBat/">WindowsBat</a>的命令。   </li>
+<li>可以尝试使用 <strong>生成事件</strong>, 如下图所示：   <img src="/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/%E7%94%9F%E6%88%90%E4%BA%8B%E4%BB%B6.jpg" class="" title="生成事件">    
+其实这里生成事件使用的就是Windows自带的DOS控制台<a href="https://whu-lyh.github.io/2020/03/21/WindowBat/">WindowsBat</a>的命令。   </li>
 </ul>
 <ol>
 <li>例如你要将本工程中的.h文件拷贝到上述自定义宏路径<code>$(ThirdParty)\include</code>下。 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">XCOPY <span class="hljs-string">"..\$(ProjectName).h"</span> <span class="hljs-string">"$(ThirdParty)\include"</span> <span class="hljs-string">/D</span> <span class="hljs-string">/R</span> <span class="hljs-string">/Y</span><br></code></pre></td></tr></table></figure></li>
@@ -213,7 +216,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2021-01-17</p>
-    <p><span>update time:</span>2023-09-21</p>
+    <p><span>update time:</span>2023-09-23</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -354,7 +357,7 @@
                     </p>
                     <a href="/blogs/tags">
                         <p class="title has-text-weight-normal">
-                            22
+                            21
                         </p>
                     </a>
                 </div>
@@ -471,7 +474,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 16.67px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 16.67px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/PointCloud/" style="font-size: 10px;">PointCloud</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 13.33px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 13.33px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 16.67px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 13.33px;">Hexo</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 16.67px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 13.33px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 13.33px;">鱼眼图像</a>
     </div>
 </div>
     
