@@ -191,33 +191,33 @@
 </li>
 </ul>
 <h2 id="普通单目相机"><a href="#普通单目相机" class="headerlink" title="普通单目相机"></a>普通单目相机</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>​        一般常见的普通小孔成像相机的成像模型如下所示，小孔相机模型采用相似成像的方式（入射角和出射角等大），内参包括焦距$f_x,f_y$和主点偏差$c_x,c_y$。如果焦距一定，那么图像传感器像素平面的面积直接决定了相机视场角的大小，超过这个视场角范围的物体不会被镜头获取到。因此基于透镜成像原理的相机，视场角无法做到足够大，水平视场角一般小于140°。在某些时候，比如气象科学空间观测、太阳能辐射研究计算天空视角系数、安防视频监控等实际场景中可能会需要更大视场角的相机，那么这时候广角相机-鱼眼相机就出现了。</p>
-<div align="center"><img src="/blogs/.io//pinhole_perspective_camera.png" width="0.05%" height="0.05%"></div>
+<div align=center><img src="./鱼眼图像/pinhole_perspective_camera.png" width="0.05%" height="0.05%" ></div>
 
-<div align="center">透视成像的小孔成像相机模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a></div>
+<div align=center>透视成像的小孔成像相机模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw" >这里</a></div>
 
 <h3 id="投影模型"><a href="#投影模型" class="headerlink" title="投影模型"></a>投影模型</h3><p>$$<br>r_d=f \cdot tan \theta<br>$$</p>
 <a id="more"></a>
 
 <h3 id="投影和反投影过程"><a href="#投影和反投影过程" class="headerlink" title="投影和反投影过程"></a>投影和反投影过程</h3><p>​        <strong>不考虑图像畸变的情况下</strong>，透视（小孔）成像的相机投影过程（3D-&gt;2D）如下，$u,v$为<strong>图像像素坐标</strong>，$X,Y,Z$为相机坐标系下的坐标。<br>$$<br>\begin{align}<br>\label{pinhole_projection}<br>u &amp;= \frac{f_x X}{Z}+c_x \<br>v &amp;= \frac{f_y Y}{Z}+c_y<br>\end{align}<br>$$<br>​        其对应相机反投影过程（2D-&gt;3D）如下，$\bar{X},\bar{Y}$为归一化坐标（即相机坐标系下的坐标变换到归一化相机坐标系）。<br>$$<br>\begin{align}<br>\label{pinhole_inverse_projection}<br>\bar{X} &amp;= \frac{u-c_x}{f_x} \<br>\bar{Y} &amp;= \frac{v-c_y}{f_y}<br>\end{align}<br>$$</p>
 <h2 id="广角相机"><a href="#广角相机" class="headerlink" title="广角相机"></a>广角相机</h2><p>​        为了获得更大视角，出现了广角相机。根据==Davide Scaramuzza==大神写的“Omnidirectional Camera”一文，有三种镜头聚光方式：第一种通过透镜折射实现；第二种通过使用标准相机加一个面镜实现；第三种通过多个相机<strong>共心</strong>组装而成（测绘中常见这种，拼接出全景图像）。如下图所示：</p>
-<div align="center"><img src="/blogs/.io//omnidirectional_camera_paper_fig_1.png" width="0.05%" height="0.05%"></div>
+<div align=center><img src="./鱼眼图像/omnidirectional_camera_paper_fig_1.png" width="0.05%" height="0.05%"></div>
 
 <p>​        传统广角相机的镜头一般由多个镜头组成，如下图所示为几种镜头的结构方式及其参数：</p>
-<div align="center"><img src="/blogs/.io//Nature_Electron_wide_angle_carema.png" width="0.05%" height="0.05%"></div>
+<div align=center><img src="./鱼眼图像/Nature_Electron_wide_angle_carema.png" width="0.05%" height="0.05%"></div>
 
-<div align="center">广角镜头示意图，图源于An aquatic-vision-inspired camera based on a monocentric lens and a silicon nanorod photodiode array</div>
+<div align=center>广角镜头示意图，图源于An aquatic-vision-inspired camera based on a monocentric lens and a silicon nanorod photodiode array</div>
 
 <h2 id="鱼眼相机"><a href="#鱼眼相机" class="headerlink" title="鱼眼相机"></a>鱼眼相机</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>​        广角相机的视场角也没有超过180°，人们为了获得更大的视场角，根据<strong>斯内尔（Snell’s law）现象</strong>发明了鱼眼相机，又因为其镜头和鱼眼非常接近，因此取名鱼眼相机。鱼眼相机拥有更大的球面弧度（<strong>超广角</strong>），成像平面离透镜更近（<strong>短焦距</strong>）。为了获得更加的视场角，鱼眼相机只能牺牲一部分精度，引入一些畸变（主要是径向畸变）的同时压缩边缘。</p>
 <p>​        鱼眼镜头属于一种特殊的超广角镜头。</p>
 <p>​        鱼眼镜头采用<strong>非相似成像</strong>（入射角比出射角大）。其镜头组成如下图所示：</p>
-<div align="center"><img src="/blogs/.io//fisheye_lenses.png" style="zoom:100%;"></div>
+<div align=center><img src="./鱼眼图像/fisheye_lenses.png" style="zoom:100%;" /></div>
 
-<div align="center">鱼眼相机的镜头组成，图源于<a href="https://mp.weixin.qq.com/s/TffJXlFjGwOKC1kIFs3sjQ">这里</a></div>
+<div align=center>鱼眼相机的镜头组成，图源于<a href="https://mp.weixin.qq.com/s/TffJXlFjGwOKC1kIFs3sjQ" >这里</a></div>
 
 <p>​        鱼眼相机的成像方式可以看成是<strong>先将3d点投影到单位球面</strong>，单位球上的点在以偏离$z$轴$\xi(或f)$处通过针孔模型进行投影，这样水平入射的光线也能投影到图像的像素区域内。其成像模型如下所示。单位半球面上的点$q$投影到相机成像平面上的点$r_d$的过程是一个非线性过程，此时折射角$\theta_d$小于入射角$\theta$。成像模型也称投影模型。投影模型要表征的就是成像平面的像高$r_d$和入射角$\theta$之间的映射关系。</p>
-<div align="center"><img src="/blogs/.io//fisheye_carema_projection_model.png" style="zoom:100%;"></div>
+<div align=center><img src="./鱼眼图像/fisheye_carema_projection_model.png" style="zoom:100%;" /></div>
 
-<div align="center">鱼眼相机的成像模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a></div>
+<div align=center>鱼眼相机的成像模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw" >这里</a></div>
 
 <p>​        鱼眼相机根据不同的投影方式可以分为以下几种：$\theta$为入射光线与鱼眼相机光轴之间的夹角（入射角），$f$为焦距，$r_d$为像点至畸变中心的距离。</p>
 <table>
@@ -230,10 +230,10 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><img src="/blogs/.io//fisheye_carema_projection_model_1.png" alt></td>
-<td align="center"><img src="/blogs/.io//fisheye_carema_projection_model_2.png" alt></td>
-<td align="center"><img src="/blogs/.io//fisheye_carema_projection_model_3.png" alt></td>
-<td align="center"><img src="/blogs/.io//fisheye_carema_projection_model_4.png" alt></td>
+<td align="center"><img src="./%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model_1.png" alt=""></td>
+<td align="center"><img src="./%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model_2.png" alt=""></td>
+<td align="center"><img src="./%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model_3.png" alt=""></td>
+<td align="center"><img src="./%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model_4.png" alt=""></td>
 </tr>
 <tr>
 <td align="center">畸变量适中，最常用</td>
@@ -248,7 +248,7 @@
 <td align="center">$r_d=f \cdot sin(\theta)$</td>
 </tr>
 </tbody></table>
-<div align="center">鱼眼相机的成像模型分类，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a></div>
+<div align=center>鱼眼相机的成像模型分类，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw" >这里</a></div>
 
 <h3 id="通用相机模型"><a href="#通用相机模型" class="headerlink" title="通用相机模型"></a>通用相机模型</h3><p>​        鱼眼相机是由多个镜头组成的，上面的投影方式还是过于简单了，理论计算出来的结果和实际差很多，因此出现了一些对鱼眼相机进行建模的方案。常见的有Kannala-Brandt模型、Mei模型、Scaramuzza模型、PolyFisheye模型等。</p>
 <h4 id="Kannala-Brandt-模型"><a href="#Kannala-Brandt-模型" class="headerlink" title="Kannala-Brandt 模型"></a>Kannala-Brandt 模型</h4><p>​        Kannala-Brandt 模型发表于TPAMI2006的“A Generic Camera Model and Calibration Method for Conventional, Wide-Angle, and Fish-Eye Lenses”，作者将普通小孔成像、广角、超广角、鱼眼相机模型统一起来。同时统一了畸变的建模方式。通过将不同投影模型的函数，如$\sin,\tan$进行泰勒展开，发现遵循一个相似的多项式方程，因此Kannala-Brandt 模型采用了多项式来近似畸变。原始论文中给出了径向畸变、切向畸变等模型，但是实际中发现只选取多项式的前几项即可得到不错的精度，因此后续的代码库中均存在不同程度的简化和近似。如<a href="https://github.com/hengli/camodocal">camodocal</a>和<a href="https://docs.opencv.org/4.x/db/d58/group__calib3d__fisheye.html">OpenCV</a>中均采用了8参数模型(固定$k_0=1$，$k_1,k_2,k_3,k_4,f_x,f_y,c_x,c_y$)，如下为OpenCV中实现的通用相机去畸变模型，由于只是兼容鱼眼相机，因此其中充满小孔成像的影子。<br>$$<br>\begin{align}<br>世界坐标系X\rightarrow相机坐标系X_c &amp;:\left[\begin{array}{c} X_c \\ Y_c \\ Z_c \end{array} \right] = RX+t \<br>归一化相机坐标系p_c &amp;: x_c = \frac{X_c}{Z_c},\ y_c=\frac{Y_c}{Z_c}\<br>&amp; \theta = arctan(r),r^2 = x^2_c + y^2_c\<br>畸变模型 &amp;: \theta _d = \theta(k_0+k_1\theta^2+k_2\theta^4+k_3\theta^6+k_4\theta^8)\<br>去畸变之后的点p_{u} :&amp; x_d=\frac{\theta_d}{r}x_c, \ y_d=\frac{\theta_d}{r}y_c\<br>归一化相机坐标系\rightarrow 像素坐标系 &amp;:u=f_xx_d+c_x, \ v=f_yy_d+c_y<br>\end{align}<br>$$</p>
@@ -259,7 +259,7 @@
 </ul>
 <h4 id="Scaramuzza模型"><a href="#Scaramuzza模型" class="headerlink" title="Scaramuzza模型"></a>Scaramuzza模型</h4><p>​        Scaramuzza大神在IROS 2006的文章“A Toolbox for Easy Calibrating Omnidirectional Cameras”中提出的的鱼眼相机模型。</p>
 <h4 id="Mei模型"><a href="#Mei模型" class="headerlink" title="Mei模型"></a>Mei模型</h4><p>​        Mei模型是在ICRA2007中的“Single View Point Omnidirectional Camera Calibration from Planar Grids”一文中专门针对鱼眼相机提出的模型，也称为Unified Camera Model（或者unified omnidirectional camera model），同时被VINS-Fusion、VINS-Mono、鱼眼DSO采用，KITTI360数据集中提供的鱼眼相机也采用了这种模型。这种通用的相机模型可以模拟小孔成像的相机模型，也可以模拟鱼眼相机的成像模型。当$\xi$=0时，鱼眼相机模型就退化为了小孔相机模型。优点（源于<a href="https://mp.weixin.qq.com/s/aMJnwTvI87YrBKkmMaGQbQ">这里</a>）是它能精确的模拟各种图像设备和畸变的几何图像生成过程，（2）它的反投影是一个闭式解。</p>
-<div align="center"><img src="/blogs/.io//Mei_model.jpg" width="0.05%" height="0.05%"></div>
+<div align=center><img src="./鱼眼图像/Mei_model.jpg" width="0.05%" height="0.05%"></div>
 
 <p>​        鱼眼相机的投影过程为$\pi_c:\mathbb{R}^3 \rightarrow \Omega$：</p>
 <p>0.将世界坐标系下的点转到相机坐标系下，需要$R,T$;</p>
@@ -270,7 +270,7 @@
 <p>​        <strong>反投影过程（2D-&gt;3D）</strong>：(提供额外深度信息时才能得到实际的三维坐标，否则只能得到归一化平面上的点的三维点坐标)<br>$$<br>\begin{align}<br>\label{uocm_inverse_projection2}<br>\left[ \begin{array}{c}\tilde{u} \\ \tilde{v} \end{array} \right] &amp;=<br>\left[ \begin{array}{c}\frac{(u-c_x)}{f_x} \\ \frac{v-c_y}{f_y} \end{array} \right]\<br>\pi_u^{-1}(u)&amp;=\frac{\xi+\sqrt{1+(1-\xi^2)(\tilde{u}^2+\tilde{v}^2)}}{\tilde{u}^2+\tilde{v}^2+1}\left[ \begin{array}{c}\tilde{u} \\ \tilde{v} \\1\end{array} \right]-\left[ \begin{array}{c}0 \\ 0 \\ \xi \end{array} \right]<br>\end{align}<br>$$</p>
 <p>​        根据上述$\ref{fisheye_normalized_point}$中的$\mathbf{m}_u(x,y,1)$，对于$x,y$轴，只需要计算一个$\lambda= \frac{Z+\xi |\mathcal{X}|}{|\mathcal{X}|}$结合内参矩阵$K$即可实现从像素坐标系坐标$\mathbf{p}(u,v)$到归一化平面系坐标$\mathbf{m}_u(x,y,1)$向归一化球面系坐标$\mathcal{X_s}$的转换；对于$z$轴，则差了一个$\frac{Z}{|\mathcal{X}|}=\lambda-\xi$，因此核心在于找到$\lambda$到底应该是多少。转换过程：$\mathbf{m}_u \rightarrow \mathcal{X}_{C_p} \rightarrow \mathcal{X}_{C_m}$，推导过程如下：<br>$$<br>\begin{align}<br>\label{fisheye_2d_to_3d}<br>\mathbf{m}_u &amp;= (x,y,1)^T = K^{-1}\mathbf{p} \<br>multiply: \quad \lambda &amp;  \Downarrow\<br>\mathcal{X}_{C_p} &amp;= (\frac{X}{|\mathcal{X}|},\frac{Y}{|\mathcal{X}|},\frac{Z}{|\mathcal{X}|}+\xi)^{T} \<br>minus: \quad \xi &amp; \Downarrow \<br>\mathcal{X}_{C_m} &amp;= \frac{\mathcal{X}}{|\mathcal{X}|}=(\frac{X}{|\mathcal{X}|},\frac{Y}{|\mathcal{X}|},\frac{Z}{|\mathcal{X}|})^{T}<br>\end{align}<br>$$<br>​        $\lambda$的计算方法如下：<br>$$<br>\begin{align}<br>\label{lambda}<br>\lambda &amp;= \frac{Z+\xi |\mathcal{X}|}{|\mathcal{X}|} \<br>&amp;= \frac{1}{\sqrt{(\frac{X}{Z+\xi |\mathcal{X}|})^2+(\frac{Y}{Z+\xi |\mathcal{X}|})^2+(\frac{Z}{Z+\xi |\mathcal{X}|})^2}} \<br>&amp;= \frac{1}{\sqrt{(\frac{X}{Z+\xi |\mathcal{X}|})^2+(\frac{Y}{Z+\xi |\mathcal{X}|})^2+(\frac{Z+\xi |\mathcal{X}|-\xi |\mathcal{X}|}{Z+\xi |\mathcal{X}|})^2}} \<br>\label{lambda_3}<br>&amp;= \frac{1}{\sqrt{(\frac{X}{Z+\xi |\mathcal{X}|})^2+(\frac{Y}{Z+\xi |\mathcal{X}|})^2+(1-\frac{\xi}{\lambda})^2}} \<br>&amp;= \frac{1}{\sqrt{x^2+y^2+(1-\frac{\xi}{\lambda})^2}} \<br>\end{align}<br>$$<br>​        将上式转成二元一次方程求解$\lambda$的解析解如下：<br>$$<br>\begin{align}<br>(x^2+y^2)\lambda^2+(\lambda-\xi)^2 &amp;= 1 \<br>\Downarrow &amp; \<br>(1+x^2+y^2)\lambda^2-2\xi \lambda+(-1+\xi^2) &amp;= 0 \<br>\Downarrow &amp; \<br>\lambda &amp;= \frac{\xi+\sqrt{\xi^2+(1+x^2+y^2)(1-\xi^2)}}{(1+x^2+y^2)} \<br>&amp;= \frac{\xi+\sqrt{1+(x^2+y^2)(1-\xi^2)}}{(1+x^2+y^2)}<br>\end{align}<br>$$<br>​        <strong>2D-&gt;3D的射线变换</strong>为：从图像上任意像素为起点，方向朝向空间中的点，此射线上的所有点的归一化平面坐标均为$\mathbf{m}_u(x,y,1)$，按照$\ref{fisheye_2d_to_3d}$中将归一化平面坐标系下的坐标变换到归一化球面坐标系下坐标有$\ref{fisheye_3d_to_2d}$的假设。<br>$$<br>\begin{align}<br>\label{fisheye_3d_to_2d}<br>(\lambda x, \lambda y,\lambda - \xi)^T \backsimeq (x,y,m)^T<br>\end{align}<br>$$<br>​        结合$\ref{fisheye_normalized_point}$和$\ref{lambda_3}$可以得出$m=1-\xi/\lambda=1-\xi \frac{(1+x^2+y^2)}{\xi+\sqrt{\xi^2+(1+x^2+y^2)(1-\xi^2)}}$，即：<br>$$<br>\begin{align}<br>\label{fisheye_3d_to_2d2}<br>(x,y, 1-\xi \frac{(1+x^2+y^2)}{\xi+\sqrt{\xi^2+(1+x^2+y^2)(1-\xi^2)}})^T<br>\end{align}<br>$$</p>
 <h4 id="PolyFisheye模型"><a href="#PolyFisheye模型" class="headerlink" title="PolyFisheye模型"></a>PolyFisheye模型</h4><p>​        PolyFisheye模型是在IROS2017中的Dual-Fisheye Omnidirectional Stereo中提出的。</p>
-<div align="center"><img src="/blogs/.io//polyfisheye.png" width="0.05%" height="0.05%"></div>
+<div align=center><img src="./鱼眼图像/polyfisheye.png" width="0.05%" height="0.05%"></div>
 
 <p>​        从模型图上看基本和Mei模型一模一样，唯一的不同是，假设空间点$\mathcal{P}^c$最终投影得到的像素点为$u$，他们认为$u$到光心$O_i$的距离$\mathcal{R}$并不是直接等于沿着$\theta_r$方向上投影过来的大小，而是和$O^{cl}$到$u$的距离存在一个关于$\theta$的七次多项式的多项式倍数关系。这样就相比Mei模型多了七个参数来刻画鱼眼相机，自然就更准了。<br>$$<br>\begin{align}<br>\mathcal{R}(\theta)=[1+\mathcal{D}(\theta)] \mathcal{R}_{ref}(\theta)=f\Sigma_{i=0}^N \eta_i \theta^i<br>\end{align}<br>$$<br>​        鱼眼相机的投影模型分为三步：1）$\mathcal{P}^c \rightarrow \bar{\mathcal{P}^c}$相机坐标系中的点转换到单位球面上；2）$\bar{\mathcal{P}}^c \rightarrow \overrightarrow{O^{cl}\mathbf{u}}$ 单位球面上的点进行光线的折射变换;3）$\overrightarrow{O^{cl}\mathbf{u}} \rightarrow \mathbf{u}$将光线投影到像平面空间。其中$\mathcal{R}(\theta)=\overrightarrow{O_i\mathbf{u}}$就是实际入射光线折射之后投影到相平面坐标系的长度，存在畸变，而$\mathcal{R}_{ref}$就是无畸变的投影向量，具体如下：</p>
 <p>1.将相机坐标系中的点归一化到单位球面$\bar{\mathcal{P}}^c=-\mathcal{P}^c/||\mathcal{P}^c||=[\bar{x}^c,\bar{y}^c,\bar{z}^c]^T$;</p>
@@ -326,9 +326,9 @@
 <li>OpenCV、Kalibr中关于Mei模型的实现也是基于Lionel Heng博士的CamOdoCal基础上完成的。</li>
 </ul>
 <h3 id="鱼眼图像转换"><a href="#鱼眼图像转换" class="headerlink" title="鱼眼图像转换"></a>鱼眼图像转换</h3><h4 id="鱼眼图像转普通（框幅式）图像"><a href="#鱼眼图像转普通（框幅式）图像" class="headerlink" title="鱼眼图像转普通（框幅式）图像"></a>鱼眼图像转普通（框幅式）图像</h4><p>​        一般的V-SLAM或者基于视觉的场景感知任务中使用的都是普通的单目相机，因此需要进行畸变矫正转成框幅式图像。</p>
-<div align="center"><img src="/blogs/.io//fisheye2pinhole.png"></div>
+<div align=center><img src="./鱼眼图像/fisheye2pinhole.png"></div>
 
-<div align="center">鱼眼图像转框幅式图像，图源于<a href="https://epsavlc.github.io/2019/10/21/fisheye_calib.html#fn:1">这里</a></div>
+<div align=center>鱼眼图像转框幅式图像，图源于<a href="https://epsavlc.github.io/2019/10/21/fisheye_calib.html#fn:1" >这里</a></div>
 
 <p>​        转成框幅式图像，首先需要虚拟一个框幅式（小孔成像）相机的内参，然后通过归一化平面作为桥梁，构建鱼眼图像每个像素与框幅式图像每个像素之间的关系。步骤：</p>
 <p>1.先确定虚拟相机的内参（$f_x,f_y,c_x,c_y$）与相对于鱼眼相机的外参。</p>
@@ -341,13 +341,13 @@
 </ul>
 <h4 id="全景图像转鱼眼图像"><a href="#全景图像转鱼眼图像" class="headerlink" title="全景图像转鱼眼图像"></a>全景图像转鱼眼图像</h4><p>​        与全景图像转成框幅式图像的原理类似。就是找到鱼眼图像上每个像素与全景图像上的对应映射关系即可，<a href="https://mp.weixin.qq.com/s/ygI6BC1JXcSP7QAwKa_Vqg">可见</a>。这里简单列一下要点：</p>
 <p>1.以下图的全景图像为例，将其转换为右侧的鱼眼图像，鱼眼相机的中心指向天空，那么全景图像的底边宽$W_c$对应了鱼眼相机圆形视角的周长，而顶边则压缩为了一个中心点，鱼眼图像的半径$r_0\neq H_c$；</p>
-<div align="center"><img src="/blogs/.io//panorama2fisheye_1.jpg"></div>
+<div align=center><img src="./鱼眼图像/panorama2fisheye_1.jpg"></div>
 
 <p>2.因此鱼眼图像的半径只能通过全景图像的底边$W_c$来计算，鱼眼图像的中心位置$C_x,C_y$就知道了；</p>
-<div align="center"><img src="/blogs/.io//panorama2fisheye_2.jpg"></div>
+<div align=center><img src="./鱼眼图像/panorama2fisheye_2.jpg"></div>
 
 <p>3.全景与鱼眼图像像素映射关系是从鱼眼图像的坐标开始，找到每一个像素$x_f,y_f$与全景图像上对应像素之间的关系$x_c,y_c$，为了不产生空洞，因此是遍历鱼眼图像像素开始，找到对应的全景图像像素，赋值颜色即可。映射关系中有一个$\theta$需要根据所处的鱼眼图像坐标象限来判断才能展开到$2\pi$空间。</p>
-<div align="center"><img src="/blogs/.io//panorama2fisheye_3.jpg"></div>
+<div align=center><img src="./鱼眼图像/panorama2fisheye_3.jpg"></div>
 
 <h5 id="细节补充-1"><a href="#细节补充-1" class="headerlink" title="细节补充"></a>细节补充</h5><p>​        试验了一下发现部分全景图像转换的结果不是很好。尤其是第二章的鱼眼图像边缘不平滑。全景图像本身有问题的话，转出来的鱼眼图像也不好。</p>
 <table>
@@ -358,17 +358,17 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><img src="/blogs/.io//panorama2fisheye_src.jpg" alt></td>
-<td align="center"><img src="/blogs/.io//panorama2fisheye_tgt.jpg" alt></td>
+<td align="center"><img src="./%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_src.jpg" alt=""></td>
+<td align="center"><img src="./%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt=""></td>
 </tr>
 <tr>
-<td align="center"><img src="/blogs/.io//panorama2fisheye_src2.jpg" alt></td>
-<td align="center"><img src="/blogs/.io//panorama2fisheye_tgt2.jpg" alt></td>
+<td align="center"><img src="./%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_src2.jpg" alt=""></td>
+<td align="center"><img src="./%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt2.jpg" alt=""></td>
 </tr>
 </tbody></table>
 <h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><ul>
-<li><input disabled type="checkbox"> <a href="https://stackoverflow.com/questions/56901894/c-algorithm-to-convert-a-fisheye-image-to-an-equirectangular-image-with-opencv?rq=1">https://stackoverflow.com/questions/56901894/c-algorithm-to-convert-a-fisheye-image-to-an-equirectangular-image-with-opencv?rq=1</a></li>
-<li><input disabled type="checkbox"> </li>
+<li><input disabled="" type="checkbox"> <a href="https://stackoverflow.com/questions/56901894/c-algorithm-to-convert-a-fisheye-image-to-an-equirectangular-image-with-opencv?rq=1">https://stackoverflow.com/questions/56901894/c-algorithm-to-convert-a-fisheye-image-to-an-equirectangular-image-with-opencv?rq=1</a></li>
+<li><input disabled="" type="checkbox"> </li>
 </ul>
 <h2 id="可视化工具"><a href="#可视化工具" class="headerlink" title="可视化工具"></a>可视化工具</h2><ul>
 <li><a href="https://renderstuff.com/tools/360-panorama-web-viewer/">web端展示</a>，导入全景图像，输出可以360展示的VR视角图像。</li>
@@ -947,10 +947,6 @@
          
             
          
-            
-         
-            
-         
             <article class="media"> <a href="/blogs/2023/04/27/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="鱼眼图像转等距投影图像">
@@ -962,6 +958,10 @@
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
         
     </div>
 </div>

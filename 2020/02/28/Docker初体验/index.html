@@ -218,14 +218,14 @@
 <p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Docker_images_container.png" alt="Docker_images_container"></p>
 <h3 id="Docker安装-以Win10安装为例，Linux详见另一个博客"><a href="#Docker安装-以Win10安装为例，Linux详见另一个博客" class="headerlink" title="Docker安装/(以Win10安装为例，Linux详见另一个博客)"></a>Docker安装/(以Win10安装为例，Linux详见另一个博客)</h3><p>Docker <a href="https://www.docker.com">官网</a>：<a href="https://www.docker.com">https://www.docker.com</a></p>
 <p>Github Docker <a href="https://github.com/docker/docker-ce">源码</a>：<a href="https://github.com/docker/docker-ce">https://github.com/docker/docker-ce</a>   </p>
-<h4 id="1-Docker-Desktop下载"><a href="#1-Docker-Desktop下载" class="headerlink" title="1. Docker-Desktop下载"></a>1. Docker-Desktop下载</h4><p>&emsp;&emsp;打开 DockerHub 直接下载 <a href="https://hub.docker.com/editions/community/docker-ce-desktop-windows">docker-desktop</a> 安装包即可。下载完成会得到<font color="blue"><strong>“Docker Desktop Installer.exe”</strong></font>软件，选个合适的路径，一路Next安装即可。   </p>
+<h4 id="1-Docker-Desktop下载"><a href="#1-Docker-Desktop下载" class="headerlink" title="1. Docker-Desktop下载"></a>1. Docker-Desktop下载</h4><p>&emsp;&emsp;打开 DockerHub 直接下载 <a href="https://hub.docker.com/editions/community/docker-ce-desktop-windows">docker-desktop</a> 安装包即可。下载完成会得到<font color=blue><strong>“Docker Desktop Installer.exe”</strong></font>软件，选个合适的路径，一路Next安装即可。   </p>
 <ul>
 <li>Win7 或Win8 需要借助 <a href="http://mirrors.aliyun.com/docker-toolbox/windows/docker-toolbox/">docker toolbox</a> 完成安装。              </li>
 <li>Win10需要开启Hyper-V功能，开启位置位于：Win10左下角第一个图标右键单击-&gt;应用和功能-&gt;启用或关闭Windows功能，从中找到Hyper-V选中即可。   </li>
 </ul>
 <p>安装完成之后会在Windows的图标中出现一个小鲸鱼的图标。</p>
 <h4 id="2-安装测试"><a href="#2-安装测试" class="headerlink" title="2. 安装测试"></a>2. 安装测试</h4><p>&emsp;&emsp;可以右键单击Docker图标进行一些个性化调整。为了加速软件和镜像的下载速度，最好将docker镜像源为阿里云或中科大源，不然下载速度会很慢。如下：   </p>
-<div align="center"><img src="/blogs/.io//setting.jpg"></div>      
+<div align=center><img src="Docker初体验/setting.jpg"></div>      
 
 <h3 id="Docker基础命令"><a href="#Docker基础命令" class="headerlink" title="Docker基础命令"></a>Docker基础命令</h3><p>安装完之后，在系统任何位置打开控制台或bash命令行（终端均可运行docker命令）  </p>
 <ul>
@@ -245,7 +245,7 @@
 <li>docker rmi imageName<br>删除镜像，需要注意的是再删除镜像的时候需要将正在运行的容器先删除掉。</li>
 <li>docker container prune<br>清理掉所有处于终止状态的容器。   </li>
 <li>docker login/logout<br>登入登出Docker Hub账号，这样就可以下载自己仓库中的镜像了。   <h3 id="Docker高级应用"><a href="#Docker高级应用" class="headerlink" title="Docker高级应用"></a>Docker高级应用</h3></li>
-<li><strong>端口映射</strong><br>如使用docker环境进行深度学习训练时，需要经对应的pytorch日志通过浏览器的方式打开查看，但是docker是没有图形化界面的因此可以通过端口映射的方式将docker环境中的端口映射到本地。<br>如：<code>docker run -d -p 5000:5000 training/webapp python app.py</code>， 即容器内部的 5000 端口映射到我们本地主机的 5000 端口上。<br>通过<code>docker port containerId</code> 即可查看容器端口映射情况。<br>当我们使用端口映射创建一个容器之后，容器就一直存在，退出后使用run退出后容器也退出。那么下次我们还想使用相同的端口进入相同的容器，则可以直接<font color="blue">start</font>该容器。<br>&emsp;&emsp;可以使用<code>docker ps -a</code> 查看正在运行的容器，可以发现之前的容器已经可以使用相同的端口进行连接了，这里使用如vnc一类的远程连接软件可以愉快开始摸鱼。   </li>
+<li><strong>端口映射</strong><br>如使用docker环境进行深度学习训练时，需要经对应的pytorch日志通过浏览器的方式打开查看，但是docker是没有图形化界面的因此可以通过端口映射的方式将docker环境中的端口映射到本地。<br>如：<code>docker run -d -p 5000:5000 training/webapp python app.py</code>， 即容器内部的 5000 端口映射到我们本地主机的 5000 端口上。<br>通过<code>docker port containerId</code> 即可查看容器端口映射情况。<br>当我们使用端口映射创建一个容器之后，容器就一直存在，退出后使用run退出后容器也退出。那么下次我们还想使用相同的端口进入相同的容器，则可以直接<font color=blue>start</font>该容器。<br>&emsp;&emsp;可以使用<code>docker ps -a</code> 查看正在运行的容器，可以发现之前的容器已经可以使用相同的端口进行连接了，这里使用如vnc一类的远程连接软件可以愉快开始摸鱼。   </li>
 <li>docker top containerId<br>使用docker top来查看容器内部运行的进程。   </li>
 <li>docker inspect containerId<br>使用docker inspect来查看 Docker 的底层信息。它会返回一个 JSON 文件记录着 Docker 容器的配置和状态信息。   </li>
 <li><strong>镜像更新</strong><br>&emsp;&emsp;这里将涉及到Docker这一灵活的容器引擎的优越之处,镜像可以理解为是一个类，镜像就是一个模板，那么在类不满足需求时可以添加不同的成员函数或者成员以丰富类的功能。<br>Docker同样提供了这个功能，允许将当前的容器内容更新到镜像中，这样当换了一个环境重新加载同一镜像时，可以获得相同的环境，以减少开发成本。<br>&emsp;&emsp;当使用一个镜像创建了一个容器时，会在该容器上配置环境，如深度学习框架和SLAM框架。为了避免换个电脑平台重新配置，可以将该容器打包成一个镜像，并推送到Docker Hub<br><code>docker commit -m=&quot;has update&quot; -a=&quot;amazinghao&quot; 462f5c932e5c amazinghao/ubuntu:v2</code>    </li>
@@ -258,7 +258,7 @@
 <h3 id="参考教程"><a href="#参考教程" class="headerlink" title="参考教程"></a>参考教程</h3><ol>
 <li><a href="https://www.runoob.com/docker/docker-tutorial.html">菜鸟教程</a> </li>
 </ol>
-<p>泡泡机器人SLAM与你一同成长<font color="green">❤</font></p>
+<p>泡泡机器人SLAM与你一同成长<font color=green>❤</font></p>
 
         </div>
         
@@ -747,12 +747,6 @@
          
             
          
-            
-         
-            
-         
-            
-         
             <article class="media"> <a href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Docker用法补充">
@@ -764,6 +758,12 @@
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
+         
+            
          
             
          

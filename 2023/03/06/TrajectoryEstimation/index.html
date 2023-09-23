@@ -204,17 +204,17 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Trajectory-level.png" alt></td>
-<td><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Sensor-level.png" alt></td>
+<td><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Trajectory-level.png" alt=""></td>
+<td><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Sensor-level.png" alt=""></td>
 </tr>
 </tbody></table>
-<h3 id="Multi-sensor-platform"><a href="#Multi-sensor-platform" class="headerlink" title="Multi-sensor platform"></a>Multi-sensor platform</h3><p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Multi-sensor-platform.png" alt></p>
+<h3 id="Multi-sensor-platform"><a href="#Multi-sensor-platform" class="headerlink" title="Multi-sensor platform"></a>Multi-sensor platform</h3><p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Multi-sensor-platform.png" alt=""></p>
 <h3 id="Taxonomy-of-filtering-methods"><a href="#Taxonomy-of-filtering-methods" class="headerlink" title="Taxonomy of filtering methods."></a>Taxonomy of filtering methods.</h3><p>在Kalman filter下面还可以加一个error state kalman filter。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Filter-methods.png" alt></p>
+<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Filter-methods.png" alt=""></p>
 <h3 id="建模框架"><a href="#建模框架" class="headerlink" title="建模框架"></a>建模框架</h3><p>​        轨迹估计需要对两个有些不同的方面进行建模：传感器测量的建模和轨迹本身的建模。 虽然经典方法将轨迹（以及其他时变量）表示为状态变量的离散时间序列，但一些较新的公式使用连续表示。</p>
 <p>​        通常，有必要在成像传感器采样时间获得轨迹估计。 如果此类测量的数量很大，则可能无法在所有这些时间明确估计轨迹，要求轨迹可以以某种方式由相对较少数量的参数表示，有两种方案：1）计算固定时间点的轨迹估计，并使用插值法得出所需的中间值，或2）使用可在需要时进行评估的显式连续时间表示。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Trajectory_estimation_characterization.png" alt></p>
-<h3 id="文献总结"><a href="#文献总结" class="headerlink" title="文献总结"></a>文献总结</h3><p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Table2.png" alt></p>
+<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Trajectory_estimation_characterization.png" alt=""></p>
+<h3 id="文献总结"><a href="#文献总结" class="headerlink" title="文献总结"></a>文献总结</h3><p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Table2.png" alt=""></p>
 <p>​        这个Tong 2013[^ 2]中做了基于高斯过程的状态估计，Furgale 2012[^ 3]-2013做了基于Spline的状态估计。但是两种方法之间的区别和联系，以及又是是什么，尚不明确。Furgale使用的B-Spline的表示方法是Qin的方案。高斯过程的方案需要对运动有一个先验，一般使用的都是高斯白噪声。这样才能得到可逆的协方差矩阵，提升计算效率。</p>
 <ul>
 <li>连续轨迹表示在减少参数数量和轨迹保真度之间进行权衡。 这种权衡通常会导致更高频率的平滑，这可能是理想的，也可能不是理想的，具体取决于应用。</li>
@@ -697,8 +697,6 @@
          
             
          
-            
-         
             <article class="media"> <a href="/blogs/2023/03/06/Hdl_graph_slam/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
@@ -711,10 +709,6 @@
                 </div>
             </article>
          
-            
-         
-            
-         
             <article class="media"> <a href="/blogs/2023/03/06/Hdl_graph_slam2/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
@@ -726,6 +720,12 @@
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
+         
+            
          
             
          
