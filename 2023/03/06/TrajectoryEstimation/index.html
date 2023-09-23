@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2023-03-06T08:56:42.663Z">
-<meta property="article:modified_time" content="2023-07-21T07:09:02.074Z">
+<meta property="article:modified_time" content="2023-09-23T09:14:10.625Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="LiDAR_SLAM">
 <meta property="article:tag" content="PaperReview">
@@ -169,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    22 分钟 读完 (大约 3310 个字)
+                    22 分钟 读完 (大约 3311 个字)
                 </span>
                 
                 
@@ -188,6 +188,8 @@
 <p>​        流程：首先用Kalman filtering 将GNSS和IMU融合到一起，如果轨迹足够准确，可以直接获得3D点云。也可以在后面加一个平差步骤，结合影像传感器的观测实现融合传感器定向，目的是：1）改正轨迹；2）传感器定向和标定；3）获取3D模型数据，e.g.点云。</p>
 <p>​        需要有一些假设：通常假设轨迹误差是由于缓慢变化的 GNSS 误差或未补偿的惯性传感器漂移造成的，因此是低频的，而轨迹的较高频率分量相对准确。 实际上，校正要么与飞行几何相关联，作为每条带的固定偏移，要么建模为缓慢时变。 由于轨迹误差在带内也可能变化很大，因此这种调整在实践中通常需要高度灵活的校正模型，而这也是的模型有较高的过拟合风险，导致点云中出现全局的变形。</p>
 <p>​        这些问题是的在传感器层级进行统一的误差建模的方法开始流形。</p>
+<a id="more"></a>
+
 <ol start="2">
 <li>联合方法。</li>
 </ol>
@@ -249,7 +251,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2023/03/06/TrajectoryEstimation/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2023-03-06</p>
-    <p><span>update time:</span>2023-07-21</p>
+    <p><span>update time:</span>2023-09-23</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -697,6 +699,10 @@
          
             
          
+            
+         
+            
+         
             <article class="media"> <a href="/blogs/2023/03/06/Hdl_graph_slam/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
@@ -720,10 +726,6 @@
                     </div>
                 </div>
             </article>
-         
-            
-         
-            
          
             
          

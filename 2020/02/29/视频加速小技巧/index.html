@@ -245,8 +245,7 @@
 </tr>
 </tbody></table>
 <p>the returned joined image (./dual_fisheye_image.png) is as followings:</p>
-<img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/dual_fisheye_image.png" class="">
-
+<p><img src="./%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/dual_fisheye_image.png" alt=""></p>
 <h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ul>
 <li><a href="https://stackoverflow.com/questions/24604689/how-to-join-two-images-into-one-with-ffmpeg">joint two images into one</a>:+1:</li>
 </ul>
@@ -256,8 +255,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./ffmpeg -i .\dual_fisheye_image.png -vf v360=dfisheye:e:ih_fov=185:iv_fov=185:yaw=-90 -y ./equirectangle_image.png<br></code></pre></td></tr></table></figure>
 
 <p>185 is the image FOV.</p>
-{% asset_img "equirectangle_image.png" "" %}
-
+<p><img src="./%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/equirectangle_image.png" alt=""></p>
 <h4 id="References-1"><a href="#References-1" class="headerlink" title="References"></a>References</h4><ul>
 <li><a href="https://stackoverflow.com/questions/37796911/is-there-a-fisheye-or-dual-fisheye-to-equirectangular-filter-for-ffmpeg">fisheye to equirectangular image</a> (<strong>Recommanded</strong>:+1::+1::+1:)</li>
 <li><a href="https://stackoverflow.com/questions/68114739/unable-to-convert-dual-fisheye-image-to-equirectangular-image-using-ffmpeg-packa">similar as upper</a> for yaw angle setting demonstration.</li>
