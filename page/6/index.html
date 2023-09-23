@@ -163,7 +163,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 分钟 读完 (大约 153 个字)
+                    1 分钟 读完 (大约 151 个字)
                 </span>
                 
                 
@@ -176,7 +176,9 @@
             
         </h1>
         <div class="content">
-            <h3 id="OSG中的坐标系和OpenGL中的坐标系"><a href="#OSG中的坐标系和OpenGL中的坐标系" class="headerlink" title="OSG中的坐标系和OpenGL中的坐标系"></a>OSG中的坐标系和OpenGL中的坐标系</h3><p>OSG中采用四元数表示旋转：<code>osg::Quat(angle to rotate, rotate around axis);</code><br>///<strong><em><br>///Q quaternion </em> P quaternion means that first conduct a rotation P,Second conduct a rotation Q, means a fusion about two rotations with a multiplication operation<br>///*</strong><br>&emsp;&emsp;The osg coordinate definition as left-hand coordinate which is right-front-up(x-y-z) and<br>the OpenGL coordinate definition also as left-hand coordinate which is right-up-behind(x-y-z), z axis is pointer to outside the screen<br>The OSG default viewport is along down direction, so heading is rotate to be equal to the y positive direction, rotate axis is x axis </p>
+            <h3 id="OSG中的坐标系和OpenGL中的坐标系"><a href="#OSG中的坐标系和OpenGL中的坐标系" class="headerlink" title="OSG中的坐标系和OpenGL中的坐标系"></a>OSG中的坐标系和OpenGL中的坐标系</h3><p>OSG中采用四元数表示旋转：<code>osg::Quat(angle to rotate, rotate around axis);</code>  </p>
+<p>///<strong><em><br>///Q quaternion </em> P quaternion means that first conduct a rotation P,Second conduct a rotation Q, means a fusion about two rotations with a multiplication operation<br>///*</strong>      </p>
+<p>The osg coordinate definition as left-hand coordinate which is right-front-up(x-y-z) and<br>the OpenGL coordinate definition also as left-hand coordinate which is right-up-behind(x-y-z), z axis is pointer to outside the screen<br>The OSG default viewport is along down direction, so heading is rotate to be equal to the y positive direction, rotate axis is x axis </p>
         </div>
         
         
