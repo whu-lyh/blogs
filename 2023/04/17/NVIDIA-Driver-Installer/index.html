@@ -177,22 +177,29 @@
             
         </h1>
         <div class="content">
-            <ol start="0">
-<li>查看系统显卡<br> <code>lspci | grep -i vga</code>，会弹出设备编号，在<a href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
-<li>下载对应驱动<br> 位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
+            <ol start="0" type="1">
+<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a
+href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a
+href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
+<li>下载对应驱动
+位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
 </ol>
 <ul>
-<li>tips: 检查cuda版本和显卡驱动的<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
+<li>tips: 检查cuda版本和显卡驱动的<a
+href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
 </ul>
-<ol start="2">
-<li>卸载之前的显卡驱动<br><code>sudo apt-get automove --purge nvidia-×</code></li>
-<li>给.run文件权限<br><code>sudo chmod a+x xxx.run</code></li>
-<li>关闭图形界面<br>ctrl+alt+f1</li>
-<li>关闭lightdm服务<br><code>sudo service lightdm stop</code></li>
-<li>安装驱动<br><code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
-<li>打开lightdm<br><code>sudo service lightdm start</code></li>
-<li>如果没反应，再试试<br><code>sudo syetemctl start gdm.service</code> or  <code>sudo syetemctl enable gdm.service</code></li>
-<li>打开图形化界面<br> <code>ctrl+alt+f7</code></li>
+<ol start="2" type="1">
+<li>卸载之前的显卡驱动
+<code>sudo apt-get automove --purge nvidia-×</code></li>
+<li>给.run文件权限 <code>sudo chmod a+x xxx.run</code></li>
+<li>关闭图形界面 ctrl+alt+f1</li>
+<li>关闭lightdm服务 <code>sudo service lightdm stop</code></li>
+<li>安装驱动
+<code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
+<li>打开lightdm <code>sudo service lightdm start</code></li>
+<li>如果没反应，再试试 <code>sudo syetemctl start gdm.service</code> or
+<code>sudo syetemctl enable gdm.service</code></li>
+<li>打开图形化界面 <code>ctrl+alt+f7</code></li>
 <li>重启</li>
 <li>Ubuntu22.04似乎不用这么麻烦了，直接重装完之后就有显卡驱动了，试图卸载过，但是重装失败，还不如直接用预先安装好的。</li>
 </ol>
@@ -626,8 +633,6 @@
          
             
          
-            
-         
             <article class="media"> <a href="/blogs/2023/01/16/ROS%20basic%20manager/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ROS basic usage and manager">
@@ -639,6 +644,8 @@
                     </div>
                 </div>
             </article>
+         
+            
          
             
          

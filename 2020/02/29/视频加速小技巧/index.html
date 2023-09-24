@@ -11,12 +11,12 @@
 <title>FFMPEG-Usage - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="Usage&amp;emsp;&amp;emsp;Here, i’m trying to sequeeze a normal video to a n times faster.   But, i found that there are many ways to relize this, such as   ffmpeg and adjust the speed while roamming, etc.">
+    <meta name="description" content="Usage   Here, i&#39;m trying to sequeeze a normal video to a n times faster. But, i found that there are many ways to relize this, such as  ffmpeg and adjust the speed while roamming, etc.  OpenCV">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FFMPEG-Usage">
 <meta property="og:url" content="http://whu-lyh.github.io/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="Usage&amp;emsp;&amp;emsp;Here, i’m trying to sequeeze a normal video to a n times faster.   But, i found that there are many ways to relize this, such as   ffmpeg and adjust the speed while roamming, etc.">
+<meta property="og:description" content="Usage   Here, i&#39;m trying to sequeeze a normal video to a n times faster. But, i found that there are many ways to relize this, such as  ffmpeg and adjust the speed while roamming, etc.  OpenCV">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2020-02-29T04:38:33.000Z">
@@ -177,126 +177,183 @@
             
         </h1>
         <div class="content">
-            <h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><p>&emsp;&emsp;Here, i’m trying to sequeeze a normal video to a n times faster.   <strong>But</strong>, i found that there are many ways to relize this, such as </p>
+            <h3 id="usage">Usage</h3>
+<p>  Here, i'm trying to sequeeze a normal video to a n times faster.
+<strong>But</strong>, i found that there are many ways to relize this,
+such as</p>
 <ul>
-<li><p>ffmpeg and adjust the speed while roamming, etc.   </p>
+<li>ffmpeg and adjust the speed while roamming, etc.<br />
 </li>
-<li><p>OpenCV requires being complied with <strong>ffmpeg</strong>, which i didn’t have the condition and many video format(.mp4) is not well supported.  </p>
-<a id="more"></a>  
-
-</li>
+<li>OpenCV requires being complied with <strong>ffmpeg</strong>, which i
+didn't have the condition and many video format(.mp4) is not well
+supported.</li>
 </ul>
-<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><ul>
-<li>Under Linux </li>
+<p><a id="more"></a></p>
+<h3 id="installation">Installation</h3>
+<ul>
+<li>Under Linux</li>
 </ul>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> ffmpeg<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>Under Windows</li>
 </ul>
-<p>Directly download the binary <strong>executable</strong> file from <a href="https://github.com/BtbN/FFmpeg-Builds">the official page</a>.  Move to the bin folder and run the <code>./ffmpeg</code> in command line.</p>
-<p>For example the “ffmpeg-master-latest-win64-gpl-shared” file.</p>
-<h3 id="Some-common-command-line-arguments"><a href="#Some-common-command-line-arguments" class="headerlink" title="Some common command line arguments"></a>Some common command line arguments</h3><p>From ffmpeg <a href="https://ffmpeg.org/ffmpeg-filters.html#v360">official page</a>.</p>
-<ol>
-<li><code>-y</code>: (default) to automatically override the out file without further confirmation.</li>
+<p>Directly download the binary <strong>executable</strong> file from <a
+href="https://github.com/BtbN/FFmpeg-Builds">the official page</a>. Move
+to the bin folder and run the <code>./ffmpeg</code> in command line.</p>
+<p>For example the "ffmpeg-master-latest-win64-gpl-shared" file.</p>
+<h3 id="some-common-command-line-arguments">Some common command line
+arguments</h3>
+<p>From ffmpeg <a
+href="https://ffmpeg.org/ffmpeg-filters.html#v360">official
+page</a>.</p>
+<ol type="1">
+<li><code>-y</code>: (default) to automatically override the out file
+without further confirmation.</li>
 <li><code>-i</code>: input file.</li>
 <li><code>-vf</code>: video filter, e.g. v360 et al.</li>
 <li><code>-bufsize</code>: set the buffer size.</li>
 <li><code>-c:v libx265</code>: libx265 video encoder.</li>
 <li><code>-b:v 40000k</code>: setting code rate of video.</li>
-<li><code>--preset</code>: 主要调节编码速度和质量的平衡，有ultrafast（转码速度最快，视频往往也最模糊）、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo，从快到慢.</li>
+<li><code>--preset</code>:
+主要调节编码速度和质量的平衡，有ultrafast（转码速度最快，视频往往也最模糊）、superfast、veryfast、faster、fast、medium、slow、slower、veryslow、placebo，从快到慢.</li>
 </ol>
-<h3 id="Video-speed-acceleration"><a href="#Video-speed-acceleration" class="headerlink" title="Video speed acceleration"></a>Video speed acceleration</h3><ol>
-<li>Speed or slow down the video, and the example as followings:</li>
+<h3 id="video-speed-acceleration">Video speed acceleration</h3>
+<ol type="1">
+<li>Speed or slow down the video, and the example as followings: *** 4
+times faster:+1:</li>
 </ol>
-<hr>
-<p>4 times faster:+1:   </p>
-<p><code>ffmpeg -i origin.mp4 -vf  &quot;setpts=0.25\*PTS&quot; UpTheOrigin.mp4</code><br>4 times slower   </p>
-<p><code>ffmpeg -i origin.mp4 -vf &quot;setpts=4\*PTS&quot; DownTheOrigin.mp4</code>  </p>
-<hr>
-<ol start="2">
-<li>Change the video format  </li>
+<p><code>ffmpeg -i origin.mp4 -vf  "setpts=0.25\*PTS" UpTheOrigin.mp4</code>
+4 times slower</p>
+<p><code>ffmpeg -i origin.mp4 -vf "setpts=4\*PTS" DownTheOrigin.mp4</code></p>
+<hr />
+<ol start="2" type="1">
+<li>Change the video format</li>
 </ol>
-<hr>
-<p><code>ffmpeg -i origin.ogv -vcodec h264 output.mp4</code>  </p>
-<p><code>ffmpeg -i origin.ogv -vcodec mpeg4 output.mp4</code> </p>
-<p><code>ffmpeg -i origin.ogv -vcodec libxvid output.mp4</code> </p>
-<p> <code>ffmpeg -i origin.mp4 -vcodec wmv1 output.wmv</code>  </p>
+<hr />
+<p><code>ffmpeg -i origin.ogv -vcodec h264 output.mp4</code></p>
+<p><code>ffmpeg -i origin.ogv -vcodec mpeg4 output.mp4</code></p>
+<p><code>ffmpeg -i origin.ogv -vcodec libxvid output.mp4</code></p>
+<p><code>ffmpeg -i origin.mp4 -vcodec wmv1 output.wmv</code></p>
 <p><code>ffmpeg -i origin.mp4 -vcodec wmv2 output.wmv</code></p>
-<hr>
-<ol start="3">
-<li>More resources </li>
+<hr />
+<ol start="3" type="1">
+<li>More resources</li>
 </ol>
-<p>Please dive the <a href="https://blog.csdn.net/WuLex/article/details/101513018"><strong>Blog</strong></a>.</p>
-<h3 id="Attach-two-images-videos-into-one-image-video"><a href="#Attach-two-images-videos-into-one-image-video" class="headerlink" title="Attach two images(videos) into one image(video)"></a>Attach two images(videos) into one image(video)</h3><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">.<span class="hljs-symbol">\f</span>fmpeg.exe -i D:<span class="hljs-symbol">\C</span>odeSpace<span class="hljs-symbol">\f</span>isheye_image<span class="hljs-symbol">\0</span>000000007-l.png -i D:<span class="hljs-symbol">\C</span>odeSpace<span class="hljs-symbol">\f</span>isheye_image<span class="hljs-symbol">\0</span>000000007-r.png -filter_complex hstack -y ./dual_fisheye_image.png<br></code></pre></td></tr></table></figure>
-
-<p>-filter_complex hstack: <code>hstack</code> means images are stacked horizontally, vertically is set to <code>vstack</code>.</p>
+<p>Please dive the <a
+href="https://blog.csdn.net/WuLex/article/details/101513018"><strong>Blog</strong></a>.</p>
+<h3 id="attach-two-imagesvideos-into-one-imagevideo">Attach two
+images(videos) into one image(video)</h3>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">.<span class="hljs-symbol">\f</span>fmpeg.exe -i D:<span class="hljs-symbol">\C</span>odeSpace<span class="hljs-symbol">\f</span>isheye_image<span class="hljs-symbol">\0</span>000000007-l.png -i D:<span class="hljs-symbol">\C</span>odeSpace<span class="hljs-symbol">\f</span>isheye_image<span class="hljs-symbol">\0</span>000000007-r.png -filter_complex hstack -y ./dual_fisheye_image.png<br></code></pre></td></tr></table></figure>
+<p>-filter_complex hstack: <code>hstack</code> means images are stacked
+horizontally, vertically is set to <code>vstack</code>.</p>
 <p>the raw separate images are here:</p>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
-<tr>
-<th align="center">left image</th>
-<th align="center">right image</th>
+<tr class="header">
+<th style="text-align: center;">left image</th>
+<th style="text-align: center;">right image</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/0000000007-l.png" class=""></td>
-<td align="center"><img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/0000000007-r.png" class=""></td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/0000000007-l.png" class=""></td>
+<td style="text-align: center;"><img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/0000000007-r.png" class=""></td>
 </tr>
-</tbody></table>
-<p>the returned joined image (./dual_fisheye_image.png) is as followings:</p>
+</tbody>
+</table>
+<p>the returned joined image (./dual_fisheye_image.png) is as
+followings:</p>
 <img src="/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/dual_fisheye_image.png" class="">
-
-<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><ul>
-<li><a href="https://stackoverflow.com/questions/24604689/how-to-join-two-images-into-one-with-ffmpeg">joint two images into one</a>:+1:</li>
+<h4 id="references">References</h4>
+<ul>
+<li><a
+href="https://stackoverflow.com/questions/24604689/how-to-join-two-images-into-one-with-ffmpeg">joint
+two images into one</a>:+1:</li>
 </ul>
-<h3 id="Fisheye-Image-to-equirectangular-Image"><a href="#Fisheye-Image-to-equirectangular-Image" class="headerlink" title="Fisheye Image to equirectangular Image"></a>Fisheye Image to equirectangular Image</h3><ul>
+<h3 id="fisheye-image-to-equirectangular-image">Fisheye Image to
+equirectangular Image</h3>
+<ul>
 <li>For single dual fisheye image to equirectangular image.</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./ffmpeg -i .\dual_fisheye_image.png -vf v360=dfisheye:e:ih_fov=185:iv_fov=185:yaw=-90 -y ./equirectangle_image.png<br></code></pre></td></tr></table></figure>
-
 <p>185 is the image FOV.</p>
 {% asset_img equirectangle_image.png  %}
-
-<h4 id="References-1"><a href="#References-1" class="headerlink" title="References"></a>References</h4><ul>
-<li><a href="https://stackoverflow.com/questions/37796911/is-there-a-fisheye-or-dual-fisheye-to-equirectangular-filter-for-ffmpeg">fisheye to equirectangular image</a> (<strong>Recommanded</strong>:+1::+1::+1:)</li>
-<li><a href="https://stackoverflow.com/questions/68114739/unable-to-convert-dual-fisheye-image-to-equirectangular-image-using-ffmpeg-packa">similar as upper</a> for yaw angle setting demonstration.</li>
-<li><a href="https://stackoverflow.com/questions/70489535/is-it-possible-to-join-two-fisheye-images-to-one-equirectangular-image-using-ffm">here</a> is information-less:-1:.</li>
+<h4 id="references-1">References</h4>
+<ul>
+<li><a
+href="https://stackoverflow.com/questions/37796911/is-there-a-fisheye-or-dual-fisheye-to-equirectangular-filter-for-ffmpeg">fisheye
+to equirectangular image</a>
+(<strong>Recommanded</strong>:+1::+1::+1:)</li>
+<li><a
+href="https://stackoverflow.com/questions/68114739/unable-to-convert-dual-fisheye-image-to-equirectangular-image-using-ffmpeg-packa">similar
+as upper</a> for yaw angle setting demonstration.</li>
+<li><a
+href="https://stackoverflow.com/questions/70489535/is-it-possible-to-join-two-fisheye-images-to-one-equirectangular-image-using-ffm">here</a>
+is information-less:-1:.</li>
 </ul>
-<h3 id="Sequence-image-to-video-back-and-forth"><a href="#Sequence-image-to-video-back-and-forth" class="headerlink" title="Sequence image to video back and forth"></a>Sequence image to video back and forth</h3><ul>
+<h3 id="sequence-image-to-video-back-and-forth">Sequence image to video
+back and forth</h3>
+<ul>
 <li>image to video</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">.\ffmpeg.exe -f image2 -r 1 -i xxx/000000000%d.png -vcodec libx265 -pix_fmt yuv420p -b:v 40000k -bufsize 5000k -preset ultrafast -c:a copy -y -r 1 ./fisheye_rgb.mp4<br></code></pre></td></tr></table></figure>
-
 <p>-f: <code>image2</code> image type.</p>
-<p>-r: video frame equal to 1, default by 25, which means extract 1(25) frames/s. Also known as definition how fast the pictures are read in. To note that, the position of the <code>-r</code> argument has different meanings. If we want to change the framerate of the output video, <code>-r</code> should be at the front of the <code>./fisheye_rgb.mp4</code></p>
-<p>-pix_fmt <code>yuv420p</code>: is required under Windows platform.</p>
+<p>-r: video frame equal to 1, default by 25, which means extract 1(25)
+frames/s. Also known as definition how fast the pictures are read in. To
+note that, the position of the <code>-r</code> argument has different
+meanings. If we want to change the framerate of the output video,
+<code>-r</code> should be at the front of the
+<code>./fisheye_rgb.mp4</code></p>
+<p>-pix_fmt <code>yuv420p</code>: is required under Windows
+platform.</p>
 <ul>
 <li>video to image</li>
 </ul>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">.\ffmpeg.exe -i .\fisheye_rgb_l.mp4 -r <span class="hljs-number">1</span> -q:v <span class="hljs-number">1</span> -start_number <span class="hljs-number">0</span> ./%<span class="hljs-number">10</span>d.png<br></code></pre></td></tr></table></figure>
-
 <p>%10d: rename the out put images with int, e.g 0000000001.png.</p>
-<p>-start_number <code>0</code>: means the result image id will start from 0. Also this argument could be used for selecting the specific images for video generation. Deeper operations(e.g. glob, cat and etc) from reference1.</p>
-<h4 id="References-2"><a href="#References-2" class="headerlink" title="References"></a>References</h4><ul>
-<li><a href="https://shotstack.io/learn/use-ffmpeg-to-convert-images-to-video/">shotstack</a></li>
-<li><a href="https://stackoverflow.com/questions/24961127/how-to-create-a-video-from-images-with-ffmpeg">create a video from images with FFMPEG</a>:+1:</li>
+<p>-start_number <code>0</code>: means the result image id will start
+from 0. Also this argument could be used for selecting the specific
+images for video generation. Deeper operations(e.g. glob, cat and etc)
+from reference1.</p>
+<h4 id="references-2">References</h4>
+<ul>
+<li><a
+href="https://shotstack.io/learn/use-ffmpeg-to-convert-images-to-video/">shotstack</a></li>
+<li><a
+href="https://stackoverflow.com/questions/24961127/how-to-create-a-video-from-images-with-ffmpeg">create
+a video from images with FFMPEG</a>:+1:</li>
 </ul>
-<h3 id="Dual-fisheye-image-video-to-equirectangular-video"><a href="#Dual-fisheye-image-video-to-equirectangular-video" class="headerlink" title="Dual fisheye image video to equirectangular video"></a>Dual fisheye image video to equirectangular video</h3><ul>
+<h3 id="dual-fisheye-image-video-to-equirectangular-video">Dual fisheye
+image video to equirectangular video</h3>
+<ul>
 <li>For dual fisheye video to equirectangular video.</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./ffmpeg -y -i <span class="hljs-variable">$file</span> -vf v360=dfisheye:e:yaw=-90:ih_fov=187.8:iv_fov=185 -c:v libx265 -b:v 40000k -bufsize 5000k -preset ultrafast -c:a copy out.mp4<br></code></pre></td></tr></table></figure>
-
-<p>here we choose the ==v360== filter, <a href="https://ffmpeg.org/ffmpeg-filters.html#v360">v360</a> basic command as followings: <code>input:output:interp:w:h:in_stereo:out_stereo:yaw(pitch\roll):rorder:h_filp(v_flip\d_flip):ih_flip(iv_flip):in_trans:out_trans:h_offset(\v_offset):alpha_mask:reset_rot</code></p>
-<p>and the corresponding parameters as followings: </p>
-<p><code>dfisheye</code> = input format is dual fisheye video for <code>input</code>.</p>
-<p><code>e</code> = ‘Equirectangular projection’ for <code>output</code> video format.</p>
-<p><code>yaw</code> = rotation along yaw direction for output video. Values in degrees.</p>
-<p><code>ih_fov</code> &amp; <code>iv_fov</code> = is output horizontal/vertical/diagonal field of view. Values in degrees.</p>
+<p>here we choose the ==v360== filter, <a
+href="https://ffmpeg.org/ffmpeg-filters.html#v360">v360</a> basic
+command as followings:
+<code>input:output:interp:w:h:in_stereo:out_stereo:yaw(pitch\roll):rorder:h_filp(v_flip\d_flip):ih_flip(iv_flip):in_trans:out_trans:h_offset(\v_offset):alpha_mask:reset_rot</code></p>
+<p>and the corresponding parameters as followings:</p>
+<p><code>dfisheye</code> = input format is dual fisheye video for
+<code>input</code>.</p>
+<p><code>e</code> = 'Equirectangular projection' for <code>output</code>
+video format.</p>
+<p><code>yaw</code> = rotation along yaw direction for output video.
+Values in degrees.</p>
+<p><code>ih_fov</code> &amp; <code>iv_fov</code> = is output
+horizontal/vertical/diagonal field of view. Values in degrees.</p>
 <p>there are no blending operation for the basic command code.</p>
-<h4 id="References-3"><a href="#References-3" class="headerlink" title="References"></a>References</h4><ul>
-<li>More details at <a href="https://ffmpeg.org/ffmpeg-filters.html#v360">here</a></li>
-<li>Basic pipeline from <a href="https://en.wikiversity.org/wiki/3D_Modelling/360_Degree_Video">wiki</a> (Recommand:+1::+1::+1:)</li>
+<h4 id="references-3">References</h4>
+<ul>
+<li>More details at <a
+href="https://ffmpeg.org/ffmpeg-filters.html#v360">here</a></li>
+<li>Basic pipeline from <a
+href="https://en.wikiversity.org/wiki/3D_Modelling/360_Degree_Video">wiki</a>
+(Recommand:+1::+1::+1:)</li>
 </ul>
 
         </div>

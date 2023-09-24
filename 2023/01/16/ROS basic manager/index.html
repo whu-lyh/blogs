@@ -182,36 +182,38 @@
             
         </h1>
         <div class="content">
-            <h3 id="ROS编译"><a href="#ROS编译" class="headerlink" title="ROS编译"></a>ROS编译</h3><ul>
+            <h3 id="ros编译">ROS编译</h3>
+<ul>
 <li>catkin_make是cmake，make的进一步封装。路径位于workspace下，src之上使用:<code>catkin_make</code>ros会自己找到src下面的源代码，并开始build，如果src下面有好几个源代码，就通过DCATKIN_WHITELIST_PACKAGES指定一个就行：</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></table></figure>
-
 <ul>
-<li><p>安装则<code>catkin_make install</code>, 使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p>
-</li>
+<li><p>安装则<code>catkin_make install</code>,
+使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p></li>
 <li><p>清理安装文件<code>catkin_make clean</code>。</p>
-<a id="more"></a>
-
-</li>
+<a id="more"></a></li>
 </ul>
-<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><ul>
-<li><p>如果发现ros依赖的python2和conda使用的python3版本出现冲突，需要使用<code>catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3</code>来手动选择版本，但是一味的设置python3，会导致ros本身出现不小的问题。</p>
-</li>
-<li><p>按照opencv_contrib官网的命令，找到对应版本的opencv和opencv_contrib（3.4.19），重新编译了带有opencv_contrib的opencv（之前版本是3.2.0），中间由于版本问题，搞错了很多次。最终opencv安装于：/usr/local/include/opencv2，/usr/local/bin/和/usr/local/lib</p>
-</li>
+<h3 id="环境配置">环境配置</h3>
+<ul>
+<li><p>如果发现ros依赖的python2和conda使用的python3版本出现冲突，需要使用<code>catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3</code>来手动选择版本，但是一味的设置python3，会导致ros本身出现不小的问题。</p></li>
+<li><p>按照opencv_contrib官网的命令，找到对应版本的opencv和opencv_contrib（3.4.19），重新编译了带有opencv_contrib的opencv（之前版本是3.2.0），中间由于版本问题，搞错了很多次。最终opencv安装于：/usr/local/include/opencv2，/usr/local/bin/和/usr/local/lib</p></li>
 </ul>
-<h3 id="常见操作"><a href="#常见操作" class="headerlink" title="常见操作"></a>常见操作</h3><ul>
+<h3 id="常见操作">常见操作</h3>
+<ul>
 <li>查看ros版本</li>
 </ul>
-<p><code>rosversion -d</code><br>melodic</p>
+<p><code>rosversion -d</code> melodic</p>
 <ul>
 <li>查看某个软件的版本</li>
 </ul>
 <p><code>pkg-config --modversion ***</code></p>
-<p>​        pkg-config 是通过.pc文件查找看有那些库文件的。</p>
-<p>​        默认情况下，会去 prefix/lib/pkgconfig/ 路径下查找，具体到 Linux 系统，就是 /usr/lib/pkgconfig/ 目录，若找不到，则会去 PKG_CONFIG_PATH 环境变量指定的路径下查找。因此，如果我们安装的库文件不在系统环境变量中，需要将其添加到 PKG_CONFIG_PATH 中.</p>
-<p>​        如果实在是找不到，那么可以根据这个<a href="https://blog.csdn.net/PecoHe/article/details/97476135">教程</a>手动创建一个。</p>
+<p>​ pkg-config 是通过.pc文件查找看有那些库文件的。</p>
+<p>​ 默认情况下，会去 prefix/lib/pkgconfig/ 路径下查找，具体到 Linux
+系统，就是 /usr/lib/pkgconfig/ 目录，若找不到，则会去 PKG_CONFIG_PATH
+环境变量指定的路径下查找。因此，如果我们安装的库文件不在系统环境变量中，需要将其添加到
+PKG_CONFIG_PATH 中.</p>
+<p>​ 如果实在是找不到，那么可以根据这个<a
+href="https://blog.csdn.net/PecoHe/article/details/97476135">教程</a>手动创建一个。</p>
 <blockquote>
 <p>e.g. 查看opencv的版本</p>
 <p><code>pkg-config --modversion opencv</code></p>
@@ -219,8 +221,19 @@
 <p><code>pkg-config --cflags opencv</code></p>
 <p>-I/usr/include/opencv</p>
 <p><code>pkg-config --cflags --libs opencv</code></p>
-<p>-I/usr/include/opencv -lopencv_shape -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_datasets -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_line_descriptor -lopencv_optflow -lopencv_video -lopencv_plot -lopencv_reg -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_rgbd -lopencv_viz -lopencv_surface_matching -lopencv_text -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_xobjdetect -lopencv_objdetect -lopencv_ml -lopencv_xphoto -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs -lopencv_photo -lopencv_imgproc -lopencv_core</p>
-<p><code>sudo find / -iname ``&quot;*opencv*&quot;</code>查看ubuntu中有那些地方包含了opencv</p>
+<p>-I/usr/include/opencv -lopencv_shape -lopencv_stitching
+-lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm
+-lopencv_bioinspired -lopencv_ccalib -lopencv_datasets -lopencv_dpm
+-lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf
+-lopencv_line_descriptor -lopencv_optflow -lopencv_video -lopencv_plot
+-lopencv_reg -lopencv_saliency -lopencv_stereo -lopencv_structured_light
+-lopencv_phase_unwrapping -lopencv_rgbd -lopencv_viz
+-lopencv_surface_matching -lopencv_text -lopencv_ximgproc
+-lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_xobjdetect
+-lopencv_objdetect -lopencv_ml -lopencv_xphoto -lopencv_highgui
+-lopencv_videoio -lopencv_imgcodecs -lopencv_photo -lopencv_imgproc
+-lopencv_core</p>
+<p><code>sudo find / -iname ``"*opencv*"</code>查看ubuntu中有那些地方包含了opencv</p>
 <p>找到当前仓库中的opencv.pc的路径是在/usr/lib/x86_64-linux-gnu/pkgconfig/opencv.pc。猜测其他的pc可能在镜像制作的时候，也是被放在这里。</p>
 </blockquote>
 
@@ -521,7 +534,7 @@
                     目录
                 </h3>
                 <ul class="menu-list"><li>
-        <a class="is-flex" href="#ROS编译">
+        <a class="is-flex" href="#ros编译">
         <span class="has-mr-6">1</span>
         <span>ROS编译</span>
         </a></li><li>
@@ -671,10 +684,6 @@
          
             
          
-            
-         
-            
-         
             <article class="media"> <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Nvidia Driver Installation">
@@ -686,6 +695,10 @@
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
          
             
          

@@ -182,62 +182,145 @@
             
         </h1>
         <div class="content">
-            <h2 id="1-针对性设计的平面提取方法"><a href="#1-针对性设计的平面提取方法" class="headerlink" title="1. 针对性设计的平面提取方法"></a>1. 针对性设计的平面提取方法</h2><p>​        因为这里使用的传感器其实一个组装的VLP16型多线激光雷达+相机+imu的背包激光扫描仪，作者考虑到LiDAR有一定的安置误差(提前肯定标定了的，e.g.倾角)，而本文使用的又是室内场景平面，因此需要根据一个仪器安装的先验确定z轴方向指向哪里（默认传感器的坐标系为右前上，z轴指向天空）。得到这个倾角主要是为了修正LiDAR坐标系的z轴方向。这对后续的高度滤波和地面点判断都有一定的影响。</p>
-<p>​        在提取平面时，为了提升效率，首先基于扫描仪的高度，通过高度滤波将一定高度之外的点去掉，同时对剩下的点云计算法向量（通过提前性的点云剔除，可以提升这里的计算效率）进行过滤，和z方向进行比较，保留地面点（和z轴夹角小就说明方向近似），用RANSAC的方式拟合平面参数方程。 这样就可以以较快的速度从单帧点云中提取出一个合适的平面。注意：原文中写的是直接用RANSAC提取平面的，这个非常的费时间，实际操作并不是这样子来的。</p>
+            <h2 id="针对性设计的平面提取方法">1. 针对性设计的平面提取方法</h2>
+<p>​
+因为这里使用的传感器其实一个组装的VLP16型多线激光雷达+相机+imu的背包激光扫描仪，作者考虑到LiDAR有一定的安置误差(提前肯定标定了的，e.g.倾角)，而本文使用的又是室内场景平面，因此需要根据一个仪器安装的先验确定z轴方向指向哪里（默认传感器的坐标系为右前上，z轴指向天空）。得到这个倾角主要是为了修正LiDAR坐标系的z轴方向。这对后续的高度滤波和地面点判断都有一定的影响。</p>
+<p>​
+在提取平面时，为了提升效率，首先基于扫描仪的高度，通过高度滤波将一定高度之外的点去掉，同时对剩下的点云计算法向量（通过提前性的点云剔除，可以提升这里的计算效率）进行过滤，和z方向进行比较，保留地面点（和z轴夹角小就说明方向近似），用RANSAC的方式拟合平面参数方程。
+这样就可以以较快的速度从单帧点云中提取出一个合适的平面。注意：原文中写的是直接用RANSAC提取平面的，这个非常的费时间，实际操作并不是这样子来的。</p>
 <a id="more"></a>
-
-<p>​        平面参数方程采用一般形式进行表达：<br>$$<br>\begin{align}<br>\pi &amp;:= n_x<em>x+n_y</em>y+n_z*z+d=0 \<br>\pi &amp;:= [(n_x,n_y,n_z),d]<br>\end{align}<br>$$</p>
-<h2 id="2-平面节点的构建以及优化"><a href="#2-平面节点的构建以及优化" class="headerlink" title="2. 平面节点的构建以及优化"></a>2. 平面节点的构建以及优化</h2><p>​        平面参数拿到之后如何抽象成为图中的一个节点，并参与优。在优化时，其实并不是所有帧都提取平面的，作者每隔10s从一个关键LiDAR帧中提取一个平面，然后引入到PGO中。不然也算不过来。</p>
-<h3 id="平面约束从何而来"><a href="#平面约束从何而来" class="headerlink" title="平面约束从何而来"></a>平面约束从何而来</h3><p>​        约束嘛，肯定得有参考，作者的实验场景是室内，提取的还是地面，可想而知，约束是通过<strong>该平面</strong>（<strong>提取平面</strong>）的参数与<strong>世界坐标系下的xoy平面平行的一个平面</strong>（<strong>参考平面</strong>）确定的。更具体地，假设在t时刻从当前LiDAR激光帧中提取的平面方程为$\pi(t):[n_p,d_p]$(local坐标系下,这里省略了$n_p(t),d_p(t)为n_p,d_p$)，而给定的世界坐标系(canonical or world)下的参考平面方程为$\pi(0):[n_b,d_b]$，也就是$\pi(0):[(0,0,1),0]$(和其他方向的平面需要设置不同的法向量朝向)。即：<br>$$<br>\begin{align}<br>nx_p<em>x+ny_p</em>y+nz_p<em>z+d_p=0 \\ \<br>nx_b</em>x+ny_b<em>y+nz_b</em>z+d_b=0<br>\end{align}<br>$$<br>​        这两个平面之间的差，两个平面之间的差需要比较法向量和截距（排除平行的情况）：</p>
+<p>​ 平面参数方程采用一般形式进行表达： <span class="math display">\[
+\begin{align}
+\pi &amp;:= n_x*x+n_y*y+n_z*z+d=0 \\
+\pi &amp;:= [(n_x,n_y,n_z),d]
+\end{align}
+\]</span></p>
+<h2 id="平面节点的构建以及优化">2. 平面节点的构建以及优化</h2>
+<p>​
+平面参数拿到之后如何抽象成为图中的一个节点，并参与优。在优化时，其实并不是所有帧都提取平面的，作者每隔10s从一个关键LiDAR帧中提取一个平面，然后引入到PGO中。不然也算不过来。</p>
+<h3 id="平面约束从何而来">平面约束从何而来</h3>
+<p>​
+约束嘛，肯定得有参考，作者的实验场景是室内，提取的还是地面，可想而知，约束是通过__该平面__（<strong>提取平面</strong>）的参数与__世界坐标系下的xoy平面平行的一个平面__（<strong>参考平面</strong>）确定的。更具体地，假设在t时刻从当前LiDAR激光帧中提取的平面方程为<span
+class="math inline">\(\pi(t):[n_p,d_p]\)</span>(local坐标系下,这里省略了<span
+class="math inline">\(n_p(t),d_p(t)为n_p,d_p\)</span>)，而给定的世界坐标系(canonical
+or world)下的参考平面方程为<span
+class="math inline">\(\pi(0):[n_b,d_b]\)</span>，也就是<span
+class="math inline">\(\pi(0):[(0,0,1),0]\)</span>(和其他方向的平面需要设置不同的法向量朝向)。即：
+<span class="math display">\[
+\begin{align}
+nx_p*x+ny_p*y+nz_p*z+d_p=0 \\ \\
+nx_b*x+ny_b*y+nz_b*z+d_b=0
+\end{align}
+\]</span> ​
+这两个平面之间的差，两个平面之间的差需要比较法向量和截距（排除平行的情况）：</p>
 <ul>
-<li>如果当前LiDAR帧的位姿估计的准确的话，提取得到的平面的法向量$n_p$应该和$n_b$是相近的，截距应该是相等的，排除沿着法向方向的平移现象：<ul>
-<li>作者这里参照的其实是一个发表在ICRA2016上的文章Cpa-SLAM[^ 1]，中的方法完成了两个平面方程的参数化过程，</li>
-</ul>
-</li>
-</ul>
-<p>$$<br>\pi := [(n_x,n_y,n_z),d]\quad \Longrightarrow \quad\tau(\pi)=[arctan(\frac{n_y}{n_x}),arctan(\frac{n_z}{|n|}),d]<br>$$</p>
-<p>​        $arctan(\frac{n_y}{n_x}),arctan(\frac{n_z}{|n|})$分别表示的是球坐标系下的azimuth（方向角）和elevation（高度角）$|n|$应该是在水平面内的投影。具体这么参数化的好处是啥呢，暂时还没有了解清楚，TODO…</p>
-<p>​        此外还需要注意的是注意：</p>
+<li>如果当前LiDAR帧的位姿估计的准确的话，提取得到的平面的法向量<span
+class="math inline">\(n_p\)</span>应该和<span
+class="math inline">\(n_b\)</span>是相近的，截距应该是相等的，排除沿着法向方向的平移现象：
 <ul>
-<li>平面约束是如何与节点位姿建立关系呢？（这个是平面可以作为约束参与优化的基础）<ul>
-<li>这里就涉及到一个坐标系转换的问题，一个是LiDAR点云帧的local系(因为点云就是从这个里面提取出来的)，一个是假定的canonical（world）系，两个需要在同一的坐标系下才能做运算，有两种思路，1）都变换到world下（koide采用的就是这种思路）；或者都同一变到canonical(world)坐标系下。这里就需要知道每一个LiDAR点云帧都保留了其在world坐标系下（相对于第一帧）的位姿$T_{iw}$,通过$T_{iw}$可以将平面$\pi(0)$变换到$\pi(t)$的坐标系下，实现统一。</li>
+<li>作者这里参照的其实是一个发表在ICRA2016上的文章Cpa-SLAM[^
+1]，中的方法完成了两个平面方程的参数化过程，</li>
+</ul></li>
 </ul>
-</li>
-<li>如何对一个平面进行变换？假设现在有了一个平面$\pi$，在经过T变换之后，对应的平面参数$\pi^{‘}$应该是什么呢？如下所示。<a href="https://community.khronos.org/t/clever-way-to-transform-plane-by-matrix/49570/3">证明参见</a></li>
-</ul>
-<p>$$<br>\pi^{‘}=(T^{-1})^T·\pi=(T^T)^{-1}·\pi<br>= \left[ \begin{array}{cc} R^{T} &amp; 0^{T} \<br>-R^{T}t &amp; 1\end{array} \right]·<br>\left[ \begin{array}{cc} n \\ d \end{array} \right]<br>= \left[ \begin{array}{cc} R^Tn \\ d- R^Ttn \end{array}\right]<br>$$</p>
+<p><span class="math display">\[
+\pi := [(n_x,n_y,n_z),d]\quad \Longrightarrow
+\quad\tau(\pi)=[arctan(\frac{n_y}{n_x}),arctan(\frac{n_z}{|n|}),d]
+\]</span></p>
+<p>​ <span
+class="math inline">\(arctan(\frac{n_y}{n_x}),arctan(\frac{n_z}{|n|})\)</span>分别表示的是球坐标系下的azimuth（方向角）和elevation（高度角）<span
+class="math inline">\(|n|\)</span>应该是在水平面内的投影。具体这么参数化的好处是啥呢，暂时还没有了解清楚，TODO...</p>
+<p>​ 此外还需要注意的是注意：</p>
 <ul>
-<li>hdl_graph_slam中使用的参考平面为世界坐标系下的参考平面为$\pi(0):[(0,0,1),0]$，而LiDAR激光帧的位姿$T_{iw}$表示的就是世界坐标系下的坐标，只是相对于第一帧而言的，因此从local系提取得到的平面参数中法向量本身可以看成是和$[0,0,1]$的差，那么在计算误差时直接就可以将$\tau(t)$看成是$e$误差，只需要对截距t做变换$T_{iw}$即可了，而这里使用的是地面，d=0，就省略了这一部分在实际代码中有所体现。（PS：更加复杂的情况需要修改g2o中的代码才行，不太行的样子…）</li>
+<li>平面约束是如何与节点位姿建立关系呢？（这个是平面可以作为约束参与优化的基础）
+<ul>
+<li>这里就涉及到一个坐标系转换的问题，一个是LiDAR点云帧的local系(因为点云就是从这个里面提取出来的)，一个是假定的canonical（world）系，两个需要在同一的坐标系下才能做运算，有两种思路，1）都变换到world下（koide采用的就是这种思路）；或者都同一变到canonical(world)坐标系下。这里就需要知道每一个LiDAR点云帧都保留了其在world坐标系下（相对于第一帧）的位姿<span
+class="math inline">\(T_{iw}\)</span>,通过<span
+class="math inline">\(T_{iw}\)</span>可以将平面<span
+class="math inline">\(\pi(0)\)</span>变换到<span
+class="math inline">\(\pi(t)\)</span>的坐标系下，实现统一。</li>
+</ul></li>
+<li>如何对一个平面进行变换？假设现在有了一个平面<span
+class="math inline">\(\pi\)</span>，在经过T变换之后，对应的平面参数<span
+class="math inline">\(\pi^{&#39;}\)</span>应该是什么呢？如下所示。<a
+href="https://community.khronos.org/t/clever-way-to-transform-plane-by-matrix/49570/3">证明参见</a></li>
 </ul>
-<h3 id="误差方程的构建"><a href="#误差方程的构建" class="headerlink" title="误差方程的构建"></a>误差方程的构建</h3><p>误差=观测值-预测值（通常是这样的，如果反过来只会影响jacobian的方程，对结果没有影响）</p>
-<p>这里将变换到当前LiDAR坐标系下的$\pi(0)$作为了观测值，提取的平面作为了预测值（按照我的理解，和他正好是反的，但是对结果没有啥影响）<br>$$<br>\begin{aligned}<br>一直和z方向比:\quad e = \tau(\pi(0)^{‘}) - \tau(\pi(t))  \<br>和前一个提取的平面参数比:\quad e = \tau(\pi(t-1)^{‘}) - \tau(\pi(t))<br>\end{aligned}<br>$$<br>最小二乘优化它的二次型即可。<br>$$<br>E = e^T \Omega e<br>$$</p>
+<p><span class="math display">\[
+\pi^{&#39;}=(T^{-1})^T·\pi=(T^T)^{-1}·\pi
+= \left[ \begin{array}{cc} R^{T} &amp; 0^{T} \\
+-R^{T}t &amp; 1\end{array} \right]·
+\left[ \begin{array}{cc} n \\ d \end{array} \right]
+= \left[ \begin{array}{cc} R^Tn \\ d- R^Ttn \end{array}\right]
+\]</span></p>
+<ul>
+<li>hdl_graph_slam中使用的参考平面为世界坐标系下的参考平面为<span
+class="math inline">\(\pi(0):[(0,0,1),0]\)</span>，而LiDAR激光帧的位姿<span
+class="math inline">\(T_{iw}\)</span>表示的就是世界坐标系下的坐标，只是相对于第一帧而言的，因此从local系提取得到的平面参数中法向量本身可以看成是和<span
+class="math inline">\([0,0,1]\)</span>的差，那么在计算误差时直接就可以将<span
+class="math inline">\(\tau(t)\)</span>看成是<span
+class="math inline">\(e\)</span>误差，只需要对截距t做变换<span
+class="math inline">\(T_{iw}\)</span>即可了，而这里使用的是地面，d=0，就省略了这一部分在实际代码中有所体现。（PS：更加复杂的情况需要修改g2o中的代码才行，不太行的样子...）</li>
+</ul>
+<h3 id="误差方程的构建">误差方程的构建</h3>
+<p>误差=观测值-预测值（通常是这样的，如果反过来只会影响jacobian的方程，对结果没有影响）</p>
+<p>这里将变换到当前LiDAR坐标系下的<span
+class="math inline">\(\pi(0)\)</span>作为了观测值，提取的平面作为了预测值（按照我的理解，和他正好是反的，但是对结果没有啥影响）
+<span class="math display">\[
+\begin{aligned}
+一直和z方向比:\quad e = \tau(\pi(0)^{&#39;}) - \tau(\pi(t))  \\
+和前一个提取的平面参数比:\quad e = \tau(\pi(t-1)^{&#39;}) - \tau(\pi(t))
+\end{aligned}
+\]</span> 最小二乘优化它的二次型即可。 <span class="math display">\[
+E = e^T \Omega e
+\]</span></p>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
-<tr>
-<th align="center"><img src="Hdl_graph_slam2/The proposed pose graph structure.gif" style="zoom:80%;" /></th>
-<th align="center"><img src="Hdl_graph_slam2/A representation of the azimuth and the elevation of the sun..jpg" style="zoom:80%;"/></th>
+<tr class="header">
+<th
+style="text-align: center;"><img src="Hdl_graph_slam2/The proposed pose graph structure.gif" style="zoom:80%;" /></th>
+<th
+style="text-align: center;"><img src="Hdl_graph_slam2/A representation of the azimuth and the elevation of the sun..jpg" style="zoom:80%;"/></th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">a</td>
-<td align="center">b</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">b</td>
 </tr>
-</tbody></table>
-<h3 id="平面参与优化过程"><a href="#平面参与优化过程" class="headerlink" title="平面参与优化过程"></a>平面参与优化过程</h3><p>​        hdl_graph_slam中平面检测和LiDAR关键帧是放在独立的deque中存储的，又通过消息的发布和接收进行数据共享。运行launch时，会自动开启好几个nodelet，e.g.HdlGraphSlamNodelet, floor_detection_nodelet, ScanMatchingOdometryNodelet, PrefilteringNodelet。这几个nodelet处于一个进程中，但是可以独立干自己的事情，通过消息的publish和subscribe进行完成消息共享。</p>
-<p>​        前端里程计在不断的完成关键帧的位姿估计，并存放在队列中，平面检测是每隔10s进行的（<strong>提取平面</strong>），也将估计结果存放在另一个队列中（1hz&lt;10hz的LiDAR帧率，而且LiDAR关键帧更低）。将选择得到的关键帧的与时间戳绑定，平面检测结果也和时间戳绑定，这样就可以通过时间上的对比完成两个数据之间的同步（或者称为数据关联）。完成平面提取结果和关键LiDAR帧的绑定之后，就可以构建平面约束了。引入图中的平面节点是canonical（world）坐标系下的平面（<strong>参考平面</strong>），也就是$\pi(0):[(0,0,1),0]$,利用与之时间匹配的LiDAR的pose，将参考平面和提取平面坐标系统一起来，构建平面约束边，误差计算方法是：首先将参考平面通过当前LiDAR帧pose（local系，表示世界坐标系下相对于第一帧的位姿？）的逆，变换到LiDAR点云的local系，然后和估计RANSAC估计出来的平面（本身就在local系下）做差。这一套都完成之后就构建好了一条平面边，加入到图中。如上图a</p>
-<h2 id="3-源码解析"><a href="#3-源码解析" class="headerlink" title="3. 源码解析"></a>3. 源码解析</h2><h3 id="1-平面提取"><a href="#1-平面提取" class="headerlink" title="1. 平面提取"></a>1. 平面提取</h3><p>​        其实代码这部分和上述描述一致，注释好的代码见本仓库app/floor_detection_nodelet.cpp。</p>
-<h3 id="2-引入平面节点的过程"><a href="#2-引入平面节点的过程" class="headerlink" title="2. 引入平面节点的过程"></a>2. 引入平面节点的过程</h3><p>​        实际引入过程和上述描述一致，注释好的代码见本仓库app/HdlGraphSlamNodelet-&gt;optimization_timer_callback()-&gt;flush_floor_queue()。</p>
-<h3 id="3-g2o已经实现好的平面节点以及边"><a href="#3-g2o已经实现好的平面节点以及边" class="headerlink" title="3. g2o已经实现好的平面节点以及边"></a>3. g2o已经实现好的平面节点以及边</h3><ul>
+</tbody>
+</table>
+<h3 id="平面参与优化过程">平面参与优化过程</h3>
+<p>​
+hdl_graph_slam中平面检测和LiDAR关键帧是放在独立的deque中存储的，又通过消息的发布和接收进行数据共享。运行launch时，会自动开启好几个nodelet，e.g.HdlGraphSlamNodelet,
+floor_detection_nodelet, ScanMatchingOdometryNodelet,
+PrefilteringNodelet。这几个nodelet处于一个进程中，但是可以独立干自己的事情，通过消息的publish和subscribe进行完成消息共享。</p>
+<p>​
+前端里程计在不断的完成关键帧的位姿估计，并存放在队列中，平面检测是每隔10s进行的（<strong>提取平面</strong>），也将估计结果存放在另一个队列中（1hz&lt;10hz的LiDAR帧率，而且LiDAR关键帧更低）。将选择得到的关键帧的与时间戳绑定，平面检测结果也和时间戳绑定，这样就可以通过时间上的对比完成两个数据之间的同步（或者称为数据关联）。完成平面提取结果和关键LiDAR帧的绑定之后，就可以构建平面约束了。引入图中的平面节点是canonical（world）坐标系下的平面（<strong>参考平面</strong>），也就是<span
+class="math inline">\(\pi(0):[(0,0,1),0]\)</span>,利用与之时间匹配的LiDAR的pose，将参考平面和提取平面坐标系统一起来，构建平面约束边，误差计算方法是：首先将参考平面通过当前LiDAR帧pose（local系，表示世界坐标系下相对于第一帧的位姿？）的逆，变换到LiDAR点云的local系，然后和估计RANSAC估计出来的平面（本身就在local系下）做差。这一套都完成之后就构建好了一条平面边，加入到图中。如上图a</p>
+<h2 id="源码解析">3. 源码解析</h2>
+<h3 id="平面提取">1. 平面提取</h3>
+<p>​
+其实代码这部分和上述描述一致，注释好的代码见本仓库app/floor_detection_nodelet.cpp。</p>
+<h3 id="引入平面节点的过程">2. 引入平面节点的过程</h3>
+<p>​
+实际引入过程和上述描述一致，注释好的代码见本仓库app/HdlGraphSlamNodelet-&gt;optimization_timer_callback()-&gt;flush_floor_queue()。</p>
+<h3 id="g2o已经实现好的平面节点以及边">3.
+g2o已经实现好的平面节点以及边</h3>
+<ul>
 <li>注意：这个EdgeSE3Plane是koide自己实现的，可能和原始g2o中的不太一样。</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @brief plane edge, the error is stored as g2o::Plane3D(in fact is a vector3 but should be initialized by vector4(plane coefficient))</span><br><span class="hljs-comment"> */</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EdgeSE3Plane</span> :</span> <span class="hljs-keyword">public</span> g2o::BaseBinaryEdge&lt;<span class="hljs-number">3</span>, g2o::Plane3D, g2o::VertexSE3, g2o::VertexPlane&gt; &#123;<br><span class="hljs-keyword">public</span>:<br>  EIGEN_MAKE_ALIGNED_OPERATOR_NEW<br>  EdgeSE3Plane() : BaseBinaryEdge&lt;<span class="hljs-number">3</span>, g2o::Plane3D, g2o::VertexSE3, g2o::VertexPlane&gt;() &#123;&#125;<br>  <span class="hljs-comment">// error is 3d vector, azimuth, elevation, the length of intercept respectively</span><br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">computeError</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;<br>    <span class="hljs-comment">// current node pose</span><br>    <span class="hljs-keyword">const</span> g2o::VertexSE3* v1 = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">const</span> g2o::VertexSE3*&gt;(_vertices[<span class="hljs-number">0</span>]);<br>    <span class="hljs-comment">// plane node (canonical plane coeff is used here as observations)</span><br>    <span class="hljs-comment">// i believe the estimate plane here is both ok, but TODO figure out)</span><br>    <span class="hljs-keyword">const</span> g2o::VertexPlane* v2 = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">const</span> g2o::VertexPlane*&gt;(_vertices[<span class="hljs-number">1</span>]);<br>    <span class="hljs-comment">// v1 is the pose in canonical(world) coordinate</span><br>    <span class="hljs-comment">// w2n represents the transformation from canonical(world) to local </span><br>    <span class="hljs-comment">// this pose should be understanded bind with whole plane node added to graph pipline</span><br>    Eigen::Isometry3d w2n = v1-&gt;estimate().inverse();<br>    <span class="hljs-comment">// transform the plane in canonical frame to current lidar coordinate</span><br>    Plane3D local_plane = w2n * v2-&gt;estimate();<br>    <span class="hljs-comment">// error should be measurement minus estimate value</span><br>    <span class="hljs-comment">// i believe here is inversed but no effect to the result, given the eTe model</span><br>    _error = local_plane.ominus(_measurement);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
-<li>g2o定义的Plane3D给出了平面边误差方程的计算实现代码，其中实现的挺好的，就一个成员是Eigen::Vector4d,包含了从一个平面参数中提取球坐标系下方向角azimuth，高度角elevation等过程，重点关注求差<strong>ominus</strong>，运算符<strong>*</strong>重载过程（和上述讲的平面变换的过程一致）。</li>
+<li>g2o定义的Plane3D给出了平面边误差方程的计算实现代码，其中实现的挺好的，就一个成员是Eigen::Vector4d,包含了从一个平面参数中提取球坐标系下方向角azimuth，高度角elevation等过程，重点关注求差__ominus<strong>，运算符</strong>*__重载过程（和上述讲的平面变换的过程一致）。</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Plane3D&#123;<br>...<br><span class="hljs-comment">// update the current state, looks like its left-hand coordinate? BUGFIX</span><br><span class="hljs-comment">// the rotation of elevation is countclockwise</span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">oplus</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Vector3&amp; v)</span></span>&#123;<br>      <span class="hljs-comment">// construct a normal from azimuth and evelation;</span><br>      <span class="hljs-comment">// this is from spherical coordinates to cartesian coordinate</span><br>      <span class="hljs-keyword">number_t</span> _azimuth=v[<span class="hljs-number">0</span>];<br>      <span class="hljs-keyword">number_t</span> _elevation=v[<span class="hljs-number">1</span>];<br>      <span class="hljs-keyword">number_t</span> s=<span class="hljs-built_in">std</span>::<span class="hljs-built_in">sin</span>(_elevation), c=<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cos</span>(_elevation);<br>      <span class="hljs-function">Vector3 <span class="hljs-title">n</span> <span class="hljs-params">(c*<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cos</span>(_azimuth), c*<span class="hljs-built_in">std</span>::<span class="hljs-built_in">sin</span>(_azimuth), s)</span> </span>;      <br>      <span class="hljs-comment">// rotate the normal</span><br>      Matrix3 R=rotation(normal());<br>      <span class="hljs-keyword">number_t</span> d=distance()+v[<span class="hljs-number">2</span>];<br>      _coeffs.head&lt;<span class="hljs-number">3</span>&gt;() = R*n;<br>      <span class="hljs-comment">// the length of intercept is direct add but why negative?</span><br>      _coeffs(<span class="hljs-number">3</span>) = -d;<br>      normalize(_coeffs);<br>    &#125;    <br><span class="hljs-function"><span class="hljs-keyword">inline</span> Vector3 <span class="hljs-title">ominus</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Plane3D&amp; plane)</span></span>&#123;<br>      <span class="hljs-comment">// construct the rotation that would bring the plane normal in (1 0 0)</span><br>      Matrix3 R=rotation(normal()).transpose();<br>      Vector3 n=R*plane.normal();<br>      <span class="hljs-keyword">number_t</span> d=distance()-plane.distance();<br>      <span class="hljs-keyword">return</span> Vector3(azimuth(n), elevation(n), d);<br>    &#125;<br>  &#125;;<br><span class="hljs-comment">// exactly same with the plane transform formula</span><br><span class="hljs-keyword">inline</span> Plane3D <span class="hljs-keyword">operator</span>*(<span class="hljs-keyword">const</span> Isometry3&amp; t, <span class="hljs-keyword">const</span> Plane3D&amp; plane)&#123;<br>    Vector4 v=plane._coeffs;<br>    Vector4 v2;<br>    Matrix3 R=t.rotation();<br>    v2.head&lt;<span class="hljs-number">3</span>&gt;() = R*v.head&lt;<span class="hljs-number">3</span>&gt;();<br>    v2(<span class="hljs-number">3</span>)=v(<span class="hljs-number">3</span>) - t.translation().dot(v2.head&lt;<span class="hljs-number">3</span>&gt;());<br>    <span class="hljs-keyword">return</span> Plane3D(v2);<br>  &#125;;<br>Vector4 _coeffs; <span class="hljs-comment">// [n,d]</span><br>...<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h2><p>[^ 1]: Ma L, Kerl C, Stückler J, et al. CPA-SLAM: Consistent plane-model alignment for direct RGB-D SLAM[C]//2016 IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2016: 1285-1291. </p>
+<h2 id="reference">4. Reference</h2>
+<p>[^ 1]: Ma L, Kerl C, Stückler J, et al. CPA-SLAM: Consistent
+plane-model alignment for direct RGB-D SLAM[C]//2016 IEEE International
+Conference on Robotics and Automation (ICRA). IEEE, 2016: 1285-1291.</p>
 
         </div>
         
@@ -536,11 +619,11 @@
                     目录
                 </h3>
                 <ul class="menu-list"><li>
-        <a class="is-flex" href="#1-针对性设计的平面提取方法">
+        <a class="is-flex" href="#针对性设计的平面提取方法">
         <span class="has-mr-6">1</span>
         <span>1. 针对性设计的平面提取方法</span>
         </a></li><li>
-        <a class="is-flex" href="#2-平面节点的构建以及优化">
+        <a class="is-flex" href="#平面节点的构建以及优化">
         <span class="has-mr-6">2</span>
         <span>2. 平面节点的构建以及优化</span>
         </a><ul class="menu-list"><li>
@@ -556,23 +639,24 @@
         <span class="has-mr-6">2.3</span>
         <span>平面参与优化过程</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#3-源码解析">
+        <a class="is-flex" href="#源码解析">
         <span class="has-mr-6">3</span>
         <span>3. 源码解析</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#1-平面提取">
+        <a class="is-flex" href="#平面提取">
         <span class="has-mr-6">3.1</span>
         <span>1. 平面提取</span>
         </a></li><li>
-        <a class="is-flex" href="#2-引入平面节点的过程">
+        <a class="is-flex" href="#引入平面节点的过程">
         <span class="has-mr-6">3.2</span>
         <span>2. 引入平面节点的过程</span>
         </a></li><li>
-        <a class="is-flex" href="#3-g2o已经实现好的平面节点以及边">
+        <a class="is-flex" href="#g2o已经实现好的平面节点以及边">
         <span class="has-mr-6">3.3</span>
-        <span>3. g2o已经实现好的平面节点以及边</span>
+        <span>3.
+g2o已经实现好的平面节点以及边</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#4-Reference">
+        <a class="is-flex" href="#reference">
         <span class="has-mr-6">4</span>
         <span>4. Reference</span>
         </a></li></ul>
@@ -694,8 +778,6 @@
          
             
          
-            
-         
             <article class="media"> <a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="CloudCompare源代码学习">
@@ -707,6 +789,10 @@
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
          
             
          
@@ -740,14 +826,6 @@
          
             
          
-            
-         
-            
-         
-            
-         
-            
-         
             <article class="media"> <a href="/blogs/2023/03/06/TrajectoryEstimation/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Kinematic mapping trajectory estimation">
@@ -768,6 +846,10 @@
          
             
          
+            
+         
+            
+         
             <article class="media"> <a href="/blogs/2023/03/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="关于控制点检核的一些思考">
@@ -776,6 +858,18 @@
                     <div class="content">
                         <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-03-06T08:56:42.686Z">2023-03-06</time></div>
                         <a href="/blogs/2023/03/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
+                    </div>
+                </div>
+            </article>
+         
+            <article class="media"> <a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="pcl中的体素滤波">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-11T11:24:21.000Z">2020-06-11</time></div>
+                        <a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">pcl中的体素滤波</a>
                     </div>
                 </div>
             </article>
@@ -800,17 +894,7 @@
          
             
          
-            <article class="media"> <a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" class="media-left">
-                        <p class="image is-64x64">
-                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="pcl中的体素滤波">
-                        </p>
-                    </a><div class="media-content">
-                    <div class="content">
-                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-11T11:24:21.000Z">2020-06-11</time></div>
-                        <a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">pcl中的体素滤波</a>
-                    </div>
-                </div>
-            </article>
+            
         
     </div>
 </div>

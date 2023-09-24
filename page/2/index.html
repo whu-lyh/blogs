@@ -176,8 +176,11 @@
             
         </h1>
         <div class="content">
-            <p>​        课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。</p>
-<p>​        武大超算使用 Slurm 系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过 Slurm 系统来进行计算</p>
+            <p>​
+课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。</p>
+<p>​ 武大超算使用 Slurm
+系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过
+Slurm 系统来进行计算</p>
         </div>
         
         
@@ -232,7 +235,8 @@
         </h1>
         <div class="content">
             <ul>
-<li>根据规范：<a href="http://www.nrsis.org.cn/mnr_kfs/file/read/75d2c98b7b855b1b508b280ac53187ac">http://www.nrsis.org.cn/mnr_kfs/file/read/75d2c98b7b855b1b508b280ac53187ac</a><br>机载点云数据高程中误差在不同比例尺上精度要求是不同的。</li>
+<li>根据规范：http://www.nrsis.org.cn/mnr_kfs/file/read/75d2c98b7b855b1b508b280ac53187ac
+机载点云数据高程中误差在不同比例尺上精度要求是不同的。</li>
 </ul>
 <p>最大允许中误差为中误差的2倍。</p>
         </div>
@@ -288,7 +292,8 @@
             
         </h1>
         <div class="content">
-            <h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>想使用一下CloudCompare自带的八叉树，替换掉nanoflann。nanoflann在某些特殊场景下返回的结果是有问题的，导致程序出现异常。</p>
+            <h3 id="目的">目的</h3>
+<p>想使用一下CloudCompare自带的八叉树，替换掉nanoflann。nanoflann在某些特殊场景下返回的结果是有问题的，导致程序出现异常。</p>
         </div>
         
         
@@ -342,13 +347,24 @@
             
         </h1>
         <div class="content">
-            <h1 id="使用地面控制点检核ALS点云精度"><a href="#使用地面控制点检核ALS点云精度" class="headerlink" title="使用地面控制点检核ALS点云精度"></a>使用地面控制点检核ALS点云精度</h1><h2 id="任务描述"><a href="#任务描述" class="headerlink" title="任务描述"></a>任务描述</h2><p>​        使用地面布设的外业控制点GCP来检核ALS点云条带平差之后的绝对位置精度。如下图所示，红圈中的是GCP点，紫色和灰色是两个条带的ALS点云。图中显示了在$z$方向上的偏差。</p>
-<div align=center><img src="./关于控制点检核的一些思考/practical_pos.png" width="100%" height="100%"></div>
-
-<p>​        通过观察，有一部分控制点是在平面区域采集的，有一些是在边缘比较锋利的区域采集的。</p>
-<h2 id="目前存在的问题"><a href="#目前存在的问题" class="headerlink" title="目前存在的问题"></a>目前存在的问题</h2><p>​        本身ALS点云就比较稀疏，再加上GCP也是离散的布设的，导致很难找到对应同名关系，想要找到对应位置的值就只能通过内插来实现。</p>
-<p>​        内插方法有很多，但是直接在ALS里面内插不是很现实，可以考虑转成<strong>格网</strong>，mesh的形式，然后基于新的数据表达方式再内插。例如可以用arcgis生成DTM，DEM，内插到高分辨率，然后再采样点和GCP做计算。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>最终论证，通过地面控制点应该是无法做到水平精度检核的，只能做到高程方向的检核。</p>
+            <h1
+id="使用地面控制点检核als点云精度">使用地面控制点检核ALS点云精度</h1>
+<h2 id="任务描述">任务描述</h2>
+<p>​
+使用地面布设的外业控制点GCP来检核ALS点云条带平差之后的绝对位置精度。如下图所示，红圈中的是GCP点，紫色和灰色是两个条带的ALS点云。图中显示了在<span
+class="math inline">\(z\)</span>方向上的偏差。</p>
+<div data-align="center">
+<img src="./关于控制点检核的一些思考/practical_pos.png" width="100%" height="100%">
+</div>
+<p>​
+通过观察，有一部分控制点是在平面区域采集的，有一些是在边缘比较锋利的区域采集的。</p>
+<h2 id="目前存在的问题">目前存在的问题</h2>
+<p>​
+本身ALS点云就比较稀疏，再加上GCP也是离散的布设的，导致很难找到对应同名关系，想要找到对应位置的值就只能通过内插来实现。</p>
+<p>​
+内插方法有很多，但是直接在ALS里面内插不是很现实，可以考虑转成<strong>格网</strong>，mesh的形式，然后基于新的数据表达方式再内插。例如可以用arcgis生成DTM，DEM，内插到高分辨率，然后再采样点和GCP做计算。</p>
+<h2 id="解决方案">解决方案</h2>
+<p>最终论证，通过地面控制点应该是无法做到水平精度检核的，只能做到高程方向的检核。</p>
         </div>
         
         
@@ -402,12 +418,21 @@
             
         </h1>
         <div class="content">
-            <h2 id="Integrated-trajectory-estimation-for-3D-kinematic-mapping-with-GNSS-INS-and-imaging-sensors-A-framework-and-review-1"><a href="#Integrated-trajectory-estimation-for-3D-kinematic-mapping-with-GNSS-INS-and-imaging-sensors-A-framework-and-review-1" class="headerlink" title="Integrated trajectory estimation for 3D kinematic mapping with GNSS, INS and imaging sensors: A framework and review[^ 1]"></a>Integrated trajectory estimation for 3D kinematic mapping with GNSS, INS and imaging sensors: A framework and review[^ 1]</h2><h3 id="方法分类"><a href="#方法分类" class="headerlink" title="方法分类"></a>方法分类</h3><ol>
+            <h2
+id="integrated-trajectory-estimation-for-3d-kinematic-mapping-with-gnss-ins-and-imaging-sensors-a-framework-and-review-1">Integrated
+trajectory estimation for 3D kinematic mapping with GNSS, INS and
+imaging sensors: A framework and review[^ 1]</h2>
+<h3 id="方法分类">方法分类</h3>
+<ol type="1">
 <li>多步方法。</li>
 </ol>
-<p>​        流程：首先用Kalman filtering 将GNSS和IMU融合到一起，如果轨迹足够准确，可以直接获得3D点云。也可以在后面加一个平差步骤，结合影像传感器的观测实现融合传感器定向，目的是：1）改正轨迹；2）传感器定向和标定；3）获取3D模型数据，e.g.点云。</p>
-<p>​        需要有一些假设：通常假设轨迹误差是由于缓慢变化的 GNSS 误差或未补偿的惯性传感器漂移造成的，因此是低频的，而轨迹的较高频率分量相对准确。 实际上，校正要么与飞行几何相关联，作为每条带的固定偏移，要么建模为缓慢时变。 由于轨迹误差在带内也可能变化很大，因此这种调整在实践中通常需要高度灵活的校正模型，而这也是的模型有较高的过拟合风险，导致点云中出现全局的变形。</p>
-<p>​        这些问题是的在传感器层级进行统一的误差建模的方法开始流形。</p>
+<p>​ 流程：首先用Kalman filtering
+将GNSS和IMU融合到一起，如果轨迹足够准确，可以直接获得3D点云。也可以在后面加一个平差步骤，结合影像传感器的观测实现融合传感器定向，目的是：1）改正轨迹；2）传感器定向和标定；3）获取3D模型数据，e.g.点云。</p>
+<p>​ 需要有一些假设：通常假设轨迹误差是由于缓慢变化的 GNSS
+误差或未补偿的惯性传感器漂移造成的，因此是低频的，而轨迹的较高频率分量相对准确。
+实际上，校正要么与飞行几何相关联，作为每条带的固定偏移，要么建模为缓慢时变。
+由于轨迹误差在带内也可能变化很大，因此这种调整在实践中通常需要高度灵活的校正模型，而这也是的模型有较高的过拟合风险，导致点云中出现全局的变形。</p>
+<p>​ 这些问题是的在传感器层级进行统一的误差建模的方法开始流形。</p>
         </div>
         
         

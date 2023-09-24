@@ -181,64 +181,114 @@
             
         </h1>
         <div class="content">
-            <h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p>​        文献管理其实是一项需要在最开始就把工作流做好的，事半功倍。之前使用了如下的方案进行文献管理：</p>
+            <h2 id="初衷">初衷</h2>
+<p>​
+文献管理其实是一项需要在最开始就把工作流做好的，事半功倍。之前使用了如下的方案进行文献管理：</p>
 <ul>
-<li><p>EndNote，写文章插入citation很好用，各种标签功能也挺好用，但是云盘空间太小，无法和pdf联动，而我喜欢把笔记写在pdf上，EndNote似乎无法直接把pdf导入，只能管理基本的文献元数据，没达到我想的那种方式。后面也就只在写文章需要添加引用的时候用了。中文比较友好。奈何我需要先写SCI。</p>
-</li>
-<li><p>Mendeley，英文非常好，但是多平台同步太慢了，经常卡死，而且后面客户端也不更新了。无法使用。用起来很气人。</p>
-</li>
-<li><p>NoteExpress一开始不好用，结果后面变好用了之后也没注意到。似乎写中文毕业论文也比较好用。主要是简单。</p>
-</li>
-<li><p>Zotero在多年前用过，当时一系列插件还不是很健全，用起来不是很美。就没用了。</p>
-</li>
+<li><p>EndNote，写文章插入citation很好用，各种标签功能也挺好用，但是云盘空间太小，无法和pdf联动，而我喜欢把笔记写在pdf上，EndNote似乎无法直接把pdf导入，只能管理基本的文献元数据，没达到我想的那种方式。后面也就只在写文章需要添加引用的时候用了。中文比较友好。奈何我需要先写SCI。</p></li>
+<li><p>Mendeley，英文非常好，但是多平台同步太慢了，经常卡死，而且后面客户端也不更新了。无法使用。用起来很气人。</p></li>
+<li><p>NoteExpress一开始不好用，结果后面变好用了之后也没注意到。似乎写中文毕业论文也比较好用。主要是简单。</p></li>
+<li><p>Zotero在多年前用过，当时一系列插件还不是很健全，用起来不是很美。就没用了。</p></li>
 </ul>
-<p>​        导致现状就是：笔记写在了pdf文件上，采用本地文件夹管理的方式，文件多了+时间长了+ipad联动等需求激增，想好好管理一下，发现一时间竟然没有合适的方案。</p>
-<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><p><strong>zotero+坚果云</strong></p>
-<p>​        zotero安装和坚果云申请就不说了。网上一大堆。虽然坚果云每个月上传下载有流量限制，但是忍过最初的几个月之后，剩下的时候不需要全部更新，应该也能顶住。</p>
+<p>​
+导致现状就是：笔记写在了pdf文件上，采用本地文件夹管理的方式，文件多了+时间长了+ipad联动等需求激增，想好好管理一下，发现一时间竟然没有合适的方案。</p>
+<h2 id="方案">方案</h2>
+<p><strong>zotero+坚果云</strong></p>
+<p>​
+zotero安装和坚果云申请就不说了。网上一大堆。虽然坚果云每个月上传下载有流量限制，但是忍过最初的几个月之后，剩下的时候不需要全部更新，应该也能顶住。</p>
 <a id="more"></a>
-
-<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><h3 id="ZotFile"><a href="#ZotFile" class="headerlink" title="ZotFile"></a><a href="http://zotfile.com/index.html#renaming-rules">ZotFile</a></h3><img src="/blogs/2023/03/06/Zotero/zotfile.png" class="">
-
-<p>Source Folder for Attaching New Files:存放由zotero管理文件时，pdf等文件的位置，storage下是采用一种zotero默认8位数字和字母的组合的编码方式存储的文件，以.zip方式存储，根本无法和pdf文件名字对应。无法直接使用。</p>
-<p>Location of Files:自定义的文件统一存放路径，可以根据设置好的文件/文件夹重命名方式将导入的文献重新按照统一的格式移动到这个路径中。（也就是说如果是本地文件导入了之后，这里会重新生成一个新的换了名字的相同文件，旧的就可以删掉了，每个新增的文件都需要手动移动一下位置，可以批量操作）。</p>
+<h2 id="插件">插件</h2>
+<h3 id="zotfile"><a
+href="http://zotfile.com/index.html#renaming-rules">ZotFile</a></h3>
+<img src="/blogs/2023/03/06/Zotero/zotfile.png" class="">
+<p>Source Folder for Attaching New
+Files:存放由zotero管理文件时，pdf等文件的位置，storage下是采用一种zotero默认8位数字和字母的组合的编码方式存储的文件，以.zip方式存储，根本无法和pdf文件名字对应。无法直接使用。</p>
+<p>Location of
+Files:自定义的文件统一存放路径，可以根据设置好的文件/文件夹重命名方式将导入的文献重新按照统一的格式移动到这个路径中。（也就是说如果是本地文件导入了之后，这里会重新生成一个新的换了名字的相同文件，旧的就可以删掉了，每个新增的文件都需要手动移动一下位置，可以批量操作）。</p>
 <ul>
-<li>use subfolder defined by <strong>/%c</strong>（%T是按照文献类别来分），这里设置的是按照我在zotero中分类的条目进行的文章归纳，这样带来的好处是，分享到其他地方仍然可以看到简单的分档归纳，问题是，文章如果想给多个分类条目，就会导致文章重复出现，因此需要在zotero中使用tag进行管理。</li>
+<li>use subfolder defined by
+<strong>/%c</strong>（%T是按照文献类别来分），这里设置的是按照我在zotero中分类的条目进行的文章归纳，这样带来的好处是，分享到其他地方仍然可以看到简单的分档归纳，问题是，文章如果想给多个分类条目，就会导致文章重复出现，因此需要在zotero中使用tag进行管理。</li>
 </ul>
 <img src="/blogs/2023/03/06/Zotero/zotfile3.png" class="">
-
 <p>这里选择的文件重命名方式是“期刊简写_年份_文章名字”的方式。因为文章良莠不齐，根据期刊名字可以迅速筛掉一部分文献，根据年限可以找到最近的文章，最后才看名字，如果不相关的肯定不会下载。这种方式非常适合将pdf导出的时候，没有zotero这一套，只有pdf文件也可以进行学习。</p>
-<h4 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h4><p>移动端负责的是文献阅读与标注，在 Zotero 完成文献的管理后，将想看的文献发送到 iPad 上进行阅读，完成 ZotFile 的设置后，对于我们想要发送到 iPad 上的文献，右键单击，依次选择「Manage Attachments 」-&gt;「Send to subfolders on tablet」，就能够将文献按照其在 Zotero 自定义分类中的情况，创建相应的子文件夹，发送到先前设定到的目标位置。</p>
-<p>这里其实还有一个选项，直接就是「Send to tablet」，这个选项只会将 PDF 文件发送过去，而不会创建子文件夹，对于一些临时看的文献可以选择该选项。我选择将文献发送到 iCloud 的一个文件夹中，便于在 iPad 上进行访问。发送完成后，可以在 Zotero 的侧边栏发现新增了两个分类，分别为「Tablet Files」和「Tablet Files (modified) 」，前者里面放的就是我们发送到平板上的所有文件（其实这也是类似于打标签）。</p>
-<p>发送到 iPad 后，就可以利用各种 PDF 阅读器对文献进行标注。自带的「文件」能够进行简单的批注，实际上手时也发现足够自己使用了，但是有一个我个人不太喜欢的问题，就是「文件」会挡住文献的右边缘，不利于充分利用空间。为了尽可能模拟在纸张上阅读文献的感觉，我找到了一个叫做「PDF Viewer」的免费软件，解决了边缘空白无法利用的问题。</p>
-<p>在 iPad 上完成文献的阅读后，进入 Zotero，在「Tablet Files」分类中找到想要取回的文献，右键单击，依次选择「Manage Attachments 」-&gt;「Get from Tablet」，就可以将标注后的 PDF 文件重新取回到 Zotero 的文件存储位置，并覆盖原来的文件，使得标注的内容得以同步。标注后的 PDF 文件体积通常会变大不少。</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
-<li><a href="http://zotfile.com/index.html#renaming-rules">http://zotfile.com/index.html#renaming-rules</a></li>
-<li><a href="https://www.zhihu.com/question/23572825">https://www.zhihu.com/question/23572825</a></li>
-<li><a href="https://andyluojj.github.io/post/zotero-kua-she-bei-wen-xian-guan-li/">https://andyluojj.github.io/post/zotero-kua-she-bei-wen-xian-guan-li/</a></li>
-<li><a href="https://blog.csdn.net/haoji007/article/details/127623641">https://blog.csdn.net/haoji007/article/details/127623641</a></li>
+<h4 id="工作流">工作流</h4>
+<p>移动端负责的是文献阅读与标注，在 Zotero
+完成文献的管理后，将想看的文献发送到 iPad 上进行阅读，完成 ZotFile
+的设置后，对于我们想要发送到 iPad 上的文献，右键单击，依次选择「Manage
+Attachments 」-&gt;「Send to subfolders on
+tablet」，就能够将文献按照其在 Zotero
+自定义分类中的情况，创建相应的子文件夹，发送到先前设定到的目标位置。</p>
+<p>这里其实还有一个选项，直接就是「Send to tablet」，这个选项只会将 PDF
+文件发送过去，而不会创建子文件夹，对于一些临时看的文献可以选择该选项。我选择将文献发送到
+iCloud 的一个文件夹中，便于在 iPad 上进行访问。发送完成后，可以在 Zotero
+的侧边栏发现新增了两个分类，分别为「Tablet Files」和「Tablet Files
+(modified)
+」，前者里面放的就是我们发送到平板上的所有文件（其实这也是类似于打标签）。</p>
+<p>发送到 iPad 后，就可以利用各种 PDF
+阅读器对文献进行标注。自带的「文件」能够进行简单的批注，实际上手时也发现足够自己使用了，但是有一个我个人不太喜欢的问题，就是「文件」会挡住文献的右边缘，不利于充分利用空间。为了尽可能模拟在纸张上阅读文献的感觉，我找到了一个叫做「PDF
+Viewer」的免费软件，解决了边缘空白无法利用的问题。</p>
+<p>在 iPad 上完成文献的阅读后，进入 Zotero，在「Tablet
+Files」分类中找到想要取回的文献，右键单击，依次选择「Manage Attachments
+」-&gt;「Get from Tablet」，就可以将标注后的 PDF 文件重新取回到 Zotero
+的文件存储位置，并覆盖原来的文件，使得标注的内容得以同步。标注后的 PDF
+文件体积通常会变大不少。</p>
+<h4 id="参考">参考</h4>
+<ul>
+<li>http://zotfile.com/index.html#renaming-rules</li>
+<li>https://www.zhihu.com/question/23572825</li>
+<li>https://andyluojj.github.io/post/zotero-kua-she-bei-wen-xian-guan-li/</li>
+<li>https://blog.csdn.net/haoji007/article/details/127623641</li>
 </ul>
-<h3 id="jaseminum"><a href="#jaseminum" class="headerlink" title="jaseminum"></a>jaseminum</h3><p>管理中文文献的。</p>
-<h3 id="IF"><a href="#IF" class="headerlink" title="IF"></a>IF</h3><p>这个插件似乎没啥用。</p>
-<h3 id="Zotero-Better-Notes"><a href="#Zotero-Better-Notes" class="headerlink" title="Zotero-Better-Notes"></a>Zotero-Better-Notes</h3><p>官方笔记见<a href="https://zotero.yuque.com/staff-gkhviy/better-notes/biigg4?">这里</a>。</p>
-<h3 id="Chartero"><a href="#Chartero" class="headerlink" title="Chartero"></a>Chartero</h3><p>浏览阅读的历史记录，可以看出本月看了多少文章。</p>
-<p>创建的Chartero文件不要删掉，不然会丢掉之前的阅读记录。官方文档见<a href="https://gitee.com/const_volatile/chartero/tree/js_overlay/">这里</a>。</p>
-<h3 id="zotero-pdf-translate"><a href="#zotero-pdf-translate" class="headerlink" title="zotero-pdf-translate"></a><a href="https://github.com/windingwind/zotero-pdf-translate">zotero-pdf-translate</a></h3><p>阅读文章的时候，想随时翻译。</p>
-<p><strong>Q</strong> I want to translate manually.<br><strong>A</strong> Go to <code>Edit-&gt;Preferences-&gt;PDF Translate-&gt;General</code>, uncheck the <code>Automatic Translation</code>. Click the <code>translate</code> button on the popup or sidebar to translate.</p>
-<p><strong>Q</strong> I want a translate shortcut.<br><strong>A</strong> Press shortcut <code>Ctrl+T</code> after you selected some text. If you are in the collection view, the titles’ translation will show/hide.</p>
-<h3 id="Zotero-Tag"><a href="#Zotero-Tag" class="headerlink" title="Zotero-Tag"></a>Zotero-Tag</h3><p>官方文档在<a href="https://www.zotero.org/support/collections_and_tags#colored_tags">这里</a>。可以给文章打上颜色标签，阅读的时候更容易找到想要的那个标签。</p>
-<h2 id="多平台同步"><a href="#多平台同步" class="headerlink" title="多平台同步"></a>多平台同步</h2><p>多平台同步的思路和流程见这里：</p>
-<p><img src="https://cdn.sspai.com/2020/12/30/b377db1c9a3cb04a944d91f990d91c2b.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt=""></p>
+<h3 id="jaseminum">jaseminum</h3>
+<p>管理中文文献的。</p>
+<h3 id="if">IF</h3>
+<p>这个插件似乎没啥用。</p>
+<h3 id="zotero-better-notes">Zotero-Better-Notes</h3>
+<p>官方笔记见<a
+href="https://zotero.yuque.com/staff-gkhviy/better-notes/biigg4?">这里</a>。</p>
+<h3 id="chartero">Chartero</h3>
+<p>浏览阅读的历史记录，可以看出本月看了多少文章。</p>
+<p>创建的Chartero文件不要删掉，不然会丢掉之前的阅读记录。官方文档见<a
+href="https://gitee.com/const_volatile/chartero/tree/js_overlay/">这里</a>。</p>
+<h3 id="zotero-pdf-translate"><a
+href="https://github.com/windingwind/zotero-pdf-translate">zotero-pdf-translate</a></h3>
+<p>阅读文章的时候，想随时翻译。</p>
+<p><strong>Q</strong> I want to translate manually. <strong>A</strong>
+Go to <code>Edit-&gt;Preferences-&gt;PDF Translate-&gt;General</code>,
+uncheck the <code>Automatic Translation</code>. Click the
+<code>translate</code> button on the popup or sidebar to translate.</p>
+<p><strong>Q</strong> I want a translate shortcut. <strong>A</strong>
+Press shortcut <code>Ctrl+T</code> after you selected some text. If you
+are in the collection view, the titles' translation will show/hide.</p>
+<h3 id="zotero-tag">Zotero-Tag</h3>
+<p>官方文档在<a
+href="https://www.zotero.org/support/collections_and_tags#colored_tags">这里</a>。可以给文章打上颜色标签，阅读的时候更容易找到想要的那个标签。</p>
+<h2 id="多平台同步">多平台同步</h2>
+<p>多平台同步的思路和流程见这里：</p>
+<p><img
+src="https://cdn.sspai.com/2020/12/30/b377db1c9a3cb04a944d91f990d91c2b.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" /></p>
 <p>如果想换电脑了，而坚果云有限制（下载限制一个周期内3G）。那么可以直接把存放文件库的那个文件夹直接全部拷贝到新的电脑上，然后按照下面的设置新的路径：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Zotero_multi_platform_%20synchronize.png" alt="image-20230907204704300"></p>
-<p>然后在新电脑上就可以直接打开啦，官方文档参见<a href="https://www.zotero.org/support/preferences/advanced#linked_attachment_base_directory">这里</a>。坚果云会自动进行同步，将旧有的文件信息不动（不会耗费流量），修改的进行同步。</p>
+<figure>
+<img
+src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Zotero_multi_platform_%20synchronize.png"
+alt="image-20230907204704300" />
+<figcaption aria-hidden="true">image-20230907204704300</figcaption>
+</figure>
+<p>然后在新电脑上就可以直接打开啦，官方文档参见<a
+href="https://www.zotero.org/support/preferences/advanced#linked_attachment_base_directory">这里</a>。坚果云会自动进行同步，将旧有的文件信息不动（不会耗费流量），修改的进行同步。</p>
 <ul>
 <li>注意：不要手贱删掉zotero云端的文章，不然同步的时候，本地的文件也就没有了。</li>
 </ul>
-<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://sspai.com/post/64283">https://sspai.com/post/64283</a></li>
+<h3 id="参考-1">参考</h3>
+<ul>
+<li>https://sspai.com/post/64283</li>
 </ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="PDF全文索引"><a href="#PDF全文索引" class="headerlink" title="PDF全文索引"></a>PDF全文索引</h3><p>​        如果发现之前的文章找不到对应的文章了，只剩下一个假索引说明，是动了zotero的原始文件存储的位置，需要重新生成一下索引就可以了。一般来说默认新导入的文章是会自动更新索引的。Zotero空闲时会自动对PDF进行索引。但是如果发现打不开pdf了，手动更新一下就行。</p>
-<h3 id="文献导入后不同图标的含义"><a href="#文献导入后不同图标的含义" class="headerlink" title="文献导入后不同图标的含义"></a>文献导入后不同图标的含义</h3><p>​        这些都是zotero自动识别出来的，可以修改。</p>
+<h2 id="其他">其他</h2>
+<h3 id="pdf全文索引">PDF全文索引</h3>
+<p>​
+如果发现之前的文章找不到对应的文章了，只剩下一个假索引说明，是动了zotero的原始文件存储的位置，需要重新生成一下索引就可以了。一般来说默认新导入的文章是会自动更新索引的。Zotero空闲时会自动对PDF进行索引。但是如果发现打不开pdf了，手动更新一下就行。</p>
+<h3 id="文献导入后不同图标的含义">文献导入后不同图标的含义</h3>
+<p>​ 这些都是zotero自动识别出来的，可以修改。</p>
 <blockquote>
 <p>白色+横道：期刊</p>
 <p>白色+横道+两个小人：会议</p>
@@ -247,24 +297,38 @@
 <ul>
 <li>如果发现导入的pdf自动检索不出来，可以手动更新，找到这个bibtex文件，然后导入的时候选择从剪贴板导入，然后和之前那个错误的合并一下就行。</li>
 </ul>
-<h3 id="文献导入"><a href="#文献导入" class="headerlink" title="文献导入"></a>文献导入</h3><p>​        导入一篇文献需要完成三步操作：拖入 PDF 文献，等待元数据检索完成并检查（或先导入元数据再拖入 PDF 文件），最后右键选择 Rename Attachments。</p>
-<p>​        或者直接在浏览器端，使用zotero connector将文件导入。这种平时浏览的话比较方便。</p>
-<h3 id="文献删除"><a href="#文献删除" class="headerlink" title="文献删除"></a>文献删除</h3><p>​        一般来说导入的文章会存成软链接的方式，因此直接在zotero删除条目时，只会删掉软链接，文章还是不动的，可以在工具-&gt;管理附件-&gt;转换已链接文件为已存储文件。这样就一下子都可以把文件都删掉。</p>
-<h3 id="文献元数据更新"><a href="#文献元数据更新" class="headerlink" title="文献元数据更新"></a>文献元数据更新</h3><p>​        由于某些文献发表时间太久了，或者是发表在某个野鸡期刊上的，可能找不到doi号，进而也无法更新元数据。这种类型的pdf就不管了，文章水平也不怎么样，可以看，但是引用意义不大。</p>
-<h4 id="更新方式"><a href="#更新方式" class="headerlink" title="更新方式"></a>更新方式</h4><ol>
+<h3 id="文献导入">文献导入</h3>
+<p>​ 导入一篇文献需要完成三步操作：拖入 PDF
+文献，等待元数据检索完成并检查（或先导入元数据再拖入 PDF
+文件），最后右键选择 Rename Attachments。</p>
+<p>​ 或者直接在浏览器端，使用zotero
+connector将文件导入。这种平时浏览的话比较方便。</p>
+<h3 id="文献删除">文献删除</h3>
+<p>​
+一般来说导入的文章会存成软链接的方式，因此直接在zotero删除条目时，只会删掉软链接，文章还是不动的，可以在工具-&gt;管理附件-&gt;转换已链接文件为已存储文件。这样就一下子都可以把文件都删掉。</p>
+<h3 id="文献元数据更新">文献元数据更新</h3>
+<p>​
+由于某些文献发表时间太久了，或者是发表在某个野鸡期刊上的，可能找不到doi号，进而也无法更新元数据。这种类型的pdf就不管了，文章水平也不怎么样，可以看，但是引用意义不大。</p>
+<h4 id="更新方式">更新方式</h4>
+<ol type="1">
 <li>选中文献，然后在工具中选择抓取DOI，如果能找到，那么恭喜，可以选择更新元数据，条目信息就更新了，文章也可以继续被更新；</li>
-<li>如果找不到，那么在<a href="https://search.crossref.org/?q=&from_ui=yes">crossref</a>上搜一下，找不到就没办法了。</li>
+<li>如果找不到，那么在<a
+href="https://search.crossref.org/?q=&amp;from_ui=yes">crossref</a>上搜一下，找不到就没办法了。</li>
 </ol>
-<p><a href="https://formlesslab.top/2021/10/13/%E5%AD%A6%E6%9C%AF/Zotero/Zotero-%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E5%85%83%E6%95%B0%E6%8D%AE/">https://formlesslab.top/2021/10/13/%E5%AD%A6%E6%9C%AF/Zotero/Zotero-%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E5%85%83%E6%95%B0%E6%8D%AE/</a></p>
-<h3 id="信息中各个label中的意义"><a href="#信息中各个label中的意义" class="headerlink" title="信息中各个label中的意义"></a>信息中各个label中的意义</h3><p>因为添加了Zotero IF Pro Max破解版（原版好像有问题）等插件，因此会有一些额外的bonus的数据给出来。</p>
+<p>https://formlesslab.top/2021/10/13/%E5%AD%A6%E6%9C%AF/Zotero/Zotero-%E6%89%B9%E9%87%8F%E4%BF%AE%E6%94%B9%E5%85%83%E6%95%B0%E6%8D%AE/</p>
+<h3 id="信息中各个label中的意义">信息中各个label中的意义</h3>
+<p>因为添加了Zotero IF Pro
+Max破解版（原版好像有问题）等插件，因此会有一些额外的bonus的数据给出来。</p>
 <p>馆藏目录表示的是影响因子，但是不知道是加了哪个插件，现在影响因子和期刊标签，引用量都可以显示出来了。</p>
 <p>存档位置表示的是引用量</p>
 <p>索书号：对应JCR分区，只对SCI有效</p>
-<p>只有使用了zotero自带的pdf阅读器才能记录有zotero style和chatero的进度条信息产生，但是pdf的注释需要手动导出才能将注释记录到pdf中。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="http://zotfile.com/index.html#renaming-rules">http://zotfile.com/index.html#renaming-rules</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/31453719">https://zhuanlan.zhihu.com/p/31453719</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/108366072">https://zhuanlan.zhihu.com/p/108366072</a></li>
+<p>只有使用了zotero自带的pdf阅读器才能记录有zotero
+style和chatero的进度条信息产生，但是pdf的注释需要手动导出才能将注释记录到pdf中。</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li>http://zotfile.com/index.html#renaming-rules</li>
+<li>https://zhuanlan.zhihu.com/p/31453719</li>
+<li>https://zhuanlan.zhihu.com/p/108366072</li>
 </ul>
 
         </div>
@@ -576,7 +640,7 @@
         <span class="has-mr-6">3</span>
         <span>插件</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#ZotFile">
+        <a class="is-flex" href="#zotfile">
         <span class="has-mr-6">3.1</span>
         <span>ZotFile</span>
         </a><ul class="menu-list"><li>
@@ -592,15 +656,15 @@
         <span class="has-mr-6">3.2</span>
         <span>jaseminum</span>
         </a></li><li>
-        <a class="is-flex" href="#IF">
+        <a class="is-flex" href="#if">
         <span class="has-mr-6">3.3</span>
         <span>IF</span>
         </a></li><li>
-        <a class="is-flex" href="#Zotero-Better-Notes">
+        <a class="is-flex" href="#zotero-better-notes">
         <span class="has-mr-6">3.4</span>
         <span>Zotero-Better-Notes</span>
         </a></li><li>
-        <a class="is-flex" href="#Chartero">
+        <a class="is-flex" href="#chartero">
         <span class="has-mr-6">3.5</span>
         <span>Chartero</span>
         </a></li><li>
@@ -608,7 +672,7 @@
         <span class="has-mr-6">3.6</span>
         <span>zotero-pdf-translate</span>
         </a></li><li>
-        <a class="is-flex" href="#Zotero-Tag">
+        <a class="is-flex" href="#zotero-tag">
         <span class="has-mr-6">3.7</span>
         <span>Zotero-Tag</span>
         </a></li></ul></li><li>
@@ -624,7 +688,7 @@
         <span class="has-mr-6">5</span>
         <span>其他</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#PDF全文索引">
+        <a class="is-flex" href="#pdf全文索引">
         <span class="has-mr-6">5.1</span>
         <span>PDF全文索引</span>
         </a></li><li>

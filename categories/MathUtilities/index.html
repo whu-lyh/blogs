@@ -236,11 +236,18 @@
             
         </h1>
         <div class="content">
-            <h2 id="B-Spline（-Basic-Spline）"><a href="#B-Spline（-Basic-Spline）" class="headerlink" title="B-Spline（=Basic Spline）"></a>B-Spline（=Basic Spline）</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><ul>
-<li>需要利用样条函数拟合<a href="https://github.com/whu-lyh/PoseSpline">时相连续的数据</a>，e.g. IMU data。</li>
-<li>利用样条函数拟合散点，做表面拟合，e.g. 构建mesh或者其他光滑的表面。</li>
-<li><a href="https://zhuanlan.zhihu.com/p/159192419">路径规划</a>中使用样条线对A*算法进行优化，得到更加平滑的路径。</li>
-<li>多传感器融合任务中，e.g.<a href="https://github.com/ethz-asl/kalibr.git">多传感器标定</a>时，为了内插任意时刻的状态，实现多传感器的时间对齐，使用B-spline做内插。</li>
+            <h2 id="b-splinebasic-spline">B-Spline（=Basic Spline）</h2>
+<h3 id="需求">需求</h3>
+<ul>
+<li>需要利用样条函数拟合<a
+href="https://github.com/whu-lyh/PoseSpline">时相连续的数据</a>，e.g.
+IMU data。</li>
+<li>利用样条函数拟合散点，做表面拟合，e.g.
+构建mesh或者其他光滑的表面。</li>
+<li><a
+href="https://zhuanlan.zhihu.com/p/159192419">路径规划</a>中使用样条线对A*算法进行优化，得到更加平滑的路径。</li>
+<li>多传感器融合任务中，e.g.<a
+href="https://github.com/ethz-asl/kalibr.git">多传感器标定</a>时，为了内插任意时刻的状态，实现多传感器的时间对齐，使用B-spline做内插。</li>
 </ul>
         </div>
         
@@ -295,9 +302,23 @@
             
         </h1>
         <div class="content">
-            <h2 id="What-is-Rotation-Averaging"><a href="#What-is-Rotation-Averaging" class="headerlink" title="What is Rotation Averaging?"></a>What is Rotation Averaging?</h2><h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem[^ 1]"></a>Problem[^ 1]</h3><p>Given a set of rotation matrices $C_i, i=\{1,2,…,n\}$, the average of them is ? <strong>Rotation Averaging</strong> is to calculate the average of a set of rotation matrices. Averaging is to get the <strong>best estimate</strong> of all rotations. (Single rotation averaging)</p>
-<p>Or equivalently, <strong>Rotation Averaging</strong> is the problem of estimating a set of $n$ unknown orientations $R_1,…,R_n \in SO(d)$ from noisy measurements $\bar{R} \in SO(d)$ of the relative rotations $R_i^{-1}R_j$ between them. (Multi rotation averaging)</p>
-<p>In practical the rotation averaging problem could be categoried into : Single rotation averaging、Multi rotation averaging and Conjugate rotation averaging.</p>
+            <h2 id="what-is-rotation-averaging">What is Rotation Averaging?</h2>
+<h3 id="problem-1">Problem[^ 1]</h3>
+<p>Given a set of rotation matrices <span class="math inline">\(C_i,
+i=\{1,2,...,n\}\)</span>, the average of them is ? <strong>Rotation
+Averaging</strong> is to calculate the average of a set of rotation
+matrices. Averaging is to get the <strong>best estimate</strong> of all
+rotations. (Single rotation averaging)</p>
+<p>Or equivalently, <strong>Rotation Averaging</strong> is the problem
+of estimating a set of <span class="math inline">\(n\)</span> unknown
+orientations <span class="math inline">\(R_1,...,R_n \in SO(d)\)</span>
+from noisy measurements <span class="math inline">\(\bar{R} \in
+SO(d)\)</span> of the relative rotations <span
+class="math inline">\(R_i^{-1}R_j\)</span> between them. (Multi rotation
+averaging)</p>
+<p>In practical the rotation averaging problem could be categoried into
+: Single rotation averaging、Multi rotation averaging and Conjugate
+rotation averaging.</p>
         </div>
         
         

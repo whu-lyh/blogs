@@ -176,8 +176,12 @@
             
         </h1>
         <div class="content">
-            <h2 id="1-针对性设计的平面提取方法"><a href="#1-针对性设计的平面提取方法" class="headerlink" title="1. 针对性设计的平面提取方法"></a>1. 针对性设计的平面提取方法</h2><p>​        因为这里使用的传感器其实一个组装的VLP16型多线激光雷达+相机+imu的背包激光扫描仪，作者考虑到LiDAR有一定的安置误差(提前肯定标定了的，e.g.倾角)，而本文使用的又是室内场景平面，因此需要根据一个仪器安装的先验确定z轴方向指向哪里（默认传感器的坐标系为右前上，z轴指向天空）。得到这个倾角主要是为了修正LiDAR坐标系的z轴方向。这对后续的高度滤波和地面点判断都有一定的影响。</p>
-<p>​        在提取平面时，为了提升效率，首先基于扫描仪的高度，通过高度滤波将一定高度之外的点去掉，同时对剩下的点云计算法向量（通过提前性的点云剔除，可以提升这里的计算效率）进行过滤，和z方向进行比较，保留地面点（和z轴夹角小就说明方向近似），用RANSAC的方式拟合平面参数方程。 这样就可以以较快的速度从单帧点云中提取出一个合适的平面。注意：原文中写的是直接用RANSAC提取平面的，这个非常的费时间，实际操作并不是这样子来的。</p>
+            <h2 id="针对性设计的平面提取方法">1. 针对性设计的平面提取方法</h2>
+<p>​
+因为这里使用的传感器其实一个组装的VLP16型多线激光雷达+相机+imu的背包激光扫描仪，作者考虑到LiDAR有一定的安置误差(提前肯定标定了的，e.g.倾角)，而本文使用的又是室内场景平面，因此需要根据一个仪器安装的先验确定z轴方向指向哪里（默认传感器的坐标系为右前上，z轴指向天空）。得到这个倾角主要是为了修正LiDAR坐标系的z轴方向。这对后续的高度滤波和地面点判断都有一定的影响。</p>
+<p>​
+在提取平面时，为了提升效率，首先基于扫描仪的高度，通过高度滤波将一定高度之外的点去掉，同时对剩下的点云计算法向量（通过提前性的点云剔除，可以提升这里的计算效率）进行过滤，和z方向进行比较，保留地面点（和z轴夹角小就说明方向近似），用RANSAC的方式拟合平面参数方程。
+这样就可以以较快的速度从单帧点云中提取出一个合适的平面。注意：原文中写的是直接用RANSAC提取平面的，这个非常的费时间，实际操作并不是这样子来的。</p>
         </div>
         
         
@@ -231,8 +235,11 @@
             
         </h1>
         <div class="content">
-            <h2 id="回环检测"><a href="#回环检测" class="headerlink" title="回环检测"></a>回环检测</h2><p>​        闭环的作用就不多说了，koide采用的闭环检测方法其实挺简单的，就是一般闭环检测的基础准则。</p>
-<h3 id="候选准则"><a href="#候选准则" class="headerlink" title="候选准则"></a>候选准则</h3><ul>
+            <h2 id="回环检测">回环检测</h2>
+<p>​
+闭环的作用就不多说了，koide采用的闭环检测方法其实挺简单的，就是一般闭环检测的基础准则。</p>
+<h3 id="候选准则">候选准则</h3>
+<ul>
 <li>候选帧不能离当前帧太近，场景变化不大的话，会引入过多的冗余匹配，对实时应用不合适；</li>
 <li>候选帧和当前帧的位姿之间的距离要足够小，这个是前提，如果都不小，那说明大概率不是闭环了，但是也不排除前端飘得确实很厉害的情况；小范围内，这个条件还是可以满足的，室外更大的场景，这种就不行了，可能飘得很厉害，只能上特征了。</li>
 </ul>
@@ -289,11 +296,18 @@
             
         </h1>
         <div class="content">
-            <h2 id="B-Spline（-Basic-Spline）"><a href="#B-Spline（-Basic-Spline）" class="headerlink" title="B-Spline（=Basic Spline）"></a>B-Spline（=Basic Spline）</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><ul>
-<li>需要利用样条函数拟合<a href="https://github.com/whu-lyh/PoseSpline">时相连续的数据</a>，e.g. IMU data。</li>
-<li>利用样条函数拟合散点，做表面拟合，e.g. 构建mesh或者其他光滑的表面。</li>
-<li><a href="https://zhuanlan.zhihu.com/p/159192419">路径规划</a>中使用样条线对A*算法进行优化，得到更加平滑的路径。</li>
-<li>多传感器融合任务中，e.g.<a href="https://github.com/ethz-asl/kalibr.git">多传感器标定</a>时，为了内插任意时刻的状态，实现多传感器的时间对齐，使用B-spline做内插。</li>
+            <h2 id="b-splinebasic-spline">B-Spline（=Basic Spline）</h2>
+<h3 id="需求">需求</h3>
+<ul>
+<li>需要利用样条函数拟合<a
+href="https://github.com/whu-lyh/PoseSpline">时相连续的数据</a>，e.g.
+IMU data。</li>
+<li>利用样条函数拟合散点，做表面拟合，e.g.
+构建mesh或者其他光滑的表面。</li>
+<li><a
+href="https://zhuanlan.zhihu.com/p/159192419">路径规划</a>中使用样条线对A*算法进行优化，得到更加平滑的路径。</li>
+<li>多传感器融合任务中，e.g.<a
+href="https://github.com/ethz-asl/kalibr.git">多传感器标定</a>时，为了内插任意时刻的状态，实现多传感器的时间对齐，使用B-spline做内插。</li>
 </ul>
         </div>
         
@@ -348,20 +362,21 @@
             
         </h1>
         <div class="content">
-            <h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p>​        文献管理其实是一项需要在最开始就把工作流做好的，事半功倍。之前使用了如下的方案进行文献管理：</p>
+            <h2 id="初衷">初衷</h2>
+<p>​
+文献管理其实是一项需要在最开始就把工作流做好的，事半功倍。之前使用了如下的方案进行文献管理：</p>
 <ul>
-<li><p>EndNote，写文章插入citation很好用，各种标签功能也挺好用，但是云盘空间太小，无法和pdf联动，而我喜欢把笔记写在pdf上，EndNote似乎无法直接把pdf导入，只能管理基本的文献元数据，没达到我想的那种方式。后面也就只在写文章需要添加引用的时候用了。中文比较友好。奈何我需要先写SCI。</p>
-</li>
-<li><p>Mendeley，英文非常好，但是多平台同步太慢了，经常卡死，而且后面客户端也不更新了。无法使用。用起来很气人。</p>
-</li>
-<li><p>NoteExpress一开始不好用，结果后面变好用了之后也没注意到。似乎写中文毕业论文也比较好用。主要是简单。</p>
-</li>
-<li><p>Zotero在多年前用过，当时一系列插件还不是很健全，用起来不是很美。就没用了。</p>
-</li>
+<li><p>EndNote，写文章插入citation很好用，各种标签功能也挺好用，但是云盘空间太小，无法和pdf联动，而我喜欢把笔记写在pdf上，EndNote似乎无法直接把pdf导入，只能管理基本的文献元数据，没达到我想的那种方式。后面也就只在写文章需要添加引用的时候用了。中文比较友好。奈何我需要先写SCI。</p></li>
+<li><p>Mendeley，英文非常好，但是多平台同步太慢了，经常卡死，而且后面客户端也不更新了。无法使用。用起来很气人。</p></li>
+<li><p>NoteExpress一开始不好用，结果后面变好用了之后也没注意到。似乎写中文毕业论文也比较好用。主要是简单。</p></li>
+<li><p>Zotero在多年前用过，当时一系列插件还不是很健全，用起来不是很美。就没用了。</p></li>
 </ul>
-<p>​        导致现状就是：笔记写在了pdf文件上，采用本地文件夹管理的方式，文件多了+时间长了+ipad联动等需求激增，想好好管理一下，发现一时间竟然没有合适的方案。</p>
-<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><p><strong>zotero+坚果云</strong></p>
-<p>​        zotero安装和坚果云申请就不说了。网上一大堆。虽然坚果云每个月上传下载有流量限制，但是忍过最初的几个月之后，剩下的时候不需要全部更新，应该也能顶住。</p>
+<p>​
+导致现状就是：笔记写在了pdf文件上，采用本地文件夹管理的方式，文件多了+时间长了+ipad联动等需求激增，想好好管理一下，发现一时间竟然没有合适的方案。</p>
+<h2 id="方案">方案</h2>
+<p><strong>zotero+坚果云</strong></p>
+<p>​
+zotero安装和坚果云申请就不说了。网上一大堆。虽然坚果云每个月上传下载有流量限制，但是忍过最初的几个月之后，剩下的时候不需要全部更新，应该也能顶住。</p>
         </div>
         
         
@@ -415,7 +430,11 @@
             
         </h1>
         <div class="content">
-            <h2 id="现象描述"><a href="#现象描述" class="headerlink" title="现象描述"></a>现象描述</h2><p>​        按照<a href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">hexo+github pages的博客部署流程</a>，hexo的博客会部署在<code>https://yourgithubname.github.io/</code>。本来没什么问题的，但是后面我想做一个个人主页，按照<a href="https://github.com/academicpages/academicpages.github.io">academicpages/academicpages.github.io</a>的方案，使用的也是<code>https://yourgithubname.github.io/</code>。这时候就有问题了，博客和个人主页的域名不就不兼容了？本人菜鸡，完全不懂前端。</p>
+            <h2 id="现象描述">现象描述</h2>
+<p>​ 按照<a
+href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">hexo+github
+pages的博客部署流程</a>，hexo的博客会部署在<code>https://yourgithubname.github.io/</code>。本来没什么问题的，但是后面我想做一个个人主页，按照<a
+href="https://github.com/academicpages/academicpages.github.io">academicpages/academicpages.github.io</a>的方案，使用的也是<code>https://yourgithubname.github.io/</code>。这时候就有问题了，博客和个人主页的域名不就不兼容了？本人菜鸡，完全不懂前端。</p>
 <ul>
 <li>我的目的是实现下面功能的东西。</li>
 </ul>

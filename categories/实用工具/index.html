@@ -187,22 +187,29 @@
             
         </h1>
         <div class="content">
-            <ol start="0">
-<li>查看系统显卡<br> <code>lspci | grep -i vga</code>，会弹出设备编号，在<a href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
-<li>下载对应驱动<br> 位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
+            <ol start="0" type="1">
+<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a
+href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a
+href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
+<li>下载对应驱动
+位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
 </ol>
 <ul>
-<li>tips: 检查cuda版本和显卡驱动的<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
+<li>tips: 检查cuda版本和显卡驱动的<a
+href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
 </ul>
-<ol start="2">
-<li>卸载之前的显卡驱动<br><code>sudo apt-get automove --purge nvidia-×</code></li>
-<li>给.run文件权限<br><code>sudo chmod a+x xxx.run</code></li>
-<li>关闭图形界面<br>ctrl+alt+f1</li>
-<li>关闭lightdm服务<br><code>sudo service lightdm stop</code></li>
-<li>安装驱动<br><code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
-<li>打开lightdm<br><code>sudo service lightdm start</code></li>
-<li>如果没反应，再试试<br><code>sudo syetemctl start gdm.service</code> or  <code>sudo syetemctl enable gdm.service</code></li>
-<li>打开图形化界面<br> <code>ctrl+alt+f7</code></li>
+<ol start="2" type="1">
+<li>卸载之前的显卡驱动
+<code>sudo apt-get automove --purge nvidia-×</code></li>
+<li>给.run文件权限 <code>sudo chmod a+x xxx.run</code></li>
+<li>关闭图形界面 ctrl+alt+f1</li>
+<li>关闭lightdm服务 <code>sudo service lightdm stop</code></li>
+<li>安装驱动
+<code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
+<li>打开lightdm <code>sudo service lightdm start</code></li>
+<li>如果没反应，再试试 <code>sudo syetemctl start gdm.service</code> or
+<code>sudo syetemctl enable gdm.service</code></li>
+<li>打开图形化界面 <code>ctrl+alt+f7</code></li>
 <li>重启</li>
 <li>Ubuntu22.04似乎不用这么麻烦了，直接重装完之后就有显卡驱动了，试图卸载过，但是重装失败，还不如直接用预先安装好的。</li>
 </ol>
@@ -252,8 +259,11 @@
             
         </h1>
         <div class="content">
-            <p>​        课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。</p>
-<p>​        武大超算使用 Slurm 系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过 Slurm 系统来进行计算</p>
+            <p>​
+课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。</p>
+<p>​ 武大超算使用 Slurm
+系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过
+Slurm 系统来进行计算</p>
         </div>
         
         
@@ -307,7 +317,8 @@
             
         </h1>
         <div class="content">
-            <h1 id="Kalibr"><a href="#Kalibr" class="headerlink" title="Kalibr"></a>Kalibr</h1><p>Kalibr中使用了B-spline实现位姿的内插，进而完成相机和IMU之间的时间同步标定。</p>
+            <h1 id="kalibr">Kalibr</h1>
+<p>Kalibr中使用了B-spline实现位姿的内插，进而完成相机和IMU之间的时间同步标定。</p>
         </div>
         
         
@@ -361,14 +372,14 @@
             
         </h1>
         <div class="content">
-            <h3 id="ROS编译"><a href="#ROS编译" class="headerlink" title="ROS编译"></a>ROS编译</h3><ul>
+            <h3 id="ros编译">ROS编译</h3>
+<ul>
 <li>catkin_make是cmake，make的进一步封装。路径位于workspace下，src之上使用:<code>catkin_make</code>ros会自己找到src下面的源代码，并开始build，如果src下面有好几个源代码，就通过DCATKIN_WHITELIST_PACKAGES指定一个就行：</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></table></figure>
-
 <ul>
-<li><p>安装则<code>catkin_make install</code>, 使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p>
-</li>
+<li><p>安装则<code>catkin_make install</code>,
+使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p></li>
 <li><p>清理安装文件<code>catkin_make clean</code>。</p>
         </div>
         
@@ -423,8 +434,13 @@
             
         </h1>
         <div class="content">
-            <p>In this machine, the docker is built based on the <a href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>, and the previous docker is replaced by the new docker. Thus, the installation should be careful</p>
-<p><a href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a> without cuda.</p>
+            <p>In this machine, the docker is built based on the <a
+href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
+and the previous docker is replaced by the new docker. Thus, the
+installation should be careful</p>
+<p><a
+href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
+without cuda.
         </div>
         
         
