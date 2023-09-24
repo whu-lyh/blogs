@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2023-03-06T08:56:42.686Z">
-<meta property="article:modified_time" content="2023-09-24T01:13:54.590Z">
+<meta property="article:modified_time" content="2023-09-24T12:07:48.824Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="B-Spline">
 <meta property="article:tag" content="Point Cloud">
@@ -200,8 +200,9 @@
 <p>最终论证，通过地面控制点应该是无法做到水平精度检核的，只能做到高程方向的检核。</p>
 <a id="more"></a>
 <h2 id="相关方法">相关方法</h2>
-<h3 id="a-quantitative-assessment-of-lidar-data-accuracy-1">A
-Quantitative Assessment of LIDAR Data Accuracy[^ 1]</h3>
+<h3 id="a-quantitative-assessment-of-lidar-data-accuracy1">A
+Quantitative Assessment of LIDAR Data
+Accuracy<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h3>
 <p>​ 文章里面的高程和平面精度是分开计算的。</p>
 <ul>
 <li><p>对于高程精度
@@ -212,9 +213,10 @@ Quantitative Assessment of LIDAR Data Accuracy[^ 1]</h3>
 <p>依然确实存在平面点不对应的问题，导致精度计算出现问题。</p>
 <p>此外，要求GCP是线性分布的，不然没法计算曲线。对检核点的布设要求很高。</p></li>
 </ul>
-<h3 id="accuracy-of-ground-surface-interpolation-from-airborne-laser-scanning-als-data-in-dense-forest-cover-2">Accuracy
+<h3 id="accuracy-of-ground-surface-interpolation-from-airborne-laser-scanning-als-data-in-dense-forest-cover2">Accuracy
 of ground surface interpolation from airborne laser scanning (ALS) data
-in dense forest cover[^ 2]</h3>
+in dense forest
+cover<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></h3>
 <h4 id="简介">简介</h4>
 <p>​
 DTM的精度取决于激光系统测量值的精度和准确度、点云滤波的精度（因为需要滤除地面点才能做DTM），以及需要内插来解决空洞问题。其中内插精度为影响DTM精度第二主要因素，因此文章主要是想在森林密集的区域，通过比较生成的DTM的精度来进一步验证9种内插方式的精度。涉及到的内插方式有：==反距离加权、最近邻、自然内插、Delauney三角网、多层-B-Spline、三次样条、Thin-Plate
@@ -245,7 +247,7 @@ TIN、克里金插值法==。对比方法为使用cross-validation的方式，�
 <td><a href="https://github.com/OSGeo/gdal/blob/4c0b804f135650c1f432f9ee338fb5a167d31370/frmts/mbtiles/mbtilesdataset.cpp#L3128">GDAL</a></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">NN:自然邻域[^ 3]</td>
+<td style="text-align: center;">NN:自然邻域<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup></td>
 <td style="text-align: center;">首先构建Thiessen多边形，根据上采样点的位置更新多边形，用多边形的中心，后续每个点的插入进来更新多边形，动态变化</td>
 <td></td>
 </tr>
@@ -255,24 +257,26 @@ TIN、克里金插值法==。对比方法为使用cross-validation的方式，�
 <td>ArcGIS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">MBA:多尺度-B-Spline[^ 4]</td>
+<td style="text-align: center;">MBA:多尺度-B-Spline<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></td>
 <td style="text-align: center;">构建层级的B-Spline</td>
 <td><a href="https://github.com/SINTEF-Geometry/MBA" title="Original and old version of C++ Implementation">SINTEF</a>,<a href="https://github.com/ddemidov/mba" title="With C++11 header-only and Python API">ddemidov</a></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">Cubic Spline:三次样条[^ 5]</td>
+<td style="text-align: center;">Cubic
+Spline:三次样条<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup></td>
 <td style="text-align: center;">基于三次Spline函数实现表面近似</td>
-<td>GDAL,<a href="https://sourceforge.net/projects/saga-gis/" title="Conrad,O.,Bechtel,B.,Bock,M.,Dietrich,H.,Fischer,E.,Gerlitz,L.,Wehberg,J.,Wichmann,V.,andBoehner,J.(2015):SystemforAutomatedGeoscientificAnalyses(SAGA)v.2.1.4.Geosci.ModelDev.,8,1991-2007,doi:10.5194/gmd-8-1991-2015.">SAGA</a></td>
+<td>GDAL,[SAGA][]</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">Thin-Plate Spline[^ 6]</td>
+<td style="text-align: center;">Thin-Plate
+Spline<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup></td>
 <td style="text-align: center;">基于三次Spline的2D泛化形式</td>
 <td><a href="https://github.com/OSGeo/gdal/blob/a632e3093d6dd34cdcf979a5b2a20529fe2df943/alg/thinplatespline.h">GDAL</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">Thin-Plate Spline by TIN</td>
 <td style="text-align: center;">在TIN构建的三角网内构建TPS，实现内插</td>
-<td><a href="https://sourceforge.net/projects/saga-gis/" title="Conrad,O.,Bechtel,B.,Bock,M.,Dietrich,H.,Fischer,E.,Gerlitz,L.,Wehberg,J.,Wichmann,V.,andBoehner,J.(2015):SystemforAutomatedGeoscientificAnalyses(SAGA)v.2.1.4.Geosci.ModelDev.,8,1991-2007,doi:10.5194/gmd-8-1991-2015.">SAGA</a></td>
+<td>[SAGA][]</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">Kriging:克里金</td>
@@ -291,8 +295,9 @@ TIN、克里金插值法==。对比方法为使用cross-validation的方式，�
 <li><p>NN，DT，Spline-based
 方法受到地面点密度、地面坡度变化的影响小。</p></li>
 </ul>
-<h3 id="scattered-data-interpolation-with-multilevel-b-splines-4">Scattered
-data interpolation with multilevel B-splines[^ 4]</h3>
+<h3 id="scattered-data-interpolation-with-multilevel-b-splines4">Scattered
+data interpolation with multilevel
+B-splines<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></h3>
 <h4 id="motivation">Motivation</h4>
 <p>​ 目的是从离散点云中实现点云表面拟合B-spline approximation
 (<strong>BA</strong>)。现有方法也有用B-spline的，但是依然受限于平滑性，时间复杂性，限定范围内的数据分布等的限制。因此本文提出使用层级的bicubic
@@ -333,15 +338,18 @@ z_c=Z_c-f_0(x_c,y_c)-f_1(x_c,y_c)\)</span>。那么从coarest的<span class="mat
 <h4 id="相关实现">相关实现</h4>
 <ul>
 <li><a href="https://github.com/SINTEF-Geometry/MBA" title="Original and old version of C++ Implementation">SINTEF</a>，实现了文献
-[^ 4]
+<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>
 中的多尺度样条曲线表面拟合，但是代码比较老了，需要额外编译，除了代码框架复杂一些，编译不是问题。</li>
 <li><a href="https://github.com/ddemidov/mba" title="With C++11 header-only and Python API">ddemidov</a>:
-基于C++11做了一个文献 [^ 4] 新的版本，实现了adaptive
+基于C++11做了一个文献
+<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>
+新的版本，实现了adaptive
 的MBA，开发了python的API，并且是header-only的方式，方便使用。根据官方提供的jupyter
 notebook的测试显示，两个库对于相同数据的内插结果之间并没有很大的误差。</li>
 </ul>
-<h3 id="smooth-approximation-and-rendering-of-large-scattered-data-sets-5">Smooth
-Approximation and Rendering of Large Scattered Data Sets[^ 5]</h3>
+<h3 id="smooth-approximation-and-rendering-of-large-scattered-data-sets5">Smooth
+Approximation and Rendering of Large Scattered Data
+Sets<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup></h3>
 <h4 id="motivation-1">Motivation</h4>
 <p>​
 表面拟合任务要求：近似程度要高、可视质量要好、适用于大数据量、高效、数值计算稳定、自适应性好以及算法简单易实现等。基于spline的方法有很多，e.g.
@@ -365,13 +373,12 @@ zier\)</span>来评估和渲染spline。通过计算spline点和散点之间的�
 </ul>
 <h4 id="相关实现-1">相关实现</h4>
 <ul>
-<li><a href="https://sourceforge.net/projects/saga-gis/" title="Conrad,O.,Bechtel,B.,Bock,M.,Dietrich,H.,Fischer,E.,Gerlitz,L.,Wehberg,J.,Wichmann,V.,andBoehner,J.(2015):SystemforAutomatedGeoscientificAnalyses(SAGA)v.2.1.4.Geosci.ModelDev.,8,1991-2007,doi:10.5194/gmd-8-1991-2015.">SAGA</a>：SAGA
-- System for Automated Geoscientific Analyses - is a Geographic
-Information System (GIS) software with immense capabilities for geodata
-processing and analysis. SAGA is programmed in the object oriented C++
-language and supports the implementation of new functions with a very
-effective Application Programming Interface (API). Functions are
-organised as <strong>modules in framework independent Module
+<li>[SAGA][]：SAGA - System for Automated Geoscientific Analyses - is a
+Geographic Information System (GIS) software with immense capabilities
+for geodata processing and analysis. SAGA is programmed in the object
+oriented C++ language and supports the implementation of new functions
+with a very effective Application Programming Interface (API). Functions
+are organised as <strong>modules in framework independent Module
 Libraries</strong> and can be accessed via SAGA’s Graphical User
 Interface (GUI) or various scripting environments (shell scripts,
 Python, R, ...).
@@ -382,21 +389,21 @@ Categories、Multilevel B-Spline form Grid Points、Thin Plate
 Spline、Thin Plate Spline (TIN)</strong>。包含了文章[^
 4]中提到的大部分算法。每种内插方法配有注释。简单测试之后发现确实和文章中提到的结论一致，起码效率方面表现相同。</li>
 </ul>
-<h3 id="approximate-thin-plate-spline-mappings-6">Approximate thin plate
-spline mappings[^ 6]</h3>
+<h3 id="approximate-thin-plate-spline-mappings6">Approximate thin plate
+spline
+mappings<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup></h3>
 <p>​ Thin plate spline是一种常见的使用基函数实现从<span class="math inline">\(\mathbb{R}^2\)</span>到<span class="math inline">\(\mathbb{R}^2\)</span>坐标映射的方法。本身TPS是cubic
 spline的2D泛化形式，TPS模型包含一个仿射模型作为一个特例。TPS模型需要对一个超大的密集矩阵<span class="math inline">\(p \times p\)</span>进行求逆，<span class="math inline">\(p\)</span>是点数。为了减少求逆的运算量，提出了很多的改进方法，包括使用局部对应点集来估计全部对应关系的方法，本文结合高斯径向基网络领域中的相关方法来讨论基于这个思路的近似方法的优缺点。指出借鉴径向基函数的方法不满足principal
-warp分析[^
-7]的要求，因此借助经典矩阵补全技术进行完善。最后，作者讨论了一种使用全部近似基函数来近似目标集数据的方法，即<span class="math inline">\(Nystor\ddot{o}m\)</span>近似法实现TPS映射。最后作者并总结了三种近似方法之间的优缺点：基于局部点采样并考虑全部目标集的方法的效果都不错，基于<span class="math inline">\(Nystor\ddot{o}m\)</span>近似的方法不但可以实现principal
+warp分析<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>的要求，因此借助经典矩阵补全技术进行完善。最后，作者讨论了一种使用全部近似基函数来近似目标集数据的方法，即<span class="math inline">\(Nystor\ddot{o}m\)</span>近似法实现TPS映射。最后作者并总结了三种近似方法之间的优缺点：基于局部点采样并考虑全部目标集的方法的效果都不错，基于<span class="math inline">\(Nystor\ddot{o}m\)</span>近似的方法不但可以实现principal
 warp
 分析，同时在子集采样结果不好时表现出最优的性能。并用实验突出了在图像编辑方面的优势。</p>
 <ul>
 <li>数学有点啃不动。详见文章6和8。</li>
 </ul>
 <h3 id="lr-b-spline">LR B-Spline</h3>
-<p>​ 最新版书籍[^
-8]中全面细致的总结了不同地形表面表达方式之间的区别，并肯定了local refine
-B-Spline表达形式（其实是一类方法）的好处。</p>
+<p>​
+最新版书籍<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup>中全面细致的总结了不同地形表面表达方式之间的区别，并肯定了local
+refine B-Spline表达形式（其实是一类方法）的好处。</p>
 <table style="width:100%;">
 <colgroup>
 <col style="width: 7%">
@@ -458,27 +465,65 @@ modules contain functionality for intersections, approximative
 implicitization, parametrization, topology, and more. 包含NURBS
 和TIN模板库。</p>
 <h2 id="references">References</h2>
-<p>[^ 1]: Elaksher A, Ali T, Alharthy A. A Quantitative Assessment of
-LIDAR Data Accuracy[J]. Remote Sensing, 2023, 15(2): 442. [^ 2]: Cățeanu
-M, Ciubotaru A. Accuracy of ground surface interpolation from airborne
-laser scanning (ALS) data in dense forest cover[J]. ISPRS International
-Journal of Geo-Information, 2020, 9(4): 224. [^ 3]: A brief description
-of natural neighbour interpolation [^ 4]: Lee S, Wolberg G, Shin S Y.
-Scattered data interpolation with multilevel B-splines[J]. IEEE
-transactions on visualization and computer graphics, 1997, 3(3):
-228-244. [^ 5]: Haber J, Zeilfelder F, Davydov O, et al. Smooth
-approximation and rendering of large scattered data sets[C]//Proceedings
-Visualization, 2001. VIS'01. IEEE, 2001: 341-571. [^ 6]: Donato G,
-Belongie S. Approximate thin plate spline mappings[C]//Computer
-Vision—ECCV 2002: 7th European Conference on Computer Vision Copenhagen,
-Denmark, May 28–31, 2002 Proceedings, Part III 7. Springer Berlin
-Heidelberg, 2002: 21-31.</p>
-<p>[^ 7]: Bookstein F L. Principal warps: Thin-plate splines and the
-decomposition of deformations[J]. IEEE Transactions on pattern analysis
-and machine intelligence, 1989, 11(6): 567-585.</p>
-<p>[^ 8]: Kermarrec G, Skytt V, Dokken T. Optimal Surface Fitting of
-Point Clouds Using Local Refinement: Application to GIS Data[M].
-Springer Nature, 2023.</p>
+[SAGA]: https://sourceforge.net/projects/saga-gis/
+"Conrad,O.,Bechtel,B.,Bock,M.,Dietrich,H.,Fischer,E.,Gerlitz,L.,Wehberg,J.,Wichmann,V.,andBoehner,J.(2015):SystemforAutomatedGeoscientificAnalyses(SAGA)v.2.1.4.Geosci.ModelDev.,8,1991-2007,doi:10.5194/gmd-8-1991-2015."
+<div id="footnotes">
+<hr>
+<div id="footnotelist">
+<ol style="list-style:none; padding-left: 0;">
+<li id="fn:1">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">Elaksher A, Ali T,
+Alharthy A. A Quantitative Assessment of LIDAR Data Accuracy[J]. Remote
+Sensing, 2023, 15(2): 442.</span><a href="#fnref:1" rev="footnote">
+↩︎</a>
+</li>
+<li id="fn:2">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px;">2.</span><span style="display: inline-block; vertical-align: top;">Cățeanu M, Ciubotaru
+A. Accuracy of ground surface interpolation from airborne laser scanning
+(ALS) data in dense forest cover[J]. ISPRS International Journal of
+Geo-Information, 2020, 9(4):
+224.</span><a href="#fnref:2" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:3">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px;">3.</span><span style="display: inline-block; vertical-align: top;">A brief description
+of natural neighbour
+interpolation</span><a href="#fnref:3" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:4">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px;">4.</span><span style="display: inline-block; vertical-align: top;">Lee S, Wolberg G,
+Shin S Y. Scattered data interpolation with multilevel B-splines[J].
+IEEE transactions on visualization and computer graphics, 1997, 3(3):
+228-244.</span><a href="#fnref:4" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:5">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px;">5.</span><span style="display: inline-block; vertical-align: top;">Haber J, Zeilfelder
+F, Davydov O, et al. Smooth approximation and rendering of large
+scattered data sets[C]//Proceedings Visualization, 2001. VIS'01. IEEE,
+2001: 341-571.</span><a href="#fnref:5" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:6">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px;">6.</span><span style="display: inline-block; vertical-align: top;">Donato G, Belongie
+S. Approximate thin plate spline mappings[C]//Computer Vision—ECCV 2002:
+7th European Conference on Computer Vision Copenhagen, Denmark, May
+28–31, 2002 Proceedings, Part III 7. Springer Berlin Heidelberg, 2002:
+21-31.</span><a href="#fnref:6" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:7">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px;">7.</span><span style="display: inline-block; vertical-align: top;">Bookstein F L.
+Principal warps: Thin-plate splines and the decomposition of
+deformations[J]. IEEE Transactions on pattern analysis and machine
+intelligence, 1989, 11(6):
+567-585.</span><a href="#fnref:7" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:8">
+<span style="display: inline-block; vertical-align: top; padding-right: 10px;">8.</span><span style="display: inline-block; vertical-align: top;">Kermarrec G, Skytt
+V, Dokken T. Optimal Surface Fitting of Point Clouds Using Local
+Refinement: Application to GIS Data[M]. Springer Nature,
+2023.</span><a href="#fnref:8" rev="footnote"> ↩︎</a>
+</li>
+</ol>
+</div>
+</div>
 
         </div>
         
@@ -797,31 +842,36 @@ Springer Nature, 2023.</p>
         <span class="has-mr-6">1.4</span>
         <span>相关方法</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#a-quantitative-assessment-of-lidar-data-accuracy-1">
+        <a class="is-flex" href="#a-quantitative-assessment-of-lidar-data-accuracy1">
         <span class="has-mr-6">1.4.1</span>
         <span>A
-Quantitative Assessment of LIDAR Data Accuracy[^ 1]</span>
+Quantitative Assessment of LIDAR Data
+Accuracy1</span>
         </a></li><li>
-        <a class="is-flex" href="#accuracy-of-ground-surface-interpolation-from-airborne-laser-scanning-als-data-in-dense-forest-cover-2">
+        <a class="is-flex" href="#accuracy-of-ground-surface-interpolation-from-airborne-laser-scanning-als-data-in-dense-forest-cover2">
         <span class="has-mr-6">1.4.2</span>
         <span>Accuracy
 of ground surface interpolation from airborne laser scanning (ALS) data
-in dense forest cover[^ 2]</span>
+in dense forest
+cover2</span>
         </a></li><li>
-        <a class="is-flex" href="#scattered-data-interpolation-with-multilevel-b-splines-4">
+        <a class="is-flex" href="#scattered-data-interpolation-with-multilevel-b-splines4">
         <span class="has-mr-6">1.4.3</span>
         <span>Scattered
-data interpolation with multilevel B-splines[^ 4]</span>
+data interpolation with multilevel
+B-splines4</span>
         </a></li><li>
-        <a class="is-flex" href="#smooth-approximation-and-rendering-of-large-scattered-data-sets-5">
+        <a class="is-flex" href="#smooth-approximation-and-rendering-of-large-scattered-data-sets5">
         <span class="has-mr-6">1.4.4</span>
         <span>Smooth
-Approximation and Rendering of Large Scattered Data Sets[^ 5]</span>
+Approximation and Rendering of Large Scattered Data
+Sets5</span>
         </a></li><li>
-        <a class="is-flex" href="#approximate-thin-plate-spline-mappings-6">
+        <a class="is-flex" href="#approximate-thin-plate-spline-mappings6">
         <span class="has-mr-6">1.4.5</span>
         <span>Approximate thin plate
-spline mappings[^ 6]</span>
+spline
+mappings6</span>
         </a></li><li>
         <a class="is-flex" href="#lr-b-spline">
         <span class="has-mr-6">1.4.6</span>
@@ -1003,8 +1053,6 @@ spline mappings[^ 6]</span>
                 </div>
             </article>
          
-            
-         
             <article class="media"> <a href="/blogs/2023/03/06/Hdl_graph_slam2/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
@@ -1016,8 +1064,6 @@ spline mappings[^ 6]</span>
                     </div>
                 </div>
             </article>
-         
-            
          
             
          
@@ -1059,6 +1105,8 @@ spline mappings[^ 6]</span>
          
             
          
+            
+         
             <article class="media"> <a href="/blogs/2023/03/13/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
@@ -1070,6 +1118,8 @@ spline mappings[^ 6]</span>
                     </div>
                 </div>
             </article>
+         
+            
          
             
          
