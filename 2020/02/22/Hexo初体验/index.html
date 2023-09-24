@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2020-02-22T07:38:32.000Z">
-<meta property="article:modified_time" content="2023-09-24T06:23:44.108Z">
+<meta property="article:modified_time" content="2023-09-24T06:27:39.342Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -168,7 +168,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    26 分钟 读完 (大约 3854 个字)
+                    28 分钟 读完 (大约 4255 个字)
                 </span>
                 
                 
@@ -305,15 +305,19 @@ hexo-renderer-marked、hexo-renderer-stylus、hexo-renderer-inferno等。<a href
 </blockquote>
 <h5 id="解决方案">解决方案</h5>
 <p>可以重新仿照hexo-asset-image写一个插件，也可以直接hack掉他的源码，修改一下对应的路径。使用方法为：</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># 重新用回不维护的插件</span><br>npm <span class="hljs-keyword">install</span> hexo-asset-image<br></code></pre></td></tr></table></figure>
-<p>找到index.js这个文件，将里面的东西换成下面的内容：</p>
-<p>特别是第50行左右的地方：注释掉的就是之前的版本</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql">$(this).attr('src', src);<br>//$(this).attr('src', config.root + link + src);// 产生问题的地方<br>//console.info&amp;&amp;console.info("<span class="hljs-keyword">update</span> <span class="hljs-keyword">link</span> <span class="hljs-keyword">as</span>:<span class="hljs-comment">--&gt;"+config.root);</span><br>//console.info&amp;&amp;console.info(<span class="hljs-string">"update link as:--&gt;"</span>+<span class="hljs-keyword">link</span>);<br>//console.info&amp;&amp;console.info("<span class="hljs-keyword">update</span> <span class="hljs-keyword">link</span> <span class="hljs-keyword">as</span>:<span class="hljs-comment">--&gt;"+src);</span><br>//console.info&amp;&amp;console.info(<span class="hljs-string">"update link as:--&gt;"</span>+config.root + <span class="hljs-keyword">link</span> + src); // 产生问题的地方<br>console.info&amp;&amp;console.info("<span class="hljs-keyword">update</span> <span class="hljs-keyword">link</span> <span class="hljs-keyword">as</span>:<span class="hljs-comment">--&gt;" + link + src);</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 重新用回不维护的插件</span><br>npm install hexo-asset-image<br></code></pre></td></tr></table></figure>
+<p>在_modules-asset-image找到index.js这个文件，将里面的东西换成下面的内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-meta">'use strict'</span>;<br><span class="hljs-keyword">var</span> cheerio = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cheerio'</span>);<br>     <br><span class="hljs-comment">// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPosition</span>(<span class="hljs-params">str, m, i</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> str.split(m, i).join(m).length;<br>&#125;<br>     <br><span class="hljs-keyword">var</span> version = <span class="hljs-built_in">String</span>(hexo.version).split(<span class="hljs-string">'.'</span>);<br>hexo.extend.filter.register(<span class="hljs-string">'after_post_render'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)</span>&#123;<br>  <span class="hljs-keyword">var</span> config = hexo.config;<br>  <span class="hljs-keyword">if</span>(config.post_asset_folder)&#123;<br>       <span class="hljs-keyword">var</span> link = data.permalink;<br>   <span class="hljs-keyword">if</span>(version.length &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">Number</span>(version[<span class="hljs-number">0</span>]) == <span class="hljs-number">3</span>)<br>      <span class="hljs-keyword">var</span> beginPos = getPosition(link, <span class="hljs-string">'/'</span>, <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>;<br>   <span class="hljs-keyword">else</span><br>      <span class="hljs-keyword">var</span> beginPos = getPosition(link, <span class="hljs-string">'/'</span>, <span class="hljs-number">3</span>) + <span class="hljs-number">1</span>;<br>   <span class="hljs-comment">// In hexo 3.1.1, the permalink of "about" page is like ".../about/index.html".</span><br>   <span class="hljs-keyword">var</span> endPos = link.lastIndexOf(<span class="hljs-string">'/'</span>) + <span class="hljs-number">1</span>;<br>    link = link.substring(beginPos, endPos);<br>     <br>    <span class="hljs-keyword">var</span> toprocess = [<span class="hljs-string">'excerpt'</span>, <span class="hljs-string">'more'</span>, <span class="hljs-string">'content'</span>];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; toprocess.length; i++)&#123;<br>      <span class="hljs-keyword">var</span> key = toprocess[i];<br>      <br>      <span class="hljs-keyword">var</span> $ = cheerio.load(data[key], &#123;<br>        ignoreWhitespace: <span class="hljs-literal">false</span>,<br>        xmlMode: <span class="hljs-literal">false</span>,<br>        lowerCaseTags: <span class="hljs-literal">false</span>,<br>        decodeEntities: <span class="hljs-literal">false</span><br>      &#125;);<br>     <br>      $(<span class="hljs-string">'img'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;<br>       <span class="hljs-keyword">if</span> ($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>))&#123;<br>           <span class="hljs-comment">// For windows style path, we replace '\' to '/'.</span><br>           <span class="hljs-keyword">var</span> src = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>).replace(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>);<br>           <span class="hljs-keyword">if</span>(!<span class="hljs-regexp">/http[s]*.*|\/\/.*/</span>.test(src) &amp;&amp;<br>              !<span class="hljs-regexp">/^\s*\//</span>.test(src)) &#123;<br>             <span class="hljs-comment">// For "about" page, the first part of "src" can't be removed.</span><br>             <span class="hljs-comment">// In addition, to support multi-level local directory.</span><br>             <span class="hljs-keyword">var</span> linkArray = link.split(<span class="hljs-string">'/'</span>).filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">elem</span>)</span>&#123;<br>               <span class="hljs-keyword">return</span> elem != <span class="hljs-string">''</span>;<br>             &#125;);<br>             <span class="hljs-keyword">var</span> srcArray = src.split(<span class="hljs-string">'/'</span>).filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">elem</span>)</span>&#123;<br>               <span class="hljs-keyword">return</span> elem != <span class="hljs-string">''</span> &amp;&amp; elem != <span class="hljs-string">'.'</span>;<br>             &#125;);<br>             <span class="hljs-keyword">if</span>(srcArray.length &gt; <span class="hljs-number">1</span>)<br>               srcArray.shift();<br>             src = srcArray.join(<span class="hljs-string">'/'</span>);<br>             $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>, src);<br>             <span class="hljs-comment">//$(this).attr('src', config.root + link + src);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+link);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+src);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root + link + src);</span><br>             <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"update link as:--&gt;"</span> + link + src);<br>           &#125;<br>       &#125;<span class="hljs-keyword">else</span>&#123;<br>           <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"no src attr, skipped..."</span>);<br>           <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info($(<span class="hljs-keyword">this</span>));<br>       &#125;<br>      &#125;);<br>      data[key] = $.html();<br>    &#125;<br>  &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>特别是第50行左右的地方：注释掉的就是之前的出问题的地方。（其他问题可同理解决。）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>, src);<br><span class="hljs-comment">//$(this).attr('src', config.root + link + src);// 产生问题的地方</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+link);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+src);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root + link + src); // 产生问题的地方</span><br><span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"update link as:--&gt;"</span> + link + src);<br></code></pre></td></tr></table></figure>
 <h4 id="页面排版">页面排版</h4>
 <ul>
-<li>hexo中设置<strong>related_posts</strong>似乎在生成时有问题，但是不影响部署。（没解决，代码应该没什么问题）</li>
+<li>hexo中设置<strong>related_posts</strong>似乎在生成时有问题，但是不影响部署。（没解决，代码应该没什么问题）（换了一台电脑之后就没问题了。）</li>
 <li>每个博客添加 一个缩略图。</li>
 </ul>
+<h4 id="换台工作电脑">换台工作电脑</h4>
+<p>工作一台，家里一台，随时想写博客怎么办？</p>
+<p>只需要按照前面的步骤安装npm，pandoc，同步修改对应的插件，把日志克隆下来，开始写，写完部署，然后把本地的仓库使用git同步更新即可。</p>
 <h3 id="参考博客">参考博客</h3>
 <ol type="1">
 <li><p><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">小茗同学</a></p></li>
@@ -661,6 +665,10 @@ hexo-renderer-marked、hexo-renderer-stylus、hexo-renderer-inferno等。<a href
         <a class="is-flex" href="#页面排版">
         <span class="has-mr-6">3.3</span>
         <span>页面排版</span>
+        </a></li><li>
+        <a class="is-flex" href="#换台工作电脑">
+        <span class="has-mr-6">3.4</span>
+        <span>换台工作电脑</span>
         </a></li></ul></li><li>
         <a class="is-flex" href="#参考博客">
         <span class="has-mr-6">4</span>
@@ -800,6 +808,10 @@ hexo-renderer-marked、hexo-renderer-stylus、hexo-renderer-inferno等。<a href
          
             
          
+            
+         
+            
+         
             <article class="media"> <a href="/blogs/2023/02/25/Hexo%E9%83%A8%E7%BD%B2/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hexo部署">
@@ -811,10 +823,6 @@ hexo-renderer-marked、hexo-renderer-stylus、hexo-renderer-inferno等。<a href
                     </div>
                 </div>
             </article>
-         
-            
-         
-            
          
             
          
