@@ -194,7 +194,8 @@
 </ul></li>
 <li>docker 启动镜像：<code>docker run</code></li>
 </ul>
-<p><a href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
+<p><a
+href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
 Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></table></figure></p>
 <h2 id="docker-安装">Docker 安装</h2>
 <h3 id="docker-安装-1">1. Docker 安装</h3>
@@ -221,7 +222,8 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
 <h4 id="启动-docker">1.5 启动 docker</h4>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo systemctl enable docker<br>sudo systemctl start docke<br></code></pre></td></tr></table></figure>
 <h4 id="设置-docker-用户组">1.6 设置 docker 用户组</h4>
-<p>默认情况下，<code>docker</code> 命令会使用 <a href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix socket</a>
+<p>默认情况下，<code>docker</code> 命令会使用 <a
+href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix socket</a>
 与 Docker 引擎通讯。而只有 <code>root</code> 用户和 <code>docker</code>
 组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux
 系统上不会直接使用 <code>root</code> 用户。因此，更好地做法是将需要使用
@@ -245,11 +247,12 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
 <h5 id="安装-nvidia-docker2">2.2 安装 nvidia-docker2</h5>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">sudo</span> <span class="hljs-string">apt-get install nvidia-docker2</span><br><span class="hljs-attr">sudo</span> <span class="hljs-string">pkill -SIGHUP dockerd</span><br></code></pre></td></tr></table></figure>
 <h4 id="未设置代理离线安装">未设置代理，离线安装</h4>
-<p>在<a href="https://github.com/NVIDIA/libnvidia-container/tree/gh-pages/stable/ubuntu18.04/amd64">官网</a>下载，ubuntu
-20.04 使用 18.04 的文件，下载下列文件： - libnvidia-container1<br>
+<p>在<a
+href="https://github.com/NVIDIA/libnvidia-container/tree/gh-pages/stable/ubuntu18.04/amd64">官网</a>下载，ubuntu
+20.04 使用 18.04 的文件，下载下列文件： - libnvidia-container1<br />
 - libnvidia-container-tools - nvidia-container-toolkit-base -
-nvidia-container-toolkit<br>
-- nvidia-container-runtime<br>
+nvidia-container-toolkit<br />
+- nvidia-container-runtime<br />
 - nvidia-docker2</p>
 <ul>
 <li><strong>文件名会根据版本有所改变，但前部一致</strong>：</li>
@@ -310,12 +313,15 @@ nvidia-container-toolkit<br>
         </h1>
         <div class="content">
             <ol start="0" type="1">
-<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
+<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a
+href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a
+href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
 <li>下载对应驱动
 位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
 </ol>
 <ul>
-<li>tips: 检查cuda版本和显卡驱动的<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
+<li>tips: 检查cuda版本和显卡驱动的<a
+href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
 </ul>
 <ol start="2" type="1">
 <li>卸载之前的显卡驱动
@@ -386,7 +392,7 @@ nvidia-container-toolkit<br>
 <ul>
 <li><p>安装则<code>catkin_make install</code>,
 使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p></li>
-<li><p>清理安装文件<code>catkin_make clean</code>。</p></li></ul>
+<li><p>清理安装文件<code>catkin_make clean</code>。</p>
         </div>
         
         

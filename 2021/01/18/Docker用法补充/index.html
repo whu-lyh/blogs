@@ -181,10 +181,12 @@
             
         </h1>
         <div class="content">
-            <p>In this machine, the docker is built based on the <a href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
+            <p>In this machine, the docker is built based on the <a
+href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
 and the previous docker is replaced by the new docker. Thus, the
 installation should be careful</p>
-<p><a href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
+<p><a
+href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
 without cuda. <a id="more"></a> ## 一般用法</p>
 <h3 id="查看镜像">查看镜像</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker ps -a<br></code></pre></td></tr></table></figure>
@@ -220,8 +222,9 @@ the image and only environment should be in there</li>
 <h4 id="save-load">save &amp; load</h4>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">docker</span> <span class="hljs-selector-tag">save</span> 0<span class="hljs-selector-tag">fdf2b4c26d3</span> &gt; <span class="hljs-selector-tag">hangge_server</span><span class="hljs-selector-class">.tar</span><br><span class="hljs-selector-tag">docker</span> <span class="hljs-selector-tag">save</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">images</span><span class="hljs-selector-class">.tar</span> <span class="hljs-selector-tag">postgres</span><span class="hljs-selector-pseudo">:9.6</span> <span class="hljs-selector-tag">mongo</span><span class="hljs-selector-pseudo">:3.4</span><br><span class="hljs-selector-tag">docker</span> <span class="hljs-selector-tag">load</span> &lt; <span class="hljs-selector-tag">hangge_server</span><span class="hljs-selector-class">.tar</span><br></code></pre></td></tr></table></figure>
 <p>​ Differences from image sizes, image rename, multiple-containers into
-one single image, application scenarios, more detail could be seen at <a href="https://www.hangge.com/blog/cache/detail_2411.html">here</a></p>
-<hr>
+one single image, application scenarios, more detail could be seen at <a
+href="https://www.hangge.com/blog/cache/detail_2411.html">here</a></p>
+<hr />
 <h2 id="使用实例">使用实例</h2>
 <h3 id="new-a-container-for-slam">New a container for SLAM</h3>
 <p>The images for SLAM are mostly built from the
@@ -239,7 +242,8 @@ pointclouddl:segmentation</del></p>
 <p>Tips:</p>
 <ul>
 <li><strong>--gpus all</strong> , only this the Nvidia driver could be
-accessed, check <a href="https://github.com/traveller59/spconv/issues/185#issuecomment-655975873">this</a></li>
+accessed, check <a
+href="https://github.com/traveller59/spconv/issues/185#issuecomment-655975873">this</a></li>
 <li><strong>--privileged=true</strong> , to obtain the 'real' permission
 to mount file or others. This one is very important</li>
 <li><strong>-v</strong> , mount the host dir or file to the container.
@@ -305,7 +309,7 @@ ros_kalibr_system ubuntu version:16.04 ros version:kinetic</p>
 machine</p>
 <p><code>--privileged</code></p>
 <p>will make all extend equippment available for the docker</p>
-<p>泡泡机器人SLAM与你一同成长<font color="green">❤</font></p>
+<p>泡泡机器人SLAM与你一同成长<font color=green>❤</font></p>
 
         </div>
         
@@ -804,6 +808,10 @@ a ros bag</span>
             related posts
         </h3>
          
+            
+         
+            
+         
             <article class="media"> <a href="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Docker初体验">
@@ -815,10 +823,6 @@ a ros bag</span>
                     </div>
                 </div>
             </article>
-         
-            
-         
-            
          
             
          
