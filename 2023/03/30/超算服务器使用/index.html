@@ -11,12 +11,12 @@
 <title>超算服务器使用记录 - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="​ 课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。 ​ 武大超算使用 Slurm 系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过 Slurm 系统来进行计算">
+    <meta name="description" content="​ 课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。 ​ 武大超算使用 Slurm 系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过 Slurm 系统来进行计算">
 <meta property="og:type" content="article">
 <meta property="og:title" content="超算服务器使用记录">
 <meta property="og:url" content="http://whu-lyh.github.io/blogs/2023/03/30/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="​ 课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。 ​ 武大超算使用 Slurm 系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过 Slurm 系统来进行计算">
+<meta property="og:description" content="​ 课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。 ​ 武大超算使用 Slurm 系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过 Slurm 系统来进行计算">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2023-03-30T07:51:35.550Z">
@@ -181,7 +181,7 @@
             
         </h1>
         <div class="content">
-            <p>​
+            <html><head></head><body><p>​
 课题组提供的GPU实在是不够用，就想着用一下学校的超算，结合之前使用的广东超算中心的经验，这里简单列一下学校服务器的一些常用命令。</p>
 <p>​ 武大超算使用 Slurm
 系统，统一管理所有计算资源、统一调度所有用户的计算任务，用户必须通过
@@ -191,7 +191,7 @@ Slurm 系统来进行计算</p>
 <ol type="1">
 <li>查看当前空间使用<code>/bin/myDiskQuota</code>,查看当前空间有多少剩余。</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">name@swarm02 ~]$ /bin/myDiskQuota<br>     Dir    DiskUsed   DiskQuota    DiskFree       Files  FilesQuota<br>    home          0M       1024M       1024M          10       10000<br> project          0G        500G        500G           1      500000<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">name@swarm02 ~]$ /bin/myDiskQuota<br>     Dir    DiskUsed   DiskQuota    DiskFree       Files  FilesQuota<br>    home          0M       1024M       1024M          10       10000<br> project          0G        500G        500G           1      500000<br></code></pre></td></tr></tbody></table></figure>
 <h2 id="数据上传">数据上传</h2>
 <ol type="1">
 <li>直接用FileZilla上传就行。</li>
@@ -199,8 +199,8 @@ Slurm 系统来进行计算</p>
 <h2 id="作业提交">作业提交</h2>
 <p>​ 需要编写一个sbatch的脚本文件，然后调用sbatch
 xxx.sbatch即可。sbatch脚本如下样例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-comment">#SBATCH --partition=hpxg</span><br><span class="hljs-comment">#SBATCH --nodes=1</span><br><span class="hljs-comment">#SBATCH --ntasks-per-node=1</span><br><span class="hljs-comment">#SBATCH --time=06:00:00</span><br><br>module load anaconda/3.7<br><br><span class="hljs-built_in">cd</span> <span class="hljs-variable">$SLURM_SUBMIT_DIR</span><br><br>python mycode.py<br></code></pre></td></tr></table></figure>
-
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-comment">#SBATCH --partition=hpxg</span><br><span class="hljs-comment">#SBATCH --nodes=1</span><br><span class="hljs-comment">#SBATCH --ntasks-per-node=1</span><br><span class="hljs-comment">#SBATCH --time=06:00:00</span><br><br>module load anaconda/3.7<br><br><span class="hljs-built_in">cd</span> <span class="hljs-variable">$SLURM_SUBMIT_DIR</span><br><br>python mycode.py<br></code></pre></td></tr></tbody></table></figure>
+</body></html>
         </div>
         
            <div class="my_post_copyright">

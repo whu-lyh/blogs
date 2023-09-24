@@ -182,11 +182,11 @@
             
         </h1>
         <div class="content">
-            <h3 id="ros编译">ROS编译</h3>
+            <html><head></head><body><h3 id="ros编译">ROS编译</h3>
 <ul>
 <li>catkin_make是cmake，make的进一步封装。路径位于workspace下，src之上使用:<code>catkin_make</code>ros会自己找到src下面的源代码，并开始build，如果src下面有好几个源代码，就通过DCATKIN_WHITELIST_PACKAGES指定一个就行：</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></tbody></table></figure>
 <ul>
 <li><p>安装则<code>catkin_make install</code>,
 使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p></li>
@@ -212,8 +212,7 @@
 系统，就是 /usr/lib/pkgconfig/ 目录，若找不到，则会去 PKG_CONFIG_PATH
 环境变量指定的路径下查找。因此，如果我们安装的库文件不在系统环境变量中，需要将其添加到
 PKG_CONFIG_PATH 中.</p>
-<p>​ 如果实在是找不到，那么可以根据这个<a
-href="https://blog.csdn.net/PecoHe/article/details/97476135">教程</a>手动创建一个。</p>
+<p>​ 如果实在是找不到，那么可以根据这个<a href="https://blog.csdn.net/PecoHe/article/details/97476135">教程</a>手动创建一个。</p>
 <blockquote>
 <p>e.g. 查看opencv的版本</p>
 <p><code>pkg-config --modversion opencv</code></p>
@@ -236,7 +235,7 @@ href="https://blog.csdn.net/PecoHe/article/details/97476135">教程</a>手动创
 <p><code>sudo find / -iname ``"*opencv*"</code>查看ubuntu中有那些地方包含了opencv</p>
 <p>找到当前仓库中的opencv.pc的路径是在/usr/lib/x86_64-linux-gnu/pkgconfig/opencv.pc。猜测其他的pc可能在镜像制作的时候，也是被放在这里。</p>
 </blockquote>
-
+</body></html>
         </div>
         
            <div class="my_post_copyright">
@@ -698,8 +697,6 @@ href="https://blog.csdn.net/PecoHe/article/details/97476135">教程</a>手动创
          
             
          
-            
-         
             <article class="media"> <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Nvidia Driver Installation">
@@ -724,6 +721,10 @@ href="https://blog.csdn.net/PecoHe/article/details/97476135">教程</a>手动创
          
             
          
+            
+         
+            
+         
             <article class="media"> <a href="/blogs/2020/05/07/linux-command-usage/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="linux command usage">
@@ -735,8 +736,6 @@ href="https://blog.csdn.net/PecoHe/article/details/97476135">教程</a>手动创
                     </div>
                 </div>
             </article>
-         
-            
          
             
          

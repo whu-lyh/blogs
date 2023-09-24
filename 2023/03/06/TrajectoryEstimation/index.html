@@ -182,8 +182,7 @@
             
         </h1>
         <div class="content">
-            <h2
-id="integrated-trajectory-estimation-for-3d-kinematic-mapping-with-gnss-ins-and-imaging-sensors-a-framework-and-review-1">Integrated
+            <html><head></head><body><h2 id="integrated-trajectory-estimation-for-3d-kinematic-mapping-with-gnss-ins-and-imaging-sensors-a-framework-and-review-1">Integrated
 trajectory estimation for 3D kinematic mapping with GNSS, INS and
 imaging sensors: A framework and review[^ 1]</h2>
 <h3 id="方法分类">方法分类</h3>
@@ -219,8 +218,8 @@ imaging sensors: A framework and review[^ 1]</h2>
 即测量以原始形式组合，并且只产生一个轨迹估计。</p>
 <table>
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -230,32 +229,26 @@ imaging sensors: A framework and review[^ 1]</h2>
 </thead>
 <tbody>
 <tr class="odd">
-<td><img
-src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Trajectory-level.png" /></td>
-<td><img
-src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Sensor-level.png" /></td>
+<td><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Trajectory-level.png"></td>
+<td><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Sensor-level.png"></td>
 </tr>
 </tbody>
 </table>
 <h3 id="multi-sensor-platform">Multi-sensor platform</h3>
-<p><img
-src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Multi-sensor-platform.png" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Multi-sensor-platform.png"></p>
 <h3 id="taxonomy-of-filtering-methods.">Taxonomy of filtering
 methods.</h3>
 <p>在Kalman filter下面还可以加一个error state kalman filter。</p>
-<p><img
-src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Filter-methods.png" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Filter-methods.png"></p>
 <h3 id="建模框架">建模框架</h3>
 <p>​
 轨迹估计需要对两个有些不同的方面进行建模：传感器测量的建模和轨迹本身的建模。
 虽然经典方法将轨迹（以及其他时变量）表示为状态变量的离散时间序列，但一些较新的公式使用连续表示。</p>
 <p>​ 通常，有必要在成像传感器采样时间获得轨迹估计。
 如果此类测量的数量很大，则可能无法在所有这些时间明确估计轨迹，要求轨迹可以以某种方式由相对较少数量的参数表示，有两种方案：1）计算固定时间点的轨迹估计，并使用插值法得出所需的中间值，或2）使用可在需要时进行评估的显式连续时间表示。</p>
-<p><img
-src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Trajectory_estimation_characterization.png" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Trajectory_estimation_characterization.png"></p>
 <h3 id="文献总结">文献总结</h3>
-<p><img
-src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Table2.png" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/whu-lyh/images//img/Table2.png"></p>
 <p>​ 这个Tong 2013[^ 2]中做了基于高斯过程的状态估计，Furgale 2012[^
 3]-2013做了基于Spline的状态估计。但是两种方法之间的区别和联系，以及又是是什么，尚不明确。Furgale使用的B-Spline的表示方法是Qin的方案。高斯过程的方案需要对运动有一个先验，一般使用的都是高斯白噪声。这样才能得到可逆的协方差矩阵，提升计算效率。</p>
 <ul>
@@ -341,7 +334,7 @@ Research, 2013, 32(5): 507-525. [^ 3]: Furgale P, Barfoot T D, Sibley G.
 Continuous-time batch estimation using temporal basis functions[C]//2012
 IEEE International Conference on Robotics and Automation. IEEE, 2012:
 2088-2095.</p>
-
+</body></html>
         </div>
         
            <div class="my_post_copyright">
@@ -810,7 +803,17 @@ methods.</span>
          
             
          
-            
+            <article class="media"> <a href="/blogs/2023/03/06/Hdl_graph_slam/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-03-06T08:56:42.620Z">2023-03-06</time></div>
+                        <a href="/blogs/2023/03/06/Hdl_graph_slam/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_回环检测</a>
+                    </div>
+                </div>
+            </article>
          
             <article class="media"> <a href="/blogs/2023/03/06/Hdl_graph_slam2/" class="media-left">
                         <p class="image is-64x64">
@@ -824,17 +827,7 @@ methods.</span>
                 </div>
             </article>
          
-            <article class="media"> <a href="/blogs/2023/03/06/Hdl_graph_slam/" class="media-left">
-                        <p class="image is-64x64">
-                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
-                        </p>
-                    </a><div class="media-content">
-                    <div class="content">
-                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-03-06T08:56:42.620Z">2023-03-06</time></div>
-                        <a href="/blogs/2023/03/06/Hdl_graph_slam/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_回环检测</a>
-                    </div>
-                </div>
-            </article>
+            
          
             
          

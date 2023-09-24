@@ -187,13 +187,11 @@
             
         </h1>
         <div class="content">
-            <p>In this machine, the docker is built based on the <a
-href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
+            <html><head></head><body><p>In this machine, the docker is built based on the <a href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
 and the previous docker is replaced by the new docker. Thus, the
 installation should be careful</p>
-<p><a
-href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
-without cuda.
+<p><a href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
+without cuda.</p></body></html>
         </div>
         
         
@@ -247,15 +245,15 @@ without cuda.
             
         </h1>
         <div class="content">
-            <h4 id="用户宏">用户宏</h4>
-<p>  由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br />
+            <html><head></head><body><h4 id="用户宏">用户宏</h4>
+<p>  由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br>
 在属性管理器中选中任意配置环境中的<code>Microsoft.Cpp.x64.user</code>
-，弹出如下页面： <img src="/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/%E7%94%A8%E6%88%B7%E5%AE%8F.png" class="" title="用户宏"><br />
+，弹出如下页面： <img src="blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/用户宏.png" alt="用户宏"><br>
 用一个你知道的缩写来作为名字，e.g.
-ThirdParty，对应的本地路径作为值即可。<br />
+ThirdParty，对应的本地路径作为值即可。<br>
 在后续其他工程使用时可以使用$(ThirdParty)来表示该本地路径。非常方便。</p>
 <h6 id="tips">Tips</h6>
-<p>也可以选择将其设置为开发环境，即在代码编译过程中会使用你定义好的路径中的环境进行链接。<br />
+<p>也可以选择将其设置为开发环境，即在代码编译过程中会使用你定义好的路径中的环境进行链接。<br></p></body></html>
         </div>
         
         
@@ -309,10 +307,10 @@ ThirdParty，对应的本地路径作为值即可。<br />
             
         </h1>
         <div class="content">
-            <h4 id="基本操作">基本操作</h4>
-<p>拉取镜像后 <code>docker pull paopaorobot/ros-vnc</code><br />
-不通过UI界面进入ubuntu，可以直接运行<code>docker run repositoryname</code><br />
-后面该怎么操作怎么操作，使用完之后exit退出即可。
+            <html><head></head><body><h4 id="基本操作">基本操作</h4>
+<p>拉取镜像后 <code>docker pull paopaorobot/ros-vnc</code><br>
+不通过UI界面进入ubuntu，可以直接运行<code>docker run repositoryname</code><br>
+后面该怎么操作怎么操作，使用完之后exit退出即可。</p></body></html>
         </div>
         
         
@@ -366,7 +364,7 @@ ThirdParty，对应的本地路径作为值即可。<br />
             
         </h1>
         <div class="content">
-            <p>一些常用的linux的命令记录</p>
+            <html><head></head><body><p>一些常用的linux的命令记录</p>
 <h3 id="common-command">Common Command</h3>
 <ol type="1">
 <li>查看当前系统的版本</li>
@@ -379,7 +377,7 @@ ThirdParty，对应的本地路径作为值即可。<br />
 <ol start="3" type="1">
 <li>查看某软件安装路径</li>
 </ol>
-<p><code>dpkg -L | grep ftp</code> 查看ftp的位置</p>
+<p><code>dpkg -L | grep ftp</code> 查看ftp的位置</p></body></html>
         </div>
         
         
@@ -420,7 +418,7 @@ ThirdParty，对应的本地路径作为值即可。<br />
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 250 个字)
+                    1 小时 读完 (大约 8615 个字)
                 </span>
                 
                 
@@ -429,22 +427,35 @@ ThirdParty，对应的本地路径作为值即可。<br />
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/blogs/2020/03/21/WindowBat%E5%AE%9E%E6%88%98/">WindowBat实战</a>
+                <a class="has-link-black-ter" href="/blogs/2020/03/21/WindowBat/">WindowBat</a>
             
         </h1>
         <div class="content">
-            <ul>
-<li>自动拷贝文件</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">@<span class="hljs-built_in">echo</span> off<br>cls<br><span class="hljs-built_in">cd</span> ./bin<br><br>REM 打印当前文件夹中的dll名称<br>dir *.dll<br><br><span class="hljs-keyword">for</span> /r %%j <span class="hljs-keyword">in</span> (*.dll) <span class="hljs-keyword">do</span> (<br>	REM 拷贝Release版的dll到指定目录<br>	<span class="hljs-built_in">echo</span> %%j | find <span class="hljs-string">"_d"</span> || xcopy %%j E:path\Release\ /Y<br>	REM 拷贝Debug版的dll到指定目录<br>	<span class="hljs-built_in">echo</span> %%j | find <span class="hljs-string">"_d"</span> &amp;&amp; xcopy %%j E:path\Debug\ /Y<br>)<br><br>PAUSE<br></code></pre></td></tr></table></figure>
-<ul>
-<li>批量自动移动文件并自动建立同名文件夹</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">@<span class="hljs-built_in">echo</span> off<br>REM 首先遍历最外层的文件夹，<br><span class="hljs-keyword">for</span> /f  %%i <span class="hljs-keyword">in</span> (<span class="hljs-string">'"dir /ad/b/on *.*"'</span>) <span class="hljs-keyword">do</span> (  <br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">"First Dir: %%~fi"</span><br>	REM MKDIR OF DESTINATION<br>	md E:\Destination\%%i<br>	<span class="hljs-built_in">cd</span> %%~<span class="hljs-keyword">fi</span><br>    REM 获取到子文件夹之后再递归遍历子文件夹<br>	<span class="hljs-keyword">for</span> /f  %%j <span class="hljs-keyword">in</span> (<span class="hljs-string">'"dir /ad/b/on *.*"'</span>) <span class="hljs-keyword">do</span> (  <br>		<span class="hljs-built_in">echo</span>  <span class="hljs-string">"Second Dir:%%~fj"</span><br>		REM MKDIR OF DESTINATION<br>		md E:\Destination\%%i\%%j<br>		<span class="hljs-built_in">cd</span> %%~fj<br>		REM 拷贝每个文件到预定的路径中<br>		<span class="hljs-keyword">for</span> %%k <span class="hljs-keyword">in</span> (*.las) <span class="hljs-keyword">do</span> ( <br>			<span class="hljs-built_in">echo</span> <span class="hljs-string">"Third Dir:%%~fk"</span><br>			REM COPY EACH LAS FILE<br>			xcopy %%k E:\Destination\%%i\%%j\ /E /D /R /Y<br>		)<br>		REM 返回到上层文件夹，继续后续的遍历<br>		<span class="hljs-built_in">cd</span> ..<br>	)<br>	REM 同理<br>	<span class="hljs-built_in">cd</span> ..<br>)<br>REM 脚本运行完之后不退出<br>pause<br></code></pre></td></tr></table></figure>
-
+            <html><head></head><body><p><a href="https://blog.csdn.net/qq_36838191/article/details/83046599">bat</a>中的一些语法学习，用于MicroStation多人编译</p>
+<h2 id="parameter-setting">Parameter Setting</h2>
+<h4 id="系统参数"><em>1、系统参数</em></h4>
+<p>%SystemRoot% === C:(%windir% 同样)<br>
+%ProgramFiles% === C:Files<br>
+%USERPROFILE% === C:and
+Settings(子目录有“桌面”,“开始菜单”,“收藏夹”等)<br>
+%APPDATA% === C:and SettingsData<br>
+%TEMP% === C:<sub>1</sub>1~1(%TEM% 同样)<br>
+%APPDATA% === C:and SettingsData<br>
+%OS% === Windows_NT (系统)<br>
+%Path% === %SystemRoot%;%SystemRoot%;%SystemRoot%(原本的设置)<br>
+%HOMEDRIVE% === C: (系统盘)<br>
+%HOMEPATH% === and Settings :: 枚举当前的环境变量<br></p></body></html>
         </div>
         
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2020/03/21/WindowBat/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>

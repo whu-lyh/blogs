@@ -173,7 +173,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 872 个字)
+                    6 分钟 读完 (大约 873 个字)
                 </span>
                 
                 
@@ -186,7 +186,7 @@
             
         </h1>
         <div class="content">
-            <p>Linux安装docker</p>
+            <html><head></head><body><p>Linux安装docker</p>
 <ul>
 <li>docker 拉去镜像：<code>docker pull &lt;image_name&gt;</code>
 <ul>
@@ -194,82 +194,39 @@
 </ul></li>
 <li>docker 启动镜像：<code>docker run</code></li>
 </ul>
-<p><a
-href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
-Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></table></figure></p>
+<p><a href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
+Err</a> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></tbody></table></figure><p></p>
 <h2 id="docker-安装">Docker 安装</h2>
 <h3 id="docker-安装-1">1. Docker 安装</h3>
 <h4 id="卸载旧版本">1.1 卸载旧版本</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get remove docker docker-engine docker.io<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get remove docker docker-engine docker.io<br></code></pre></td></tr></tbody></table></figure>
 <h4 id="安装依赖项">1.2 安装依赖项</h4>
 <p>由于 <code>apt</code> 源使用 HTTPS
 以确保软件下载过程中不被篡改。因此，我们首先需要添加使用 HTTPS
-传输的软件包以及 CA 证书。 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-builtin-name">get</span> update<br>sudo apt-<span class="hljs-builtin-name">get</span> install apt-transport-https ca-certificates curl gnupg-agent software-properties-common<br></code></pre></td></tr></table></figure></p>
+传输的软件包以及 CA 证书。 </p><figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-builtin-name">get</span> update<br>sudo apt-<span class="hljs-builtin-name">get</span> install apt-transport-https ca-certificates curl gnupg-agent software-properties-common<br></code></pre></td></tr></tbody></table></figure><p></p>
 <h4 id="添加源和密钥">1.3 添加源和密钥</h4>
 <p>为了确认所下载软件包的合法性，需要添加软件源的 <code>GPG</code>
 密钥。</p>
 <h5 id="设备未设置代理使用-aliyun-镜像">设备未设置代理：使用 aliyun
 镜像</h5>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -<br></code></pre></td></tr></tbody></table></figure>
 <p>向 <code>sources.list</code> 添加 Docker 软件源</p>
-<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">sudo<span class="hljs-built_in"> add-apt-repository </span><span class="hljs-string">"deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs)  stable"</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight smali"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">sudo<span class="hljs-built_in"> add-apt-repository </span><span class="hljs-string">"deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs)  stable"</span><br></code></pre></td></tr></tbody></table></figure>
 <h5 id="设置了代理使用官方源">设置了代理：使用官方源</h5>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -<br></code></pre></td></tr></tbody></table></figure>
 <p>向 <code>sources.list</code> 添加 Docker 软件源</p>
-<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">sudo<span class="hljs-built_in"> add-apt-repository </span><span class="hljs-string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</span><br></code></pre></td></tr></table></figure>
-<h4 id="安装-docker">1.4 安装 Docker</h4>
-<p>更新apt并安装 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get update<br>sudo apt-get install docker-ce docker-ce-cli containerd.io<br></code></pre></td></tr></table></figure></p>
-<h4 id="启动-docker">1.5 启动 docker</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo systemctl enable docker<br>sudo systemctl start docke<br></code></pre></td></tr></table></figure>
-<h4 id="设置-docker-用户组">1.6 设置 docker 用户组</h4>
-<p>默认情况下，<code>docker</code> 命令会使用 <a
-href="https://en.wikipedia.org/wiki/Unix_domain_socket">Unix socket</a>
-与 Docker 引擎通讯。而只有 <code>root</code> 用户和 <code>docker</code>
-组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux
-系统上不会直接使用 <code>root</code> 用户。因此，更好地做法是将需要使用
-<code>docker</code> 的用户加入 <code>docker</code> 用户组。</p>
-<p>建立 <code>docker</code> 组： <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo groupadd docker</span><br></code></pre></td></tr></table></figure> 将当前用户加入
-<code>docker</code> 组： <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>sudo usermod -aG docker <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure>
-退出当前终端并重新登录，进行如下测试。</p>
-<h4 id="测试是否安装正确">1.7 测试是否安装正确</h4>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">docker <span class="hljs-keyword">run</span><span class="bash"> hello-world</span><br></code></pre></td></tr></table></figure>
-<p>输出成功信息即可</p>
-<h4 id="修改-docker-images-存储路径">1.8 修改 docker images
-存储路径</h4>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo vim <span class="hljs-regexp">/etc/</span>docker<span class="hljs-regexp">/daemon.json</span><br></code></pre></td></tr></table></figure>
-<p>添加 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-string">"data-root"</span>: <span class="hljs-string">"/data/docker/images"</span><br></code></pre></td></tr></table></figure> 重启生效</p>
-<h3 id="安装-nvidia-docker">2. 安装 nvidia-docker</h3>
-<p><strong>要求已经按照 nvidia 驱动</strong></p>
-<h4 id="设置了代理通过-apt-安装">设置了代理，通过 apt 安装</h4>
-<h5 id="配置-nvidia-docker-源">2.1 配置 nvidia docker 源</h5>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">curl</span> -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -distribution=$(. /etc/os-release;<span class="hljs-attribute">echo</span> <span class="hljs-variable">$ID</span><span class="hljs-variable">$VERSION_ID</span>)<br>curl -s -L https://nvidia.github.io/nvidia-docker/<span class="hljs-variable">$distribution</span>/nvidia-docker.list |  sudo tee /etc/apt/sources.list.d/nvidia-docker.list<br>sudo apt-get update<br></code></pre></td></tr></table></figure>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl -s -L https:<span class="hljs-regexp">//</span>nvidia.github.io<span class="hljs-regexp">/nvidia-docker/g</span>pgkey | sudo apt-key add -<br></code></pre></td></tr></table></figure>
-<h5 id="安装-nvidia-docker2">2.2 安装 nvidia-docker2</h5>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">sudo</span> <span class="hljs-string">apt-get install nvidia-docker2</span><br><span class="hljs-attr">sudo</span> <span class="hljs-string">pkill -SIGHUP dockerd</span><br></code></pre></td></tr></table></figure>
-<h4 id="未设置代理离线安装">未设置代理，离线安装</h4>
-<p>在<a
-href="https://github.com/NVIDIA/libnvidia-container/tree/gh-pages/stable/ubuntu18.04/amd64">官网</a>下载，ubuntu
-20.04 使用 18.04 的文件，下载下列文件： - libnvidia-container1<br />
-- libnvidia-container-tools - nvidia-container-toolkit-base -
-nvidia-container-toolkit<br />
-- nvidia-container-runtime<br />
-- nvidia-docker2</p>
-<ul>
-<li><strong>文件名会根据版本有所改变，但前部一致</strong>：</li>
-<li><strong>严格按照以下顺序，因存在依赖关系</strong></li>
-</ul>
-<p>依次输入</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dpkg -<span class="hljs-built_in">i</span> libnvidia-container1  <br>dpkg -<span class="hljs-built_in">i</span> libnvidia-container-tools<br>dpkg -<span class="hljs-built_in">i</span> nvidia-container-toolkit-base<br>dpkg -<span class="hljs-built_in">i</span> nvidia-container-toolkit  <br>dpkg -<span class="hljs-built_in">i</span> nvidia-container-runtime  <br>dpkg -<span class="hljs-built_in">i</span> nvidia-docker2<br></code></pre></td></tr></table></figure>
-<p>若无报错 ❌，则安装成功 ✅</p>
-<h4 id="重启-docker">重启 docker</h4>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">systemctl restart docker</span><br></code></pre></td></tr></table></figure>
-<p>使用需要gpu的测试</p>
-<p><strong><em>安装完成后，会覆盖 daemon.json，如果需要更改 image
-的存储位置，需要重新设置</em></strong></p>
-
+<figure class="highlight smali"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">sudo<span class="hljs-built_in"> add-apt-repository </span><span class="hljs-string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</span><br></code></pre></td></tr></tbody></table></figure></body></html>
         </div>
         
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2023/04/17/Docker%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -312,36 +269,18 @@ nvidia-container-toolkit<br />
             
         </h1>
         <div class="content">
-            <ol start="0" type="1">
-<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a
-href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a
-href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
-<li>下载对应驱动
-位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
-</ol>
-<ul>
-<li>tips: 检查cuda版本和显卡驱动的<a
-href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
-</ul>
-<ol start="2" type="1">
-<li>卸载之前的显卡驱动
-<code>sudo apt-get automove --purge nvidia-×</code></li>
-<li>给.run文件权限 <code>sudo chmod a+x xxx.run</code></li>
-<li>关闭图形界面 ctrl+alt+f1</li>
-<li>关闭lightdm服务 <code>sudo service lightdm stop</code></li>
-<li>安装驱动
-<code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
-<li>打开lightdm <code>sudo service lightdm start</code></li>
-<li>如果没反应，再试试 <code>sudo syetemctl start gdm.service</code> or
-<code>sudo syetemctl enable gdm.service</code></li>
-<li>打开图形化界面 <code>ctrl+alt+f7</code></li>
-<li>重启</li>
-<li>Ubuntu22.04似乎不用这么麻烦了，直接重装完之后就有显卡驱动了，试图卸载过，但是重装失败，还不如直接用预先安装好的。</li>
-</ol>
-
+            <html><head></head><body></body></html>
         </div>
         
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2023/04/17/NVIDIA-Driver-Installer/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -384,15 +323,15 @@ href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应
             
         </h1>
         <div class="content">
-            <h3 id="ros编译">ROS编译</h3>
+            <html><head></head><body><h3 id="ros编译">ROS编译</h3>
 <ul>
 <li>catkin_make是cmake，make的进一步封装。路径位于workspace下，src之上使用:<code>catkin_make</code>ros会自己找到src下面的源代码，并开始build，如果src下面有好几个源代码，就通过DCATKIN_WHITELIST_PACKAGES指定一个就行：</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></tbody></table></figure>
 <ul>
 <li><p>安装则<code>catkin_make install</code>,
 使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p></li>
-<li><p>清理安装文件<code>catkin_make clean</code>。</p>
+<li><p>清理安装文件<code>catkin_make clean</code>。</p></li></ul></body></html>
         </div>
         
         
@@ -446,7 +385,7 @@ href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应
             
         </h1>
         <div class="content">
-            <p>一些常用的linux的命令记录</p>
+            <html><head></head><body><p>一些常用的linux的命令记录</p>
 <h3 id="common-command">Common Command</h3>
 <ol type="1">
 <li>查看当前系统的版本</li>
@@ -459,7 +398,7 @@ href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应
 <ol start="3" type="1">
 <li>查看某软件安装路径</li>
 </ol>
-<p><code>dpkg -L | grep ftp</code> 查看ftp的位置</p>
+<p><code>dpkg -L | grep ftp</code> 查看ftp的位置</p></body></html>
         </div>
         
         

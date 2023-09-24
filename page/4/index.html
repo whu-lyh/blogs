@@ -176,8 +176,8 @@
             
         </h1>
         <div class="content">
-            <h1 id="kalibr">Kalibr</h1>
-<p>Kalibr中使用了B-spline实现位姿的内插，进而完成相机和IMU之间的时间同步标定。</p>
+            <html><head></head><body><h1 id="kalibr">Kalibr</h1>
+<p>Kalibr中使用了B-spline实现位姿的内插，进而完成相机和IMU之间的时间同步标定。</p></body></html>
         </div>
         
         
@@ -231,7 +231,7 @@
             
         </h1>
         <div class="content">
-            <h2 id="what-is-rotation-averaging">What is Rotation Averaging?</h2>
+            <html><head></head><body><h2 id="what-is-rotation-averaging">What is Rotation Averaging?</h2>
 <h3 id="problem-1">Problem[^ 1]</h3>
 <p>Given a set of rotation matrices <span class="math inline">\(C_i,
 i=\{1,2,...,n\}\)</span>, the average of them is ? <strong>Rotation
@@ -242,12 +242,11 @@ rotations. (Single rotation averaging)</p>
 of estimating a set of <span class="math inline">\(n\)</span> unknown
 orientations <span class="math inline">\(R_1,...,R_n \in SO(d)\)</span>
 from noisy measurements <span class="math inline">\(\bar{R} \in
-SO(d)\)</span> of the relative rotations <span
-class="math inline">\(R_i^{-1}R_j\)</span> between them. (Multi rotation
+SO(d)\)</span> of the relative rotations <span class="math inline">\(R_i^{-1}R_j\)</span> between them. (Multi rotation
 averaging)</p>
 <p>In practical the rotation averaging problem could be categoried into
 : Single rotation averaging、Multi rotation averaging and Conjugate
-rotation averaging.</p>
+rotation averaging.</p></body></html>
         </div>
         
         
@@ -301,15 +300,15 @@ rotation averaging.</p>
             
         </h1>
         <div class="content">
-            <h3 id="ros编译">ROS编译</h3>
+            <html><head></head><body><h3 id="ros编译">ROS编译</h3>
 <ul>
 <li>catkin_make是cmake，make的进一步封装。路径位于workspace下，src之上使用:<code>catkin_make</code>ros会自己找到src下面的源代码，并开始build，如果src下面有好几个源代码，就通过DCATKIN_WHITELIST_PACKAGES指定一个就行：</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></tbody></table></figure>
 <ul>
 <li><p>安装则<code>catkin_make install</code>,
 使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p></li>
-<li><p>清理安装文件<code>catkin_make clean</code>。</p>
+<li><p>清理安装文件<code>catkin_make clean</code>。</p></li></ul></body></html>
         </div>
         
         
@@ -363,13 +362,11 @@ rotation averaging.</p>
             
         </h1>
         <div class="content">
-            <p>In this machine, the docker is built based on the <a
-href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
+            <html><head></head><body><p>In this machine, the docker is built based on the <a href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
 and the previous docker is replaced by the new docker. Thus, the
 installation should be careful</p>
-<p><a
-href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
-without cuda.
+<p><a href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
+without cuda.</p></body></html>
         </div>
         
         
@@ -423,15 +420,15 @@ without cuda.
             
         </h1>
         <div class="content">
-            <h4 id="用户宏">用户宏</h4>
-<p>  由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br />
+            <html><head></head><body><h4 id="用户宏">用户宏</h4>
+<p>  由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br>
 在属性管理器中选中任意配置环境中的<code>Microsoft.Cpp.x64.user</code>
-，弹出如下页面： <img src="/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/%E7%94%A8%E6%88%B7%E5%AE%8F.png" class="" title="用户宏"><br />
+，弹出如下页面： <img src="blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/用户宏.png" alt="用户宏"><br>
 用一个你知道的缩写来作为名字，e.g.
-ThirdParty，对应的本地路径作为值即可。<br />
+ThirdParty，对应的本地路径作为值即可。<br>
 在后续其他工程使用时可以使用$(ThirdParty)来表示该本地路径。非常方便。</p>
 <h6 id="tips">Tips</h6>
-<p>也可以选择将其设置为开发环境，即在代码编译过程中会使用你定义好的路径中的环境进行链接。<br />
+<p>也可以选择将其设置为开发环境，即在代码编译过程中会使用你定义好的路径中的环境进行链接。<br></p></body></html>
         </div>
         
         

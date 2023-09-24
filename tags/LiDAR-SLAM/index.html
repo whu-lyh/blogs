@@ -186,8 +186,7 @@
             
         </h1>
         <div class="content">
-            <h2
-id="integrated-trajectory-estimation-for-3d-kinematic-mapping-with-gnss-ins-and-imaging-sensors-a-framework-and-review-1">Integrated
+            <html><head></head><body><h2 id="integrated-trajectory-estimation-for-3d-kinematic-mapping-with-gnss-ins-and-imaging-sensors-a-framework-and-review-1">Integrated
 trajectory estimation for 3D kinematic mapping with GNSS, INS and
 imaging sensors: A framework and review[^ 1]</h2>
 <h3 id="方法分类">方法分类</h3>
@@ -200,7 +199,7 @@ imaging sensors: A framework and review[^ 1]</h2>
 误差或未补偿的惯性传感器漂移造成的，因此是低频的，而轨迹的较高频率分量相对准确。
 实际上，校正要么与飞行几何相关联，作为每条带的固定偏移，要么建模为缓慢时变。
 由于轨迹误差在带内也可能变化很大，因此这种调整在实践中通常需要高度灵活的校正模型，而这也是的模型有较高的过拟合风险，导致点云中出现全局的变形。</p>
-<p>​ 这些问题是的在传感器层级进行统一的误差建模的方法开始流形。</p>
+<p>​ 这些问题是的在传感器层级进行统一的误差建模的方法开始流形。</p></body></html>
         </div>
         
         
@@ -254,12 +253,12 @@ imaging sensors: A framework and review[^ 1]</h2>
             
         </h1>
         <div class="content">
-            <h2 id="针对性设计的平面提取方法">1. 针对性设计的平面提取方法</h2>
+            <html><head></head><body><h2 id="针对性设计的平面提取方法">1. 针对性设计的平面提取方法</h2>
 <p>​
 因为这里使用的传感器其实一个组装的VLP16型多线激光雷达+相机+imu的背包激光扫描仪，作者考虑到LiDAR有一定的安置误差(提前肯定标定了的，e.g.倾角)，而本文使用的又是室内场景平面，因此需要根据一个仪器安装的先验确定z轴方向指向哪里（默认传感器的坐标系为右前上，z轴指向天空）。得到这个倾角主要是为了修正LiDAR坐标系的z轴方向。这对后续的高度滤波和地面点判断都有一定的影响。</p>
 <p>​
 在提取平面时，为了提升效率，首先基于扫描仪的高度，通过高度滤波将一定高度之外的点去掉，同时对剩下的点云计算法向量（通过提前性的点云剔除，可以提升这里的计算效率）进行过滤，和z方向进行比较，保留地面点（和z轴夹角小就说明方向近似），用RANSAC的方式拟合平面参数方程。
-这样就可以以较快的速度从单帧点云中提取出一个合适的平面。注意：原文中写的是直接用RANSAC提取平面的，这个非常的费时间，实际操作并不是这样子来的。</p>
+这样就可以以较快的速度从单帧点云中提取出一个合适的平面。注意：原文中写的是直接用RANSAC提取平面的，这个非常的费时间，实际操作并不是这样子来的。</p></body></html>
         </div>
         
         
@@ -313,14 +312,14 @@ imaging sensors: A framework and review[^ 1]</h2>
             
         </h1>
         <div class="content">
-            <h2 id="回环检测">回环检测</h2>
+            <html><head></head><body><h2 id="回环检测">回环检测</h2>
 <p>​
 闭环的作用就不多说了，koide采用的闭环检测方法其实挺简单的，就是一般闭环检测的基础准则。</p>
 <h3 id="候选准则">候选准则</h3>
 <ul>
 <li>候选帧不能离当前帧太近，场景变化不大的话，会引入过多的冗余匹配，对实时应用不合适；</li>
 <li>候选帧和当前帧的位姿之间的距离要足够小，这个是前提，如果都不小，那说明大概率不是闭环了，但是也不排除前端飘得确实很厉害的情况；小范围内，这个条件还是可以满足的，室外更大的场景，这种就不行了，可能飘得很厉害，只能上特征了。</li>
-</ul>
+</ul></body></html>
         </div>
         
         
