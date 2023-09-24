@@ -11,12 +11,12 @@
 <title>FFMPEG-Usage - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="Usage   Here, i&#39;m trying to sequeeze a normal video to a n times faster. But, i found that there are many ways to relize this, such as  ffmpeg and adjust the speed while roamming, etc.  OpenCV require">
+    <meta name="description" content="Usage   Here, i&#39;m trying to sequeeze a normal video to a n times faster. But, i found that there are many ways to relize this, such as  ffmpeg and adjust the speed while roamming, etc.  OpenCV">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FFMPEG-Usage">
 <meta property="og:url" content="http://whu-lyh.github.io/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="Usage   Here, i&#39;m trying to sequeeze a normal video to a n times faster. But, i found that there are many ways to relize this, such as  ffmpeg and adjust the speed while roamming, etc.  OpenCV require">
+<meta property="og:description" content="Usage   Here, i&#39;m trying to sequeeze a normal video to a n times faster. But, i found that there are many ways to relize this, such as  ffmpeg and adjust the speed while roamming, etc.  OpenCV">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2020-02-29T04:38:33.000Z">
@@ -177,7 +177,7 @@
             
         </h1>
         <div class="content">
-            <html><head></head><body><h3 id="usage">Usage</h3>
+            <h3 id="usage">Usage</h3>
 <p>  Here, i'm trying to sequeeze a normal video to a n times faster.
 <strong>But</strong>, i found that there are many ways to relize this,
 such as</p>
@@ -193,7 +193,7 @@ supported.</li>
 <ul>
 <li>Under Linux</li>
 </ul>
-<figure class="highlight cmake"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> ffmpeg<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> ffmpeg<br></code></pre></td></tr></table></figure>
 <ul>
 <li>Under Windows</li>
 </ul>
@@ -240,7 +240,7 @@ times faster:+1:</li>
 <p>Please dive the <a href="https://blog.csdn.net/WuLex/article/details/101513018"><strong>Blog</strong></a>.</p>
 <h3 id="attach-two-imagesvideos-into-one-imagevideo">Attach two
 images(videos) into one image(video)</h3>
-<figure class="highlight taggerscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">.<span class="hljs-symbol">\f</span>fmpeg.exe -i D:<span class="hljs-symbol">\C</span>odeSpace<span class="hljs-symbol">\f</span>isheye_image<span class="hljs-symbol">\0</span>000000007-l.png -i D:<span class="hljs-symbol">\C</span>odeSpace<span class="hljs-symbol">\f</span>isheye_image<span class="hljs-symbol">\0</span>000000007-r.png -filter_complex hstack -y ./dual_fisheye_image.png<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">.<span class="hljs-symbol">\f</span>fmpeg.exe -i D:<span class="hljs-symbol">\C</span>odeSpace<span class="hljs-symbol">\f</span>isheye_image<span class="hljs-symbol">\0</span>000000007-l.png -i D:<span class="hljs-symbol">\C</span>odeSpace<span class="hljs-symbol">\f</span>isheye_image<span class="hljs-symbol">\0</span>000000007-r.png -filter_complex hstack -y ./dual_fisheye_image.png<br></code></pre></td></tr></table></figure>
 <p>-filter_complex hstack: <code>hstack</code> means images are stacked
 horizontally, vertically is set to <code>vstack</code>.</p>
 <p>the raw separate images are here:</p>
@@ -275,7 +275,7 @@ equirectangular Image</h3>
 <ul>
 <li>For single dual fisheye image to equirectangular image.</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./ffmpeg -i .\dual_fisheye_image.png -vf v360=dfisheye:e:ih_fov=185:iv_fov=185:yaw=-90 -y ./equirectangle_image.png<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./ffmpeg -i .\dual_fisheye_image.png -vf v360=dfisheye:e:ih_fov=185:iv_fov=185:yaw=-90 -y ./equirectangle_image.png<br></code></pre></td></tr></table></figure>
 <p>185 is the image FOV.</p>
 <p><img src="equirectangle_image.png"></p>
 <h4 id="references-1">References</h4>
@@ -293,7 +293,7 @@ back and forth</h3>
 <ul>
 <li>image to video</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">.\ffmpeg.exe -f image2 -r 1 -i xxx/000000000%d.png -vcodec libx265 -pix_fmt yuv420p -b:v 40000k -bufsize 5000k -preset ultrafast -c:a copy -y -r 1 ./fisheye_rgb.mp4<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">.\ffmpeg.exe -f image2 -r 1 -i xxx/000000000%d.png -vcodec libx265 -pix_fmt yuv420p -b:v 40000k -bufsize 5000k -preset ultrafast -c:a copy -y -r 1 ./fisheye_rgb.mp4<br></code></pre></td></tr></table></figure>
 <p>-f: <code>image2</code> image type.</p>
 <p>-r: video frame equal to 1, default by 25, which means extract 1(25)
 frames/s. Also known as definition how fast the pictures are read in. To
@@ -306,7 +306,7 @@ platform.</p>
 <ul>
 <li>video to image</li>
 </ul>
-<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">.\ffmpeg.exe -i .\fisheye_rgb_l.mp4 -r <span class="hljs-number">1</span> -q:v <span class="hljs-number">1</span> -start_number <span class="hljs-number">0</span> ./%<span class="hljs-number">10</span>d.png<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">.\ffmpeg.exe -i .\fisheye_rgb_l.mp4 -r <span class="hljs-number">1</span> -q:v <span class="hljs-number">1</span> -start_number <span class="hljs-number">0</span> ./%<span class="hljs-number">10</span>d.png<br></code></pre></td></tr></table></figure>
 <p>%10d: rename the out put images with int, e.g 0000000001.png.</p>
 <p>-start_number <code>0</code>: means the result image id will start
 from 0. Also this argument could be used for selecting the specific
@@ -323,7 +323,7 @@ image video to equirectangular video</h3>
 <ul>
 <li>For dual fisheye video to equirectangular video.</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./ffmpeg -y -i <span class="hljs-variable">$file</span> -vf v360=dfisheye:e:yaw=-90:ih_fov=187.8:iv_fov=185 -c:v libx265 -b:v 40000k -bufsize 5000k -preset ultrafast -c:a copy out.mp4<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./ffmpeg -y -i <span class="hljs-variable">$file</span> -vf v360=dfisheye:e:yaw=-90:ih_fov=187.8:iv_fov=185 -c:v libx265 -b:v 40000k -bufsize 5000k -preset ultrafast -c:a copy out.mp4<br></code></pre></td></tr></table></figure>
 <p>here we choose the ==v360== filter, <a href="https://ffmpeg.org/ffmpeg-filters.html#v360">v360</a> basic
 command as followings:
 <code>input:output:interp:w:h:in_stereo:out_stereo:yaw(pitch\roll):rorder:h_filp(v_flip\d_flip):ih_flip(iv_flip):in_trans:out_trans:h_offset(\v_offset):alpha_mask:reset_rot</code></p>
@@ -343,7 +343,7 @@ horizontal/vertical/diagonal field of view. Values in degrees.</p>
 <li>Basic pipeline from <a href="https://en.wikiversity.org/wiki/3D_Modelling/360_Degree_Video">wiki</a>
 (Recommand:+1::+1::+1:)</li>
 </ul>
-</body></html>
+
         </div>
         
            <div class="my_post_copyright">

@@ -186,15 +186,15 @@
             
         </h1>
         <div class="content">
-            <html><head></head><body><h3 id="ros编译">ROS编译</h3>
+            <h3 id="ros编译">ROS编译</h3>
 <ul>
 <li>catkin_make是cmake，make的进一步封装。路径位于workspace下，src之上使用:<code>catkin_make</code>ros会自己找到src下面的源代码，并开始build，如果src下面有好几个源代码，就通过DCATKIN_WHITELIST_PACKAGES指定一个就行：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="hljs-string">"package1;package2"</span><br></code></pre></td></tr></table></figure>
 <ul>
 <li><p>安装则<code>catkin_make install</code>,
 使用<code>catkin_make -DCMAKE_INSTALL_PREFIX=/opt/ros/groovy install</code>指定要安装在哪里。</p></li>
-<li><p>清理安装文件<code>catkin_make clean</code>。</p></li></ul></body></html>
+<li><p>清理安装文件<code>catkin_make clean</code>。</p></li></ul>
         </div>
         
         

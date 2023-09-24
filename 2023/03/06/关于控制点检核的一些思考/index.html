@@ -182,7 +182,7 @@
             
         </h1>
         <div class="content">
-            <html><head></head><body><h1 id="使用地面控制点检核als点云精度">使用地面控制点检核ALS点云精度</h1>
+            <h1 id="使用地面控制点检核als点云精度">使用地面控制点检核ALS点云精度</h1>
 <h2 id="任务描述">任务描述</h2>
 <p>​
 使用地面布设的外业控制点GCP来检核ALS点云条带平差之后的绝对位置精度。如下图所示，红圈中的是GCP点，紫色和灰色是两个条带的ALS点云。图中显示了在<span class="math inline">\(z\)</span>方向上的偏差。</p>
@@ -350,13 +350,13 @@ Work写的不错。</p>
 <h4 id="methodology-1">Methodology</h4>
 <p>​
 本文提出一种两阶段方法实现表面美观、属性好的表面拟合方法。<strong>Step1</strong>：仅使用==局部==少量的数据点计算离散的最小二乘多边形段discrete
-least squares polynomial pieces，基于==SVD==构建了<span class="math inline">\(Bernstein-B \'{e}
+least squares polynomial pieces，基于==SVD==构建了<span class="math inline">\(Bernstein-B \&#39;{e}
 zier\)</span>形式以根据实际点云分布空间初始多边形的次数。<strong>Step2</strong>：基于<span class="math inline">\(C^1\)</span>连续条件结合相邻的三角化<span class="math inline">\(Bezier\)</span>块直接得到剩余多边形段。算法不需要全局计算，不依赖三角网，不需要计算导数。</p>
 <p>​ 基于<span class="math inline">\(C^1\)</span>连续的bivariate
 <strong>cubic</strong>
 <strong>spline</strong>实现了大场景下散点的最优近似拟合。使用局部多边形最小二乘近似的方式来减少数据的局部差异和非均匀分布的问题。但是考虑到实际数据分布，算法使用的cubic
 spline的次数是自适应变化的。算法的复杂度是和点数成线性关系的。这里去掉了从数据生成三角网的过程，而算法在介绍的时候<em>依赖三角网</em>的生成。中间使用了LOD加速计算。</p>
-<p>​ 最后使用了<span class="math inline">\(Bernstein-B \'{e}
+<p>​ 最后使用了<span class="math inline">\(Bernstein-B \&#39;{e}
 zier\)</span>来评估和渲染spline。通过计算spline点和散点之间的单向<span class="math inline">\(Housdorff\)</span>距离来评估质量。</p>
 <h4 id="结论-1">结论</h4>
 <ul>
@@ -479,7 +479,7 @@ and machine intelligence, 1989, 11(6): 567-585.</p>
 <p>[^ 8]: Kermarrec G, Skytt V, Dokken T. Optimal Surface Fitting of
 Point Clouds Using Local Refinement: Application to GIS Data[M].
 Springer Nature, 2023.</p>
-</body></html>
+
         </div>
         
            <div class="my_post_copyright">
@@ -947,18 +947,6 @@ spline mappings[^ 6]</span>
             related posts
         </h3>
          
-            <article class="media"> <a href="/blogs/2023/02/09/B-spline-Interpolation/" class="media-left">
-                        <p class="image is-64x64">
-                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="B-spline Interpolation">
-                        </p>
-                    </a><div class="media-content">
-                    <div class="content">
-                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:13:29.000Z">2023-02-09</time></div>
-                        <a href="/blogs/2023/02/09/B-spline-Interpolation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-spline Interpolation</a>
-                    </div>
-                </div>
-            </article>
-         
             <article class="media"> <a href="/blogs/2023/03/06/B-Spline/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="B-Spline探秘">
@@ -971,8 +959,6 @@ spline mappings[^ 6]</span>
                 </div>
             </article>
          
-            
-         
             <article class="media"> <a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="CloudCompare源代码学习">
@@ -981,6 +967,18 @@ spline mappings[^ 6]</span>
                     <div class="content">
                         <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-03-13T11:58:06.000Z">2023-03-13</time></div>
                         <a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CloudCompare源代码学习</a>
+                    </div>
+                </div>
+            </article>
+         
+            <article class="media"> <a href="/blogs/2023/02/09/B-spline-Interpolation/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="B-spline Interpolation">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-02-09T02:13:29.000Z">2023-02-09</time></div>
+                        <a href="/blogs/2023/02/09/B-spline-Interpolation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">B-spline Interpolation</a>
                     </div>
                 </div>
             </article>
@@ -1003,6 +1001,14 @@ spline mappings[^ 6]</span>
                 </div>
             </article>
          
+            
+         
+            
+         
+            
+         
+            
+         
             <article class="media"> <a href="/blogs/2023/03/06/Hdl_graph_slam2/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
@@ -1014,12 +1020,6 @@ spline mappings[^ 6]</span>
                     </div>
                 </div>
             </article>
-         
-            
-         
-            
-         
-            
          
             
          

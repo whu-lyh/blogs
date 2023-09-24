@@ -176,18 +176,13 @@
             
         </h1>
         <div class="content">
-            <html><head></head><body></body></html>
+            <p>动量蒸馏中用到了</p>
+<p>点云配准</p>
+<p>Jenson-Shannon divergence</p>
+
         </div>
         
         
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2023/09/21/KL%20Divergence/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
         
         
     </div>
@@ -230,14 +225,14 @@
             
         </h1>
         <div class="content">
-            <html><head></head><body><h3 id="目的">目的</h3>
+            <h3 id="目的">目的</h3>
 <p>​
 为了将KITTI360提供的鱼眼图像转换成360度的等距投影图像（全景图像）。数据集中提供两个鱼眼相机的图像，但是为了得到一个全景图像，一张一张的处理虽然可以，但是太费时间。因此借助FFMPEG来提升生产力。</p>
 <p>​ 单张图像的使用方法见下面的博客。</p>
 <ul>
 <li><p>鱼眼图像的说明见<a href="http://whu-lyh.github.io/blogs/2023/04/13/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/">这里</a>。</p></li>
 <li><p>FFMPEG的使用说明见<a href="http://whu-lyh.github.io/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/">这里</a>。</p></li>
-</ul></body></html>
+</ul>
         </div>
         
         
@@ -291,7 +286,7 @@
             
         </h1>
         <div class="content">
-            <html><head></head><body><p>Linux安装docker</p>
+            <p>Linux安装docker</p>
 <ul>
 <li>docker 拉去镜像：<code>docker pull &lt;image_name&gt;</code>
 <ul>
@@ -300,27 +295,27 @@
 <li>docker 启动镜像：<code>docker run</code></li>
 </ul>
 <p><a href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
-Err</a> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></tbody></table></figure><p></p>
+Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></table></figure></p>
 <h2 id="docker-安装">Docker 安装</h2>
 <h3 id="docker-安装-1">1. Docker 安装</h3>
 <h4 id="卸载旧版本">1.1 卸载旧版本</h4>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get remove docker docker-engine docker.io<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get remove docker docker-engine docker.io<br></code></pre></td></tr></table></figure>
 <h4 id="安装依赖项">1.2 安装依赖项</h4>
 <p>由于 <code>apt</code> 源使用 HTTPS
 以确保软件下载过程中不被篡改。因此，我们首先需要添加使用 HTTPS
-传输的软件包以及 CA 证书。 </p><figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-builtin-name">get</span> update<br>sudo apt-<span class="hljs-builtin-name">get</span> install apt-transport-https ca-certificates curl gnupg-agent software-properties-common<br></code></pre></td></tr></tbody></table></figure><p></p>
+传输的软件包以及 CA 证书。 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo apt-<span class="hljs-builtin-name">get</span> update<br>sudo apt-<span class="hljs-builtin-name">get</span> install apt-transport-https ca-certificates curl gnupg-agent software-properties-common<br></code></pre></td></tr></table></figure></p>
 <h4 id="添加源和密钥">1.3 添加源和密钥</h4>
 <p>为了确认所下载软件包的合法性，需要添加软件源的 <code>GPG</code>
 密钥。</p>
 <h5 id="设备未设置代理使用-aliyun-镜像">设备未设置代理：使用 aliyun
 镜像</h5>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -<br></code></pre></td></tr></table></figure>
 <p>向 <code>sources.list</code> 添加 Docker 软件源</p>
-<figure class="highlight smali"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">sudo<span class="hljs-built_in"> add-apt-repository </span><span class="hljs-string">"deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs)  stable"</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">sudo<span class="hljs-built_in"> add-apt-repository </span><span class="hljs-string">"deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs)  stable"</span><br></code></pre></td></tr></table></figure>
 <h5 id="设置了代理使用官方源">设置了代理：使用官方源</h5>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -<br></code></pre></td></tr></table></figure>
 <p>向 <code>sources.list</code> 添加 Docker 软件源</p>
-<figure class="highlight smali"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">sudo<span class="hljs-built_in"> add-apt-repository </span><span class="hljs-string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</span><br></code></pre></td></tr></tbody></table></figure></body></html>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smali">sudo<span class="hljs-built_in"> add-apt-repository </span><span class="hljs-string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</span><br></code></pre></td></tr></table></figure>
         </div>
         
         
@@ -374,18 +369,33 @@ Err</a> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"
             
         </h1>
         <div class="content">
-            <html><head></head><body></body></html>
+            <ol start="0" type="1">
+<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
+<li>下载对应驱动
+位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
+</ol>
+<ul>
+<li>tips: 检查cuda版本和显卡驱动的<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
+</ul>
+<ol start="2" type="1">
+<li>卸载之前的显卡驱动
+<code>sudo apt-get automove --purge nvidia-×</code></li>
+<li>给.run文件权限 <code>sudo chmod a+x xxx.run</code></li>
+<li>关闭图形界面 ctrl+alt+f1</li>
+<li>关闭lightdm服务 <code>sudo service lightdm stop</code></li>
+<li>安装驱动
+<code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
+<li>打开lightdm <code>sudo service lightdm start</code></li>
+<li>如果没反应，再试试 <code>sudo syetemctl start gdm.service</code> or
+<code>sudo syetemctl enable gdm.service</code></li>
+<li>打开图形化界面 <code>ctrl+alt+f7</code></li>
+<li>重启</li>
+<li>Ubuntu22.04似乎不用这么麻烦了，直接重装完之后就有显卡驱动了，试图卸载过，但是重装失败，还不如直接用预先安装好的。</li>
+</ol>
+
         </div>
         
         
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2023/04/17/NVIDIA-Driver-Installer/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
         
         
     </div>
@@ -428,7 +438,7 @@ Err</a> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"
             
         </h1>
         <div class="content">
-            <html><head></head><body><h3 id="前序">前序</h3>
+            <h3 id="前序">前序</h3>
 <p>​
 简单介绍一下目前的相机种类，主要是对相机镜头按照焦距及视角的大小，可分为标准镜头、广角镜头和鱼眼镜头。他们的一些特点如下：</p>
 <ul>
@@ -449,7 +459,7 @@ Err</a> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"
 <h3 id="投影模型">投影模型</h3>
 <p><span class="math display">\[
 r_d=f \cdot tan \theta
-\]</span></p></body></html>
+\]</span></p>
         </div>
         
         
