@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2020-05-07T02:37:44.000Z">
-<meta property="article:modified_time" content="2023-09-21T15:13:52.888Z">
+<meta property="article:modified_time" content="2023-09-24T12:49:48.805Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -164,7 +164,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 245 个字)
+                    2 分钟 读完 (大约 345 个字)
                 </span>
                 
                 
@@ -228,7 +228,15 @@
 <ol start="12" type="1">
 <li>创建快捷方式</li>
 </ol>
-<p>todo</p>
+<p>以给Typora创建快捷方式为例：</p>
+<ul>
+<li>首先创建一个<code>typora.desktop</code>的文件，将下列内容写入该文件中，</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">[Desktop Entry]<br>Name=Typora<br>Exec=/home/amazinghao/Downloads/Typora-linux-x64/bin/Typora-linux-x64/Typora<br>Type=Application<br>Icon=/home/amazinghao/Downloads/Typora-linux-x64/bin/Typora-linux-x64/resources/assets/icon/icon_512x512.png<br></code></pre></td></tr></table></figure>
+<ul>
+<li>然后把这个文件拷贝到系统应用目录下，<code>sudo cp typora.desktop /usr/share/applications/</code>，
+搞定。</li>
+</ul>
 <ol start="13" type="1">
 <li></li>
 <li></li>
@@ -249,7 +257,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2020/05/07/linux-command-usage/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2020-05-07</p>
-    <p><span>update time:</span>2023-09-21</p>
+    <p><span>update time:</span>2023-09-24</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -305,8 +313,8 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2020/03/21/WindowBat/">
-                <span class="level-item">WindowBat</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2020/03/21/WindowBat%E5%AE%9E%E6%88%98/">
+                <span class="level-item">WindowBat实战</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -645,8 +653,6 @@
          
             
          
-            
-         
             <article class="media"> <a href="/blogs/2023/04/17/Docker%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Nvidia Driver Installation">
@@ -669,8 +675,6 @@
          
             
          
-            
-         
             <article class="media"> <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Nvidia Driver Installation">
@@ -682,6 +686,10 @@
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
          
             
          
