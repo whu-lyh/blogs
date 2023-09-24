@@ -8,19 +8,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Hexo??? - AmazingHao&#39;s Free Space</title>
+<title>Hexo初体验 - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="???????Hexo?????????????????">
+    <meta name="description" content="主要记录在使用Hexo写个人博客时候的一些小问题和小心得">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo???">
+<meta property="og:title" content="Hexo初体验">
 <meta property="og:url" content="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="???????Hexo?????????????????">
+<meta property="og:description" content="主要记录在使用Hexo写个人博客时候的一些小问题和小心得">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2020-02-22T07:38:32.000Z">
-<meta property="article:modified_time" content="2023-09-24T07:19:51.187Z">
+<meta property="article:modified_time" content="2023-09-24T12:04:21.976Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -80,7 +80,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/blogs/">
             
-                <img src="/blogs/images/logo.svg" alt="Hexo???" height="28">
+                <img src="/blogs/images/logo.svg" alt="Hexo初体验" height="28">
             
             </a>
         </div>
@@ -161,14 +161,14 @@
                 <time class="level-item has-text-grey" datetime="2020-02-22T07:38:32.000Z">2020-02-22</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/">????</a>
+                <a class="has-link-grey -link" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">写作工具</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    8 分钟 读完 (大约 1244 个字)
+                    31 分钟 读完 (大约 4681 个字)
                 </span>
                 
                 
@@ -177,154 +177,190 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Hexo???
+                Hexo初体验
             
         </h1>
         <div class="content">
-            <p><font color="red"><strong>Hexo</strong></font>?????<strong>????</strong>?????????
-Markdown?????????? HTML??? Git ? FTP
-??????????????git????????????Windows?hexo????????? <a id="more"></a> *** ###
-1?Node.js ?? ###
-  ????hexo????????????Node.js????Node.js???????????????????????????????????????<a href="https://nodejs.org/en/download/"><strong>Node.js</strong></a>?
+            <p><font color="red"><strong>Hexo</strong></font>本身是一个<strong>静态博客</strong>生成工具，具备编译
+Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
+等基本功能。本博客将不会介绍git实用技巧而是着重于介绍在Windows上hexo的搭建及测试过程
+<a id="more"></a></p>
+<h3 id="node.js-安装">1、Node.js 安装</h3>
+<p>首先搭建hexo个人博客网站需要电脑中有Node.js环境，而Node.js即使是一个没有写过前端界面的人也可以完全傻瓜式安装完成的。参照官网下载对应版本<a href="https://nodejs.org/en/download/"><strong>Node.js</strong></a>。
 <img src="Nodejs.png">
-  ????????????Node.js??????????JavaScript?????????????????????<a href="https://www.runoob.com/nodejs/nodejs-tutorial.html"><strong>??</strong></a>
-?????Next????? ???????bash???????<code>node --version(?node -v)</code>
-????Node.js???????????</p>
-<figure>
-<img src="Nodejs2.png" alt="nodejsTestVersion">
-<figcaption aria-hidden="true">nodejsTestVersion</figcaption>
-</figure>
-<p>npm?install??uninstall?????Nodejs???????????package.json???</p>
-<h3 id="hexo">2?Hexo??</h3>
-<p>  ???Node.js????????????????npm?????????????python??pip??linux??apt-get?
-???????????????git bash????????<code>npm install hexo-cli -g</code>? CLI
-= Command Line Interface??????? #### 2.1 Hexo???
-  ????????????????????Hexo????????????NotesRecording??????????????bash???????:
-<code>hexo init NotesRecording</code> ?????:
-<code>hexo --version</code>?????Hexo?????:</p>
+另外如果你想要进一步学习Node.js这个强大的服务器端的JavaScript绚丽技术以及体验高性能服务配置技术，请移步<a href="https://www.runoob.com/nodejs/nodejs-tutorial.html"><strong>这里</strong></a>
+,一路Next安装即可。最后在控制台或bash命令行上输入：<code>node --version(或node -v)</code>，以查看Node.js版本来验证否配置完成。</p>
+<p><img src="Nodejs2.png"></p>
+<p>npm的install或者uninstall需要在安装Nodejs的目录下才能行，需要有package.json存在。</p>
+<h3 id="hexo安装">2、Hexo安装</h3>
+<p>在安装Node.js的时候一般来说会自动安装一个叫做npm的软件安装程序，功能类似于python中的pip以及linux下的apt-get。然后通过在本地路径打开命令行或git
+bash命令行，并输入：<code>npm install hexo-cli -g</code>，CLI = Command
+Line Interface为命令行界面。</p>
+<h4 id="hexo初始化">2.1 Hexo初始化</h4>
+<p>在本地找个合适的位置新建一个文件夹，作为Hexo博客存放的位置，这里名为NotesRecording，并在此文件夹下打开控制台或bash命令行，并输入:
+<code>hexo init NotesRecording</code>，然后输入:
+<code>hexo --version</code>即可查看Hexo版本，如下: (这里采用了 <a href="https://github.com/ppoffice/hexo-theme-icarus"><strong>icarus</strong></a>
+主题，因此和你现在能看到的可能有所出入。)</p>
 <p><img src="hexo-v.jpg"></p>
+<p>在控制台或bash命令行输入：<code>npm install</code>，指定文件夹目录下有：
+<img src="notesrecording.jpg" alt="notesrecording"></p>
+<blockquote>
+<p>node_modules: Hexo的依赖包，和插件</p>
+<p>public：存放生成的页面,这些index.html都是要上传到服务器端的</p>
+<p>scaffolds：生成文章的一些模板</p>
+<p>source：用来存放编辑好的文章</p>
+<p>source/_post：用来存放正式发布的文章</p>
+<p>themes：存放喜欢的主题，比如本文的 <a href="https://github.com/ppoffice/hexo-theme-icarus"><strong>icarus</strong></a></p>
+<p>_config.yml: Hexo博客的配置文件</p>
+</blockquote>
+<p>接着再运行：<code>hexo server</code>
+，等待几秒之后，通过按照提示在本地浏览器打开 http://localhost:4000/
+网址，即可预览初始化好的Hexo博客界面。</p>
+<h4 id="hexo配置以及主题修改">2.2 Hexo配置以及主题修改</h4>
 <ul>
-<li>????? <a href="https://github.com/ppoffice/hexo-theme-icarus"><strong>icarus</strong></a>
-???????????????????? ?????bash??????<code>npm install</code>
-????????????????</li>
+<li>修改为中文：如 : language: zh-CN</li>
+<li>修改Hexo的主题，可以从 <a href="https://hexo.io/themes/"><strong>官方主题</strong></a>
+处寻找并下载。然后放置在themes路径下并在_config.yml配置文件中设置：</li>
 </ul>
-<figure>
-<img src="notesrecording.jpg" alt="notesrecording">
-<figcaption aria-hidden="true">notesrecording</figcaption>
-</figure>
-<p>node_modules: Hexo???? public????????,??index.html???????????
-scaffolds?????????? source??????????? themes?????????????? <a href="https://github.com/ppoffice/hexo-theme-icarus"><strong>icarus</strong></a>
-_config.yml: Hexo??????? ??????<code>hexo server</code>
-???????????????????? http://localhost:4000/ ???????????Hexo?????</p>
-<h4 id="hexo-1">2.2 Hexo????????</h4>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-variable">theme</span>: <span class="hljs-function"><span class="hljs-title">icarus</span>(这里以<span class="hljs-variable">icarus</span>为例)</span><br></code></pre></td></tr></table></figure>
 <ul>
-<li>??????? ? language: zh-CN</li>
-<li>??Hexo??????? <a href="https://hexo.io/themes/"><strong>????</strong></a> ???????
-?????themes?????_config.yml???????? <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">theme:</span> icarus(???icarus??)<br></code></pre></td></tr></table></figure></li>
-<li>??Hexo??git ??
-  ??????Git???????????????????Hexo????????????????????
-?????hexo???git??????<code>npm install hexo-deployer-git --save</code>
-?_config.yml???????????????? <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-attribute">deploy</span>:<br>  <span class="hljs-attribute">type</span>: git    <br>  <span class="hljs-attribute">repo</span>: <span class="hljs-attribute">https</span>:<span class="hljs-comment">//github.com/yourGitName/yourGitName.github.io.git    </span><br>  <span class="hljs-attribute">branch</span>: master<br></code></pre></td></tr></table></figure>
-???????????bash???????<code>Hexo -g -d</code> ??????????</li>
-<li>??icarus???? ??<a href="https://blog.csdn.net/marvine/article/details/89816846">?????</a></li>
-<li>??????????????????Hexo?????????????????</li>
+<li>设置Hexo关联git
+仓库，设置好关联的Git账号之后，就可以将每次写好的博客以及对Hexo的配置进行保存，方便后续进行回顾和修改。需要先安装hexo关联的git，命令如下：<code>npm install hexo-deployer-git --save</code>，在_config.yml文件中找到如下对应的地方，并修改:</li>
 </ul>
-<ol type="1">
-<li>??Hexo??_config.yml??post_asset_folder???????false??true???<code>hexo new blog_title</code>????????????blog_title????????????blog??????</li>
-<li>????Hexo???<code>npm install hexo-asset-image --save</code> ????????
-???????????? ### 3?????????????????????? #### 3.1 ?????????? <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new <span class="hljs-string">"My New Post"</span><br></code></pre></td></tr></table></figure>
-   ??????????????My New
-Post.md??????????Hexo????????????????,???????????????????.md?????????
-???????????md???????????????????????Hexo?????????
-????????????????????????/scaffolds/post.md`????????md????????????????????????????????????</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">postName</span> <span class="hljs-comment">#????????????????</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020</span><span class="hljs-number">-02</span><span class="hljs-number">-28</span> <span class="hljs-number">23</span><span class="hljs-string">:38:32</span> <span class="hljs-comment">#??????</span><br><span class="hljs-attr">categories:</span> <span class="hljs-string">????</span> <span class="hljs-comment">#??</span><br><span class="hljs-attr">tags:</span> <span class="hljs-string">[tag1,tag2,tag3]</span> <span class="hljs-comment">#???????????????=</span><br><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CN</span><br><span class="hljs-attr">description:</span> <span class="hljs-string">??????????????140????????meta?description??</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
-<h4 id="section">3.2 ????</h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo server (hexo -s)<br></code></pre></td></tr></table></figure>
-<p>????????? http://localhost:4000/ , ??????????????????????????? ####
-3.3 ??Hexo?? <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo generate (hexo -g)<br></code></pre></td></tr></table></figure> #### 3.4 ????????? <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo deploy (hexo -d)<br></code></pre></td></tr></table></figure>
-?????gitname.github.io???????? ### 4????? +
-Hexo??deploy?generate???????????????????????????????????????
-????github??????????????????????????git????????????????????????????????????????????
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-attribute">deploy</span>:<br>    <span class="hljs-attribute">type</span>: git    <br>    <span class="hljs-attribute">repo</span>: <span class="hljs-attribute">https</span>:<span class="hljs-comment">//github.com/yourGitName/yourGitName.github.io.git    </span><br>    <span class="hljs-attribute">branch</span>: master<br></code></pre></td></tr></table></figure>
+<p>配置好之后在控制台或者bash命令行中输入：<code>Hexo -g -d</code>，按照新的修改生成博客。
++ 修改icarus配置文件，详见<a href="https://blog.csdn.net/marvine/article/details/89816846">飞鱼的博客</a>
 +
-??????MarkDown?????Hexo???????Hexo?????????????????????????????????????????????????Html????????????
-<code>&lt;!--more--&gt;</code>???????hexo???? +
-?generate?????????????<code>hexo clean</code>????????????????? +
-?????????(?12.16.1??????????)???????Nodejs???????repair?????</p>
+在写博客时难免会有一些图片需要添加，Hexo在添加本地图片时需要修改两个地方：</p>
+<blockquote>
+<p>找到Hexo下的_config.yml里的post_asset_folder，把这个选项从false改成true。
+安装一个Hexo的插件<code>npm install hexo-asset-image --save</code>
+即可。将图片放入这个文件夹，然后引用</p>
+</blockquote>
+<h3 id="环境配置好后就可以开始写博客啦">3、环境配置好后就可以开始写博客啦</h3>
+<h4 id="首先创建一个新的博客">3.1 首先创建一个新的博客</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new <span class="hljs-string">"My New Post"</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>本地文件夹中会出现一个名为“My New
+Post.md”的文档，如果在上述Hexo配置过程中开启了本地图片加载功能,则还会生成一个同名的文件夹，用来存放在.md文档中要上传的照片；</li>
+<li>另外使用命令还会自动在md文档中生成一些头文件，包含<strong>属性</strong>信息，如下，可以更好地帮助构建Hexo界面上的文档显示。
+新建文档时手动就该就行，自定义文件头的位置位于：/scaffolds/post.md`。如果是直接新建md文件，则只能手动拷贝一个合适的头文件到新建文档的最前面，就能正常显示了。</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">postName</span> <span class="hljs-comment">#文章页面上的显示名称，一般是中文</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020</span><span class="hljs-number">-02</span><span class="hljs-number">-28</span> <span class="hljs-number">23</span><span class="hljs-string">:38:32</span> <span class="hljs-comment">#文章生成时间</span><br><span class="hljs-attr">categories:</span> <span class="hljs-string">默认分类</span> <span class="hljs-comment">#分类</span><br><span class="hljs-attr">tags:</span> <span class="hljs-string">[tag1,tag2,tag3]</span> <span class="hljs-comment">#文章标签，可空，多标签请用格式=</span><br><span class="hljs-attr">description:</span> <span class="hljs-string">附加一段文章摘要，字数最好在140字以内，会出现在meta的description里面</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
+<h4 id="博客预览">3.2 博客预览</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo server (hexo -s)<br></code></pre></td></tr></table></figure>
+<p>通过在浏览器中打开 http://localhost:4000/ ,
+即可预览到刚刚创建好的博客内容，如有问题，可立马修改。</p>
+<h4 id="生成hexo文档">3.3 生成Hexo文档</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo generate (hexo -g)<br></code></pre></td></tr></table></figure>
+<h4 id="部署到远程服务器上">3.4 部署到远程服务器上</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo deploy (hexo -d)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>打开对应的gitname.github.io即可查看博客啦。</li>
+</ul>
+<h3 id="注意事项">4、注意事项</h3>
+<ul>
+<li>Hexo每次deploy，generate之后会加原来的文档资料全部覆盖掉，因此为了便于找回之前的内容，方便进行版本管理。建议使用github进行文档和操作同步，即在本地博客目录下同时初始化一个git仓库，每次更新完博客之后，随手进行仓库的同步更新，这样的话，将会极大地方便后续博客管理。<br>
+</li>
+<li>当你将写好的MarkDown文章推送到Hexo的时候，会发现Hexo默认显示了全部的文档内容，这对于博客内容比较多的人来说，显然是不合适的，因此有一个解决方案是：采用Html的语法，在合适的地方添加
+，当然也可以在hexo中设置<code>&lt;!--more--&gt;</code> 。</li>
+<li>在generate之前最好再清理一下本地缓存，以免由于缓存更新延迟造成“误会”，<code>hexo clean</code>
+。</li>
+<li>如果出现下面的问题(在12.16.1版本上出现的非常频繁)，那么需要找到Nodejs的安装包，点击repair才能解决。</li>
+</ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">internal/modules/cjs/loader.js:985<br>  throw err;<br>  ^<br><br>Error: Cannot find module <span class="hljs-string">'D:\SoftWare\Nodejs\node_modules\npm\bin\npm-cli.js'</span><br>    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:982:15)<br>    at Function.Module._load (internal/modules/cjs/loader.js:864:27)<br>    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:74:12)<br>    at internal/main/run_main_module.js:18:47 &#123;<br>  code: <span class="hljs-string">'MODULE_NOT_FOUND'</span>,<br>  requireStack: []<br>&#125;<br>internal/modules/cjs/loader.js:985<br>  throw err;<br>  ^<br><br>Error: Cannot find module <span class="hljs-string">'D:\SoftWare\Nodejs\node_modules\npm\bin\npm-cli.js'</span><br>[90m    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:982:15)[39m<br>[90m    at Function.Module._load (internal/modules/cjs/loader.js:864:27)[39m<br>[90m    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:74:12)[39m<br>[90m    at internal/main/run_main_module.js:18:47[39m &#123;<br>  code: [32m<span class="hljs-string">'MODULE_NOT_FOUND'</span>[39m,<br>  requireStack: []<br></code></pre></td></tr></table></figure>
-<h3 id="section-1">5?????</h3>
-<p>??????????????Typora????????hexo???????</p>
-<h4 id="markdown">Markdown?????</h4>
+<h3 id="问题记录">5、问题记录</h3>
+<p>我个人常用的工作流是本地用Typora写好博客，然后用hexo部署到网页端。</p>
+<h4 id="markdown冲突">5.1 Markdown冲突</h4>
 <ol type="1">
-<li>Typora????????????????<code>[TOC]</code>????hexo?????????????????.md???????<code>toc: true</code>????????hexo??????????????????????????????????????????????[TOC]????</li>
-<li>Typora??<span class="math inline">\(\LaTeX\)</span>?????????????????hexo??????????????????</li>
+<li>Typora在写博客时可以手动添加目录，使用<code>[TOC]</code>，为了在hexo发布的时候页面也能显示目录，需要在.md文件的头部添加<code>toc: true</code>的标注。但是经过hexo发布之后，目录无法显示，目前考虑是一个不兼容的问题。如果想在发布的时候自动显示就不要手动添加[TOC]标记了。</li>
+<li>Typora中的<span class="math inline">\(\LaTeX\)</span>代码公式渲染出来非常漂亮，但是经过hexo发布之后公式就出现了排版错误的情况。</li>
 </ol>
 <ul>
-<li>???$$?????????????????????????
-????hexo+icarus?????????????????????????????????????????????????????????????????????<span class="math inline">\(\LaTeX\)</span>????????????<code>npm uninstall</code>????math???????e.g.
-hexo-math?hexo-filter-mathjax????????<a href="https://github.com/ppoffice/hexo-theme-icarus/blob/master/package.json">hexo-theme-icarus</a>?????????dependencies?e.g.
-hexo-renderer-marked?hexo-renderer-stylus?hexo-renderer-inferno??<a href="https://github.com/jgm/pandoc/releases">pandoc</a>???????
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-renderer-marked --save <span class="hljs-comment"># ??icarus?????marked?????</span><br><span class="hljs-comment"># ????????????????hexo???????hexo-renderer-pandoc???</span><br>npm install hexo-renderer-pandoc --save <span class="hljs-comment"># latex???????????????pandoc??????????????????pandoc?</span><br><span class="hljs-comment"># ?????????</span><br>npm install hexo-renderer-ejs --save<br>npm install hexo-renderer-stylus --save<br>npm install hexo-renderer-inferno --save<br></code></pre></td></tr></table></figure></li>
-<li>????package.json???????????????dependencies???????????</li>
+<li>要么是$$符号无法识别，要么是渲染出来和本地渲染结果不一样。由于我的hexo+icarus的版本比较老了，目前一些比较新的解决方案均无法实现，找了好久，试了很多都不行，最后找到一个适用于我的解决方案：主要问题应该就是渲染的问题，<span class="math inline">\(\LaTeX\)</span>代码写的应该没问题。首先<code>npm uninstall</code>卸载掉和math相关的所有库，e.g.
+hexo-math、hexo-filter-mathjax等，然后和官方的<a href="https://github.com/ppoffice/hexo-theme-icarus/blob/master/package.json">hexo-theme-icarus</a>比较，看看少了哪些dependencies，e.g.
+hexo-renderer-marked、hexo-renderer-stylus、hexo-renderer-inferno等。<a href="https://github.com/jgm/pandoc/releases">pandoc</a>需要独立安装。</li>
 </ul>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs Json">&#123;<br>  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"hexo-related"</span>,<br>  <span class="hljs-attr">"version"</span>: <span class="hljs-string">"1.0.0"</span>,<br>  <span class="hljs-attr">"description"</span>: <span class="hljs-string">""</span>,<br>  <span class="hljs-attr">"main"</span>: <span class="hljs-string">"index.js"</span>,<br>  <span class="hljs-attr">"dependencies"</span>: &#123;<br>    <span class="hljs-attr">"hexo-renderer-ejs"</span>: <span class="hljs-string">"^2.0.0"</span>,<br>    <span class="hljs-attr">"hexo-renderer-inferno"</span>: <span class="hljs-string">"^0.1.3"</span>,<br>    <span class="hljs-attr">"hexo-renderer-marked"</span>: <span class="hljs-string">"^6.0.0"</span>,<br>    <span class="hljs-attr">"hexo-renderer-pandoc"</span>: <span class="hljs-string">"^0.3.1"</span>,<br>    <span class="hljs-attr">"hexo-renderer-stylus"</span>: <span class="hljs-string">"^2.1.0"</span><br>  &#125;,<br>  <span class="hljs-attr">"devDependencies"</span>: &#123;&#125;,<br>  <span class="hljs-attr">"scripts"</span>: &#123;<br>    <span class="hljs-attr">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span><br>  &#125;,<br>  <span class="hljs-attr">"author"</span>: <span class="hljs-string">""</span>,<br>  <span class="hljs-attr">"license"</span>: <span class="hljs-string">"ISC"</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-renderer-marked --save <span class="hljs-comment"># 原来icarus就是使用的marked作为渲染的</span><br><span class="hljs-comment"># 上面的可以不用卸载，卸载了会发现hexo也没了，直接装hexo-renderer-pandoc就行。</span><br>npm install hexo-renderer-pandoc --save <span class="hljs-comment"># latex公式渲染之后，变得很奇怪，使用pandoc之后就和本地的一样了。但是得先装一个pandoc。</span><br><span class="hljs-comment"># 下面的会自动安装上</span><br>npm install hexo-renderer-ejs --save<br>npm install hexo-renderer-stylus --save<br>npm install hexo-renderer-inferno --save<br></code></pre></td></tr></table></figure>
+<ul>
+<li>最后得到package.json如下：（让然也可能有一些没用的dependencies）吓得我赶紧保存下来。</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs Json">&#123;<br>    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"hexo-related"</span>,<br>    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"1.0.0"</span>,<br>    <span class="hljs-attr">"description"</span>: <span class="hljs-string">""</span>,<br>    <span class="hljs-attr">"main"</span>: <span class="hljs-string">"index.js"</span>,<br>    <span class="hljs-attr">"dependencies"</span>: &#123;<br>        <span class="hljs-attr">"hexo-renderer-ejs"</span>: <span class="hljs-string">"^2.0.0"</span>,<br>        <span class="hljs-attr">"hexo-renderer-inferno"</span>: <span class="hljs-string">"^0.1.3"</span>,<br>        <span class="hljs-attr">"hexo-renderer-marked"</span>: <span class="hljs-string">"^6.0.0"</span>,<br>        <span class="hljs-attr">"hexo-renderer-pandoc"</span>: <span class="hljs-string">"^0.3.1"</span>,<br>        <span class="hljs-attr">"hexo-renderer-stylus"</span>: <span class="hljs-string">"^2.1.0"</span><br>    &#125;,<br>    <span class="hljs-attr">"devDependencies"</span>: &#123;&#125;,<br>        <span class="hljs-attr">"scripts"</span>: &#123;<br>        <span class="hljs-attr">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span><br>    &#125;,<br>    <span class="hljs-attr">"author"</span>: <span class="hljs-string">""</span>,<br>    <span class="hljs-attr">"license"</span>: <span class="hljs-string">"ISC"</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ol start="3" type="1">
-<li>Typora???markdown????????????????hexo???????????
-???hexo??????icarus??????????<a href="https://github.com/ppoffice/hexo-theme-icarus/issues/572#issuecomment-565253447">??hexo-renderer-markdown-it</a>???????????????????<code>hexo-footnotes</code>?????????????????????
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-renderer-markdown-it --save <span class="hljs-comment">#??</span><br>npm install hexo-footnotes --save <span class="hljs-comment">#??</span><br></code></pre></td></tr></table></figure></li>
+<li>Typora中使用markdown的语法进行脚注标记是正常的，但是hexo发布之后无法正常渲染。这个是hexo的问题，不是icarus主题的问题，有人曾说<a href="https://github.com/ppoffice/hexo-theme-icarus/issues/572#issuecomment-565253447">换用hexo-renderer-markdown-it</a>可以解决，但是我尝试了，没用。但其实有用的是hexo-footnotes这个插件。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-renderer-markdown-it --save <span class="hljs-comment">#没用</span><br>npm install hexo-footnotes --save <span class="hljs-comment">#有用</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>一些关于markdown-it的<a href="https://blog.bugimg.com/works/hexo-renderer-markdown-it_and_plugins_config.html">插件解释</a>。一顿操作之后的package.json文件。依然没反应。hexo-footnotes已经不再维护了。</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"hexo-related"</span>,<br>    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"1.0.0"</span>,<br>    <span class="hljs-attr">"description"</span>: <span class="hljs-string">""</span>,<br>    <span class="hljs-attr">"main"</span>: <span class="hljs-string">"index.js"</span>,<br>    <span class="hljs-attr">"dependencies"</span>: &#123;<br>        <span class="hljs-attr">"hexo-renderer-ejs"</span>: <span class="hljs-string">"^2.0.0"</span>,<br>        <span class="hljs-attr">"hexo-renderer-inferno"</span>: <span class="hljs-string">"^0.1.3"</span>,<br>        <span class="hljs-attr">"hexo-renderer-markdown-it"</span>: <span class="hljs-string">"^6.1.0"</span>,<br>        <span class="hljs-attr">"hexo-renderer-pandoc"</span>: <span class="hljs-string">"^0.3.1"</span>,<br>        <span class="hljs-attr">"hexo-renderer-stylus"</span>: <span class="hljs-string">"^2.1.0"</span>,<br>        <span class="hljs-attr">"markdown-it-cjk-breaks"</span>: <span class="hljs-string">"^1.1.3"</span>,<br>        <span class="hljs-attr">"markdown-it-footnote"</span>: <span class="hljs-string">"^3.0.3"</span>,<br>        <span class="hljs-attr">"markdown-it-task-lists"</span>: <span class="hljs-string">"^2.1.1"</span><br>    &#125;,<br>    <span class="hljs-attr">"devDependencies"</span>: &#123;&#125;,<br>        <span class="hljs-attr">"scripts"</span>: &#123;<br>        <span class="hljs-attr">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span><br>    &#125;,<br>    <span class="hljs-attr">"author"</span>: <span class="hljs-string">""</span>,<br>    <span class="hljs-attr">"license"</span>: <span class="hljs-string">"ISC"</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li>Typora中插入公式、图表等markdown语法都没什么问题，但是hexo部署完之后就发现各种缩进问题，可能是因为空行导致的，因此如果发现有缩进错误，就尝试增加一个空行，可以解决问题。</li>
+</ol>
+<h4 id="图片渲染不兼容">5.2 图片渲染不兼容</h4>
+<h5 id="问题">问题</h5>
+<p>本地Typora写的博客，使用到hexo部署之后，其中的图片不能正确的显示。</p>
+<p>Typora中使用<code>![image name](image relative path)</code>或者是使用html的语法<code>&lt;div align=center&gt;&lt;img src="image relative path" width="100%" height="100%"&gt;&lt;/div&gt;</code>都可以加载图片，其中使用后者的原因是可以控制图片的位置和大小，排版出来比较美观。</p>
+<blockquote>
+<p>后来喜欢用github的图床实现图片保存，但是后面发现图片数量增加时，图片保存的时候，名字不好取，而且非常不好管理，容易出现冲突，因此后面是否继续使用，打个问号。</p>
+</blockquote>
+<p>但是hexo部署之后，网页端就打不开了，本地预览也不行。</p>
+<blockquote>
+<p>hexo部署带有图床链接的图片时，也会自动重新拷贝一份图像到新的文件夹下，并不会直接使用图床链接。图片依旧加载不出来。</p>
+</blockquote>
+<h5 id="分析原因">分析原因</h5>
+<p>使用的hexo-asset-image插件有问题（这个插件会给<a href="http://disq.us/p/2il5c89">添加的图片一个错误的前缀</a>，导致无法正确链接，只支持版本较低的hexo，e.g.
+3.0，而我使用的是4.2.+，目前hexo-asset-image这个库已经暂停维护了）。有<a href="https://github.com/yiyungent/hexo-asset-img">解决方案</a>称，应该使用这个插件hexo-asset-img，于是按照要求首先使用<code>npm uninstall hexo-asset-image</code>卸载之前的插件，然后使用<code>npm install hexo-asset-img</code>安装新的插件。但是发现图片依然加载失败，后面发现是在插入图片时，原先使用的都是添加了<code>./</code>最为前缀的，这里完全不需要，直接写文件夹名字加图片名，比如：<code>![](./Hexo初体验/Nodejs.png)</code>，按照正常的流程清空-生成-部署，之后图片就正常显示了。<strong>But</strong>，如果typora中使用html的方式引入图片，一开始的命令是<code>&lt;div align=center&gt;&lt;img src="./Bspline/viz_basis_function.svg" width="100%" height="100%"&gt;&lt;/div&gt;</code>但是这样只能在typora中看到，hexo部署之后就看不到了.使用<code>&lt;div align=center&gt;&lt;img src="viz_basis_function.svg" width="100%" height="100%"&gt;&lt;/div&gt;</code>之后，typora中看不到，但是hexo部署之后可以。对于排版有一定要求的我，并不满意这样的解决方案。</p>
+<h5 id="定位问题">定位问题</h5>
+<p>通过检查几种可能得解决方案后发现，主要是这些插件在生成图片链接的时候多多少少有点问题，问题如下所示。发现一个和我相同问题的<a href="https://zhuanlan.zhihu.com/p/645679541">老哥</a>， 尝试了
+一下，他的解决方案并不能解决我的问题，于是我开始小改了一下hexo-asset-image的代码。</p>
+<blockquote>
+<p>可以发现，使用旧的插件部署之后，图片链接变成了<code>http://localhost:4000/blogs/2023/03/06/B-Spline/viz_basis_function.svg</code>，</p>
+<p>而使用新的插件部署之后，在路径上自动添加了一个前缀<code>http://localhost:4000/blogs/2023/03/06/B-Spline/B-Spline/viz_basis_function.svg</code></p>
+</blockquote>
+<h5 id="解决方案">解决方案</h5>
+<p>可以重新仿照hexo-asset-image写一个插件，也可以直接hack掉他的源码，修改一下对应的路径。使用方法为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 重新用回不维护的插件</span><br>npm install hexo-asset-image<br></code></pre></td></tr></table></figure>
+<p>在_modules-asset-image找到index.js这个文件，将里面的东西换成下面的内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-meta">'use strict'</span>;<br><span class="hljs-keyword">var</span> cheerio = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cheerio'</span>);<br>     <br><span class="hljs-comment">// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPosition</span>(<span class="hljs-params">str, m, i</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> str.split(m, i).join(m).length;<br>&#125;<br>     <br><span class="hljs-keyword">var</span> version = <span class="hljs-built_in">String</span>(hexo.version).split(<span class="hljs-string">'.'</span>);<br>hexo.extend.filter.register(<span class="hljs-string">'after_post_render'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)</span>&#123;<br>  <span class="hljs-keyword">var</span> config = hexo.config;<br>  <span class="hljs-keyword">if</span>(config.post_asset_folder)&#123;<br>       <span class="hljs-keyword">var</span> link = data.permalink;<br>   <span class="hljs-keyword">if</span>(version.length &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">Number</span>(version[<span class="hljs-number">0</span>]) == <span class="hljs-number">3</span>)<br>      <span class="hljs-keyword">var</span> beginPos = getPosition(link, <span class="hljs-string">'/'</span>, <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>;<br>   <span class="hljs-keyword">else</span><br>      <span class="hljs-keyword">var</span> beginPos = getPosition(link, <span class="hljs-string">'/'</span>, <span class="hljs-number">3</span>) + <span class="hljs-number">1</span>;<br>   <span class="hljs-comment">// In hexo 3.1.1, the permalink of "about" page is like ".../about/index.html".</span><br>   <span class="hljs-keyword">var</span> endPos = link.lastIndexOf(<span class="hljs-string">'/'</span>) + <span class="hljs-number">1</span>;<br>    link = link.substring(beginPos, endPos);<br>     <br>    <span class="hljs-keyword">var</span> toprocess = [<span class="hljs-string">'excerpt'</span>, <span class="hljs-string">'more'</span>, <span class="hljs-string">'content'</span>];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; toprocess.length; i++)&#123;<br>      <span class="hljs-keyword">var</span> key = toprocess[i];<br>      <br>      <span class="hljs-keyword">var</span> $ = cheerio.load(data[key], &#123;<br>        ignoreWhitespace: <span class="hljs-literal">false</span>,<br>        xmlMode: <span class="hljs-literal">false</span>,<br>        lowerCaseTags: <span class="hljs-literal">false</span>,<br>        decodeEntities: <span class="hljs-literal">false</span><br>      &#125;);<br>     <br>      $(<span class="hljs-string">'img'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;<br>       <span class="hljs-keyword">if</span> ($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>))&#123;<br>           <span class="hljs-comment">// For windows style path, we replace '\' to '/'.</span><br>           <span class="hljs-keyword">var</span> src = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>).replace(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>);<br>           <span class="hljs-keyword">if</span>(!<span class="hljs-regexp">/http[s]*.*|\/\/.*/</span>.test(src) &amp;&amp;<br>              !<span class="hljs-regexp">/^\s*\//</span>.test(src)) &#123;<br>             <span class="hljs-comment">// For "about" page, the first part of "src" can't be removed.</span><br>             <span class="hljs-comment">// In addition, to support multi-level local directory.</span><br>             <span class="hljs-keyword">var</span> linkArray = link.split(<span class="hljs-string">'/'</span>).filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">elem</span>)</span>&#123;<br>               <span class="hljs-keyword">return</span> elem != <span class="hljs-string">''</span>;<br>             &#125;);<br>             <span class="hljs-keyword">var</span> srcArray = src.split(<span class="hljs-string">'/'</span>).filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">elem</span>)</span>&#123;<br>               <span class="hljs-keyword">return</span> elem != <span class="hljs-string">''</span> &amp;&amp; elem != <span class="hljs-string">'.'</span>;<br>             &#125;);<br>             <span class="hljs-keyword">if</span>(srcArray.length &gt; <span class="hljs-number">1</span>)<br>               srcArray.shift();<br>             src = srcArray.join(<span class="hljs-string">'/'</span>);<br>             $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>, src);<br>             <span class="hljs-comment">//$(this).attr('src', config.root + link + src);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+link);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+src);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root + link + src);</span><br>             <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"update link as:--&gt;"</span> + link + src);<br>           &#125;<br>       &#125;<span class="hljs-keyword">else</span>&#123;<br>           <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"no src attr, skipped..."</span>);<br>           <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info($(<span class="hljs-keyword">this</span>));<br>       &#125;<br>      &#125;);<br>      data[key] = $.html();<br>    &#125;<br>  &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>特别是第50行左右的地方：注释掉的就是之前的出问题的地方。（其他问题可同理解决。）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>, src);<br><span class="hljs-comment">//$(this).attr('src', config.root + link + src);// 产生问题的地方</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+link);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+src);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root + link + src); // 产生问题的地方</span><br><span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"update link as:--&gt;"</span> + link + src);<br></code></pre></td></tr></table></figure>
+<p>But，突然发现这样之后再Hexo本地预览的时候，没法正常显示照片，就想着能否不用Html来居中图像，就发现了<a href="https://github.com/ppoffice/hexo-theme-icarus/issues/386">魔改icarus的模板</a>的方案，需要在icarus的主体路径下.styl文件，在187行附近添加如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js">.article<br>    .article-meta<br>        margin-bottom: <span class="hljs-number">0.5</span>rem !important<br>    .content<br>        font-size: <span class="hljs-number">1.1</span>rem<br>        blockquote.pullquote<br>            float: right<br>            max-width: <span class="hljs-number">50</span>%<br>            font-size: <span class="hljs-number">1.15</span>rem<br>            position: relative<br>        a<br>            word-wrap: <span class="hljs-keyword">break</span>-word<br>            img # 图像居中<br>                margin: auto # 图像居中<br>                display: block # 图像居中<br></code></pre></td></tr></table></figure>
+<p>然后icarus默认的设置全部图像都自动居中刻，一些简单的图片不需要html也可以实现居中，复杂彩涉及到html语言了。</p>
+<h4 id="其他">5.3 其他</h4>
+<ol type="1">
+<li>hexo中设置<strong>related_posts</strong>似乎在生成时有问题，但是不影响部署。（没解决，代码应该没什么问题）</li>
+<li>每个博客添加一个缩略图（和文章题目一起显示的那个）。在每个md文档的前面，有一一些属性可以设置。其中：</li>
+</ol>
+<blockquote>
+<p>当只设置 banner 时，文章的缩略图 和 banner 将都是 banner
+所设置的图片； 当只设置 thumbnail 时， 文章只有缩略图，无banner；
+当同时设置 banner 和 thumbnail 时，banner 为 banner图，thumbnail
+为缩略图， 两者各自生效；</p>
+</blockquote>
+<p>例如这里就是：<code>banner:/blogs/(article_year)/(article_month)/(article_day)/(article_name)/xxx.png</code></p>
+<ol start="3" type="1">
+<li>站内搜索，而不是直接联网搜索。</li>
 </ol>
 <ul>
-<li>????markdown-it?<a href="https://blog.bugimg.com/works/hexo-renderer-markdown-it_and_plugins_config.html">????</a>????????package.json?????????hexo-footnotes????????</li>
+<li><p>首先在主题的_config.yaml文件中找到search，设置<code>use: local</code>，icarus主题大约位于73行左右。</p></li>
+<li><p>然后在博客的_config.yaml文件中添加如下，文件结尾处即可：</p></li>
 </ul>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"hexo-related"</span>,<br>  <span class="hljs-attr">"version"</span>: <span class="hljs-string">"1.0.0"</span>,<br>  <span class="hljs-attr">"description"</span>: <span class="hljs-string">""</span>,<br>  <span class="hljs-attr">"main"</span>: <span class="hljs-string">"index.js"</span>,<br>  <span class="hljs-attr">"dependencies"</span>: &#123;<br>    <span class="hljs-attr">"hexo-renderer-ejs"</span>: <span class="hljs-string">"^2.0.0"</span>,<br>    <span class="hljs-attr">"hexo-renderer-inferno"</span>: <span class="hljs-string">"^0.1.3"</span>,<br>    <span class="hljs-attr">"hexo-renderer-markdown-it"</span>: <span class="hljs-string">"^6.1.0"</span>,<br>    <span class="hljs-attr">"hexo-renderer-pandoc"</span>: <span class="hljs-string">"^0.3.1"</span>,<br>    <span class="hljs-attr">"hexo-renderer-stylus"</span>: <span class="hljs-string">"^2.1.0"</span>,<br>    <span class="hljs-attr">"markdown-it-cjk-breaks"</span>: <span class="hljs-string">"^1.1.3"</span>,<br>    <span class="hljs-attr">"markdown-it-footnote"</span>: <span class="hljs-string">"^3.0.3"</span>,<br>    <span class="hljs-attr">"markdown-it-task-lists"</span>: <span class="hljs-string">"^2.1.1"</span><br>  &#125;,<br>  <span class="hljs-attr">"devDependencies"</span>: &#123;&#125;,<br>  <span class="hljs-attr">"scripts"</span>: &#123;<br>    <span class="hljs-attr">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span><br>  &#125;,<br>  <span class="hljs-attr">"author"</span>: <span class="hljs-string">""</span>,<br>  <span class="hljs-attr">"license"</span>: <span class="hljs-string">"ISC"</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="section-2">???????</h4>
-<h5 id="section-3">??</h5>
-<p>??Typora????????hexo??????????????????</p>
-<p>Typora???<code>![image name](image relative path)</code>?????html???<code>&lt;div align=center&gt;&lt;img src="image relative path" width="100%" height="100%"&gt;&lt;/div&gt;</code>????????????????????????????????????????</p>
-<blockquote>
-<p>?????github??????????????????????????????????????????????????????????????????????</p>
-</blockquote>
-<p>??hexo??????????????????????</p>
-<blockquote>
-<p>hexo???????????????????????????????????????????????????????</p>
-</blockquote>
-<h5 id="section-4">?????</h5>
-<p>???hexo-asset-image????????????<a href="http://disq.us/p/2il5c89">????????????</a>??????????????????hexo?e.g.
-3.0???????4.2.+???hexo-asset-image?????????????<a href="https://github.com/yiyungent/hexo-asset-img">????</a>??????????hexo-asset-img???????????<code>npm uninstall hexo-asset-image</code>????????????<code>npm install hexo-asset-img</code>??????????????????????????????????????????<code>./</code>??????????????????????????????<code>![](./Hexo???/Nodejs.png)</code>??????????-??-??????????????<strong>But</strong>???typora???html???????????????<code>&lt;div align=center&gt;&lt;img src="./Bspline/viz_basis_function.svg" width="100%" height="100%"&gt;&lt;/div&gt;</code>???????typora????hexo?????????.??<code>&lt;div align=center&gt;&lt;img src="viz_basis_function.svg" width="100%" height="100%"&gt;&lt;/div&gt;</code>???typora???????hexo???????????????????????????????</p>
-<h5 id="section-5">????</h5>
-<p>?????????????????????????????????????????????????????????????<a href="https://zhuanlan.zhihu.com/p/645679541">??</a>? ???
-?????????????????????????????hexo-asset-image????</p>
-<blockquote>
-<p>???????????????????????<code>http://localhost:4000/blogs/2023/03/06/B-Spline/viz_basis_function.svg</code>?</p>
-<p>?????????????????????????<code>http://localhost:4000/blogs/2023/03/06/B-Spline/B-Spline/viz_basis_function.svg</code></p>
-</blockquote>
-<h5 id="section-6">????</h5>
-<p>??????hexo-asset-image???????????hack??????????????????????</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># ??????????</span><br>npm install hexo-asset-image<br></code></pre></td></tr></table></figure>
-<p>?_modules-asset-image??index.js???????????????????</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-meta">'use strict'</span>;<br><span class="hljs-keyword">var</span> cheerio = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cheerio'</span>);<br>     <br><span class="hljs-comment">// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPosition</span>(<span class="hljs-params">str, m, i</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> str.split(m, i).join(m).length;<br>&#125;<br>     <br><span class="hljs-keyword">var</span> version = <span class="hljs-built_in">String</span>(hexo.version).split(<span class="hljs-string">'.'</span>);<br>hexo.extend.filter.register(<span class="hljs-string">'after_post_render'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)</span>&#123;<br>  <span class="hljs-keyword">var</span> config = hexo.config;<br>  <span class="hljs-keyword">if</span>(config.post_asset_folder)&#123;<br>       <span class="hljs-keyword">var</span> link = data.permalink;<br>   <span class="hljs-keyword">if</span>(version.length &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">Number</span>(version[<span class="hljs-number">0</span>]) == <span class="hljs-number">3</span>)<br>      <span class="hljs-keyword">var</span> beginPos = getPosition(link, <span class="hljs-string">'/'</span>, <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>;<br>   <span class="hljs-keyword">else</span><br>      <span class="hljs-keyword">var</span> beginPos = getPosition(link, <span class="hljs-string">'/'</span>, <span class="hljs-number">3</span>) + <span class="hljs-number">1</span>;<br>   <span class="hljs-comment">// In hexo 3.1.1, the permalink of "about" page is like ".../about/index.html".</span><br>   <span class="hljs-keyword">var</span> endPos = link.lastIndexOf(<span class="hljs-string">'/'</span>) + <span class="hljs-number">1</span>;<br>    link = link.substring(beginPos, endPos);<br>     <br>    <span class="hljs-keyword">var</span> toprocess = [<span class="hljs-string">'excerpt'</span>, <span class="hljs-string">'more'</span>, <span class="hljs-string">'content'</span>];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; toprocess.length; i++)&#123;<br>      <span class="hljs-keyword">var</span> key = toprocess[i];<br>      <br>      <span class="hljs-keyword">var</span> $ = cheerio.load(data[key], &#123;<br>        ignoreWhitespace: <span class="hljs-literal">false</span>,<br>        xmlMode: <span class="hljs-literal">false</span>,<br>        lowerCaseTags: <span class="hljs-literal">false</span>,<br>        decodeEntities: <span class="hljs-literal">false</span><br>      &#125;);<br>     <br>      $(<span class="hljs-string">'img'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;<br>       <span class="hljs-keyword">if</span> ($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>))&#123;<br>           <span class="hljs-comment">// For windows style path, we replace '\' to '/'.</span><br>           <span class="hljs-keyword">var</span> src = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>).replace(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>);<br>           <span class="hljs-keyword">if</span>(!<span class="hljs-regexp">/http[s]*.*|\/\/.*/</span>.test(src) &amp;&amp;<br>              !<span class="hljs-regexp">/^\s*\//</span>.test(src)) &#123;<br>             <span class="hljs-comment">// For "about" page, the first part of "src" can't be removed.</span><br>             <span class="hljs-comment">// In addition, to support multi-level local directory.</span><br>             <span class="hljs-keyword">var</span> linkArray = link.split(<span class="hljs-string">'/'</span>).filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">elem</span>)</span>&#123;<br>               <span class="hljs-keyword">return</span> elem != <span class="hljs-string">''</span>;<br>             &#125;);<br>             <span class="hljs-keyword">var</span> srcArray = src.split(<span class="hljs-string">'/'</span>).filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">elem</span>)</span>&#123;<br>               <span class="hljs-keyword">return</span> elem != <span class="hljs-string">''</span> &amp;&amp; elem != <span class="hljs-string">'.'</span>;<br>             &#125;);<br>             <span class="hljs-keyword">if</span>(srcArray.length &gt; <span class="hljs-number">1</span>)<br>               srcArray.shift();<br>             src = srcArray.join(<span class="hljs-string">'/'</span>);<br>             $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>, src);<br>             <span class="hljs-comment">//$(this).attr('src', config.root + link + src);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+link);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+src);</span><br>             <span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root + link + src);</span><br>             <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"update link as:--&gt;"</span> + link + src);<br>           &#125;<br>       &#125;<span class="hljs-keyword">else</span>&#123;<br>           <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"no src attr, skipped..."</span>);<br>           <span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info($(<span class="hljs-keyword">this</span>));<br>       &#125;<br>      &#125;);<br>      data[key] = $.html();<br>    &#125;<br>  &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
-<p>????50???????????????????????????????????</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>, src);<br><span class="hljs-comment">//$(this).attr('src', config.root + link + src);// ???????</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+link);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+src);</span><br><span class="hljs-comment">//console.info&amp;&amp;console.info("update link as:--&gt;"+config.root + link + src); // ???????</span><br><span class="hljs-built_in">console</span>.info&amp;&amp;<span class="hljs-built_in">console</span>.info(<span class="hljs-string">"update link as:--&gt;"</span> + link + src);<br></code></pre></td></tr></table></figure>
-<h4 id="section-7">??</h4>
-<p>??????????Typora????????????????????????????????????...??</p>
-<p>?????????markdown????hexo?????????????????<a href="https://github.com/ppoffice/hexo-theme-icarus/issues/386">????</a>????????????style.styl?175??????????????????????????????????????html??????????????????????html????????</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs style">.article<br>    .article-meta<br>        margin-bottom: 0.5rem !important<br>    .content<br>        font-size: 1.1rem<br>        blockquote.pullquote<br>            float: right<br>            max-width: 50%<br>            font-size: 1.15rem<br>            position: relative<br>        a<br>            word-wrap: break-word<br>            img #??<br>                margin: auto #??<br>                display: block #??<br></code></pre></td></tr></table></figure>
-<h4 id="section-8">????</h4>
-<ul>
-<li>hexo???<strong>related_posts</strong>?????????????????????????????????????????????????</li>
-<li>????????????</li>
-</ul>
-<h4 id="section-9">??????</h4>
-<p>????????????????????</p>
-<p>????????????npm?pandoc??????????????????????????????????????git???????</p>
-<h3 id="section-10">????</h3>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># search inside blogs</span><br><span class="hljs-attr">search:</span><br>  <span class="hljs-attr">path:</span> <span class="hljs-string">search.xml</span><br>  <span class="hljs-attr">field:</span> <span class="hljs-string">all</span><br></code></pre></td></tr></table></figure>
+<h4 id="换台工作电脑">5.4 换台工作电脑</h4>
+<p>工作一台，家里一台，随时想写博客怎么办？只需要按照前面的步骤安装npm，pandoc，同步修改对应的插件，把日志克隆下来，开始写，写完部署，然后把本地的仓库使用git同步更新即可。</p>
+<h3 id="参考博客">6、参考博客</h3>
 <ol type="1">
-<li><p><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">????</a></p></li>
-<li><p><a href="https://blog.csdn.net/sinat_37781304/article/details/82729029">fangzh?????</a></p></li>
-<li><p><a href="https://godweiyang.com/2018/04/13/hexo-blog/">?????</a></p></li>
-<li><p><a href="https://annewqx.top/posts/65512/?nsukey=Ky9s%2BVwfoeIxBfNyS7TyLGKo9BSPWmG6AcQbnEXL9BKoN4AKFRf84H5Xc%2FwkRFTUp6m9SC80E5J2F4MCLvtqRpVFM37o0K1pYKV4pxKWvtT5AeqIbzUZcf5V4qiu58kzzz6PNTha2oG8w2EMgAMhXGEQTNAri4fGuaDM1KLMFQMtpljAfJ0m2uaL2P8ZNNDhLcmSl1SwyAP7RmTi2imwlg%3D%3D#??">ICARUS??</a></p></li>
-<li><p>hexo-asset-image???<a href="https://blog.csdn.net/qq_42009500/article/details/118788129">??????1????</a></p></li>
-<li><p>hexo-asset-image???<a href="https://github.com/iotctech/hexo-asset-image">??????2????</a></p></li>
+<li><a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html">小茗同学</a><br>
+</li>
+<li><a href="https://blog.csdn.net/sinat_37781304/article/details/82729029">fangzh的个人博客</a></li>
+<li><a href="https://godweiyang.com/2018/04/13/hexo-blog/">韦阳的博客</a></li>
+<li><a href="https://annewqx.top/posts/65512/?nsukey=Ky9s%2BVwfoeIxBfNyS7TyLGKo9BSPWmG6AcQbnEXL9BKoN4AKFRf84H5Xc%2FwkRFTUp6m9SC80E5J2F4MCLvtqRpVFM37o0K1pYKV4pxKWvtT5AeqIbzUZcf5V4qiu58kzzz6PNTha2oG8w2EMgAMhXGEQTNAri4fGuaDM1KLMFQMtpljAfJ0m2uaL2P8ZNNDhLcmSl1SwyAP7RmTi2imwlg%3D%3D#功能">ICARUS美化</a></li>
+<li>图片渲染不兼容的<a href="https://blog.csdn.net/qq_42009500/article/details/118788129">可能解决方案1：改源码</a></li>
+<li>图片渲染不兼容的<a href="https://github.com/iotctech/hexo-asset-image">可能解决方案2：改源码</a></li>
+<li>站内搜索源于<a href="http://tanglab.pku.edu.cn/2022/11/24/R&amp;D/2022/GitHub_pages_tutorial_sequel/">这里</a></li>
+<li></li>
 </ol>
 
         </div>
@@ -335,10 +371,10 @@ hexo-renderer-marked?hexo-renderer-stylus?hexo-renderer-inferno??<a href="https:
 
     <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
     <div class="has-text-grey is-size-7 is-block">
-    <p><span>title:</span><a href="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">Hexo???</a></p>
+    <p><span>title:</span><a href="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">Hexo初体验</a></p>
     <p><span>author:</span><a href="/">AmazingHao</a></p>
     <p>
-        <span>link:</span><a href="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/" title="Hexo??? - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/</a>
+        <span>link:</span><a href="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/" title="Hexo初体验 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/</a>
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2020-02-22</p>
@@ -346,7 +382,7 @@ hexo-renderer-marked?hexo-renderer-stylus?hexo-renderer-inferno??<a href="https:
     </div>
 </div>
 <!-- <ul class="post-copyright">
-    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">Hexo???</a></li>
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">Hexo初体验</a></li>
      <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
     <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/</a></li>
     <li><strong>发布时间：</strong>2020-02-22</li>
@@ -464,7 +500,7 @@ hexo-renderer-marked?hexo-renderer-stylus?hexo-renderer-inferno??<a href="https:
                     </p>
                     <a href="/blogs/categories">
                         <p class="title has-text-weight-normal">
-                            8
+                            7
                         </p>
                     </a>
                 </div>
@@ -527,14 +563,6 @@ hexo-renderer-marked?hexo-renderer-stylus?hexo-renderer-inferno??<a href="https:
             </h3>
             <ul class="menu-list">
             <li>
-        <a class="level is-marginless" href="/blogs/categories/">
-            <span class="level-start">
-                <span class="level-item">????</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/MathUtilities/">
             <span class="level-start">
                 <span class="level-item">MathUtilities</span>
@@ -556,7 +584,7 @@ hexo-renderer-marked?hexo-renderer-stylus?hexo-renderer-inferno??<a href="https:
                 <span class="level-item">写作工具</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
@@ -625,61 +653,85 @@ hexo-renderer-marked?hexo-renderer-stylus?hexo-renderer-inferno??<a href="https:
                     目录
                 </h3>
                 <ul class="menu-list"><li>
-        <a class="is-flex" href="#hexo">
+        <a class="is-flex" href="#node.js-安装">
         <span class="has-mr-6">1</span>
-        <span>2?Hexo??</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#hexo-1">
-        <span class="has-mr-6">1.1</span>
-        <span>2.2 Hexo????????</span>
+        <span>1、Node.js 安装</span>
         </a></li><li>
-        <a class="is-flex" href="#section">
-        <span class="has-mr-6">1.2</span>
-        <span>3.2 ????</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#section-1">
+        <a class="is-flex" href="#hexo安装">
         <span class="has-mr-6">2</span>
-        <span>5?????</span>
+        <span>2、Hexo安装</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#markdown">
+        <a class="is-flex" href="#hexo初始化">
         <span class="has-mr-6">2.1</span>
-        <span>Markdown?????</span>
+        <span>2.1 Hexo初始化</span>
         </a></li><li>
-        <a class="is-flex" href="#section-2">
+        <a class="is-flex" href="#hexo配置以及主题修改">
         <span class="has-mr-6">2.2</span>
-        <span>???????</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#section-3">
-        <span class="has-mr-6">2.2.1</span>
-        <span>??</span>
-        </a></li><li>
-        <a class="is-flex" href="#section-4">
-        <span class="has-mr-6">2.2.2</span>
-        <span>?????</span>
-        </a></li><li>
-        <a class="is-flex" href="#section-5">
-        <span class="has-mr-6">2.2.3</span>
-        <span>????</span>
-        </a></li><li>
-        <a class="is-flex" href="#section-6">
-        <span class="has-mr-6">2.2.4</span>
-        <span>????</span>
+        <span>2.2 Hexo配置以及主题修改</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#section-7">
-        <span class="has-mr-6">2.3</span>
-        <span>??</span>
-        </a></li><li>
-        <a class="is-flex" href="#section-8">
-        <span class="has-mr-6">2.4</span>
-        <span>????</span>
-        </a></li><li>
-        <a class="is-flex" href="#section-9">
-        <span class="has-mr-6">2.5</span>
-        <span>??????</span>
-        </a></li></ul></li><li>
-        <a class="is-flex" href="#section-10">
+        <a class="is-flex" href="#环境配置好后就可以开始写博客啦">
         <span class="has-mr-6">3</span>
-        <span>????</span>
+        <span>3、环境配置好后就可以开始写博客啦</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#首先创建一个新的博客">
+        <span class="has-mr-6">3.1</span>
+        <span>3.1 首先创建一个新的博客</span>
+        </a></li><li>
+        <a class="is-flex" href="#博客预览">
+        <span class="has-mr-6">3.2</span>
+        <span>3.2 博客预览</span>
+        </a></li><li>
+        <a class="is-flex" href="#生成hexo文档">
+        <span class="has-mr-6">3.3</span>
+        <span>3.3 生成Hexo文档</span>
+        </a></li><li>
+        <a class="is-flex" href="#部署到远程服务器上">
+        <span class="has-mr-6">3.4</span>
+        <span>3.4 部署到远程服务器上</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#注意事项">
+        <span class="has-mr-6">4</span>
+        <span>4、注意事项</span>
+        </a></li><li>
+        <a class="is-flex" href="#问题记录">
+        <span class="has-mr-6">5</span>
+        <span>5、问题记录</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#markdown冲突">
+        <span class="has-mr-6">5.1</span>
+        <span>5.1 Markdown冲突</span>
+        </a></li><li>
+        <a class="is-flex" href="#图片渲染不兼容">
+        <span class="has-mr-6">5.2</span>
+        <span>5.2 图片渲染不兼容</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#问题">
+        <span class="has-mr-6">5.2.1</span>
+        <span>问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#分析原因">
+        <span class="has-mr-6">5.2.2</span>
+        <span>分析原因</span>
+        </a></li><li>
+        <a class="is-flex" href="#定位问题">
+        <span class="has-mr-6">5.2.3</span>
+        <span>定位问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#解决方案">
+        <span class="has-mr-6">5.2.4</span>
+        <span>解决方案</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#其他">
+        <span class="has-mr-6">5.3</span>
+        <span>5.3 其他</span>
+        </a></li><li>
+        <a class="is-flex" href="#换台工作电脑">
+        <span class="has-mr-6">5.4</span>
+        <span>5.4 换台工作电脑</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#参考博客">
+        <span class="has-mr-6">6</span>
+        <span>6、参考博客</span>
         </a></li></ul>
             </div>
         </div>
@@ -1021,7 +1073,7 @@ hexo-renderer-marked?hexo-renderer-stylus?hexo-renderer-inferno??<a href="https:
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/blogs/">
                 
-                    <img src="/blogs/images/logo.svg" alt="Hexo???" height="28">
+                    <img src="/blogs/images/logo.svg" alt="Hexo初体验" height="28">
                 
                 </a>
                 <p class="is-size-7">
