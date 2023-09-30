@@ -153,6 +153,59 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 30 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/blogs/2023/09/30/MLS-position-inconsistency-correction/">MLS position inconsistency correction</a>
+            
+        </h1>
+        <div class="content">
+            <p>Supplementary video of paper "MuCoGraph: A Multi-scale Constraint
+Enhanced Pose Graph Framework for MLS Point Cloud Inconsistency
+Correction", Accepted by Journal of Photogrammetry and Remote Sensing
+SCI1-TOP, IF=12.7.</p>
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+<iframe src="//player.bilibili.com/player.html?aid=448787968&amp;bvid=BV1Lj411C7NV&amp;cid=1276019175&amp;p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" controls="controls" loop="loop">
+</iframe>
+</div>
+        </div>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2023-09-25T01:44:08.000Z">2023-09-25</time>
                 
                 <div class="level-item">
@@ -163,7 +216,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 511 个字)
+                    3 分钟 读完 (大约 512 个字)
                 </span>
                 
                 
@@ -186,67 +239,17 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install -y tmux<br></code></pre></td></tr></table></figure>
 <h3 id="使用">使用</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 新建一个后台终端</span><br>tmux new -t <span class="hljs-string">"session name"</span><br><span class="hljs-comment"># 附加在现存的终端上</span><br>tmux attach -t <span class="hljs-string">"session name"</span><br><span class="hljs-comment"># 列出所有的session</span><br>tmux ls<br><span class="hljs-comment"># 关闭session</span><br>tmux <span class="hljs-built_in">kill</span>-session -t <span class="hljs-string">"session name"</span><br></code></pre></td></tr></table></figure>
-<h3 id="其他快捷键">其他快捷键</h3>
-<table>
-<colgroup>
-<col style="width: 24%">
-<col style="width: 75%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>key</th>
-<th>what it does</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ctrl-b, %</td>
-<td>split the screen in half from left to right</td>
-</tr>
-<tr class="even">
-<td>ctrl-b, "</td>
-<td>split the screen in half from top to bottom</td>
-</tr>
-<tr class="odd">
-<td>ctrl-b, x</td>
-<td>kill the current pane</td>
-</tr>
-<tr class="even">
-<td>ctrl-b, <arrow key></arrow></td>
-<td>switch to the pane in whichever direction you press</td>
-</tr>
-<tr class="odd">
-<td>ctrl-b, d</td>
-<td>detach from tmux, leaving everything running in the background</td>
-</tr>
-</tbody>
-</table>
-<p>其他更多快捷键，参见<a href="https://gist.github.com/MohamedAlaa/2961058">github-tmux-cheatsheet</a>。</p>
-<h2 id="htop">Htop</h2>
-<ul>
-<li>相比top，<a href="https://htop.dev/">htop</a>可以看到更加丰富的CPU信息。</li>
-</ul>
-<h3 id="安装方法-1">安装方法</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install htop<br></code></pre></td></tr></table></figure>
-<h3 id="使用-1">使用</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">htop<br></code></pre></td></tr></table></figure>
-<p>示例图如下所示：</p>
-<p><img src="htop.jpg"></p>
-<h2 id="lm-sensors">lm-sensors</h2>
-<ul>
-<li>用于<a href="https://www.cyberciti.biz/faq/install-sensors-lm-sensors-on-ubuntu-debian-linux/">查看风扇温度</a>，
-比如新装了电脑如果CPU支持超频，那么打开CPU超频的话就会导致水冷风扇转速和降温效果达到最高，甚至有点异响。或者用于检查其他硬件是否有问题。</li>
-</ul>
-<h3 id="安装方法-2">安装方法</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install lm-sensors<br></code></pre></td></tr></table></figure>
-<h3 id="使用-2">使用</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sensors<br></code></pre></td></tr></table></figure>
-<p>就会得到如下的显示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">coretemp-isa-0000 <span class="hljs-comment"># CPU内核温度</span><br>Adapter: ISA adapter<br>Package id 0:  +47.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 0:        +32.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 1:        +33.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 2:        +33.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 3:        +35.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 4:        +31.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 5:        +47.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 6:        +34.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 7:        +33.0°C  (high = +100.0°C, crit = +100.0°C)<br><br>acpitz-acpi-0<br>Adapter: ACPI interface<br>temp1:        +27.8°C  (crit = +105.0°C)<br><br>iwlwifi_1-virtual-0 <span class="hljs-comment">#Intel WiFi温度数据</span><br>Adapter: Virtual device<br>temp1:        +40.0°C  <br><br>nvme-pci-0500 <span class="hljs-comment"># GPU温度</span><br>Adapter: PCI adapter<br>Composite:    +41.9°C  (low  = -273.1°C, high = +81.8°C)<br>                       (crit = +84.8°C)<br>Sensor 1:     +41.9°C  (low  = -273.1°C, high = +65261.8°C)<br>Sensor 2:     +47.9°C  (low  = -273.1°C, high = +65261.8°C)<br></code></pre></td></tr></table></figure>
-
         </div>
         
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2023/09/25/Linux-BoostUp/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -331,7 +334,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 1014 个字)
+                    6 分钟 读完 (大约 924 个字)
                 </span>
                 
                 
@@ -345,13 +348,14 @@
         </h1>
         <div class="content">
             <h3 id="目的">目的</h3>
-<p>​
-为了将KITTI360提供的鱼眼图像转换成360度的等距投影图像（全景图像）。数据集中提供两个鱼眼相机的图像，但是为了得到一个全景图像，一张一张的处理虽然可以，但是太费时间。因此借助FFMPEG来提升生产力。</p>
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+<iframe src="//player.bilibili.com/player.html?aid=448787968&amp;bvid=BV1Lj411C7NV&amp;cid=1276019175&amp;p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
+</iframe>
 <p>​ 单张图像的使用方法见下面的博客。</p>
 <ul>
 <li><p>鱼眼图像的说明见<a href="http://whu-lyh.github.io/blogs/2023/04/13/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/">这里</a>。</p></li>
 <li><p>FFMPEG的使用说明见<a href="http://whu-lyh.github.io/blogs/2020/02/29/%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F%E5%B0%8F%E6%8A%80%E5%B7%A7/">这里</a>。</p></li>
-</ul>
+</ul></div>
         </div>
         
         
@@ -464,81 +468,6 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="image is-7by1">
-            <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 251 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2023/04/17/NVIDIA-Driver-Installer/">Nvidia Driver Installation</a>
-            
-        </h1>
-        <div class="content">
-            <ol start="0" type="1">
-<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
-<li>下载对应驱动
-位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
-</ol>
-<ul>
-<li>tips: 检查cuda版本和显卡驱动的<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
-</ul>
-<ol start="2" type="1">
-<li>卸载之前的显卡驱动
-<code>sudo apt-get automove --purge nvidia-×</code></li>
-<li>给.run文件权限 <code>sudo chmod a+x xxx.run</code></li>
-<li>关闭图形界面 ctrl+alt+f1</li>
-<li>关闭lightdm服务 <code>sudo service lightdm stop</code></li>
-<li>安装驱动
-<code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
-<li>打开lightdm <code>sudo service lightdm start</code></li>
-<li>如果没反应，再试试 <code>sudo syetemctl start gdm.service</code> or
-<code>sudo syetemctl enable gdm.service</code></li>
-<li>打开图形化界面 <code>ctrl+alt+f7</code></li>
-<li>重启</li>
-<li>Ubuntu22.04似乎不用这么麻烦了，直接重装完之后就有显卡驱动了，试图卸载过，但是重装失败，还不如直接用预先安装好的。</li>
-</ol>
-
-        </div>
-        
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -610,7 +539,7 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            31
+                            32
                         </p>
                     </a>
                 </div>
@@ -698,7 +627,7 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
                 <span class="level-item">专业应用</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
@@ -765,6 +694,25 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                    <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -842,25 +790,6 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time></div>
-                    <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Nvidia Driver Installation</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -880,7 +809,7 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
                     <span class="level-item">九月 2023</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1024,6 +953,25 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
         
         <article class="media">
             
+            <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                    <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2023/09/25/Linux-BoostUp/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Linux BoostUp">
@@ -1098,25 +1046,6 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time></div>
-                    <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Nvidia Driver Installation</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1136,7 +1065,7 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
                     <span class="level-item">九月 2023</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>

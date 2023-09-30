@@ -173,7 +173,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 511 个字)
+                    3 分钟 读完 (大约 512 个字)
                 </span>
                 
                 
@@ -196,67 +196,17 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install -y tmux<br></code></pre></td></tr></table></figure>
 <h3 id="使用">使用</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 新建一个后台终端</span><br>tmux new -t <span class="hljs-string">"session name"</span><br><span class="hljs-comment"># 附加在现存的终端上</span><br>tmux attach -t <span class="hljs-string">"session name"</span><br><span class="hljs-comment"># 列出所有的session</span><br>tmux ls<br><span class="hljs-comment"># 关闭session</span><br>tmux <span class="hljs-built_in">kill</span>-session -t <span class="hljs-string">"session name"</span><br></code></pre></td></tr></table></figure>
-<h3 id="其他快捷键">其他快捷键</h3>
-<table>
-<colgroup>
-<col style="width: 24%">
-<col style="width: 75%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>key</th>
-<th>what it does</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ctrl-b, %</td>
-<td>split the screen in half from left to right</td>
-</tr>
-<tr class="even">
-<td>ctrl-b, "</td>
-<td>split the screen in half from top to bottom</td>
-</tr>
-<tr class="odd">
-<td>ctrl-b, x</td>
-<td>kill the current pane</td>
-</tr>
-<tr class="even">
-<td>ctrl-b, <arrow key></arrow></td>
-<td>switch to the pane in whichever direction you press</td>
-</tr>
-<tr class="odd">
-<td>ctrl-b, d</td>
-<td>detach from tmux, leaving everything running in the background</td>
-</tr>
-</tbody>
-</table>
-<p>其他更多快捷键，参见<a href="https://gist.github.com/MohamedAlaa/2961058">github-tmux-cheatsheet</a>。</p>
-<h2 id="htop">Htop</h2>
-<ul>
-<li>相比top，<a href="https://htop.dev/">htop</a>可以看到更加丰富的CPU信息。</li>
-</ul>
-<h3 id="安装方法-1">安装方法</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install htop<br></code></pre></td></tr></table></figure>
-<h3 id="使用-1">使用</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">htop<br></code></pre></td></tr></table></figure>
-<p>示例图如下所示：</p>
-<p><img src="htop.jpg"></p>
-<h2 id="lm-sensors">lm-sensors</h2>
-<ul>
-<li>用于<a href="https://www.cyberciti.biz/faq/install-sensors-lm-sensors-on-ubuntu-debian-linux/">查看风扇温度</a>，
-比如新装了电脑如果CPU支持超频，那么打开CPU超频的话就会导致水冷风扇转速和降温效果达到最高，甚至有点异响。或者用于检查其他硬件是否有问题。</li>
-</ul>
-<h3 id="安装方法-2">安装方法</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install lm-sensors<br></code></pre></td></tr></table></figure>
-<h3 id="使用-2">使用</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sensors<br></code></pre></td></tr></table></figure>
-<p>就会得到如下的显示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">coretemp-isa-0000 <span class="hljs-comment"># CPU内核温度</span><br>Adapter: ISA adapter<br>Package id 0:  +47.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 0:        +32.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 1:        +33.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 2:        +33.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 3:        +35.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 4:        +31.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 5:        +47.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 6:        +34.0°C  (high = +100.0°C, crit = +100.0°C)<br>Core 7:        +33.0°C  (high = +100.0°C, crit = +100.0°C)<br><br>acpitz-acpi-0<br>Adapter: ACPI interface<br>temp1:        +27.8°C  (crit = +105.0°C)<br><br>iwlwifi_1-virtual-0 <span class="hljs-comment">#Intel WiFi温度数据</span><br>Adapter: Virtual device<br>temp1:        +40.0°C  <br><br>nvme-pci-0500 <span class="hljs-comment"># GPU温度</span><br>Adapter: PCI adapter<br>Composite:    +41.9°C  (low  = -273.1°C, high = +81.8°C)<br>                       (crit = +84.8°C)<br>Sensor 1:     +41.9°C  (low  = -273.1°C, high = +65261.8°C)<br>Sensor 2:     +47.9°C  (low  = -273.1°C, high = +65261.8°C)<br></code></pre></td></tr></table></figure>
-
         </div>
         
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2023/09/25/Linux-BoostUp/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -521,7 +471,7 @@
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            31
+                            32
                         </p>
                     </a>
                 </div>
@@ -609,7 +559,7 @@
                 <span class="level-item">专业应用</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
@@ -676,6 +626,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                    <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -753,25 +722,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time></div>
-                    <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Nvidia Driver Installation</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -791,7 +741,7 @@
                     <span class="level-item">九月 2023</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -935,6 +885,25 @@
         
         <article class="media">
             
+            <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                    <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2023/09/25/Linux-BoostUp/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Linux BoostUp">
@@ -1009,25 +978,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time></div>
-                    <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Nvidia Driver Installation</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1047,7 +997,7 @@
                     <span class="level-item">九月 2023</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>

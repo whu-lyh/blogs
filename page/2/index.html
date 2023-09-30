@@ -150,6 +150,81 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 251 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/blogs/2023/04/17/NVIDIA-Driver-Installer/">Nvidia Driver Installation</a>
+            
+        </h1>
+        <div class="content">
+            <ol start="0" type="1">
+<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
+<li>下载对应驱动
+位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
+</ol>
+<ul>
+<li>tips: 检查cuda版本和显卡驱动的<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
+</ul>
+<ol start="2" type="1">
+<li>卸载之前的显卡驱动
+<code>sudo apt-get automove --purge nvidia-×</code></li>
+<li>给.run文件权限 <code>sudo chmod a+x xxx.run</code></li>
+<li>关闭图形界面 ctrl+alt+f1</li>
+<li>关闭lightdm服务 <code>sudo service lightdm stop</code></li>
+<li>安装驱动
+<code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
+<li>打开lightdm <code>sudo service lightdm start</code></li>
+<li>如果没反应，再试试 <code>sudo syetemctl start gdm.service</code> or
+<code>sudo syetemctl enable gdm.service</code></li>
+<li>打开图形化界面 <code>ctrl+alt+f7</code></li>
+<li>重启</li>
+<li>Ubuntu22.04似乎不用这么麻烦了，直接重装完之后就有显卡驱动了，试图卸载过，但是重装失败，还不如直接用预先安装好的。</li>
+</ol>
+
+        </div>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="image is-7by1">
             <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
         </a>
@@ -404,75 +479,6 @@ Slurm 系统来进行计算</p>
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2023-03-06T08:56:42.686Z">2023-03-06</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    29 分钟 读完 (大约 4406 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2023/03/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/">关于控制点检核的一些思考</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="使用地面控制点检核als点云精度">使用地面控制点检核ALS点云精度</h1>
-<h2 id="任务描述">任务描述</h2>
-<p>​
-使用地面布设的外业控制点GCP来检核ALS点云条带平差之后的绝对位置精度。如下图所示，红圈中的是GCP点，紫色和灰色是两个条带的ALS点云。图中显示了在<span class="math inline">\(z\)</span>方向上的偏差。</p>
-<div data-align="center">
-<img src="practical_pos.png" width="100%" height="100%">
-</div>
-<p>​
-通过观察，有一部分控制点是在平面区域采集的，有一些是在边缘比较锋利的区域采集的。</p>
-<h2 id="目前存在的问题">目前存在的问题</h2>
-<p>​
-本身ALS点云就比较稀疏，再加上GCP也是离散的布设的，导致很难找到对应同名关系，想要找到对应位置的值就只能通过内插来实现。</p>
-<p>​
-内插方法有很多，但是直接在ALS里面内插不是很现实，可以考虑转成<strong>格网</strong>，mesh的形式，然后基于新的数据表达方式再内插。例如可以用arcgis生成DTM，DEM，内插到高分辨率，然后再采样点和GCP做计算。</p>
-<h2 id="解决方案">解决方案</h2>
-<p>最终论证，通过地面控制点应该是无法做到水平精度检核的，只能做到高程方向的检核。</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2023/03/06/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -546,7 +552,7 @@ Slurm 系统来进行计算</p>
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            31
+                            32
                         </p>
                     </a>
                 </div>
@@ -634,7 +640,7 @@ Slurm 系统来进行计算</p>
                 <span class="level-item">专业应用</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
@@ -701,6 +707,25 @@ Slurm 系统来进行计算</p>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                    <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -778,25 +803,6 @@ Slurm 系统来进行计算</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time></div>
-                    <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Nvidia Driver Installation</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -816,7 +822,7 @@ Slurm 系统来进行计算</p>
                     <span class="level-item">九月 2023</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -960,6 +966,25 @@ Slurm 系统来进行计算</p>
         
         <article class="media">
             
+            <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                    <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2023/09/25/Linux-BoostUp/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Linux BoostUp">
@@ -1034,25 +1059,6 @@ Slurm 系统来进行计算</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time></div>
-                    <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Nvidia Driver Installation</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1072,7 +1078,7 @@ Slurm 系统来进行计算</p>
                     <span class="level-item">九月 2023</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
