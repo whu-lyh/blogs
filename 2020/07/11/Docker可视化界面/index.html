@@ -8,19 +8,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Docker用法补充 - AmazingHao&#39;s Free Space</title>
+<title>Docker可视化界面 - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="主要记录在使用Docker进行涉及到cuda的镜像及容器使用时的经过">
+    <meta name="description" content="主要记录Docker的使用，这里涉及可视化界面">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker用法补充">
-<meta property="og:url" content="http://whu-lyh.github.io/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/index.html">
+<meta property="og:title" content="Docker可视化界面">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="主要记录在使用Docker进行涉及到cuda的镜像及容器使用时的经过">
+<meta property="og:description" content="主要记录Docker的使用，这里涉及可视化界面">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png">
-<meta property="article:published_time" content="2021-01-18T13:27:24.000Z">
-<meta property="article:modified_time" content="2023-09-24T13:52:25.809Z">
+<meta property="article:published_time" content="2020-07-11T08:33:49.000Z">
+<meta property="article:modified_time" content="2023-11-13T08:05:51.118Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -80,7 +80,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/blogs/">
             
-                <img src="/blogs/images/logo.svg" alt="Docker用法补充" height="28">
+                <img src="/blogs/images/logo.svg" alt="Docker可视化界面" height="28">
             
             </a>
         </div>
@@ -156,7 +156,7 @@
     
     <div class="card-image">
         <span  class="image is-7by1">
-            <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker用法补充">
+            <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker可视化界面">
         </span>
     </div>
     
@@ -164,7 +164,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2021-01-18T13:27:24.000Z">2021-01-18</time>
+                <time class="level-item has-text-grey" datetime="2020-07-11T08:33:49.000Z">2020-07-11</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
@@ -174,7 +174,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1368 个字)
+                    7 分钟 读完 (大约 1063 个字)
                 </span>
                 
                 
@@ -183,135 +183,76 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Docker用法补充
+                Docker可视化界面
             
         </h1>
         <div class="content">
-            <p>In this machine, the docker is built based on the <a href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
-and the previous docker is replaced by the new docker. Thus, the
-installation should be careful</p>
-<p><a href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
-without cuda. <a id="more"></a> ## 一般用法</p>
-<h3 id="查看镜像">查看镜像</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker ps -a<br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">CONTAINER ID   IMAGE                                              COMMAND                  CREATED         STATUS                   PORTS                                       NAMES<br>0ac8c062fa10   pointclouddl:segmentation                          <span class="hljs-string">"/bin/sh -c 'service…"</span>   8 minutes ago   Up 8 minutes             6006/tcp, 50051/tcp, 0.0.0.0:2224-&gt;22/tcp   brave_kilby<br>cd8b9c9c5b07   stereolabs/zed:3.0-gl-devel-cuda10.0-ubuntu18.04   <span class="hljs-string">"/bin/bash"</span>              4 weeks ago     Exited (0) 5 hours ago                                               jolly_feynman<br>af07110a5157   stereolabs/kalibr                                  <span class="hljs-string">"/ros_entrypoint.sh …"</span>   4 weeks ago     Exited (0) 4 weeks ago                                               modest_leakey<br></code></pre></td></tr></table></figure>
-<p>​ e.g.现有用于laser slam的镜像,
-设置了界面，ssh，基于amazinghao/ubuntu:graph_slam_clean镜像。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">CONTAINER ID   IMAGE                                COMMAND          CREATED         STATUS         PORTS                            NAMES<br>fe7323d95d8f   amazinghao/ubuntu:graph_slam_clean   <span class="hljs-string">"./startup.sh"</span>   9 seconds ago   Up 7 seconds   22/tcp, 0.0.0.0:5900-&gt;5900/tcp   laser_slam_env<br></code></pre></td></tr></table></figure>
-<h3 id="拷贝文件">拷贝文件</h3>
-<p>从主机复制到容器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker cp host_path containerID:container_path<br></code></pre></td></tr></table></figure>
-<p>从容器复制到主机</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker cp containerID:container_path host_path<br></code></pre></td></tr></table></figure>
-<h3 id="将容器打包成镜像">将容器打包成镜像</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker commit -a <span class="hljs-string">"amazinghao"</span> -m <span class="hljs-string">"for point cloud deep learning environment"</span> dc1e2f6fcf8d pointclouddl:segmentation<br></code></pre></td></tr></table></figure>
+            <p>泡泡机器人SLAM与你一同成长<font color="green">❤</font></p>
+<h3 id="可视化"><strong>可视化</strong></h3>
+<p>其实关键就是添加一个可视化的应用，如X11 apps (and GL), is the key for
+display inside the docker，e.g.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-comment"># This file is covered by the LICENSE file in the root of this project.</span><br>docker build -t api --build-arg uid=$(id -g) --build-arg gid=$(id -g) .<br>docker run --privileged \<br>       -ti --rm -e DISPLAY=<span class="hljs-variable">$DISPLAY</span> \<br>       -v /tmp/.X11-unix:/tmp/.X11-unix \<br>       -v <span class="hljs-variable">$1</span>:/home/data/ \<br>       api<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --privileged -ti --rm -e DISPLAY=<span class="hljs-variable">$DISPLAY</span> -v /tmp/.X11-unix:/tmp/.X11-unix -v /home/amazinghao/Data:/home/data/ api<br></code></pre></td></tr></table></figure>
 <ul>
-<li>-a, auther info</li>
-<li>-m, commit message</li>
-<li>the last parameter is the new image name and its tag. The new image
-name should be lowercase</li>
-<li>Note that the code file and data file should not be packaged into
-the image and only environment should be in there</li>
+<li><p><code>-e DISPLAY=$DISPLAY</code>，after this the gui inside the
+docker will show in the host machine</p></li>
+<li><p><code>--privileged</code>，will make all extend equippment
+available for the docker</p></li>
 </ul>
-<h3 id="设置别名">设置别名</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -itd --name=laser_slam_env<br></code></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="打开界面"><strong>打开界面</strong></h4>
+<p>有几种方式可以在Docker中设置界面，openbox，vnc等。这里选择的是ros-vnc来进行可视化界面的，vnc其实是一个功能，
+ubuntu自带的某些软件也有这个功能,VNC-Viewer免费版即可。
+比如直接启动如下容器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it -p 5900:5900 paopaorobot/ros-vnc<br></code></pre></td></tr></table></figure>
+<p><strong>调整分辨率</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it -p 5900:5900 -e RESOLUTION=1980x1200 paopaorobot/ros-vnc<br></code></pre></td></tr></table></figure>
+<p><strong>通过ssh连接</strong></p>
+<p>打开本机控制台，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it -p 2222:22 paopaorobot/ros-vnc<br></code></pre></td></tr></table></figure>
+<p><code>ssh -o 'UserKnownHostsFile=/dev/null' root@localhost -p [port]</code>
+port表示端口号，保持和开启镜像时映射的端口一致。在控制台使用下述ssh链接打开的容器：<strong><code>ssh root@localhost -p 2222</code></strong></p>
+<p>也可以设置自定义的ssh密码,如asc123</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it -p 2222:22 -e SSHPW=asc123 paopaorobot/ros-vnc<br></code></pre></td></tr></table></figure>
+<p>也可以随机选择端口号，P会系统自动给一个端口，可以避免端口冲突</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it -P paopaorobot/ros-vnc<br></code></pre></td></tr></table></figure>
+<p>通过<code>docker port</code>查看当前开了哪些端口，然后找到想要的端口</p>
+<h4 id="同时使用ssh和可视化界面"><strong>同时使用ssh和可视化界面</strong></h4>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">docker run -it -p <span class="hljs-number">5900</span>:<span class="hljs-number">5900</span> -p <span class="hljs-number">2222</span>:<span class="hljs-number">22</span> paopaorobot/ros-vnc<br>docker run -itd -p <span class="hljs-number">5900</span>:<span class="hljs-number">5900</span> -e SSHPW=usmn9a  -e RESOLUTION=<span class="hljs-number">1920</span>x1280 -v /d/data:/data -p <span class="hljs-number">2222</span>:<span class="hljs-number">22</span> amazinghao/ubuntu:graph_slam_updated<br></code></pre></td></tr></table></figure>
 <ul>
-<li>注意别名的设置尽量放置在命令行的前面。</li>
+<li><p><code>-p</code>
+将本地5900端口映射到容器，服务于vnc进行可视化</p></li>
+<li><p><code>-e</code> SSHPW= 设置ssh连接的密码为xxx</p></li>
+<li><p><code>-p</code>
+将本地2222端口映射到容器，服务于ssh进行连接</p></li>
+<li><p><code>-e RESOLUTION=1920x1280</code> 设置分辨率为1080p</p></li>
+<li><p><code>-v</code>
+表示将本地D:/data路径挂在到容器对应的/data下，amazinghao/ubuntu:graph_slam_updated
+为镜像名。</p></li>
 </ul>
-<h3 id="检查镜像的信息">检查镜像的信息</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker image inspect pointclouddl:segmentaton<br></code></pre></td></tr></table></figure>
-<h3 id="导出镜像">导出镜像</h3>
-<h4 id="export-import">export &amp; import</h4>
-<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs elm"># ex<span class="hljs-keyword">port</span> current image<br><span class="hljs-title">docker</span> ex<span class="hljs-keyword">port</span> image_id &gt; current.tar<br># <span class="hljs-keyword">import</span> current image<br><span class="hljs-title">docker</span> <span class="hljs-keyword">import</span> - image_name &lt; current.tar<br></code></pre></td></tr></table></figure>
-<h4 id="save-load">save &amp; load</h4>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">docker</span> <span class="hljs-selector-tag">save</span> 0<span class="hljs-selector-tag">fdf2b4c26d3</span> &gt; <span class="hljs-selector-tag">hangge_server</span><span class="hljs-selector-class">.tar</span><br><span class="hljs-selector-tag">docker</span> <span class="hljs-selector-tag">save</span> <span class="hljs-selector-tag">-o</span> <span class="hljs-selector-tag">images</span><span class="hljs-selector-class">.tar</span> <span class="hljs-selector-tag">postgres</span><span class="hljs-selector-pseudo">:9.6</span> <span class="hljs-selector-tag">mongo</span><span class="hljs-selector-pseudo">:3.4</span><br><span class="hljs-selector-tag">docker</span> <span class="hljs-selector-tag">load</span> &lt; <span class="hljs-selector-tag">hangge_server</span><span class="hljs-selector-class">.tar</span><br></code></pre></td></tr></table></figure>
-<p>​ Differences from image sizes, image rename, multiple-containers into
-one single image, application scenarios, more detail could be seen at <a href="https://www.hangge.com/blog/cache/detail_2411.html">here</a></p>
-<hr>
-<h2 id="使用实例">使用实例</h2>
-<h3 id="new-a-container-for-slam">New a container for SLAM</h3>
-<p>The images for SLAM are mostly built from the
-<strong>paopaorobot/ros-vnc</strong>, so the visualization module is
-embedded into the image. Any thing related to the visualization could be
-set as you wish.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># open a new container using the xfce&amp;vnc for visualization, host port is 5900, host mount dir is /Data, extra setting is the resolution which is 1080P</span><br>sudo docker run -i -t -p 5900:5900 -v /Data:/data -e RESOLUTION=1920x1080 paopaorobot/ubuntu-xfce-vnc<br><span class="hljs-comment"># similar to the upper one, amazinghao/ubuntu is build based on the ros-vnc image</span><br>sudo docker run -i -t -p 5900:5900 -v /Data:/data -e RESOLUTION=1920x1080 amazinghao/ubuntu<br><span class="hljs-comment"># similar to the upper two</span><br>sudo docker run -i -t -p 5900:5900 -v /Data:/data -e RESOLUTION=1920x1080 paopaorobot/ros-vnc:latest<br><span class="hljs-comment"># windows docker container creation commond</span><br><span class="hljs-comment"># Note that the alias name should be placed frontier and the dir mount should be carefully set</span><br>docker run -itd --name=laser_slam_env -p 5900:5900 -e SSHPW=usmn9a -v /D/data/Publicdatasets/:/data -v /E/Vs15WorkSpace/catkin_ws_lidar:/workspsace_slam  -e RESOLUTION=1920x1080 amazinghao/ubuntu:graph_slam_clean<br></code></pre></td></tr></table></figure>
-<h3 id="new-a-container-for-deep-learning-with-cuda">New a container for
-Deep learning with CUDA</h3>
-<p><del>sudo docker run -itd ---gpus all --privileged=true -v
-/Data:/data-lyh -v /PointSeg:/pointcloud_seg_code -p 2222:22 -p
-5900:5900 -e RESOLUTION=1920x1080 -e SSHPW=xxxx
-pointclouddl:segmentation</del></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># bad command:</span><br>sudo docker run -itd --gpus all --privileged=<span class="hljs-literal">true</span> -v /Data:/data-lyh -v /PointSeg:/pointcloud_seg_code -p 2222:22 -p 5900:5900 -e RESOLUTION=1920x1080 -e SSHPW=xxxx pointclouddl:segmentation<br><span class="hljs-comment"># correct command:</span><br>sudo docker run -itd --gpus all --privileged=<span class="hljs-literal">true</span> -v /home/amazinghao/Data:/data-lyh -v /home/amazinghao/PointSeg:/pointcloud_seg_code -p 2224:22 -e SSHPW=xxx pointclouddl:segmentation<br></code></pre></td></tr></table></figure>
-<p>Tips:</p>
+<h4 id="退出之后再打开"><strong>退出之后再打开</strong></h4>
 <ul>
-<li><strong>--gpus all</strong> , only this the Nvidia driver could be
-accessed, check <a href="https://github.com/traveller59/spconv/issues/185#issuecomment-655975873">this</a></li>
-<li><strong>--privileged=true</strong> , to obtain the 'real' permission
-to mount file or others. This one is very important</li>
-<li><strong>-v</strong> , mount the host dir or file to the container.
-The dir should begin with '/' and connected by ':'</li>
-<li><strong>-e SSHPW</strong> , set the ssh connect password</li>
-<li><strong>-p</strong> , two ports are opened for both ssh or
-visualize. Only if the visualization module is activated, the VNC-Viewer
-is available.</li>
-<li>-<strong>d</strong> , the container should be closed manually, and
-the local command will not convert to the container.</li>
+<li>按照前述方法用vnc或者ssh打开Docker的一个镜像并生成容器之后，通过exit退出当前容器，若是后续还想再进去，此时如果通过run命令就会再次产生一个容器，而你在之前的容器中所做的操作就不会保留。<br>
+</li>
+<li>因此这时需要通过start，打开之前操作过现在状态是exit的容器，用attach建立连接，此时如果通过<code>docker ps -a</code>可以发现之前的容器又可以打开了,并且端口号是可用的。<br>
+</li>
+<li>另外如果想要在exit容器时，容器不退出，应该使用exec命令打开镜像<code>docker exec -it 24d1106f11b8 /bin/bash</code>,此时也会发现容器时可用的了。</li>
 </ul>
-<h3 id="after-using-run-to-new-container">After using run to new
-container</h3>
-<p>Using "run" to new a new container and once you quit the container,
-the container will immediately be closed.</p>
-<p>The container that you new right now will stay started and STATUS
-will be like: <strong>Up 8 minutes</strong></p>
-<p>Only thing you should do, if you are using VNC-Viewer for
-visualization, is as followings:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker start 0ac8c062fa10<br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">amazinghao@xixi-ubuntu:~$ sudo docker attach 0ac8c062fa10<br>root@0ac8c062fa10:~<span class="hljs-comment"># nvidia-smi</span><br>Mon Jan 18 04:55:55 2021       <br>+-----------------------------------------------------------------------------+<br>| NVIDIA-SMI 450.80.02    Driver Version: 450.80.02    CUDA Version: 11.0     |<br>|-------------------------------+----------------------+----------------------+<br>| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |<br>| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |<br>|                               |                      |               MIG M. |<br>|===============================+======================+======================|<br>|   0  GeForce GTX 108...  Off  | 00000000:01:00.0  On |                  N/A |<br>| 24%   46C    P5    18W / 250W |    271MiB / 11175MiB |      0%      Default |<br>|                               |                      |                  N/A |<br>+-------------------------------+----------------------+----------------------+<br>                                                                               <br>+-----------------------------------------------------------------------------+<br>| Processes:                                                                  |<br>|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |<br>|        ID   ID                                                   Usage      |<br>|=============================================================================|<br>+-----------------------------------------------------------------------------+<br>root@0ac8c062fa10:~<span class="hljs-comment"># nvcc -V</span><br>nvcc: NVIDIA (R) Cuda compiler driver<br>Copyright (c) 2005-2019 NVIDIA Corporation<br>Built on Sun_Jul_28_19:07:16_PDT_2019<br>Cuda compilation tools, release 10.1, V10.1.243<br></code></pre></td></tr></table></figure>
-<p>When you exit the container, the correspond container's STATUS will
-be some thing like: <strong>Exited (0) 4 seconds ago</strong></p>
-<p>But if you only close vscode (connnet by Remote Container), the
-container will not be closed.</p>
-<h3 id="also-you-can-using-exec-to-new-a-container">Also you can using
-exec to new a container</h3>
-<p>使用docker exec -it 容器id /bin/bash命令进入容器即可 ##access the
-previous container id again #the following command should be bind
-strongly</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it af07110a5157 /bin/bash<br>docker attach previous_container_id<br></code></pre></td></tr></table></figure>
-<h2 id="new-a-container-for-zed-sdk">New a container for zed sdk</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Open a container for zed stereo camera. The image contains a visualization module using "X11"</span><br>sudo docker run --gpus all -it --privileged --network=host stereolabs/zed:3.0-runtime-cuda10.0-ubuntu18.04<br></code></pre></td></tr></table></figure>
-<h2 id="zed-docker-display-support">ZED docker display support</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">xhost +si:localuser:root<br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker run --gpus all -it --privileged -e DISPLAY=<span class="hljs-variable">$DISPLAY</span> -v /tmp/.X11-unix:/tmp/.X11-unix stereolabs/zed:3.0-gl-devel-cuda10.0-ubuntu18.04<br>sudo docker attach containerID<br></code></pre></td></tr></table></figure>
-<ul>
-<li>The camera connection can be verified using lsusb:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lsusb -d 2b03: -vvv<br></code></pre></td></tr></table></figure>
-<ul>
-<li>in case of replug/hotplug, mount all the dev folder</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --gpus all -it -v /dev:/dev --privileged stereolabs/zed:3.0-runtime-cuda10.0-ubuntu18.04<br></code></pre></td></tr></table></figure>
-<h4 id="problem">problem</h4>
-<ul>
-<li>the ZED_Depth_Viewer didn't work somehow.</li>
-</ul>
-<h2 id="zed_ros_wapper-cuda-for-a-ros-bag">zed_ros_wapper &amp; cuda for
-a ros bag</h2>
-<p>add a ros melodic to zed-sdk and build the zed_ros_wapper in it
-ID:cd8b9c9c5b07</p>
-<p>stereolabs/zed:3.0-gl-devel-cuda10.0-ubuntu18.04</p>
-<h2 id="new-a-container-for-kalibr">New a container for kalibr</h2>
-<p>container ID:af07110a5157 is the one which rebuild the
-ros_kalibr_system ubuntu version:16.04 ros version:kinetic</p>
-<p><code>--show-extraction</code></p>
-<h2 id="others">Others</h2>
-<h3 id="visualization">Visualization</h3>
-<p>X11 apps (and GL), is the key for display inside the docker</p>
-<p>e.g. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-comment"># This file is covered by the LICENSE file in the root of this project.</span><br>docker build -t api --build-arg uid=$(id -g) --build-arg gid=$(id -g) .<br>docker run --privileged \<br>       -ti --rm -e DISPLAY=<span class="hljs-variable">$DISPLAY</span> \<br>       -v /tmp/.X11-unix:/tmp/.X11-unix \<br>       -v <span class="hljs-variable">$1</span>:/home/data/ \<br>       api<br></code></pre></td></tr></table></figure> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --privileged -ti --rm -e DISPLAY=<span class="hljs-variable">$DISPLAY</span> -v /tmp/.X11-unix:/tmp/.X11-unix -v /home/amazinghao/Data:/home/data/ api<br></code></pre></td></tr></table></figure> <code>-e DISPLAY=$DISPLAY</code></p>
-<p>after this the gui inside the docker will show in the host
-machine</p>
-<p><code>--privileged</code></p>
-<p>will make all extend equippment available for the docker</p>
-<p>泡泡机器人SLAM与你一同成长<font color="green">❤</font></p>
+<h3 id="docker远程debug"><strong>Docker远程Debug</strong></h3>
+<p>首先代码是在本地，以文件夹挂载的方式挂载到容器中。</p>
+<h4 id="python文件的debug"><strong>Python文件的Debug</strong></h4>
+<p>这里借助的是vscode来实现代码Debug。首先通过Remote-Container/Remote-SSH插件连接到容器中，点击运行-&gt;打开配置，即如下类似的文件settings.json（位于本地.vscode路径下）：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs awk">&#123;<br>    <span class="hljs-regexp">//</span> 使用 IntelliSense 了解相关属性。 <br>    <span class="hljs-regexp">//</span> 悬停以查看现有属性的描述。<br>    <span class="hljs-regexp">//</span> 欲了解更多信息，请访问: https:<span class="hljs-regexp">//g</span>o.microsoft.com<span class="hljs-regexp">/fwlink/</span>?linkid=<span class="hljs-number">830387</span><br>    <span class="hljs-string">"version"</span>: <span class="hljs-string">"0.2.0"</span>,<br>    <span class="hljs-string">"configurations"</span>: [<br>        &#123;<br>            <span class="hljs-string">"name"</span>: <span class="hljs-string">"Python: 当前文件"</span>,<br>            <span class="hljs-string">"type"</span>: <span class="hljs-string">"python"</span>,<br>            <span class="hljs-string">"request"</span>: <span class="hljs-string">"launch"</span>,<br>            <span class="hljs-string">"program"</span>: <span class="hljs-string">"main.py"</span>, <span class="hljs-comment"># 主函数入口</span><br>            <span class="hljs-string">"console"</span>: <span class="hljs-string">"integratedTerminal"</span>,<br>            <span class="hljs-string">"justMyCode"</span>: true,<br>            <span class="hljs-string">"args"</span>: [ <span class="hljs-regexp">//</span>在这里写命令行的参数，如下<br>                <span class="hljs-string">"--dataset"</span>, <span class="hljs-string">"ETH"</span>,<br>                <span class="hljs-string">"--estimator"</span>, <span class="hljs-string">"4DOF"</span>,<br>                <span class="hljs-string">"--topk"</span>, <span class="hljs-string">"6"</span>,<br>                <span class="hljs-string">"--inlierd"</span>, <span class="hljs-string">"0.2"</span>,<br>                <span class="hljs-string">"--tau_2"</span>, <span class="hljs-string">"0.5"</span>,<br>                <span class="hljs-string">"--rr"</span><br>            ]<br>        &#125;<br>    ]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>设置好之后可以F5开启调试了，打断点和单步调试都可以用。</p>
+<h4 id="c的debug"><strong>C++的Debug</strong></h4>
+<p>TODO</p>
+<h3 id="其他问题"><strong>其他问题</strong></h3>
+<p>vnc首次可以连接成功，但是再次连接时失败，打开vnc5900时提示，connected
+closed unxepectedly。</p>
+<p><font color="red"><strong>解决方案：</strong></font>
+这是需要使用start将上次的docker容器打开就可以了，连接失败的原因可能是因为端口被占用了。</p>
+<iframe src="//player.bilibili.com/player.html?aid=882822967&amp;bvid=BV1uK4y1k7Q1&amp;cid=180178150&amp;p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
+</iframe>
 
         </div>
         
@@ -321,21 +262,21 @@ machine</p>
 
     <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
     <div class="has-text-grey is-size-7 is-block">
-    <p><span>title:</span><a href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/">Docker用法补充</a></p>
+    <p><span>title:</span><a href="/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/">Docker可视化界面</a></p>
     <p><span>author:</span><a href="/">AmazingHao</a></p>
     <p>
-        <span>link:</span><a href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/" title="Docker用法补充 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/</a>
-        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/"  aria-label="复制成功！"></i></span>
+        <span>link:</span><a href="/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/" title="Docker可视化界面 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/"  aria-label="复制成功！"></i></span>
     </p>
-    <p><span>publish time:</span>2021-01-18</p>
-    <p><span>update time:</span>2023-09-24</p>
+    <p><span>publish time:</span>2020-07-11</p>
+    <p><span>update time:</span>2023-11-13</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
-    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/">Docker用法补充</a></li>
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/">Docker可视化界面</a></li>
      <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
-    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/">http://whu-lyh.github.io/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/</a></li>
-    <li><strong>发布时间：</strong>2021-01-18</li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/">http://whu-lyh.github.io/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/</a></li>
+    <li><strong>发布时间：</strong>2020-07-11</li>
     <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
     </li>
 </ul> -->
@@ -376,16 +317,16 @@ machine</p>
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/blogs/2023/01/16/ROS%20basic%20manager/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">ROS basic usage and manager</span>
+                <span class="level-item">VS开发Tricks</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/">
-                <span class="level-item">VS开发Tricks</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">
+                <span class="level-item">pcl中的体素滤波</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -609,91 +550,39 @@ machine</p>
                 <h3 class="menu-label">
                     目录
                 </h3>
-                <ul class="menu-list"><ul class="menu-list"><li>
-        <a class="is-flex" href="#查看镜像">
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#可视化">
+        <span class="has-mr-6">1</span>
+        <span>可视化</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#打开界面">
         <span class="has-mr-6">1.1</span>
-        <span>查看镜像</span>
+        <span>打开界面</span>
         </a></li><li>
-        <a class="is-flex" href="#拷贝文件">
+        <a class="is-flex" href="#同时使用ssh和可视化界面">
         <span class="has-mr-6">1.2</span>
-        <span>拷贝文件</span>
+        <span>同时使用ssh和可视化界面</span>
         </a></li><li>
-        <a class="is-flex" href="#将容器打包成镜像">
+        <a class="is-flex" href="#退出之后再打开">
         <span class="has-mr-6">1.3</span>
-        <span>将容器打包成镜像</span>
-        </a></li><li>
-        <a class="is-flex" href="#设置别名">
-        <span class="has-mr-6">1.4</span>
-        <span>设置别名</span>
-        </a></li><li>
-        <a class="is-flex" href="#检查镜像的信息">
-        <span class="has-mr-6">1.5</span>
-        <span>检查镜像的信息</span>
-        </a></li><li>
-        <a class="is-flex" href="#导出镜像">
-        <span class="has-mr-6">1.6</span>
-        <span>导出镜像</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#export-import">
-        <span class="has-mr-6">1.6.1</span>
-        <span>export & import</span>
-        </a></li><li>
-        <a class="is-flex" href="#save-load">
-        <span class="has-mr-6">1.6.2</span>
-        <span>save & load</span>
-        </a></li></ul></li></ul><li>
-        <a class="is-flex" href="#使用实例">
-        <span class="has-mr-6">2</span>
-        <span>使用实例</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#new-a-container-for-slam">
-        <span class="has-mr-6">2.1</span>
-        <span>New a container for SLAM</span>
-        </a></li><li>
-        <a class="is-flex" href="#new-a-container-for-deep-learning-with-cuda">
-        <span class="has-mr-6">2.2</span>
-        <span>New a container for
-Deep learning with CUDA</span>
-        </a></li><li>
-        <a class="is-flex" href="#after-using-run-to-new-container">
-        <span class="has-mr-6">2.3</span>
-        <span>After using run to new
-container</span>
-        </a></li><li>
-        <a class="is-flex" href="#also-you-can-using-exec-to-new-a-container">
-        <span class="has-mr-6">2.4</span>
-        <span>Also you can using
-exec to new a container</span>
+        <span>退出之后再打开</span>
         </a></li></ul></li><li>
-        <a class="is-flex" href="#new-a-container-for-zed-sdk">
-        <span class="has-mr-6">3</span>
-        <span>New a container for zed sdk</span>
-        </a></li><li>
-        <a class="is-flex" href="#zed-docker-display-support">
-        <span class="has-mr-6">4</span>
-        <span>ZED docker display support</span>
-        </a><ul class="menu-list"><ul class="menu-list"><li>
-        <a class="is-flex" href="#problem">
-        <span class="has-mr-6">4.1.1</span>
-        <span>problem</span>
-        </a></li></ul></ul></li><li>
-        <a class="is-flex" href="#zed_ros_wapper-cuda-for-a-ros-bag">
-        <span class="has-mr-6">5</span>
-        <span>zed_ros_wapper & cuda for
-a ros bag</span>
-        </a></li><li>
-        <a class="is-flex" href="#new-a-container-for-kalibr">
-        <span class="has-mr-6">6</span>
-        <span>New a container for kalibr</span>
-        </a></li><li>
-        <a class="is-flex" href="#others">
-        <span class="has-mr-6">7</span>
-        <span>Others</span>
+        <a class="is-flex" href="#docker远程debug">
+        <span class="has-mr-6">2</span>
+        <span>Docker远程Debug</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#visualization">
-        <span class="has-mr-6">7.1</span>
-        <span>Visualization</span>
-        </a></li></ul></li></ul>
+        <a class="is-flex" href="#python文件的debug">
+        <span class="has-mr-6">2.1</span>
+        <span>Python文件的Debug</span>
+        </a></li><li>
+        <a class="is-flex" href="#c的debug">
+        <span class="has-mr-6">2.2</span>
+        <span>C++的Debug</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#其他问题">
+        <span class="has-mr-6">3</span>
+        <span>其他问题</span>
+        </a></li></ul>
             </div>
         </div>
     </div>
@@ -810,24 +699,6 @@ a ros bag</span>
             related posts
         </h3>
          
-            
-         
-            
-         
-            <article class="media"> <a href="/blogs/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/" class="media-left">
-                        <p class="image is-64x64">
-                            <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker日常使用">
-                        </p>
-                    </a><div class="media-content">
-                    <div class="content">
-                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-11T08:33:49.000Z">2020-07-11</time></div>
-                        <a href="/blogs/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Docker日常使用</a>
-                    </div>
-                </div>
-            </article>
-         
-            
-         
             <article class="media"> <a href="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker初体验">
@@ -844,10 +715,6 @@ a ros bag</span>
          
             
          
-            
-         
-            
-         
             <article class="media"> <a href="/blogs/2023/04/17/Docker%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker深度学习">
@@ -859,6 +726,28 @@ a ros bag</span>
                     </div>
                 </div>
             </article>
+         
+            
+         
+            <article class="media"> <a href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%BF%9B%E9%98%B6/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker用法进阶">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-01-18T13:27:24.000Z">2021-01-18</time></div>
+                        <a href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%BF%9B%E9%98%B6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Docker用法进阶</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
          
             
          
@@ -1060,7 +949,7 @@ a ros bag</span>
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/blogs/">
                 
-                    <img src="/blogs/images/logo.svg" alt="Docker用法补充" height="28">
+                    <img src="/blogs/images/logo.svg" alt="Docker可视化界面" height="28">
                 
                 </a>
                 <p class="is-size-7">

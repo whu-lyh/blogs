@@ -179,7 +179,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 873 个字)
+                    6 分钟 读完 (大约 847 个字)
                 </span>
                 
                 
@@ -192,16 +192,12 @@
             
         </h1>
         <div class="content">
-            <p>Linux安装docker</p>
-<ul>
-<li>docker 拉去镜像：<code>docker pull &lt;image_name&gt;</code>
-<ul>
-<li>可以换国内源，但国内源容易断，建议翻墙直接官方源</li>
-</ul></li>
-<li>docker 启动镜像：<code>docker run</code></li>
+            <ul>
+<li>感谢卢指导！</li>
+<li>安装出现错误<a href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
+Err</a>解决方案为：</li>
 </ul>
-<p><a href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
-Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></table></figure></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></table></figure>
 <h2 id="docker-安装">Docker 安装</h2>
 <h3 id="docker-安装-1">1. Docker 安装</h3>
 <h4 id="卸载旧版本">1.1 卸载旧版本</h4>
@@ -249,8 +245,8 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
 <div class="card">
     
     <div class="card-image">
-        <a href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/" class="image is-7by1">
-            <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker用法补充">
+        <a href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%BF%9B%E9%98%B6/" class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker用法进阶">
         </a>
     </div>
     
@@ -268,7 +264,7 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1368 个字)
+                    14 分钟 读完 (大约 2058 个字)
                 </span>
                 
                 
@@ -277,15 +273,19 @@ Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/">Docker用法补充</a>
+                <a class="has-link-black-ter" href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%BF%9B%E9%98%B6/">Docker用法进阶</a>
             
         </h1>
         <div class="content">
-            <p>In this machine, the docker is built based on the <a href="https://www.runoob.com/docker/docker-hello-world.html">Nvidia-docker</a>,
-and the previous docker is replaced by the new docker. Thus, the
-installation should be careful</p>
-<p><a href="https://www.runoob.com/docker/docker-hello-world.html">Docker</a>
-without cuda.</p>
+            <p>泡泡机器人SLAM与你一同成长<font color="green">❤</font></p>
+<p>使用之前先看看本地都有哪些镜像和容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo docker ps -a<br></code></pre></td></tr></table></figure>
+<p>查看现有容器以及状态。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">CONTAINER ID   IMAGE                                              COMMAND                  CREATED         STATUS                   PORTS                                       NAMES<br>0ac8c062fa10   pointclouddl:segmentation                          <span class="hljs-string">"/bin/sh -c 'service…"</span>   8 minutes ago   Up 8 minutes             6006/tcp, 50051/tcp, 0.0.0.0:2224-&gt;22/tcp   brave_kilby<br>cd8b9c9c5b07   stereolabs/zed:3.0-gl-devel-cuda10.0-ubuntu18.04   <span class="hljs-string">"/bin/bash"</span>              4 weeks ago     Exited (0) 5 hours ago                                               jolly_feynman<br>af07110a5157   stereolabs/kalibr                                  <span class="hljs-string">"/ros_entrypoint.sh …"</span>   4 weeks ago     Exited (0) 4 weeks ago                                               modest_leakey<br></code></pre></td></tr></table></figure>
+<p>e.g.现有用于laser slam的镜像,
+设置了界面，ssh，基于amazinghao/ubuntu:graph_slam_clean镜像。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">CONTAINER ID   IMAGE                                COMMAND          CREATED         STATUS         PORTS                            NAMES<br>fe7323d95d8f   amazinghao/ubuntu:graph_slam_clean   <span class="hljs-string">"./startup.sh"</span>   9 seconds ago   Up 7 seconds   22/tcp, 0.0.0.0:5900-&gt;5900/tcp   laser_slam_env<br></code></pre></td></tr></table></figure>
+<p>一些容器内部设置必须在创建的时候就设置好，不然就只能重新创建。比如端口映射，文件夹挂载，设置别名，虚拟内存设置，时区设置等。</p>
         </div>
         
         
@@ -293,7 +293,7 @@ without cuda.</p>
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%A1%A5%E5%85%85/#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/blogs/2021/01/18/Docker%E7%94%A8%E6%B3%95%E8%BF%9B%E9%98%B6/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -313,8 +313,8 @@ without cuda.</p>
 <div class="card">
     
     <div class="card-image">
-        <a href="/blogs/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/" class="image is-7by1">
-            <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker日常使用">
+        <a href="/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/" class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker可视化界面">
         </a>
     </div>
     
@@ -332,7 +332,7 @@ without cuda.</p>
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 947 个字)
+                    7 分钟 读完 (大约 1063 个字)
                 </span>
                 
                 
@@ -341,14 +341,22 @@ without cuda.</p>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/blogs/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/">Docker日常使用</a>
+                <a class="has-link-black-ter" href="/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/">Docker可视化界面</a>
             
         </h1>
         <div class="content">
-            <h4 id="基本操作">基本操作</h4>
-<p>拉取镜像后 <code>docker pull paopaorobot/ros-vnc</code><br>
-不通过UI界面进入ubuntu，可以直接运行<code>docker run repositoryname</code><br>
-后面该怎么操作怎么操作，使用完之后exit退出即可。</p>
+            <p>泡泡机器人SLAM与你一同成长<font color="green">❤</font></p>
+<h3 id="可视化"><strong>可视化</strong></h3>
+<p>其实关键就是添加一个可视化的应用，如X11 apps (and GL), is the key for
+display inside the docker，e.g.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-comment"># This file is covered by the LICENSE file in the root of this project.</span><br>docker build -t api --build-arg uid=$(id -g) --build-arg gid=$(id -g) .<br>docker run --privileged \<br>       -ti --rm -e DISPLAY=<span class="hljs-variable">$DISPLAY</span> \<br>       -v /tmp/.X11-unix:/tmp/.X11-unix \<br>       -v <span class="hljs-variable">$1</span>:/home/data/ \<br>       api<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run --privileged -ti --rm -e DISPLAY=<span class="hljs-variable">$DISPLAY</span> -v /tmp/.X11-unix:/tmp/.X11-unix -v /home/amazinghao/Data:/home/data/ api<br></code></pre></td></tr></table></figure>
+<ul>
+<li><p><code>-e DISPLAY=$DISPLAY</code>，after this the gui inside the
+docker will show in the host machine</p></li>
+<li><p><code>--privileged</code>，will make all extend equippment
+available for the docker</p></li>
+</ul>
         </div>
         
         
@@ -356,7 +364,7 @@ without cuda.</p>
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2020/07/11/Docker%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -395,7 +403,7 @@ without cuda.</p>
                 <span class="level-item has-text-grey">
                     
                     
-                    22 分钟 读完 (大约 3325 个字)
+                    17 分钟 读完 (大约 2522 个字)
                 </span>
                 
                 
@@ -409,13 +417,15 @@ without cuda.</p>
         </h1>
         <div class="content">
             <hr>
-<h3 id="docker简介">Docker简介</h3>
-<p>  Docker 是一个开源的应用容器引擎，基于Go语言
-并遵从Apache2.0协议开源。   Docker
+<p>泡泡机器人SLAM与你一同成长<font color="green">❤</font></p>
+<h3 id="docker简介"><strong>Docker简介</strong></h3>
+<p>Docker 是一个开源的应用容器引擎，基于Go语言
+并遵从Apache2.0协议开源。</p>
+<p>Docker
 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的
-Linux 机器上，也可以实现虚拟化。
-  容器可以认为是一种虚拟环境，它完全使用沙箱机制，相互之间不会有任何接口（类似iPhone的app）,更重要的是容器性能开销极低。
-(我认为是一种管理虚拟环境的引擎，方便快速构建任何虚拟环境，而各个环境之间不会相互影响，并且支持快速移植和部署。)</p>
+Linux 机器上，也可以实现虚拟化。</p>
+<p>容器可以认为是一种虚拟环境，它完全使用沙箱机制，相互之间不会有任何接口（类似iPhone的app）,更重要的是容器性能开销极低。</p>
+<p>(我认为是一种管理虚拟环境的引擎，方便快速构建任何虚拟环境，而各个环境之间不会相互影响，并且支持快速移植和部署。)</p>
         </div>
         
         

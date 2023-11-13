@@ -399,7 +399,7 @@ SCI1-TOP, IF=12.7.</p>
                 <span class="level-item has-text-grey">
                     
                     
-                    6 分钟 读完 (大约 873 个字)
+                    6 分钟 读完 (大约 847 个字)
                 </span>
                 
                 
@@ -412,16 +412,12 @@ SCI1-TOP, IF=12.7.</p>
             
         </h1>
         <div class="content">
-            <p>Linux安装docker</p>
-<ul>
-<li>docker 拉去镜像：<code>docker pull &lt;image_name&gt;</code>
-<ul>
-<li>可以换国内源，但国内源容易断，建议翻墙直接官方源</li>
-</ul></li>
-<li>docker 启动镜像：<code>docker run</code></li>
+            <ul>
+<li>感谢卢指导！</li>
+<li>安装出现错误<a href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
+Err</a>解决方案为：</li>
 </ul>
-<p><a href="https://jdhao.github.io/2022/05/05/nvidia-apt-repo-public-key-error-fix/">GPG
-Err</a> <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></table></figure></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm /etc/apt/sources.list.d/cuda.list<br>rm /etc/apt/sources.list.d/nvidia-ml.list<br>apt-key del 7fa2af80<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub<br>apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub<br></code></pre></td></tr></table></figure>
 <h2 id="docker-安装">Docker 安装</h2>
 <h3 id="docker-安装-1">1. Docker 安装</h3>
 <h4 id="卸载旧版本">1.1 卸载旧版本</h4>
