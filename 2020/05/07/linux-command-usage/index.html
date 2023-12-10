@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2020-05-07T02:37:44.000Z">
-<meta property="article:modified_time" content="2023-09-24T12:49:48.805Z">
+<meta property="article:modified_time" content="2023-12-10T06:54:39.824Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -164,7 +164,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 345 个字)
+                    4 分钟 读完 (大约 599 个字)
                 </span>
                 
                 
@@ -177,16 +177,16 @@
             
         </h1>
         <div class="content">
-            <p>一些常用的linux的命令记录</p>
+            <p>一些常用的Linux的命令记录</p>
 <h3 id="common-command">Common Command</h3>
 <ol type="1">
 <li>查看当前系统的版本</li>
 </ol>
-<p><code>cat /etc/issue</code> 返回当前系统的版本名字和版本号</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat /etc/issue<br></code></pre></td></tr></table></figure>
 <ol start="2" type="1">
 <li>查看当前所安装的软件</li>
 </ol>
-<p><code>dpkg -l</code> 列出全部安装软件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">dpkg -l<br></code></pre></td></tr></table></figure>
 <ol start="3" type="1">
 <li>查看某软件安装路径</li>
 </ol>
@@ -204,31 +204,17 @@
 <ol start="6" type="1">
 <li>删除带锁文件夹（文件）</li>
 </ol>
-<p>文件夹所在目录下执行：<code>sudo chmod -R 777 文件或文件夹</code>，即可去掉带锁，然后就可以删除了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo chmod -R 777 文件或文件夹<br></code></pre></td></tr></table></figure>
 <ol start="7" type="1">
 <li>打开隐藏文件</li>
 </ol>
-<p><code>ctrl+h</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ctrl+h<br></code></pre></td></tr></table></figure>
 <ol start="8" type="1">
-<li>Filezilla</li>
-</ol>
-<p>通过<code>sudo apt-get install filezilla</code>安装好了，直接在命令行输入<code>filezilla</code>即可打开。</p>
-<ol start="9" type="1">
-<li>但是需要安装ssh server 服务，不然没法使用</li>
-</ol>
-<p><code>sudo apt-get install openssh-server</code></p>
-<ol start="10" type="1">
-<li>检查ssh服务状态</li>
-</ol>
-<p><code>sudo /etc/init.d/ssh status</code></p>
-<ol start="11" type="1">
-<li>启动ssh服务</li>
-</ol>
-<p><code>sudo /etc/init.d/ssh start</code></p>
-<ol start="12" type="1">
 <li>创建快捷方式</li>
 </ol>
+<blockquote>
 <p>以给Typora创建快捷方式为例：</p>
+</blockquote>
 <ul>
 <li>首先创建一个<code>typora.desktop</code>的文件，将下列内容写入该文件中，</li>
 </ul>
@@ -237,10 +223,66 @@
 <li>然后把这个文件拷贝到系统应用目录下，<code>sudo cp typora.desktop /usr/share/applications/</code>，
 搞定。</li>
 </ul>
-<ol start="13" type="1">
-<li></li>
-<li></li>
+<ol start="9" type="1">
+<li>文件解压</li>
 </ol>
+<ul>
+<li>批量解压</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> *.tgz; <span class="hljs-keyword">do</span> tar -xvf <span class="hljs-string">"<span class="hljs-variable">$f</span>"</span>; <span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>文件太大压缩包分成多个部分，解压到一个文件夹下</li>
+</ul>
+<blockquote>
+<p>xxx.tar.gz.00.tar.gz.01.tar.gz.02</p>
+</blockquote>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">cat</span> TRAIN.<span class="hljs-regexp">tar.gz.*</span> | tar -zxv<br>tar -zxv VAL.tar.gz<br></code></pre></td></tr></table></figure>
+<ol start="10" type="1">
+<li>文件夹软连接</li>
+</ol>
+<blockquote>
+<p>将一个文件夹软连接到另一个文件夹，但是在docker容器路径映射中没用。而且文件夹修改会同步生效。在使用ls命令时，文件夹路径后会有@符号。</p>
+</blockquote>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">ln -s tar_dir src_dir</span><br></code></pre></td></tr></table></figure>
+<ol start="11" type="1">
+<li><a href="https://www.51cto.com/article/630899.html">删除apt的缓存</a></li>
+</ol>
+<blockquote>
+<p>节约磁盘空间，虽然下次再下载的时候时间会长一些。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt-get clean<br></code></pre></td></tr></table></figure>
+<ol start="12" type="1">
+<li>服务器ssh服务开启</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo /etc/init.d/ssh status # 检查ssh服务状态<br>sudo /etc/init.d/ssh start<br>service ssh start # 或者<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>需要先检查是否有openssh安装</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">apt-get update<br>apt-get install -y openssh-server vim<br></code></pre></td></tr></table></figure>
+<ul>
+<li>然后设置密码，才能远程连接</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/ssh/sshd_config # 设置允许密码连接<br>passwd #设置密码<br>service ssh restart # 重新打开ssh服务<br></code></pre></td></tr></table></figure>
+<ol start="13" type="1">
+<li>服务器容器远程连接</li>
+</ol>
+<blockquote>
+<p>首先服务器需要开启openssh服务</p>
+</blockquote>
+<ul>
+<li>直接使用控制台终端连接</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -p port_id root@server_ip<br></code></pre></td></tr></table></figure>
+<ul>
+<li>vscode连接</li>
+</ul>
+<p>需要一个插件Remote-SSH。然后点击<code>远程资源服务器</code>-<code>远程</code>，然后输入<code>ssh -p port_id root@server_ip</code>会更新配置config配置文件。比如：</p>
+<blockquote>
+<p>Host custom_name</p>
+<p>​ HostName ip</p>
+<p>​ Port 10008</p>
+<p>​ User root</p>
+</blockquote>
 
         </div>
         
@@ -257,7 +299,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2020/05/07/linux-command-usage/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2020-05-07</p>
-    <p><span>update time:</span>2023-09-24</p>
+    <p><span>update time:</span>2023-12-10</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -663,10 +705,6 @@
          
             
          
-            
-         
-            
-         
             <article class="media"> <a href="/blogs/2023/09/25/Linux-BoostUp/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Linux BoostUp">
@@ -678,6 +716,10 @@
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
          
             
          
@@ -697,16 +739,6 @@
          
             
          
-            
-         
-            
-         
-            
-         
-            
-         
-            
-         
             <article class="media"> <a href="/blogs/2023/01/16/ROS%20basic%20manager/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ROS basic usage and manager">
@@ -718,6 +750,16 @@
                     </div>
                 </div>
             </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
          
             
          
