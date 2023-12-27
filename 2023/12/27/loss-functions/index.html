@@ -8,17 +8,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>AmazingHao&#39;s Free Space</title>
+<title>loss functions - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="Recording the knowledge about the world">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AmazingHao&#39;s Free Space">
-<meta property="og:url" content="http://whu-lyh.github.io/blogs/page/6/index.html">
+    <meta name="description" content="损失函数 常见的调包就行，复杂的得自己写。损失函数中没有可训练的参数，因此通常直接使用torch.nn.functional中的函数即可。 1234import torch.nn as nncls_criterion &#x3D; nn.CrossEntropyLoss()dist_criterion &#x3D; nn.MSELoss()  # Use L2 loss functionhinge_criteri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="loss functions">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/2023/12/27/loss-functions/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="Recording the knowledge about the world">
+<meta property="og:description" content="损失函数 常见的调包就行，复杂的得自己写。损失函数中没有可训练的参数，因此通常直接使用torch.nn.functional中的函数即可。 1234import torch.nn as nncls_criterion &#x3D; nn.CrossEntropyLoss()dist_criterion &#x3D; nn.MSELoss()  # Use L2 loss functionhinge_criteri">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
+<meta property="article:published_time" content="2023-12-27T11:34:04.000Z">
+<meta property="article:modified_time" content="2023-12-27T15:55:16.827Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Fire">
 <meta name="twitter:card" content="summary">
@@ -78,7 +80,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/blogs/">
             
-                <img src="/blogs/images/logo.svg" alt="AmazingHao&#39;s Free Space" height="28">
+                <img src="/blogs/images/logo.svg" alt="loss functions" height="28">
             
             </a>
         </div>
@@ -114,6 +116,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="搜索" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -144,26 +150,21 @@
     <section class="section">
         <div>
             <div class="columns is-centered is-variable is-2">
-                <div class="column is-two-thirds-tablet is-6-desktop is-5-widescreen is-5-fullhd has-order-2 column-main">
+                <div class="column is-two-thirds-tablet is-9-desktop is-7-widescreen is-three-fifths-fullhd has-order-2 column-main">
                     
-    
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-06-11T11:24:21.000Z">2020-06-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
-                </div>
+                <time class="level-item has-text-grey" datetime="2023-12-27T11:34:04.000Z">2023-12-27</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 984 个字)
+                    13 分钟 读完 (大约 1952 个字)
                 </span>
                 
                 
@@ -172,143 +173,140 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">pcl中的体素滤波</a>
+                loss functions
             
         </h1>
         <div class="content">
-            <h3 id="体素滤波">体素滤波</h3>
-<p>  Voxel滤波作为一种很常见的滤波方法，但是其PCL内部代码却值得学习，因此今天转载一篇关于pcl中实现的体素滤波的方法。<br>
-基本上参考博客：https://blog.csdn.net/u013630299/article/details/105661194</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-05-07T02:37:44.000Z">2020-05-07</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 608 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2020/05/07/linux-command-usage/">linux command usage</a>
-            
-        </h1>
-        <div class="content">
-            <p>一些常用的Linux的命令记录</p>
-<h3 id="common-command">Common Command</h3>
-<ol type="1">
-<li>查看当前系统的版本</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat /etc/issue<br></code></pre></td></tr></table></figure>
-<ol start="2" type="1">
-<li>查看当前所安装的软件</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">dpkg -l<br></code></pre></td></tr></table></figure>
-<ol start="3" type="1">
-<li>查看某软件安装路径</li>
-</ol>
-<p><code>dpkg -L | grep ftp</code> 查看ftp的位置</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2020/05/07/linux-command-usage/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-21T08:21:12.000Z">2020-03-21</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 250 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2020/03/21/WindowBat%E5%AE%9E%E6%88%98/">WindowBat实战</a>
-            
-        </h1>
-        <div class="content">
-            <ul>
-<li>自动拷贝文件</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">@<span class="hljs-built_in">echo</span> off<br>cls<br><span class="hljs-built_in">cd</span> ./bin<br><br>REM 打印当前文件夹中的dll名称<br>dir *.dll<br><br><span class="hljs-keyword">for</span> /r %%j <span class="hljs-keyword">in</span> (*.dll) <span class="hljs-keyword">do</span> (<br>	REM 拷贝Release版的dll到指定目录<br>	<span class="hljs-built_in">echo</span> %%j | find <span class="hljs-string">"_d"</span> || xcopy %%j E:path\Release\ /Y<br>	REM 拷贝Debug版的dll到指定目录<br>	<span class="hljs-built_in">echo</span> %%j | find <span class="hljs-string">"_d"</span> &amp;&amp; xcopy %%j E:path\Debug\ /Y<br>)<br><br>PAUSE<br></code></pre></td></tr></table></figure>
+            <h3 id="损失函数">损失函数</h3>
+<p>常见的调包就行，复杂的得自己写。损失函数中没有可训练的参数，因此通常直接使用<code>torch.nn.functional</code>中的函数即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br>cls_criterion = nn.CrossEntropyLoss()<br>dist_criterion = nn.MSELoss()  <span class="hljs-comment"># Use L2 loss function</span><br>hinge_criterion = nn.HingeEmbeddingLoss()<br></code></pre></td></tr></table></figure>
 <ul>
-<li>批量自动移动文件并自动建立同名文件夹</li>
+<li><h4 id="triplet-loss">Triplet loss</h4></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">@<span class="hljs-built_in">echo</span> off<br>REM 首先遍历最外层的文件夹，<br><span class="hljs-keyword">for</span> /f  %%i <span class="hljs-keyword">in</span> (<span class="hljs-string">'"dir /ad/b/on *.*"'</span>) <span class="hljs-keyword">do</span> (  <br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">"First Dir: %%~fi"</span><br>	REM MKDIR OF DESTINATION<br>	md E:\Destination\%%i<br>	<span class="hljs-built_in">cd</span> %%~<span class="hljs-keyword">fi</span><br>    REM 获取到子文件夹之后再递归遍历子文件夹<br>	<span class="hljs-keyword">for</span> /f  %%j <span class="hljs-keyword">in</span> (<span class="hljs-string">'"dir /ad/b/on *.*"'</span>) <span class="hljs-keyword">do</span> (  <br>		<span class="hljs-built_in">echo</span>  <span class="hljs-string">"Second Dir:%%~fj"</span><br>		REM MKDIR OF DESTINATION<br>		md E:\Destination\%%i\%%j<br>		<span class="hljs-built_in">cd</span> %%~fj<br>		REM 拷贝每个文件到预定的路径中<br>		<span class="hljs-keyword">for</span> %%k <span class="hljs-keyword">in</span> (*.las) <span class="hljs-keyword">do</span> ( <br>			<span class="hljs-built_in">echo</span> <span class="hljs-string">"Third Dir:%%~fk"</span><br>			REM COPY EACH LAS FILE<br>			xcopy %%k E:\Destination\%%i\%%j\ /E /D /R /Y<br>		)<br>		REM 返回到上层文件夹，继续后续的遍历<br>		<span class="hljs-built_in">cd</span> ..<br>	)<br>	REM 同理<br>	<span class="hljs-built_in">cd</span> ..<br>)<br>REM 脚本运行完之后不退出<br>pause<br></code></pre></td></tr></table></figure>
+<p>公式详见点云定位的docx文档。<code>torch.nn.TripletMarginLoss</code>。</p>
+<p>需要注意正负样本的选择，有不同的方式，比较常见的有两种:一种是提前计算好;一种是使用mini-batch内的其他样本直接作为负样本。但是后者会不会存在问题，比如恰好找到了相邻位置的正样本，使得所谓的负样本其实是正样本来的。</p>
+<a id="more"></a>
+<ul>
+<li>该函数支持多个负样本的计算，其实就是循环，如果把循环单独拎出来，计算结果是一样的。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">criterion = nn.TripletMarginLoss(margin=margin_value, p=<span class="hljs-number">2</span>, reduction=<span class="hljs-string">'sum'</span>)<br><span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> range(negCount):<br> 	negIx = (torch.sum(negCounts[:i]) + n).item()<br> 	loss += criterion(anchor[i: i + <span class="hljs-number">1</span>], positives[i: i + <span class="hljs-number">1</span>], negatives[negIx:negIx + <span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="infonce">InfoNCE</h4></li>
+</ul>
+<p>名称：Information Noise-Contrastive Estimation。
+目的是为了通过优化的方式最大化多模态特征之间的互信息，从而使得隐向量表达多个模态之间的公有表征。The
+InfoNCE loss can also be interpreted as a kind of classification, where
+you have K-1 negative classes and 1 positive
+class。在多模态对比学习任务中，优化Info-NCE
+损失函数可以理解为最大化两个模态互信息的下界，使得隐藏层更能包含两个模态的共有信息。公式表达如下：</p>
+<p><span class="math display">\[
+\mathcal{L}_{Info\_NCE}=-log \Large( \frac{\exp (q \cdot k ^+
+/\tau)}{\exp (q \cdot k ^+ /\tau)+\Sigma_{k^-}\exp (q \cdot k ^-
+/\tau)})
+\]</span> <span class="math inline">\(q,k^+,k^-\)</span>，分别表示query、positive，negative<strong>s</strong>的特征，负样本可有多个。特征向量之间的点乘表示两个特征之间的相似性。</p>
+<p>使用了softmax的思路进行标准化，实际使用时：就是准备好正负样本对之后，使用Cross-Entropy进行分类的。</p>
+<ul>
+<li><h4 id="binary-cross-entropy">Binary Cross-Entropy</h4></li>
+</ul>
+<p><a href="http://t.csdn.cn/IWfMo">用于二分类任务，针对每个输入样本</a>，计算预测的概率和真实标签之间的不相关性。<code>torch.nn.BCELoss</code>。
+<span class="math display">\[
+L = -\left(y_{\text{true}} \cdot \log(y_{\text{pred}}) + (1 -
+y_{\text{true}}) \cdot \log(1 - y_{\text{pred}})\right)
+\]</span> <span class="math inline">\(y_{true}\)</span>表示真实二值标签，要么0要么1，<span class="math inline">\(y_{pred}\)</span>表示正确类的预测概率，可以先用sigmoid将每个神经元输出的logits值归一化到[0,1]区间成为概率，这里不保证所有的值加起来等于1
+。函数输入是(B,C)的向量矩阵，表示B个样本、C个类别和(B,C)个二值标签。</p>
+<ul>
+<li><h4 id="cross-entropy-loss">Cross-Entropy loss</h4></li>
+</ul>
+<p>交叉熵主要用于多分类任务。<code>torch.nn.CrossEntropyLoss()</code>。交叉熵公式表示如下：
+<span class="math display">\[
+H(p,q)=-\Sigma_i P(i)\log Q(i)
+\]</span> 发现<span class="math inline">\(H(p,q)\)</span>的计算不依赖于<span class="math inline">\(P\)</span>矩阵，而仅仅与<span class="math inline">\(P\)</span>的真实类别的index有关。</p>
+<p><a href="https://zhuanlan.zhihu.com/p/159477597">当input满足一定条件时，nll_loss和torch.nn.CrossEntropyLoss()是等价的</a>。交叉熵是定义在两个one-hot向量之间的，更具体地说是定义在两个概率向量之间nll是定义在一个模型上的，取决于模型本身可以取不同的形式。<strong>步骤</strong>：1）将预测的值通过softmax进行归一化保证无上溢出问题；2）再log运算保证无下溢出问题；3）最后与真值计算负对数似然损失。</p>
+<p>pytorch官网给出了很好的解释：</p>
+<ul>
+<li><p><a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">实际代码实现</a>中就是将nnl_loss和log_softmax（可以认为就是归一化得到0-1概率值的过程）的结果进行了结合。</p></li>
+<li><p>不需要对输入的标签进行==one_hot==编码，只需要<a href="https://blog.csdn.net/wuliBob/article/details/104119616">输入对应的真实标签</a>==（标量）==，内部自动one_hot。</p></li>
+<li><p>还可以在计算误差是对每个类别进行加权，只需要传入一个权重矩阵就行。</p></li>
+<li><p>传入的logits值不需要进行<strong>归一化</strong>（<strong>但是实际使用来看，还是归一化比较好</strong>），也不需要是正数，或者加起来和为1。</p></li>
+<li><p>输出的结果依据input来，如果是一个C，那么输出就是一个标量，如果传入的是一个batch的数据，那么输出就是B个值。其他见<a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">官方说明</a>。</p></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> torch<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> torch.nn.functional <span class="hljs-keyword">as</span> F<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-meta">&gt;&gt;&gt; </span>x = torch.randn(<span class="hljs-number">5</span>, <span class="hljs-number">5</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>target = torch.tensor([<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>]) <span class="hljs-comment"># 标签 这里还有一个torch.tensor与torch.Tensor的知识点https://blog.csdn.net/weixin_40607008/article/details/107348254</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>one_hot = F.one_hot(target).float() <span class="hljs-comment"># 对标签进行one_hot编码</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>softmax = torch.exp(x)/torch.sum(torch.exp(x), dim = <span class="hljs-number">1</span>).reshape(<span class="hljs-number">-1</span>, <span class="hljs-number">1</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>logsoftmax = torch.log(softmax)<br><span class="hljs-meta">&gt;&gt;&gt; </span>nllloss = -torch.sum(one_hot*logsoftmax)/target.shape[<span class="hljs-number">0</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span>nllloss<br>tensor(<span class="hljs-number">1.8566</span>)<br><span class="hljs-comment">###下面用torch.nn.function实现一下以验证上述结果的正确性</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>logsoftmax = F.log_softmax(x, dim = <span class="hljs-number">1</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>nllloss = F.nll_loss(logsoftmax, target) <span class="hljs-comment"># 无需对标签做one_hot编码</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>nllloss<br>tensor(<span class="hljs-number">1.8566</span>)<br><span class="hljs-comment">###最后我们直接用torch.nn.CrossEntropyLoss验证一下以上两种方法的正确性</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>cross_entropy = F.cross_entropy(x, target)<br><span class="hljs-meta">&gt;&gt;&gt; </span>cross_entropy<br>tensor(<span class="hljs-number">1.8566</span>) <span class="hljs-comment">#发现是一样的</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="nll_loss">nll_loss</h4></li>
+</ul>
+<p>负对数似然损失函数(Negtive Log Likehood)，对应多分类问题： <span class="math display">\[
+nll\_loss = -\frac{1}{N}\Sigma_{i=1}^N \mathcal{y}_i (logsoftmax)
+\]</span> 其中<span class="math inline">\(y_i\)</span>是==one_hot==编码后的数据标签，NLLLoss()得到的结果即是<span class="math inline">\(y_i\)</span>与logsoftmax()激活后的结果相乘再求均值再取反。（实际在用封装好的函数时,传入的标签无需进行one_hot编码）</p>
+<ul class="task-list">
+<li><label><input type="checkbox" checked>==ont_hot==：在多分类(不是多标签分类)任务中，标签不在是二值量。需要将原来的一个标量，表示为向量，只有对应位置处的值为1，其他都是0，确保加和为1.</label></li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">target = torch.tensor([<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>])<br>one_hot = F.one_hot(target).<span class="hljs-built_in">float</span>()<br>&gt;&gt;&gt; print(one_hot)<br>tensor([[<span class="hljs-number">1.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>],<br>        [<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>],<br>        [<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">0.</span>],<br>        [<span class="hljs-number">0.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>],<br>        [<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">1.</span>]])<br></code></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="softmax">Softmax</h4></li>
+</ul>
+<p>从<strong>argmax</strong>-&gt;<strong>softargmax</strong>-&gt;<strong>softmax</strong>而来，目的是为了找到一个数列中的最大值，在分类任务中找到概率做大的那个类就是分类的结果。softmax是指数标准化函数，又称为归一化指数函数，将多个神经元的输出，映射到
+(0,1)
+范围内的K维向量，并且归一化保证和为1，从而使得多分类的概率之和也刚好为1。<a href="https://www.zhihu.com/question/358069078/answer/912691444">数学原理</a>如下：
+<span class="math display">\[
+Softmax(\mathcal{z}_i)=\frac{\exp (\mathcal{z}_i)}{\Sigma_j \exp
+(\mathcal{z}_j)}
+\]</span> <span class="math inline">\(\mathcal{z}_j\)</span>非常大或者非常小的时候就会导致指数计算出现上溢出和下溢出的问题。那么就可以统一对z的取值进行修改，比如减去<span class="math inline">\(c=max(z)\)</span>，这样就不会上溢出了。但是还存在下溢出，通过数值计算中的等式变换避免下溢出的情况，即使用log函数进行变换。实际计算softmax的方式就变成如下<strong>logsoftmax</strong>形式，同时保证和为1.
+<span class="math display">\[
+\begin{align}
+Log(Softmax(\mathcal{z}_i))&amp;=Log (\frac{\exp
+(\mathcal{z}_i-c)}{\Sigma_j \exp (\mathcal{z}_j-c)}) \
+&amp;= (\mathcal{z}_i-c)-Log(\Sigma_j \exp(\mathcal{z}_j)-c)
+\end{align}
+\]</span> <img src="sigmoid_softmax.png" alt="在这里插入图片描述"></p>
+<figure>
+<img src="sigmoid_softmax2.png" alt="在这里插入图片描述">
+<figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<ul class="task-list">
+<li><label><input type="checkbox" checked>loss波动很厉害是为什么呢？batch_size小的时候，波动厉害是正常的，还有一种情况就是学习率太高了，导致有问题。<strong>the
+training loss oscillates and fails to converge</strong>.</label></li>
+<li><label><input type="checkbox">可能需要固定一些tokenizator，不然训练会不稳定。</label></li>
+</ul>
 
         </div>
+        
+           <div class="my_post_copyright">
+    <div style="text-align:center" class="menu-label">------ copyright ------</div>
+    <p style="text-align:center" class="menu-label"> 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank"><i class="fab fa-creative-commons" style="color:#29a329"></a></i> 许可协议</p>  
+
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <div class="has-text-grey is-size-7 is-block">
+    <p><span>title:</span><a href="/blogs/2023/12/27/loss-functions/">loss functions</a></p>
+    <p><span>author:</span><a href="/">AmazingHao</a></p>
+    <p>
+        <span>link:</span><a href="/blogs/2023/12/27/loss-functions/" title="loss functions - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2023/12/27/loss-functions/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2023/12/27/loss-functions/"  aria-label="复制成功！"></i></span>
+    </p>
+    <p><span>publish time:</span>2023-12-27</p>
+    <p><span>update time:</span>2023-12-27</p>
+    </div>
+</div>
+<!-- <ul class="post-copyright">
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2023/12/27/loss-functions/">loss functions</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2023/12/27/loss-functions/">http://whu-lyh.github.io/blogs/2023/12/27/loss-functions/</a></li>
+    <li><strong>发布时间：</strong>2023-12-27</li>
+    <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+    </li>
+</ul> -->
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+        clipboard.on('success', function(){
+            swal({   
+                title: "",   
+                text: '复制成功',
+                icon: "success", 
+                showConfirmButton: true
+            });
+         });
+    });  
+</script>
         
         
         
@@ -320,166 +318,24 @@
 
 
 
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-21T08:21:12.000Z">2020-03-21</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 小时 读完 (大约 8615 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2020/03/21/WindowBat/">WindowBat</a>
-            
-        </h1>
-        <div class="content">
-            <p><a href="https://blog.csdn.net/qq_36838191/article/details/83046599">bat</a>中的一些语法学习，用于MicroStation多人编译</p>
-<h2 id="parameter-setting">Parameter Setting</h2>
-<h4 id="系统参数"><em>1、系统参数</em></h4>
-<p>%SystemRoot% === C:(%windir% 同样)<br>
-%ProgramFiles% === C:Files<br>
-%USERPROFILE% === C:and
-Settings(子目录有“桌面”,“开始菜单”,“收藏夹”等)<br>
-%APPDATA% === C:and SettingsData<br>
-%TEMP% === C:<sub>1</sub>1~1(%TEM% 同样)<br>
-%APPDATA% === C:and SettingsData<br>
-%OS% === Windows_NT (系统)<br>
-%Path% === %SystemRoot%;%SystemRoot%;%SystemRoot%(原本的设置)<br>
-%HOMEDRIVE% === C: (系统盘)<br>
-%HOMEPATH% === and Settings :: 枚举当前的环境变量<br></p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2020/03/21/WindowBat/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-11T10:57:49.000Z">2020-03-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 151 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2020/03/11/OSG%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB/">OSG中的坐标系</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="osg中的坐标系和opengl中的坐标系">OSG中的坐标系和OpenGL中的坐标系</h3>
-<p>OSG中采用四元数表示旋转：<code>osg::Quat(angle to rotate, rotate around axis);</code></p>
-<p>///***<br>
-///Q quaternion * P quaternion means that first conduct a rotation
-P,Second conduct a rotation Q, means a fusion about two rotations with a
-multiplication operation ///***</p>
-<p>The osg coordinate definition as left-hand coordinate which is
-right-front-up(x-y-z) and the OpenGL coordinate definition also as
-left-hand coordinate which is right-up-behind(x-y-z), z axis is pointer
-to outside the screen The OSG default viewport is along down direction,
-so heading is rotate to be equal to the y positive direction, rotate
-axis is x axis</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2020/03/11/OSG%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
 <div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous">
-            <a class="is-flex-grow has-text-black-ter" href="/blogs/page/5/">上一页</a>
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2023/09/30/MLS-position-inconsistency-correction/">
+                <span class="level-item">MLS position inconsistency correction</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        <div class="pagination-next">
-            <a class="is-flex-grow has-text-black-ter" href="/blogs/page/7/">下一页</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link has-text-black-ter" href="/blogs/">1</a></li>
-            
-            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
-            
-            <li><a class="pagination-link has-text-black-ter" href="/blogs/page/5/">5</a></li>
-            
-            <li><a class="pagination-link is-current" href="/blogs/page/6/">6</a></li>
-            
-            <li><a class="pagination-link has-text-black-ter" href="/blogs/page/7/">7</a></li>
-            
-        </ul>
-    </nav>
+        
+    </div>
 </div>
+
+
+
+<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
                     
                     
@@ -489,7 +345,7 @@ axis is x axis</p>
 
 
 
-<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd  has-order-1 column-left is-sticky">    
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd is-hidden-touch  is-hidden-desktop-only has-order-3 column-left is-sticky">    
     
         
 <div class="card widget">
@@ -674,265 +530,6 @@ axis is x axis</p>
 </div>
     
     
-        <div class="column-right-shadow is-hidden-desktop">
-        
-            
-        
-            <div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            最新文章
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/blogs/2023/12/27/loss-functions/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="loss functions">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-12-27T11:34:04.000Z">2023-12-27</time></div>
-                    <a href="/blogs/2023/12/27/loss-functions/" class="title has-link-black-ter is-size-6 has-text-weight-normal">loss functions</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
-                    <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blogs/2023/09/25/Linux-BoostUp/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Linux BoostUp">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-25T01:44:08.000Z">2023-09-25</time></div>
-                    <a href="/blogs/2023/09/25/Linux-BoostUp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Linux BoostUp</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blogs/2023/09/21/KL%20Divergence/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="KL-divergence">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-21T15:17:44.000Z">2023-09-21</time></div>
-                    <a href="/blogs/2023/09/21/KL%20Divergence/" class="title has-link-black-ter is-size-6 has-text-weight-normal">KL-divergence</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/MathUtilities/">MathUtilities</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blogs/2023/04/27/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-27T03:03:03.971Z">2023-04-27</time></div>
-                    <a href="/blogs/2023/04/27/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-        
-            
-        
-            <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            归档
-        </h3>
-        <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2023/12/">
-                <span class="level-start">
-                    <span class="level-item">十二月 2023</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2023/09/">
-                <span class="level-start">
-                    <span class="level-item">九月 2023</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">3</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2023/04/">
-                <span class="level-start">
-                    <span class="level-item">四月 2023</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">4</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2023/03/">
-                <span class="level-start">
-                    <span class="level-item">三月 2023</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">9</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2023/02/">
-                <span class="level-start">
-                    <span class="level-item">二月 2023</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">4</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2023/01/">
-                <span class="level-start">
-                    <span class="level-item">一月 2023</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2021/01/">
-                <span class="level-start">
-                    <span class="level-item">一月 2021</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">2</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2020/07/">
-                <span class="level-start">
-                    <span class="level-item">七月 2020</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2020/06/">
-                <span class="level-start">
-                    <span class="level-item">六月 2020</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2020/05/">
-                <span class="level-start">
-                    <span class="level-item">五月 2020</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2020/03/">
-                <span class="level-start">
-                    <span class="level-item">三月 2020</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">3</span>
-                </span>
-            </a>
-        </li>
-        
-        <li>
-            <a class="level is-marginless" href="/blogs/archives/2020/02/">
-                <span class="level-start">
-                    <span class="level-item">二月 2020</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">4</span>
-                </span>
-            </a>
-        </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-        
-            <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5dbucqf8hsc&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
-        
-        </div>
-    
     
 </div>
 
@@ -941,9 +538,49 @@ axis is x axis</p>
 
 
 
-<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd is-hidden-touch has-order-3 column-right ">    
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd  has-order-1 column-right ">    
     
         
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#损失函数">
+        <span class="has-mr-6">1</span>
+        <span>损失函数</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#triplet-loss">
+        <span class="has-mr-6">1.1</span>
+        <span>Triplet loss</span>
+        </a></li><li>
+        <a class="is-flex" href="#infonce">
+        <span class="has-mr-6">1.2</span>
+        <span>InfoNCE</span>
+        </a></li><li>
+        <a class="is-flex" href="#binary-cross-entropy">
+        <span class="has-mr-6">1.3</span>
+        <span>Binary Cross-Entropy</span>
+        </a></li><li>
+        <a class="is-flex" href="#cross-entropy-loss">
+        <span class="has-mr-6">1.4</span>
+        <span>Cross-Entropy loss</span>
+        </a></li><li>
+        <a class="is-flex" href="#nll_loss">
+        <span class="has-mr-6">1.5</span>
+        <span>nll_loss</span>
+        </a></li><li>
+        <a class="is-flex" href="#softmax">
+        <span class="has-mr-6">1.6</span>
+        <span>Softmax</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
     
         <div class="card widget">
     <div class="card-content">
@@ -1050,6 +687,83 @@ axis is x axis</p>
 </div>
     
         
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            related posts
+        </h3>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+        
+    </div>
+</div>
+
     
         <div class="card widget">
     <div class="card-content">
@@ -1212,7 +926,7 @@ axis is x axis</p>
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/blogs/">
                 
-                    <img src="/blogs/images/logo.svg" alt="AmazingHao&#39;s Free Space" height="28">
+                    <img src="/blogs/images/logo.svg" alt="loss functions" height="28">
                 
                 </a>
                 <p class="is-size-7">

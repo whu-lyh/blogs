@@ -150,6 +150,75 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/blogs/2023/03/06/B-Spline/" class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2023/03/06/B-Spline/viz_ctrlpt.svg" alt="B-Spline探秘">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2023-03-06T08:56:42.594Z">2023-03-06</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/MathUtilities/">MathUtilities</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    18 分钟 读完 (大约 2632 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/blogs/2023/03/06/B-Spline/">B-Spline探秘</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="b-splinebasic-spline">B-Spline（=Basic Spline）</h2>
+<h3 id="需求">需求</h3>
+<ul>
+<li>需要利用样条函数拟合<a href="https://github.com/whu-lyh/PoseSpline">时相连续的数据</a>，e.g.
+IMU data。</li>
+<li>利用样条函数拟合散点，做表面拟合，e.g.
+构建mesh或者其他光滑的表面。</li>
+<li><a href="https://zhuanlan.zhihu.com/p/159192419">路径规划</a>中使用样条线对A*算法进行优化，得到更加平滑的路径。</li>
+<li>多传感器融合任务中，e.g.<a href="https://github.com/ethz-asl/kalibr.git">多传感器标定</a>时，为了内插任意时刻的状态，实现多传感器的时间对齐，使用B-spline做内插。</li>
+</ul>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2023/03/06/B-Spline/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/blogs/2023/03/06/Zotero/" class="image is-7by1">
             <img class="thumbnail" src="/blogs/2023/03/06/Zotero/zotero-logo.png" alt="Zotero食用指南">
         </a>
@@ -205,82 +274,6 @@ zotero安装和坚果云申请就不说了。网上一大堆。虽然坚果云�
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/blogs/2023/03/06/Zotero/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blogs/2023/02/25/Hexo%E8%BF%9B%E9%98%B6/" class="image is-7by1">
-            <img class="thumbnail" src="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/hexo-logo.png" alt="Hexo进阶">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2023-02-25T04:55:14.000Z">2023-02-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">写作工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    12 分钟 读完 (大约 1825 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2023/02/25/Hexo%E8%BF%9B%E9%98%B6/">Hexo进阶</a>
-            
-        </h1>
-        <div class="content">
-            <ul>
-<li>关于Hexo如何制作博客主页详见<a href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">这里</a>。</li>
-</ul>
-<h2 id="现象描述">现象描述</h2>
-<p>​ 按照<a href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">hexo+github
-pages的博客搭建部署流程</a>，hexo的<strong>博客主页</strong>会部署在<code>https://yourgithubname.github.io/</code>。本来没什么问题的，但是后面我想做一个<strong>个人主页（学术主页）</strong>，按照<a href="https://github.com/academicpages/academicpages.github.io">academicpages/academicpages.github.io</a>或者<a href="RayeRen/acad-homepage.github.io">RayeRen/acad-homepage.github.io</a>的方案，使用的也是<code>https://yourgithubname.github.io/</code>。这时候就有问题了，博客和个人主页的域名不就冲突了？</p>
-<ul>
-<li>我的目的是实现下面功能的东西。</li>
-</ul>
-<blockquote>
-<p>从yourgithubname.github.io进入，访问的是我的个人主页。通过个人主页可以跳转到博客、建立页面。</p>
-<p>从yourgithubname.github.io/blogs进入，访问的是我的博客，就是用hexo搭建好的。</p>
-<p>从yourgithubname.github.io/resume进入，访问的就是我的一个个人简历。</p>
-</blockquote>
-<ul>
-<li>本人菜鸡，完全不懂前端。尝试了几种不同的方案，包括切换repo分支的谜之操作，都试了，都不行。最后发现原来是对Hexo进行部署了解的不够细致。</li>
-</ul>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2023/02/25/Hexo%E8%BF%9B%E9%98%B6/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -376,6 +369,82 @@ pages的博客搭建部署流程</a>，hexo的<strong>博客主页</strong>会�
 <div class="card">
     
     <div class="card-image">
+        <a href="/blogs/2023/02/25/Hexo%E8%BF%9B%E9%98%B6/" class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/hexo-logo.png" alt="Hexo进阶">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2023-02-25T04:55:14.000Z">2023-02-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">写作工具</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    12 分钟 读完 (大约 1825 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/blogs/2023/02/25/Hexo%E8%BF%9B%E9%98%B6/">Hexo进阶</a>
+            
+        </h1>
+        <div class="content">
+            <ul>
+<li>关于Hexo如何制作博客主页详见<a href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">这里</a>。</li>
+</ul>
+<h2 id="现象描述">现象描述</h2>
+<p>​ 按照<a href="http://whu-lyh.github.io/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">hexo+github
+pages的博客搭建部署流程</a>，hexo的<strong>博客主页</strong>会部署在<code>https://yourgithubname.github.io/</code>。本来没什么问题的，但是后面我想做一个<strong>个人主页（学术主页）</strong>，按照<a href="https://github.com/academicpages/academicpages.github.io">academicpages/academicpages.github.io</a>或者<a href="RayeRen/acad-homepage.github.io">RayeRen/acad-homepage.github.io</a>的方案，使用的也是<code>https://yourgithubname.github.io/</code>。这时候就有问题了，博客和个人主页的域名不就冲突了？</p>
+<ul>
+<li>我的目的是实现下面功能的东西。</li>
+</ul>
+<blockquote>
+<p>从yourgithubname.github.io进入，访问的是我的个人主页。通过个人主页可以跳转到博客、建立页面。</p>
+<p>从yourgithubname.github.io/blogs进入，访问的是我的博客，就是用hexo搭建好的。</p>
+<p>从yourgithubname.github.io/resume进入，访问的就是我的一个个人简历。</p>
+</blockquote>
+<ul>
+<li>本人菜鸡，完全不懂前端。尝试了几种不同的方案，包括切换repo分支的谜之操作，都试了，都不行。最后发现原来是对Hexo进行部署了解的不够细致。</li>
+</ul>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2023/02/25/Hexo%E8%BF%9B%E9%98%B6/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/blogs/2023/02/09/B-spline-Interpolation/" class="image is-7by1">
             <img class="thumbnail" src="/blogs/2023/03/06/B-Spline/viz_ctrlpt.svg" alt="B-spline Interpolation">
         </a>
@@ -418,75 +487,6 @@ pages的博客搭建部署流程</a>，hexo的<strong>博客主页</strong>会�
             <div class="level-start">
                 <div class="level-item">
                 <a class="button is-size-7 is-light" href="/blogs/2023/02/09/B-spline-Interpolation/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2023-02-09T02:08:24.000Z">2023-02-09</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/MathUtilities/">MathUtilities</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 分钟 读完 (大约 1158 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2023/02/09/Rotation-Average/">Rotation Average</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="what-is-rotation-averaging">What is Rotation Averaging?</h2>
-<h3 id="problem1">Problem<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h3>
-<p>Given a set of rotation matrices <span class="math inline">\(C_i,
-i=\{1,2,...,n\}\)</span>, the average of them is ? <strong>Rotation
-Averaging</strong> is to calculate the average of a set of rotation
-matrices. Averaging is to get the <strong>best estimate</strong> of all
-rotations. (Single rotation averaging)</p>
-<p>Or equivalently, <strong>Rotation Averaging</strong> is the problem
-of estimating a set of <span class="math inline">\(n\)</span> unknown
-orientations <span class="math inline">\(R_1,...,R_n \in SO(d)\)</span>
-from noisy measurements <span class="math inline">\(\bar{R} \in
-SO(d)\)</span> of the relative rotations <span class="math inline">\(R_i^{-1}R_j\)</span> between them. (Multi rotation
-averaging)</p>
-<p>In practical the rotation averaging problem could be categoried into
-: Single rotation averaging、Multi rotation averaging and Conjugate
-rotation averaging.</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2023/02/09/Rotation-Average/#more">阅读更多</a>
                 </div>
             </div>
         </div>
@@ -579,7 +579,7 @@ rotation averaging.</p>
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            33
+                            34
                         </p>
                     </a>
                 </div>
@@ -737,6 +737,25 @@ rotation averaging.</p>
         
         <article class="media">
             
+            <a href="/blogs/2023/12/27/loss-functions/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="loss functions">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-12-27T11:34:04.000Z">2023-12-27</time></div>
+                    <a href="/blogs/2023/12/27/loss-functions/" class="title has-link-black-ter is-size-6 has-text-weight-normal">loss functions</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
@@ -811,25 +830,6 @@ rotation averaging.</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/04/17/Docker%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker深度学习">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time></div>
-                    <a href="/blogs/2023/04/17/Docker%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Docker深度学习</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -842,6 +842,17 @@ rotation averaging.</p>
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2023/09/">
@@ -993,6 +1004,25 @@ rotation averaging.</p>
         
         <article class="media">
             
+            <a href="/blogs/2023/12/27/loss-functions/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="loss functions">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-12-27T11:34:04.000Z">2023-12-27</time></div>
+                    <a href="/blogs/2023/12/27/loss-functions/" class="title has-link-black-ter is-size-6 has-text-weight-normal">loss functions</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
@@ -1067,25 +1097,6 @@ rotation averaging.</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/04/17/Docker%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2020/02/28/Docker%E5%88%9D%E4%BD%93%E9%AA%8C/Docker-logo.png" alt="Docker深度学习">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time></div>
-                    <a href="/blogs/2023/04/17/Docker%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Docker深度学习</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1098,6 +1109,17 @@ rotation averaging.</p>
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2023/09/">
