@@ -8,13 +8,13 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>标签: OSG - AmazingHao&#39;s Free Space</title>
+<title>标签: Pytorch - AmazingHao&#39;s Free Space</title>
 
 
     <meta name="description" content="Recording the knowledge about the world">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AmazingHao&#39;s Free Space">
-<meta property="og:url" content="http://whu-lyh.github.io/blogs/tags/OSG/index.html">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/tags/Pytorch/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
 <meta property="og:description" content="Recording the knowledge about the world">
 <meta property="og:locale" content="zh_CN">
@@ -150,7 +150,7 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="/blogs/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">OSG</a></li>
+            <li class="is-active"><a href="#" aria-current="page">Pytorch</a></li>
         </ul>
         </nav>
     </div>
@@ -163,7 +163,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-11T10:57:49.000Z">2020-03-11</time>
+                <time class="level-item has-text-grey" datetime="2023-12-27T11:34:04.000Z">2023-12-27</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
@@ -173,7 +173,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 分钟 读完 (大约 151 个字)
+                    15 分钟 读完 (大约 2236 个字)
                 </span>
                 
                 
@@ -182,22 +182,13 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/blogs/2020/03/11/OSG%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB/">OSG中的坐标系</a>
+                <a class="has-link-black-ter" href="/blogs/2023/12/27/loss-functions/">loss functions</a>
             
         </h1>
         <div class="content">
-            <h3 id="osg中的坐标系和opengl中的坐标系">OSG中的坐标系和OpenGL中的坐标系</h3>
-<p>OSG中采用四元数表示旋转：<code>osg::Quat(angle to rotate, rotate around axis);</code></p>
-<p>///***<br>
-///Q quaternion * P quaternion means that first conduct a rotation
-P,Second conduct a rotation Q, means a fusion about two rotations with a
-multiplication operation ///***</p>
-<p>The osg coordinate definition as left-hand coordinate which is
-right-front-up(x-y-z) and the OpenGL coordinate definition also as
-left-hand coordinate which is right-up-behind(x-y-z), z axis is pointer
-to outside the screen The OSG default viewport is along down direction,
-so heading is rotate to be equal to the y positive direction, rotate
-axis is x axis</p>
+            <p>一些常见的损失函数调包就行，复杂的得自己写。损失函数中没有可训练的参数，因此通常直接使用<code>torch.nn.functional</code>中的函数即可。例如一些简单的损失函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br>cls_criterion = nn.CrossEntropyLoss()<br>dist_criterion = nn.MSELoss()  <span class="hljs-comment"># Use L2 loss function</span><br>hinge_criterion = nn.HingeEmbeddingLoss()<br></code></pre></td></tr></table></figure>
+<p>还可以参照pytorch.metrics这个库</p>
         </div>
         
         
@@ -205,7 +196,7 @@ axis is x axis</p>
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2020/03/11/OSG%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB/#more">阅读更多</a>
+                <a class="button is-size-7 is-light" href="/blogs/2023/12/27/loss-functions/#more">阅读更多</a>
                 </div>
             </div>
         </div>

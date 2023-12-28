@@ -155,11 +155,15 @@
             <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2023-12-27T11:34:04.000Z">2023-12-27</time>
                 
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
+                </div>
+                
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    13 分钟 读完 (大约 1952 个字)
+                    15 分钟 读完 (大约 2236 个字)
                 </span>
                 
                 
@@ -172,14 +176,9 @@
             
         </h1>
         <div class="content">
-            <h3 id="损失函数">损失函数</h3>
-<p>常见的调包就行，复杂的得自己写。损失函数中没有可训练的参数，因此通常直接使用<code>torch.nn.functional</code>中的函数即可。</p>
+            <p>一些常见的损失函数调包就行，复杂的得自己写。损失函数中没有可训练的参数，因此通常直接使用<code>torch.nn.functional</code>中的函数即可。例如一些简单的损失函数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br>cls_criterion = nn.CrossEntropyLoss()<br>dist_criterion = nn.MSELoss()  <span class="hljs-comment"># Use L2 loss function</span><br>hinge_criterion = nn.HingeEmbeddingLoss()<br></code></pre></td></tr></table></figure>
-<ul>
-<li><h4 id="triplet-loss">Triplet loss</h4></li>
-</ul>
-<p>公式详见点云定位的docx文档。<code>torch.nn.TripletMarginLoss</code>。</p>
-<p>需要注意正负样本的选择，有不同的方式，比较常见的有两种:一种是提前计算好;一种是使用mini-batch内的其他样本直接作为负样本。但是后者会不会存在问题，比如恰好找到了相邻位置的正样本，使得所谓的负样本其实是正样本来的。</p>
+<p>还可以参照pytorch.metrics这个库</p>
         </div>
         
         
@@ -532,7 +531,7 @@ SCI1-TOP, IF=12.7.</p>
                     </p>
                     <a href="/blogs/tags">
                         <p class="title has-text-weight-normal">
-                            21
+                            22
                         </p>
                     </a>
                 </div>
@@ -620,7 +619,7 @@ SCI1-TOP, IF=12.7.</p>
                 <span class="level-item">开源库</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
@@ -649,7 +648,7 @@ SCI1-TOP, IF=12.7.</p>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
     </div>
 </div>
     
@@ -677,7 +676,7 @@ SCI1-TOP, IF=12.7.</p>
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-12-27T11:34:04.000Z">2023-12-27</time></div>
                     <a href="/blogs/2023/12/27/loss-functions/" class="title has-link-black-ter is-size-6 has-text-weight-normal">loss functions</a>
                     <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
                     </p>
                 </div>
             </div>
@@ -944,7 +943,7 @@ SCI1-TOP, IF=12.7.</p>
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-12-27T11:34:04.000Z">2023-12-27</time></div>
                     <a href="/blogs/2023/12/27/loss-functions/" class="title has-link-black-ter is-size-6 has-text-weight-normal">loss functions</a>
                     <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
                     </p>
                 </div>
             </div>
