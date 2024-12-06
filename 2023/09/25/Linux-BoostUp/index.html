@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2023-09-25T01:44:08.000Z">
-<meta property="article:modified_time" content="2024-10-11T04:07:52.496Z">
+<meta property="article:modified_time" content="2024-12-06T13:39:10.637Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -164,7 +164,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    22 分钟 读完 (大约 3314 个字)
+                    25 分钟 读完 (大约 3688 个字)
                 </span>
                 
                 
@@ -343,10 +343,34 @@ Monitor</h2>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim">old <span class="hljs-keyword">mode</span> <span class="hljs-number">100755</span>  <br><span class="hljs-keyword">new</span> <span class="hljs-keyword">mode</span> <span class="hljs-number">100644</span><br></code></pre></td></tr></table></figure>
 <p><a href="https://stackoverflow.com/questions/1257592/how-do-i-remove-files-saying-old-mode-100755-new-mode-100644-from-unstaged-cha">解决方案</a>：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git config core.filemode false<br></code></pre></td></tr></table></figure>
-<p>git推送代码时出现问题，<a href="https://stackoverflow.com/questions/20168639/git-commit-get-fatal-error-fatal-crlf-would-be-replaced-by-lf-in">fatal:
+<p>Git推送代码时出现问题，<a href="https://stackoverflow.com/questions/20168639/git-commit-get-fatal-error-fatal-crlf-would-be-replaced-by-lf-in">fatal:
 CRLF would be replaced by LF in</a>:</p>
 <p>解决方案：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global core.autocrlf <span class="hljs-literal">false</span><br>git config --global core.safecrlf <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<p>Github中存储大量的数据，如何快速下载？</p>
+<p>解决方案：因为大文件使用的是LFS，是Git Large File
+Storage（LFS），因此需要在Git安装并配置好SSH密钥，连接到GitHub、huggingface或其他代码仓库。</p>
+<ul>
+<li>LINUX系统：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash<br>sudo apt-get install git-lfs<br>git lfs install<br></code></pre></td></tr></table></figure>
+<p>也可以通过软件包管理器（如yum或apt）安装Git LFS。</p>
+<ul>
+<li>Windows系统：</li>
+</ul>
+<p>直接：<code>git lfs install</code>如果显示Git LFS
+initialized说明已经OK。然后再git clone就行了。</p>
+<h2 id="huggingface如何快速下载数据">HuggingFace如何快速下载数据</h2>
+<p>使用官方huggingface_hub可以更加高效一些，然后在使用的时候再从本地加载。github一个下载加速的快捷工具<strong><a href="https://github.com/LetheSec/HuggingFace-Download-Accelerator">HuggingFace-Download-Accelerator</a></strong>。</p>
+<p>首先安装huggingface_hub，但是这个安装的时候与网络有很大的关系，很容易出现网络错误。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install -U huggingface_hub<br></code></pre></td></tr></table></figure>
+<p>命令行下载：(比如下载CV-Cities数据集)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python hf_download.py --dataset gaoshuang98/CV-Cities --save_dir ../CV-Cities --use_mirror True --use_hf_transfer False<br></code></pre></td></tr></table></figure>
+<ul>
+<li>如果下载失败了之后，重新运行的话，还可以续下。</li>
+</ul>
+<p>如果是需要在代码中下载权重，那么在python
+xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下载速度。然后再转到本地存储下来避免二次下载。</p>
 <h2 id="pip库安装">pip库安装</h2>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">pip cache <span class="hljs-builtin-name">remove</span> *<br></code></pre></td></tr></table></figure>
 <ul class="task-list">
@@ -400,7 +424,7 @@ CRLF would be replaced by LF in</a>:</p>
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2023/09/25/Linux-BoostUp/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2023-09-25</p>
-    <p><span>update time:</span>2024-10-11</p>
+    <p><span>update time:</span>2024-12-06</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -832,6 +856,8 @@ CRLF would be replaced by LF in</a>:</p>
                 </div>
             </article>
          
+            
+         
             <article class="media"> <a href="/blogs/2023/01/16/ROS%20basic%20manager/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ROS basic usage and manager">
@@ -867,8 +893,6 @@ CRLF would be replaced by LF in</a>:</p>
                     </div>
                 </div>
             </article>
-         
-            
          
             
          
