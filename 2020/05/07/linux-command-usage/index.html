@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2020-05-07T02:37:44.000Z">
-<meta property="article:modified_time" content="2023-12-15T05:15:06.778Z">
+<meta property="article:modified_time" content="2025-01-15T14:18:29.146Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -164,7 +164,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 分钟 读完 (大约 608 个字)
+                    5 分钟 读完 (大约 735 个字)
                 </span>
                 
                 
@@ -287,6 +287,18 @@
 <li>查看IP</li>
 </ol>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">ifconfig<br>apt-<span class="hljs-builtin-name">get</span> install net-tools<br></code></pre></td></tr></table></figure>
+<ol start="15" type="1">
+<li>清空回收站</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo rm -rf ~/.<span class="hljs-built_in">local</span>/share/Trash/*<br></code></pre></td></tr></table></figure>
+<ol start="16" type="1">
+<li>查看cpu的核数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cat /proc/cpuinfo| grep <span class="hljs-string">"cpu cores"</span>| uniq<br></code></pre></td></tr></table></figure>
+<ol start="17" type="1">
+<li>如何在ubuntu中添加一个软件的快捷方式，例如Typora</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#首先使用vim新建一个文件</span><br>vim typora.desktop<span class="hljs-string">"</span><br><span class="hljs-string">#在文件中输入下列内容</span><br><span class="hljs-string">[Desktop Entry]</span><br><span class="hljs-string">Name=Typora</span><br><span class="hljs-string">Exec=/opt/Typora-linux-x64/Typora</span><br><span class="hljs-string">Type=Application</span><br><span class="hljs-string">Icon=/opt/Typora-linux-x64/resources/asserts/icon/icon_512x512.png</span><br><span class="hljs-string">#退出vim</span><br><span class="hljs-string">#拷贝这个文件到系统路径下</span><br><span class="hljs-string">sudo cp typora.desktop /usr/share/applications/</span><br><span class="hljs-string">#可能需要重启就出现了。</span><br></code></pre></td></tr></table></figure>
 
         </div>
         
@@ -303,7 +315,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2020/05/07/linux-command-usage/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2020-05-07</p>
-    <p><span>update time:</span>2023-12-15</p>
+    <p><span>update time:</span>2025-01-15</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -359,8 +371,8 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2020/03/21/WindowBat%E5%AE%9E%E6%88%98/">
-                <span class="level-item">WindowBat实战</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2020/03/21/WindowBat/">
+                <span class="level-item">WindowBat</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -420,7 +432,7 @@
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            34
+                            36
                         </p>
                     </a>
                 </div>
@@ -432,7 +444,7 @@
                     </p>
                     <a href="/blogs/categories">
                         <p class="title has-text-weight-normal">
-                            7
+                            8
                         </p>
                     </a>
                 </div>
@@ -444,7 +456,7 @@
                     </p>
                     <a href="/blogs/tags">
                         <p class="title has-text-weight-normal">
-                            22
+                            24
                         </p>
                     </a>
                 </div>
@@ -511,6 +523,14 @@
                 <span class="level-item tag">3</span>
             </span>
         </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">传感器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
             <span class="level-start">
                 <span class="level-item">写作工具</span>
@@ -561,7 +581,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
     </div>
 </div>
     
@@ -583,6 +603,44 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/01/15/IMU/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="IMU">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-01-15T14:31:42.000Z">2025-01-15</time></div>
+                    <a href="/blogs/2025/01/15/IMU/" class="title has-link-black-ter is-size-6 has-text-weight-normal">IMU</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">传感器</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/01/15/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%E4%BC%A0%E6%84%9F%E5%99%A8/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="激光雷达传感器">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-01-15T14:21:58.000Z">2025-01-15</time></div>
+                    <a href="/blogs/2025/01/15/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%E4%BC%A0%E6%84%9F%E5%99%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">激光雷达传感器</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">传感器</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -641,44 +699,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2023/09/21/KL%20Divergence/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="KL-divergence">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-21T15:17:44.000Z">2023-09-21</time></div>
-                    <a href="/blogs/2023/09/21/KL%20Divergence/" class="title has-link-black-ter is-size-6 has-text-weight-normal">KL-divergence</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/MathUtilities/">MathUtilities</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blogs/2023/04/27/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-04-27T03:03:03.971Z">2023-04-27</time></div>
-                    <a href="/blogs/2023/04/27/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -688,6 +708,10 @@
         <h3 class="menu-label">
             related posts
         </h3>
+         
+            
+         
+            
          
             
          
@@ -729,9 +753,17 @@
                 </div>
             </article>
          
-            
-         
-            
+            <article class="media"> <a href="/blogs/2023/01/16/ROS%20basic%20manager/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ROS basic usage and manager">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-01-16T03:24:49.000Z">2023-01-16</time></div>
+                        <a href="/blogs/2023/01/16/ROS%20basic%20manager/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ROS basic usage and manager</a>
+                    </div>
+                </div>
+            </article>
          
             <article class="media"> <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="media-left">
                         <p class="image is-64x64">
@@ -747,17 +779,9 @@
          
             
          
-            <article class="media"> <a href="/blogs/2023/01/16/ROS%20basic%20manager/" class="media-left">
-                        <p class="image is-64x64">
-                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ROS basic usage and manager">
-                        </p>
-                    </a><div class="media-content">
-                    <div class="content">
-                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-01-16T03:24:49.000Z">2023-01-16</time></div>
-                        <a href="/blogs/2023/01/16/ROS%20basic%20manager/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ROS basic usage and manager</a>
-                    </div>
-                </div>
-            </article>
+            
+         
+            
          
             
          
@@ -798,6 +822,17 @@
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2023/12/">
@@ -956,7 +991,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2024 AmazingHao&nbsp;
+                &copy; 2025 AmazingHao&nbsp;
                 Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
                         href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
                 
