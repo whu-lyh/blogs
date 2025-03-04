@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<script src="/js/click.js"></script>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Hdl_graph_slam论文及代码解析_回环检测 - AmazingHao&#39;s Free Space</title>
+
+
+    <meta name="description" content="HDL_GRAPH_SLAM中采用的回环检测方法及其后端优化过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hdl_graph_slam论文及代码解析_回环检测">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/2025/02/08/Hdl_graph_slam/index.html">
+<meta property="og:site_name" content="AmazingHao&#39;s Free Space">
+<meta property="og:description" content="HDL_GRAPH_SLAM中采用的回环检测方法及其后端优化过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
+<meta property="article:published_time" content="2025-02-08T04:06:31.754Z">
+<meta property="article:modified_time" content="2025-02-08T04:06:31.754Z">
+<meta property="article:author" content="AmazingHao">
+<meta property="article:tag" content="Point Cloud">
+<meta property="article:tag" content="LiDAR_SLAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/blogs/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+<link rel="stylesheet" href="/blogs/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/blogs/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+
+
+<link rel="stylesheet" href="/blogs/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/blogs/">
+            
+                <img src="/blogs/images/logo.svg" alt="Hdl_graph_slam论文及代码解析_回环检测" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/blogs/">Home</a>
+                
+                <a class="navbar-item"
+                href="/blogs/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/blogs/categories">Categories</a>
+                
+                <a class="navbar-item"
+                href="/blogs/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/blogs/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/whu-lyh">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    <br/>
+    <center>
+        <span id="jinrishici-sentence" style="font-size:14px"></span>
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <div id="poem_sentence"></div>
+        <div id="poem_info"></div>
+        <script type="text/javascript">
+          jinrishici.load(function(result) {
+            var sentence = document.querySelector("#poem_sentence")
+            var info = document.querySelector("#poem_info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = '------【' + result.data.origin.dynasty + '】' + result.data.origin.author + '《' + result.data.origin.title + '》'
+          });
+        </script>  
+    </center>
+
+    
+
+    <section class="section">
+        <div>
+            <div class="columns is-centered is-variable is-2">
+                <div class="column is-two-thirds-tablet is-9-desktop is-7-widescreen is-three-fifths-fullhd has-order-2 column-main">
+                    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2025-02-08T04:06:31.754Z">2025-02-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    29 分钟 读完 (大约 4320 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Hdl_graph_slam论文及代码解析_回环检测
+            
+        </h1>
+        <div class="content">
+            <h2 id="回环检测">回环检测</h2>
+<p>​
+闭环的作用就不多说了，koide采用的闭环检测方法其实挺简单的，就是一般闭环检测的基础准则。</p>
+<h3 id="候选准则">候选准则</h3>
+<ul>
+<li>候选帧不能离当前帧太近，场景变化不大的话，会引入过多的冗余匹配，对实时应用不合适；</li>
+<li>候选帧和当前帧的位姿之间的距离要足够小，这个是前提，如果都不小，那说明大概率不是闭环了，但是也不排除前端飘得确实很厉害的情况；小范围内，这个条件还是可以满足的，室外更大的场景，这种就不行了，可能飘得很厉害，只能上特征了。</li>
+</ul>
+<a id="more"></a>
+<h3 id="候选帧确认">候选帧确认</h3>
+<p>​
+前面只是拿到了一堆可能是候选帧的集合（这里回环候选帧是从历史帧中拿到的），还需要进一步判断到底能不能作为闭环帧，这里判断的依据就是对候选帧<span class="math inline">\(lp_{candidate}\)</span>和当前新来的关键帧<span class="math inline">\(kf_{current}\)</span>做一次点云匹配，采用的就是他们组之前的工作Fast
+GICP、NDT_OMP做两帧点云的匹配。计算一个sum of squared error
+得分score，如果这个score小于阈值，则说明可以接受其作为回环帧。具体点，利用从前端得到的两帧点云的位姿<code>g2o::VertexSE3* node</code>计算一个初始的相对位姿<span class="math inline">\(T_{candidate}^{current} =
+T_{candidate}^{-1}·T_{current}\)</span>，作为配准初始位姿开始配准，这么做是为了提升配准方法收敛的可能性。匹配完之后返回一个度量，依据这个度量做最终的判断。</p>
+<h3 id="回环检测流程">回环检测流程</h3>
+<p>​ 前端开始工作，得到序列化的关键帧<span class="math inline">\(kfs\)</span>，整个SLAM系统开启的同时回环检测线程就开始工作了，一直在不断的积累关键帧，一定程度（这里可能是延时开启，或者给定关键帧数量阈值）之后，开始做候选回环帧的检测。做回环检测是在新来一帧关键帧<span class="math inline">\(kf_{current}\)</span>之后就开始的（因为要同时进行局部位姿优化得到更加准确的当前帧的位姿），通过上述候选准则，与历史帧中的关键帧进行比较，从中删选出满足条件的关键帧作为当前关键帧<span class="math inline">\(kf_{current}\)</span>的回环候选帧<span class="math inline">\(lp_{candidate}\)</span>，因为候选回环帧可能不是一个，而是一系列组成集合<span class="math inline">\(LP_{candidate}\)</span>（场景变化不大时，都很像），从<span class="math inline">\(LP_{candidate}\)</span>中找到得分最高的候选帧作为最终的回环帧<span class="math inline">\(kf_{loop}\)</span>。</p>
+<p>注：</p>
+<ul>
+<li><p>回环检测结果一定要鲁棒且正确，因为如果一旦引入一个错误的闭环，整个后端就崩掉了。当然现在大部分工作都是引入特征描述子了，不仅几何空间，在特征空间也同样进行检测，极大提升回环的召回率。这里就先不介绍了。</p></li>
+<li><p>如果候选帧的筛查是在特征空间完成的（相对位姿可直接根据匹配对SVD分解得到），后面通常会跟一个几何验证模块，即又是一个点云匹配过程，类似于ICP或者NDT得到从几何角度拿到的相对位姿，与特征匹配得到的相对位姿进行对比，完成进一步确认。</p></li>
+</ul>
+<h2 id="闭环优化">闭环优化</h2>
+<h3 id="误差来源">误差来源</h3>
+<p>​ 每一个激光帧的位姿都是通过匹配（无论是scan2scan or
+scan2map）得到的，每一次匹配求位姿都存在偏差，因此检测到回环的时候肯定就互相对不上了，就存在观测值（匹配的T）与估计值（一步步叠加得到的T）之间的偏差。
+<span class="math display">\[
+e=(\check{T}_i^j)^{-1}T_{jw}^{-1}T_{iw}
+\]</span> ​
+这里的误差表示和视觉SLAM14讲中的PGO优化时采用的表达方式是一样的。<span class="math inline">\(T_{iw},T_{jw}\)</span>分别表示世界坐标系下两个激光关键帧的位姿，<span class="math inline">\(\check{T}_i^j\)</span>表示的是从i到j的相对位姿（也就是闭环检测估计出来的相对位姿，可以视为观测值）。<span class="math inline">\(T_{jw}^{-1}T_{iw}\)</span>表示的就是用这两个激光关键帧通过前端不断积累之后的位姿所表示的两帧之间的相对位姿。</p>
+<ul>
+<li>e对两个节点位姿的jacobian公式推导<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>
+TODO...</li>
+</ul>
+<h3 id="回环边的构建">回环边的构建</h3>
+<p>​ 得到当前激光关键帧<span class="math inline">\(kf_{current}\)</span>的回环帧<span class="math inline">\(kf_{loop}\)</span>之后，就可以构建回环边了，引入回环约束，开始后端优化。</p>
+<p>​
+检测出来的回环存储于Loop结构体中，其实光看Loop的定义，无法确定relative_pose描述的是谁到谁的变换，还需要实际看使用的时候的传入参数。hdl_graph_slam中采用的是<span class="math inline">\(T_{loop}^{current}\)</span>，检测到的回环帧<span class="math inline">\(kf_{loop}\)</span>到当前关键帧<span class="math inline">\(kf_{current}\)</span>的变换，也就是key2<span class="math inline">\(\Rightarrow\)</span>key1。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Loop</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  EIGEN_MAKE_ALIGNED_OPERATOR_NEW<br>  <span class="hljs-keyword">using</span> Ptr = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Loop&gt;;<br>  Loop(<span class="hljs-keyword">const</span> KeyFrame::Ptr&amp; key1, <span class="hljs-keyword">const</span> KeyFrame::Ptr&amp; key2, <span class="hljs-keyword">const</span> Eigen::Matrix4f&amp; relpose) <br>      : key1(key1), key2(key2), relative_pose(relpose) &#123;&#125;<br><span class="hljs-keyword">public</span>:<br>  KeyFrame::Ptr key1;<br>  KeyFrame::Ptr key2;<br>  Eigen::Matrix4f relative_pose;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>​ 回环边的构建如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">g2o::EdgeSE3* <span class="hljs-title">GraphSLAM::add_se3_edge</span><span class="hljs-params">(g2o::VertexSE3* v1, g2o::VertexSE3* v2, <span class="hljs-keyword">const</span> Eigen::Isometry3d&amp; relative_pose, <span class="hljs-keyword">const</span> Eigen::MatrixXd&amp; information_matrix)</span> </span>&#123;<br>  <span class="hljs-function">g2o::EdgeSE3* <span class="hljs-title">edge</span><span class="hljs-params">(<span class="hljs-keyword">new</span> g2o::EdgeSE3())</span></span>;<br>  edge-&gt;setMeasurement(relative_pose);<br>  edge-&gt;setInformation(information_matrix);<br>  edge-&gt;vertices()[<span class="hljs-number">0</span>] = v1;<br>  edge-&gt;vertices()[<span class="hljs-number">1</span>] = v2;<br>  graph-&gt;addEdge(edge);<br>  <span class="hljs-keyword">return</span> edge;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​
+回环边连接的两个顶点是用<code>g2o::SE3</code>表示的顶点，表示关键帧的位姿世界坐标系下，相对于第一帧的位姿。观测值是两个节点之间的相对位姿，采用<code>Eigen::Isometry3d</code>表示。构建的边的类型是用<code>g2o::EdgeSE3</code>表示的，计算的误差是一个6维的向量。g2o中的实现如下：</p>
+<ul>
+<li>VertexSE3，g2o中采用<code>Eigen::Isometry3</code>来描述当前帧的位姿</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs CPP"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * \brief 3D pose Vertex, represented as an Isometry3</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * 3D pose vertex, represented as an Isometry3, i.e., an affine transformation</span><br><span class="hljs-comment"> * which is constructed by only concatenating rotation and translation</span><br><span class="hljs-comment"> * matrices. Hence, no scaling or projection.  To avoid that the rotational</span><br><span class="hljs-comment"> * part of the Isometry3 gets numerically unstable we compute the nearest</span><br><span class="hljs-comment"> * orthogonal matrix after a large number of calls to the oplus method.</span><br><span class="hljs-comment"> * </span><br><span class="hljs-comment"> * The parameterization for the increments constructed is a 6d vector</span><br><span class="hljs-comment"> * (x,y,z,qx,qy,qz) (note that we leave out the w part of the quaternion.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">VertexSE3</span> :</span> <span class="hljs-keyword">public</span> BaseVertex&lt;<span class="hljs-number">6</span>, Isometry3&gt; &#123;...&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>EdgeSE3，误差同样也是一个<code>VertexSE3</code>型的变量表示的，而<code>VertexSE3</code>实际上是<code>Isometry3</code>，<code>Isometry3</code>实际上又是（x,y,z,qx,qy,qz）不表示缩放。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp">EdgeSE3 : <span class="hljs-keyword">public</span> BaseBinaryEdge&lt;<span class="hljs-number">6</span>, Isometry3, VertexSE3, VertexSE3&gt;<br>&#123;<br>    ...<br>    <span class="hljs-comment">// 虽然代码中的注释写明，这个误差表示的是j到i节点的变换的，z^-1 * (x_i^-1 * x_j)误差应该是这样的，但是实际写的时候好像写反了</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">EdgeSE3::computeError</span><span class="hljs-params">()</span> </span>&#123;<br>        VertexSE3 *from = <span class="hljs-keyword">static_cast</span>&lt;VertexSE3*&gt;(_vertices[<span class="hljs-number">0</span>]);<br>        VertexSE3 *to   = <span class="hljs-keyword">static_cast</span>&lt;VertexSE3*&gt;(_vertices[<span class="hljs-number">1</span>]);<br>        Isometry3 delta=_inverseMeasurement * from-&gt;estimate().inverse() * to-&gt;estimate();<br>        _error=internal::toVectorMQT(delta);<br>    &#125;<br>    ...<br>&#125;<br><span class="hljs-comment">// 其中Isometry3转换为6维的误差</span><br><span class="hljs-function">Vector6 <span class="hljs-title">toVectorMQT</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Isometry3&amp; t)</span> </span>&#123;<br>    Vector6 v;<br>    <span class="hljs-comment">// 表示从变换矩阵t中提取旋转矩阵，再转为归一化的四元数，返回四元数的实部，放在返回向量的后三位</span><br>    v.block&lt;<span class="hljs-number">3</span>,<span class="hljs-number">1</span>&gt;(<span class="hljs-number">3</span>,<span class="hljs-number">0</span>) = toCompactQuaternion(extractRotation(t));<br>    <span class="hljs-comment">// 下面表示直接将平移从t中提取出来放在返回向量的前三位</span><br>    v.block&lt;<span class="hljs-number">3</span>,<span class="hljs-number">1</span>&gt;(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>) = t.translation();<br>    <span class="hljs-keyword">return</span> v;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​ 加入到图中：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// loop detection, should be false in first round of detection but it's correct</span><br><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Loop::Ptr&gt; loops = loop_detector-&gt;detect(keyframes, new_keyframes, *graph_slam);<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; loop : loops) &#123;<br>      <span class="hljs-function">Eigen::Isometry3d <span class="hljs-title">relpose</span><span class="hljs-params">(loop-&gt;relative_pose.cast&lt;<span class="hljs-keyword">double</span>&gt;())</span></span>;<br>      <span class="hljs-comment">// calc_information_matrix is a reweight procedure</span><br>      Eigen::MatrixXd information_matrix = inf_calclator-&gt;calc_information_matrix(loop-&gt;key1-&gt;cloud, loop-&gt;key2-&gt;cloud, <br>                                                                                  relpose);<br>      <span class="hljs-keyword">auto</span> edge = graph_slam-&gt;add_se3_edge(loop-&gt;key1-&gt;node, loop-&gt;key2-&gt;node, relpose, information_matrix);<br>      graph_slam-&gt;add_robust_kernel(edge, private_nh.param&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt;(<span class="hljs-string">"loop_closure_edge_robust_kernel"</span>, <span class="hljs-string">"NONE"</span>), <br>                                    private_nh.param&lt;<span class="hljs-keyword">double</span>&gt;(<span class="hljs-string">"loop_closure_edge_robust_kernel_size"</span>, <span class="hljs-number">1.0</span>));<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>个人觉着，将回环边加入到图中时，顶点的添加顺序应该和相对位姿的作用方向严格对应，假设1&amp;2节点互换，相对位姿也求逆就可以了。</li>
+<li>有小伙伴说VertexSE3在g2o中的<a href="https://githubmemory.com/repo/RainerKuemmerle/g2o/issues/430">实现</a>是采用的右扰动，因此，和一般常见的左扰动不一致，就有点突然...也确实是这样的，亲测如此。</li>
+</ul>
+<h2 id="gps点约束">GPS点约束</h2>
+<p>​
+hdl_graph_slam中GPS信号是不断接收的，因此会有一个时间戳，通过硬件同步之后，激光和GPS完成时间同步，就可以通过时间找到最近GPS点对应的激光帧的位置，从而构建关系。</p>
+<ul>
+<li>将一段滑窗内的gps点与攒起来的激光关键帧进行时间戳比较的时候，虽然找的是最近的，但是万一最近的gps点和某关键帧之间的时间差还是差很多，依然是无法建立关系的，需要及时剔除。</li>
+<li>GPS点是<code>WGS84</code>坐标系下的，需要转成空间直角坐标系<code>UTM</code>下的北东高坐标才行。</li>
+</ul>
+<h3 id="误差方程">误差方程</h3>
+<p><span class="math display">\[
+e=G(t)-p
+\]</span></p>
+<p>这种表示方法，说明一个gps点只能控制位置，无法控制旋转，因此没有R什么事情。</p>
+<h3 id="gps边的构建">gps边的构建</h3>
+<p>​
+构建一元边，GPS节点是固定的。koide这里认为gps定位结果如果认为xyz都有效，则使用<code>add_se3_prior_xyz_edge</code>类型的边，如果只有平面左边有效，则使用<code>add_se3_prior_xy_edge</code>，信息矩阵的权重和观测精度有关。这里认为信息矩阵就是协方差的逆，协方差可以看成是在三个维度上观测值的方差。</p>
+<p>​
+构建的一元边的类型分别是：<code>g2o::EdgeSE3PriorXY</code>和<code>g2o::EdgeSE3PriorXYZ</code>,都比较好理解。koide在使用时，误差采用的是估计值-观测值，和我的理解相反了，不过不影响结果。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">computeError</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;<br>    <span class="hljs-keyword">const</span> g2o::VertexSE3* v1 = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">const</span> g2o::VertexSE3*&gt;(_vertices[<span class="hljs-number">0</span>]);<br>    <span class="hljs-comment">// only translation is used</span><br>    Eigen::Vector3d estimate = v1-&gt;estimate().translation();<br>    _error = estimate - _measurement;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​ 加入到图：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">if</span>(<span class="hljs-built_in">std</span>::isnan(xyz.z())) &#123;<br>    Eigen::Matrix2d information_matrix = Eigen::Matrix2d::Identity() / gps_edge_stddev_xy;<br>    edge = graph_slam-&gt;add_se3_prior_xy_edge(keyframe-&gt;node, xyz.head&lt;<span class="hljs-number">2</span>&gt;(), information_matrix);<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    Eigen::Matrix3d information_matrix = Eigen::Matrix3d::Identity();<br>    information_matrix.block&lt;<span class="hljs-number">2</span>, <span class="hljs-number">2</span>&gt;(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) /= gps_edge_stddev_xy;<br>    information_matrix(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>) /= gps_edge_stddev_z;<br>    edge = graph_slam-&gt;add_se3_prior_xyz_edge(keyframe-&gt;node, xyz, information_matrix);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="imu观测">IMU观测</h2>
+<h3 id="误差方程-1">误差方程</h3>
+<p>TODO</p>
+<h3 id="imu边的构建">IMU边的构建</h3>
+<p>TODO</p>
+<h2 id="整个后端优化流程">整个后端优化流程</h2>
+<p>​
+ros环境下用roslaunch随便启动一个hdl_graph_slam的launch文件，都会启动如下四个节点：<code>prefiltering_nodelet</code>,
+<code>scan_matching_odometry_nodelet</code>，
+<code>floor_detection_nodelet</code>，
+<code>hdl_graph_slam_nodelet</code>，看名字就知道对应的功能是什么了。其实我对ros不熟悉，认为一个launch文件通过配置多个nodelet的方式同时启动多个节点就相当于实例化出多个对象，每个对象都可以开始做事情，之间可以快速的数据共享<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>。这些节点都是nodelet的派生类。</p>
+<p>​
+<code>prefiltering_nodelet</code>节点主要负责接收从硬件传回来的点云数据，完成去畸变，简单距离过滤等操作，然后将其逐帧发布为<code>/filtered_points</code>主题。</p>
+<p>​
+<code>scan_matching_odometry_nodelet</code>负责前端匹配，发布里程计消息。它也订阅了<code>/filtered_points</code>话题，一旦检测到消息，就调用<code>cloud_callback()</code>
+，将传入的点云逐帧和之前的帧进行匹配，得到以前一帧点云为基准的相对位姿，并返回以全部帧中第一帧为基准的世界坐标下的位姿，核心是<code>matching()</code>函数。要随着激光帧的不断发布和接收，将new
+frame的位姿视为下一次前端匹配中的old
+frame的位姿，并以当前的匹配估计值作为下一次匹配的先验，提升匹配成功的概率。
+<span class="math display">\[
+T_{source}=T_{new keyframe}^{w}\\
+T_{target}=T_{old frame}^{w}\\
+T_{source}^{target} = T_{new keyframe}^{old keyframe} =
+matching()\{ICP,NDT \quad liked \quad method\}
+\]</span> ​
+<code>hdl_graph_slam_nodelet</code>在一开始初始化的时候就自动订阅如下的主题，并开始循环接受其发出的消息：看名识功能</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-string">/odom</span>;<br><span class="hljs-string">/filtered_points</span>;<br><span class="hljs-string">/gpsimu_driver/imu_data</span>;<br><span class="hljs-string">/floor_detection/floor_coeffs</span>;<br><span class="hljs-string">/gps/geopoint</span>;<br><span class="hljs-string">/gpsimu_driver/nmea_sentence</span>;<br><span class="hljs-string">/gps/navsat</span>，<br></code></pre></td></tr></table></figure>
+<p>​
+<code>hdl_graph_slam_nodelet</code>在初始化时通过订阅<code>/odom</code>和<code>/filtered_points</code>的消息并调用<code>cloud_callback()</code>，将估计的里程计位姿和点云绑定在一起，并检查当前帧是否构成成为关键帧的条件，满足才会将关键帧留下来。</p>
+<p>​
+<code>hdl_graph_slam_nodelet</code>还包含了成员<code>optimization_timer</code>和<code>map_publish_timer</code>，都是ros下的一个定时器<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>类型，且在其虚函数<code>onInit()</code>函数中做了初始化。这两个定时器分别表示每隔3s做一次优化和每隔10s发布一次地图点的两个不同操作。<code>optimization_timer_callback()</code>和<code>map_points_publish_timer_callback()</code>就是定时器到点了之后执行的函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">double</span> graph_update_interval = private_nh.param&lt;<span class="hljs-keyword">double</span>&gt;(<span class="hljs-string">"graph_update_interval"</span>, <span class="hljs-number">3.0</span>);<br><span class="hljs-keyword">double</span> map_cloud_update_interval = private_nh.param&lt;<span class="hljs-keyword">double</span>&gt;(<span class="hljs-string">"map_cloud_update_interval"</span>, <span class="hljs-number">10.0</span>);<br>optimization_timer = mt_nh.createWallTimer(ros::WallDuration(graph_update_interval), <br>                                               &amp;HdlGraphSlamNodelet::optimization_timer_callback, <span class="hljs-keyword">this</span>);<br>map_publish_timer = mt_nh.createWallTimer(ros::WallDuration(map_cloud_update_interval), <br>                                              &amp;HdlGraphSlamNodelet::map_points_publish_timer_callback, <span class="hljs-keyword">this</span>);<br></code></pre></td></tr></table></figure>
+<p>​
+<code>optimization_timer_callback()</code>回调函数中，首先执行<code>flush_keyframe_queue()</code>判断是否有关键帧更新，并对已有的关键帧构建成图，包括添加节点，构建序列节点之间的边（观测就是相对位姿<span class="math inline">\(T_{curr}^{prev}=T_{curr}^{-1}·T_{prev}\)</span>，估计值就是各自的位姿）。关键帧更新成功之后，开始依次调用<code>flush_floor_queue()</code>,
+<code>flush_gps_queue()</code>和<code>flush_imu_queue()</code>，功能分别是：</p>
+<ul>
+<li><code>flush_floor_queue()</code>：
+首先需要知道<code>floor_detection_nodelet</code>在一开始系统启动的时候就存在了，同时该节点会自动订阅<code>/filtered_points</code>节点的消息，收到消息之后就会执行<code>cloud_callback()</code>回调函数（<code>onInit</code>函数中），立马针对接收到的点云提取平面，发布平面参数。<code>hdl_graph_slam_nodelet</code>通过订阅相应的主题，就可以拿到平面提取结果。所有的平面提取结果是通过时间戳的形式和每一个关键帧建立关系的。因此<code>flush_floor_queue()</code>就是要通过时间比对，找到对应关系，往图中添加平面节点。</li>
+<li><code>flush_gps_queue()</code>：在<code>hdl_graph_slam_nodelet</code>的<code>onInit()</code>中设置了如果当前环境支持gps，就会自动分别从<code>"/gps/geopoint"</code>,
+<code>"/gpsimu_driver/nmea_sentence"</code>和<code>"/gps/navsat"</code>节点订阅消息，分别执行<code>gps_callback()</code>,
+<code>nmea_callback()</code>和<code>navsat_callback()</code>。<code>gps_callback()</code>负责将现有的gps数据存储下来到队列中，<code>nmea_callback()</code>和<code>navsat_callback()</code>一样都是用已经写好的驱动包读取（解析）GNSS数据然后调用<code>gps_callback()</code><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>，这样就把需要的数据都接收完了。然后<code>flush_gps_queue()</code>主要是通过时间检查，关联gps点和关键帧，找到对应关系，往图中添加gps节点。</li>
+<li><code>flush_imu_queue()</code>：TODO...</li>
+</ul>
+<p>​
+这些传感器的约束就通过这三个函数引入了，如果这三个全都没有，直接退出优化，没有额外的观测，无法平差。其中任意一个有的话就继续。</p>
+<p>​
+接下来就开始回环检测，将检测到的回环帧们构建成回环约束加入到图中。用于回环检测的对象是，当前时刻之前攒下的局部滑动窗口中的关键帧和现存的关键帧集合，一开始是空的，隔一段时间之后才会有积累，因此第一次loop
+detection肯定返回false的。然后将临时的关键帧拷贝到集合中。最后就开始图优化的过程了。LiDAR
+SLAM的图优化这里没用什么技巧，就是正常的选择求解器，设定循环次数，开始优化就结束了。优化完之后每个节点的位姿通过<code>KeyFrameSnapshot</code>和<code>KeyFrame</code>的转换（内部构造函数）中直接将图的节点位姿传递给关键帧的位姿，用于保存。</p>
+<p>​
+<code>map_points_publish_timer_callback()</code>就是将通过绑定的位姿将<code>optimization_timer_callback()</code>优化好的关键帧中的点云变换到统一的世界坐标系下，并抽稀，然后发布就完了。</p>
+<h2 id="reference">Reference</h2>
+<div id="footnotes">
+<hr>
+<div id="footnotelist">
+<ol>
+<li id="fn:1">
+在最新版的g2o中已经变成了和ceres一样的自动求导了...<a href="#fnref:1" rev="footnote">
+↩︎</a>
+</li>
+<li id="fn:2">
+https://m.jb51.cc/xml/294932.html<a href="#fnref:2" rev="footnote">
+↩︎</a>
+</li>
+<li id="fn:3">
+https://www.ncnynl.com/archives/201702/1296.html<a href="#fnref:3" rev="footnote">
+↩︎</a>
+</li>
+<li id="fn:4">
+实际中可能IMU中也集成了一个GNSS，因此有两个<a href="#fnref:4" rev="footnote">
+↩︎</a>
+</li>
+</ol>
+</div>
+</div>
+
+
+        </div>
+        
+           <div class="my_post_copyright">
+    <div style="text-align:center" class="menu-label">------ copyright ------</div>
+    <p style="text-align:center" class="menu-label"> 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank"><i class="fab fa-creative-commons" style="color:#29a329"></a></i> 许可协议</p>  
+
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <div class="has-text-grey is-size-7 is-block">
+    <p><span>title:</span><a href="/blogs/2025/02/08/Hdl_graph_slam/">Hdl_graph_slam论文及代码解析_回环检测</a></p>
+    <p><span>author:</span><a href="/">AmazingHao</a></p>
+    <p>
+        <span>link:</span><a href="/blogs/2025/02/08/Hdl_graph_slam/" title="Hdl_graph_slam论文及代码解析_回环检测 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2025/02/08/Hdl_graph_slam/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2025/02/08/Hdl_graph_slam/"  aria-label="复制成功！"></i></span>
+    </p>
+    <p><span>publish time:</span>2025-02-08</p>
+    <p><span>update time:</span>2025-02-08</p>
+    </div>
+</div>
+<!-- <ul class="post-copyright">
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2025/02/08/Hdl_graph_slam/">Hdl_graph_slam论文及代码解析_回环检测</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2025/02/08/Hdl_graph_slam/">http://whu-lyh.github.io/blogs/2025/02/08/Hdl_graph_slam/</a></li>
+    <li><strong>发布时间：</strong>2025-02-08</li>
+    <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+    </li>
+</ul> -->
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+        clipboard.on('success', function(){
+            swal({   
+                title: "",   
+                text: '复制成功',
+                icon: "success", 
+                showConfirmButton: true
+            });
+         });
+    });  
+</script>
+        
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/blogs/tags/LiDAR-SLAM/" rel="tag">LiDAR_SLAM</a>, <a class="has-link-grey -link" href="/blogs/tags/Point-Cloud/" rel="tag">Point Cloud</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blogs/2025/02/08/TrajectoryEstimation/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Kinematic mapping trajectory estimation</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2025/02/08/Hdl_graph_slam2/">
+                <span class="level-item">Hdl_graph_slam论文及代码解析_后端优化</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+                    
+                    
+                </div>
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd is-hidden-touch  is-hidden-desktop-only has-order-3 column-left is-sticky">    
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="/blogs/images/Title_image.jpg" alt="AmazingHao">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        AmazingHao
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Engineer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Wuhan, Chongqing, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/blogs/archives">
+                        <p class="title has-text-weight-normal">
+                            36
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/blogs/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/blogs/tags">
+                        <p class="title has-text-weight-normal">
+                            26
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/whu-lyh" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/qq_38827743" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/blogs/categories/MathUtilities/">
+            <span class="level-start">
+                <span class="level-item">MathUtilities</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
+            <span class="level-start">
+                <span class="level-item">专业应用</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">传感器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">写作工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">实用工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
+            <span class="level-start">
+                <span class="level-item">开源库</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">科研神器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%AE%97%E6%B3%95/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+    </div>
+</div>
+    
+    
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd  has-order-1 column-right ">    
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#回环检测">
+        <span class="has-mr-6">1</span>
+        <span>回环检测</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#候选准则">
+        <span class="has-mr-6">1.1</span>
+        <span>候选准则</span>
+        </a></li><li>
+        <a class="is-flex" href="#候选帧确认">
+        <span class="has-mr-6">1.2</span>
+        <span>候选帧确认</span>
+        </a></li><li>
+        <a class="is-flex" href="#回环检测流程">
+        <span class="has-mr-6">1.3</span>
+        <span>回环检测流程</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#闭环优化">
+        <span class="has-mr-6">2</span>
+        <span>闭环优化</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#误差来源">
+        <span class="has-mr-6">2.1</span>
+        <span>误差来源</span>
+        </a></li><li>
+        <a class="is-flex" href="#回环边的构建">
+        <span class="has-mr-6">2.2</span>
+        <span>回环边的构建</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#gps点约束">
+        <span class="has-mr-6">3</span>
+        <span>GPS点约束</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#误差方程">
+        <span class="has-mr-6">3.1</span>
+        <span>误差方程</span>
+        </a></li><li>
+        <a class="is-flex" href="#gps边的构建">
+        <span class="has-mr-6">3.2</span>
+        <span>gps边的构建</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#imu观测">
+        <span class="has-mr-6">4</span>
+        <span>IMU观测</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#误差方程-1">
+        <span class="has-mr-6">4.1</span>
+        <span>误差方程</span>
+        </a></li><li>
+        <a class="is-flex" href="#imu边的构建">
+        <span class="has-mr-6">4.2</span>
+        <span>IMU边的构建</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#整个后端优化流程">
+        <span class="has-mr-6">5</span>
+        <span>整个后端优化流程</span>
+        </a></li><li>
+        <a class="is-flex" href="#reference">
+        <span class="has-mr-6">6</span>
+        <span>Reference</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/Windows-BoostUp/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Windows-BoostUp">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T08:21:18.000Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/Windows-BoostUp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Windows-BoostUp</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.995Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="超算服务器使用记录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">超算服务器使用记录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            related posts
+        </h3>
+         
+            <article class="media"> <a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/cc-logo.png" alt="CloudCompare源代码学习">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-03-13T11:58:06.000Z">2023-03-13</time></div>
+                        <a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CloudCompare源代码学习</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/Hdl_graph_slam2/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.754Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/Hdl_graph_slam2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_后端优化</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                        <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/TrajectoryEstimation/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Kinematic mapping trajectory estimation">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.767Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/TrajectoryEstimation/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Kinematic mapping trajectory estimation</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="关于控制点检核的一些思考">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.787Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
+                    </div>
+                </div>
+            </article>
+         
+            <article class="media"> <a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="pcl中的体素滤波">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-11T11:24:21.000Z">2020-06-11</time></div>
+                        <a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">pcl中的体素滤波</a>
+                    </div>
+                </div>
+            </article>
+         
+            <article class="media"> <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5dbucqf8hsc&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
+    
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/blogs/">
+                
+                    <img src="/blogs/images/logo.svg" alt="Hdl_graph_slam论文及代码解析_回环检测" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2025 AmazingHao&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+			<style>
+				.copyright{line-height:24px}
+			</style>
+			<div class="copyright">
+			<span id="busuanzi_container_site_pv" style='display:none'> 
+                <i class="fa fa-heart-o"></i> 
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span> 
+            </span>
+			<span id="busuanzi_container_site_uv" style='display:none'> 
+            人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人. 
+            </span>
+            <span id="sitetime"></span>
+			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+			</script>
+		</div>
+    </div>
+</footer>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 02, 23, 10, 00, 00); //北京时间2020-2-23 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://whu-lyh.github.io/blogs',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/blogs/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/blogs/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/blogs/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+
+<script src="/blogs/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/blogs/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/blogs/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blogs/css/search.css">
+<link rel="stylesheet" href="/blogs/css/insight.css">
+    
+
+	<!-- 雪花特效 -->
+    <script type="text/javascript">
+      var windowWidth = $(window).width();
+      if (windowWidth > 480) {
+        document.write('<script type="text/javascript" src="/js/snow.js"><\/script>');
+      }
+    </script>
+
+</body>
+</html>

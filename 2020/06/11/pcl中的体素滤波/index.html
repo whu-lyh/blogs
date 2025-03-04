@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<script src="/js/click.js"></script>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>pcl中的体素滤波 - AmazingHao&#39;s Free Space</title>
+
+
+    <meta name="description" content="体素滤波   Voxel滤波作为一种很常见的滤波方法，但是其PCL内部代码却值得学习，因此今天转载一篇关于pcl中实现的体素滤波的方法。 基本上参考博客：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u013630299&#x2F;article&#x2F;details&#x2F;105661194">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pcl中的体素滤波">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/index.html">
+<meta property="og:site_name" content="AmazingHao&#39;s Free Space">
+<meta property="og:description" content="体素滤波   Voxel滤波作为一种很常见的滤波方法，但是其PCL内部代码却值得学习，因此今天转载一篇关于pcl中实现的体素滤波的方法。 基本上参考博客：https:&#x2F;&#x2F;blog.csdn.net&#x2F;u013630299&#x2F;article&#x2F;details&#x2F;105661194">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
+<meta property="article:published_time" content="2020-06-11T11:24:21.000Z">
+<meta property="article:modified_time" content="2025-02-08T04:06:31.784Z">
+<meta property="article:author" content="AmazingHao">
+<meta property="article:tag" content="Point Cloud">
+<meta property="article:tag" content="PCL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/blogs/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+<link rel="stylesheet" href="/blogs/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/blogs/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+
+
+<link rel="stylesheet" href="/blogs/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/blogs/">
+            
+                <img src="/blogs/images/logo.svg" alt="pcl中的体素滤波" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/blogs/">Home</a>
+                
+                <a class="navbar-item"
+                href="/blogs/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/blogs/categories">Categories</a>
+                
+                <a class="navbar-item"
+                href="/blogs/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/blogs/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/whu-lyh">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    <br/>
+    <center>
+        <span id="jinrishici-sentence" style="font-size:14px"></span>
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <div id="poem_sentence"></div>
+        <div id="poem_info"></div>
+        <script type="text/javascript">
+          jinrishici.load(function(result) {
+            var sentence = document.querySelector("#poem_sentence")
+            var info = document.querySelector("#poem_info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = '------【' + result.data.origin.dynasty + '】' + result.data.origin.author + '《' + result.data.origin.title + '》'
+          });
+        </script>  
+    </center>
+
+    
+
+    <section class="section">
+        <div>
+            <div class="columns is-centered is-variable is-2">
+                <div class="column is-two-thirds-tablet is-9-desktop is-7-widescreen is-three-fifths-fullhd has-order-2 column-main">
+                    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-06-11T11:24:21.000Z">2020-06-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 984 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                pcl中的体素滤波
+            
+        </h1>
+        <div class="content">
+            <h3 id="体素滤波">体素滤波</h3>
+<p>  Voxel滤波作为一种很常见的滤波方法，但是其PCL内部代码却值得学习，因此今天转载一篇关于pcl中实现的体素滤波的方法。<br>
+基本上参考博客：https://blog.csdn.net/u013630299/article/details/105661194
+<a id="more"></a> #### Voxel_grid.h
+  需要添加头文件：<code>#include &lt;pcl/filters/voxel_grid.h&gt;</code>
+<img src="/blogs/.io//voxel_grid.png" alt="voxelgrid"><br>
+<img src="https://img-blog.csdnimg.cn/20200421162454452.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" style="width: 1118px;">
+  必须保证Dx&gt;hx，Dy&gt;hy(这两个条件是必须)，第四步的时候是计算voxel空间索引.准确降采样就是在每个voxel索引里面取中值，或者随机取一个点，然后输出的点云就是降采样后的点云.
+也就是说，下采样后的点云还是原始点云中的点？<font color="red"><strong>❤</strong></font></p>
+<h4 id="approximate_voxel_grid.h">Approximate_voxel_grid.h</h4>
+<p>  需要添加头文件：<code>#include &lt;pcl/filters/approximate_voxel_grid.h&gt;</code>
+核心源码也比较短，还有待研究。 <img src="/blogs/.io//approximate_voxel_grid.png" alt="approximatevoxelgrid">
+<img alt height="397" src="https://img-blog.csdnimg.cn/20200421163734565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" width="586">
+  和exact downsampling的前四步一样，先算出voxel的空间索引
+，然后通过<strong>哈希函数</strong>映射到对应的容器里面，这里假设有100个容器，按照图里面给的例子，以h%container作为hash函数映射的值，放到对应的容器里面，这样的话会出现什么情况呢，16,116对应的容器是一样的，而两个h对应的hx，hy，hz是不一样的，这就是哈希冲突。怎么处理哈希冲突呢？<br>
+<img src="/blogs/.io//hash_conflict.png" alt="voxelgrid"><br>
+<img alt height="173" src="https://img-blog.csdnimg.cn/20200421170651371.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM2MzAyOTk=,size_16,color_FFFFFF,t_70" width="579">
+  把原来容器里面的点全都取出来，清空，随机取其中的一个点作为输出，然后把新的点放进来，继续填容器的操作。相当于是拿了100个容器，一直从一堆点里面淘点，10000个点放到100个容器里面必然会有索引的冲突，一有冲突就把之前放进去的点拿出来，随机取一个点作为输出，清空，再往里面放新的点。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> PointT&gt; <span class="hljs-keyword">void</span><br>pcl::ApproximateVoxelGrid&lt;PointT&gt;::applyFilter (PointCloud &amp;output)<br>&#123;<br>  <span class="hljs-keyword">int</span> centroid_size = <span class="hljs-number">4</span>;<br>  <span class="hljs-keyword">if</span> (downsample_all_data_)<br>    centroid_size = boost::mpl::<span class="hljs-built_in">size</span>&lt;FieldList&gt;::value;<br><br>  <span class="hljs-comment">// ---[ RGB special case</span><br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;pcl::PCLPointField&gt; fields;<br>  <span class="hljs-keyword">int</span> rgba_index = <span class="hljs-number">-1</span>;<br>  rgba_index = pcl::getFieldIndex (*input_, <span class="hljs-string">"rgb"</span>, fields);<br>  <span class="hljs-keyword">if</span> (rgba_index == <span class="hljs-number">-1</span>)<br>    rgba_index = pcl::getFieldIndex (*input_, <span class="hljs-string">"rgba"</span>, fields);<br>  <span class="hljs-keyword">if</span> (rgba_index &gt;= <span class="hljs-number">0</span>)<br>  &#123;<br>    rgba_index = fields[rgba_index].offset;<br>    centroid_size += <span class="hljs-number">3</span>;<br>  &#125;<br><br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; histsize_; i++) <br>  &#123;<br>    history_[i].count = <span class="hljs-number">0</span>;<br>    history_[i].centroid = Eigen::VectorXf::Zero (centroid_size);<br>  &#125;<br>  Eigen::VectorXf scratch = Eigen::VectorXf::Zero (centroid_size);<br><br>  output.points.resize (input_-&gt;points.<span class="hljs-built_in">size</span> ());   <span class="hljs-comment">// size output for worst case</span><br>  <span class="hljs-keyword">size_t</span> op = <span class="hljs-number">0</span>;    <span class="hljs-comment">// output pointer</span><br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> cp = <span class="hljs-number">0</span>; cp &lt; input_-&gt;points.<span class="hljs-built_in">size</span> (); ++cp) <br>  &#123;<br>    <span class="hljs-keyword">int</span> ix = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">int</span>&gt; (<span class="hljs-built_in">floor</span> (input_-&gt;points[cp].x * inverse_leaf_size_[<span class="hljs-number">0</span>]));<br>    <span class="hljs-keyword">int</span> iy = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">int</span>&gt; (<span class="hljs-built_in">floor</span> (input_-&gt;points[cp].y * inverse_leaf_size_[<span class="hljs-number">1</span>]));<br>    <span class="hljs-keyword">int</span> iz = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">int</span>&gt; (<span class="hljs-built_in">floor</span> (input_-&gt;points[cp].z * inverse_leaf_size_[<span class="hljs-number">2</span>]));<br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> hash = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>&gt; ((ix * <span class="hljs-number">7171</span> + iy * <span class="hljs-number">3079</span> + iz * <span class="hljs-number">4231</span>) &amp; (histsize_ - <span class="hljs-number">1</span>));<br>    he *hhe = &amp;history_[hash];<br>    <span class="hljs-keyword">if</span> (hhe-&gt;count &amp;&amp; ((ix != hhe-&gt;ix) || (iy != hhe-&gt;iy) || (iz != hhe-&gt;iz))) <br>    &#123;<br>      <span class="hljs-built_in">flush</span> (output, op++, hhe, rgba_index, centroid_size);<br>      hhe-&gt;count = <span class="hljs-number">0</span>;<br>      hhe-&gt;centroid.setZero ();<span class="hljs-comment">// = Eigen::VectorXf::Zero (centroid_size);</span><br>    &#125;<br>    hhe-&gt;ix = ix;<br>    hhe-&gt;iy = iy;<br>    hhe-&gt;iz = iz;<br>    hhe-&gt;count++;<br><br>    <span class="hljs-comment">// Unpack the point into scratch, then accumulate</span><br>    <span class="hljs-comment">// ---[ RGB special case</span><br>    <span class="hljs-keyword">if</span> (rgba_index &gt;= <span class="hljs-number">0</span>)<br>    &#123;<br>      <span class="hljs-comment">// fill r/g/b data</span><br>      pcl::RGB rgb;<br>      <span class="hljs-built_in">memcpy</span> (&amp;rgb, (<span class="hljs-keyword">reinterpret_cast</span>&lt;<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *&gt; (&amp;input_-&gt;points[cp])) + rgba_index, <span class="hljs-keyword">sizeof</span> (RGB));<br>      scratch[centroid_size<span class="hljs-number">-3</span>] = rgb.r;<br>      scratch[centroid_size<span class="hljs-number">-2</span>] = rgb.g;<br>      scratch[centroid_size<span class="hljs-number">-1</span>] = rgb.b;<br>    &#125;<br>    pcl::for_each_type &lt;FieldList&gt; (xNdCopyPointEigenFunctor &lt;PointT&gt; (input_-&gt;points[cp], scratch));<br>    hhe-&gt;centroid += scratch;<br>  &#125;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; histsize_; i++) <br>  &#123;<br>    he *hhe = &amp;history_[i];<br>    <span class="hljs-keyword">if</span> (hhe-&gt;count)<br>      <span class="hljs-built_in">flush</span> (output, op++, hhe, rgba_index, centroid_size);<br>  &#125;<br>  output.points.resize (op);<br>  output.<span class="hljs-built_in">width</span> = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">uint32_t</span>&gt; (output.points.<span class="hljs-built_in">size</span> ());<br>  output.<span class="hljs-built_in">height</span>       = <span class="hljs-number">1</span>;                    <span class="hljs-comment">// downsampling breaks the organized structure</span><br>  output.is_dense     = <span class="hljs-literal">false</span>;                 <span class="hljs-comment">// we filter out invalid points</span><br>&#125;   <br>&amp;emsp;&amp;emsp;为什么Dx必须&amp;gt;hx,后面的y也一样，Dx其实就是x的进位，h的表达式类似于hx*<span class="hljs-number">1</span>+hy*<span class="hljs-number">10</span>+hz*<span class="hljs-number">10</span>*<span class="hljs-number">10</span>，如果Dx=x了那必然会出现不同范围的点指到同一个索引h里面，譬如假设Dx=<span class="hljs-number">10</span>，hx可以等于<span class="hljs-number">10</span>，以（hx，hy）作为坐标的话，（<span class="hljs-number">0</span>,<span class="hljs-number">1</span>）和（<span class="hljs-number">10</span>,<span class="hljs-number">0</span>）在同一个voxel里面，显然这是不对的。<br></code></pre></td></tr></table></figure>
+<h5 id="疑问">疑问</h5>
+<p>我之前得到的voxel采样之后就不是原来的点云了，这个假设是怎么来的？</p>
+
+        </div>
+        
+           <div class="my_post_copyright">
+    <div style="text-align:center" class="menu-label">------ copyright ------</div>
+    <p style="text-align:center" class="menu-label"> 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank"><i class="fab fa-creative-commons" style="color:#29a329"></a></i> 许可协议</p>  
+
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <div class="has-text-grey is-size-7 is-block">
+    <p><span>title:</span><a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">pcl中的体素滤波</a></p>
+    <p><span>author:</span><a href="/">AmazingHao</a></p>
+    <p>
+        <span>link:</span><a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" title="pcl中的体素滤波 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/"  aria-label="复制成功！"></i></span>
+    </p>
+    <p><span>publish time:</span>2020-06-11</p>
+    <p><span>update time:</span>2025-02-08</p>
+    </div>
+</div>
+<!-- <ul class="post-copyright">
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">pcl中的体素滤波</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/">http://whu-lyh.github.io/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/</a></li>
+    <li><strong>发布时间：</strong>2020-06-11</li>
+    <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+    </li>
+</ul> -->
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+        clipboard.on('success', function(){
+            swal({   
+                title: "",   
+                text: '复制成功',
+                icon: "success", 
+                showConfirmButton: true
+            });
+         });
+    });  
+</script>
+        
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/blogs/tags/PCL/" rel="tag">PCL</a>, <a class="has-link-grey -link" href="/blogs/tags/Point-Cloud/" rel="tag">Point Cloud</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blogs/2020/07/11/Docker%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Docker可视化界面</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2020/05/07/linux-command-usage/">
+                <span class="level-item">linux command usage</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+                    
+                    
+                </div>
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd is-hidden-touch  is-hidden-desktop-only has-order-3 column-left is-sticky">    
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="/blogs/images/Title_image.jpg" alt="AmazingHao">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        AmazingHao
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Engineer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Wuhan, Chongqing, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/blogs/archives">
+                        <p class="title has-text-weight-normal">
+                            36
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/blogs/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/blogs/tags">
+                        <p class="title has-text-weight-normal">
+                            26
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/whu-lyh" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/qq_38827743" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/blogs/categories/MathUtilities/">
+            <span class="level-start">
+                <span class="level-item">MathUtilities</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
+            <span class="level-start">
+                <span class="level-item">专业应用</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">传感器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">写作工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">实用工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
+            <span class="level-start">
+                <span class="level-item">开源库</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">科研神器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%AE%97%E6%B3%95/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+    </div>
+</div>
+    
+    
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd  has-order-1 column-right ">    
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/Windows-BoostUp/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Windows-BoostUp">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T08:21:18.000Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/Windows-BoostUp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Windows-BoostUp</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.995Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="超算服务器使用记录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">超算服务器使用记录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            related posts
+        </h3>
+         
+            <article class="media"> <a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/cc-logo.png" alt="CloudCompare源代码学习">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-03-13T11:58:06.000Z">2023-03-13</time></div>
+                        <a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CloudCompare源代码学习</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/Hdl_graph_slam/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.754Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/Hdl_graph_slam/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_回环检测</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/Hdl_graph_slam2/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.754Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/Hdl_graph_slam2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_后端优化</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                        <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="关于控制点检核的一些思考">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.787Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5dbucqf8hsc&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
+    
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/blogs/">
+                
+                    <img src="/blogs/images/logo.svg" alt="pcl中的体素滤波" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2025 AmazingHao&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+			<style>
+				.copyright{line-height:24px}
+			</style>
+			<div class="copyright">
+			<span id="busuanzi_container_site_pv" style='display:none'> 
+                <i class="fa fa-heart-o"></i> 
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span> 
+            </span>
+			<span id="busuanzi_container_site_uv" style='display:none'> 
+            人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人. 
+            </span>
+            <span id="sitetime"></span>
+			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+			</script>
+		</div>
+    </div>
+</footer>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 02, 23, 10, 00, 00); //北京时间2020-2-23 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://whu-lyh.github.io/blogs',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/blogs/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/blogs/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/blogs/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+
+<script src="/blogs/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/blogs/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/blogs/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blogs/css/search.css">
+<link rel="stylesheet" href="/blogs/css/insight.css">
+    
+
+	<!-- 雪花特效 -->
+    <script type="text/javascript">
+      var windowWidth = $(window).width();
+      if (windowWidth > 480) {
+        document.write('<script type="text/javascript" src="/js/snow.js"><\/script>');
+      }
+    </script>
+
+</body>
+</html>

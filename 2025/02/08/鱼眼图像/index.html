@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<script src="/js/click.js"></script>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>鱼眼图像投影模型及使用 - AmazingHao&#39;s Free Space</title>
+
+
+    <meta name="description" content="记录在将鱼眼图像拼接成全景图像中的知识点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鱼眼图像投影模型及使用">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/index.html">
+<meta property="og:site_name" content="AmazingHao&#39;s Free Space">
+<meta property="og:description" content="记录在将鱼眼图像拼接成全景图像中的知识点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://whu-lyh.github.io/blogs/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg">
+<meta property="article:published_time" content="2025-02-08T04:06:31.883Z">
+<meta property="article:modified_time" content="2025-02-08T04:06:31.883Z">
+<meta property="article:author" content="AmazingHao">
+<meta property="article:tag" content="鱼眼图像">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://whu-lyh.github.io/blogs/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/blogs/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+<link rel="stylesheet" href="/blogs/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/blogs/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+
+
+<link rel="stylesheet" href="/blogs/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/blogs/">
+            
+                <img src="/blogs/images/logo.svg" alt="鱼眼图像投影模型及使用" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/blogs/">Home</a>
+                
+                <a class="navbar-item"
+                href="/blogs/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/blogs/categories">Categories</a>
+                
+                <a class="navbar-item"
+                href="/blogs/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/blogs/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/whu-lyh">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    <br/>
+    <center>
+        <span id="jinrishici-sentence" style="font-size:14px"></span>
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <div id="poem_sentence"></div>
+        <div id="poem_info"></div>
+        <script type="text/javascript">
+          jinrishici.load(function(result) {
+            var sentence = document.querySelector("#poem_sentence")
+            var info = document.querySelector("#poem_info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = '------【' + result.data.origin.dynasty + '】' + result.data.origin.author + '《' + result.data.origin.title + '》'
+          });
+        </script>  
+    </center>
+
+    
+
+    <section class="section">
+        <div>
+            <div class="columns is-centered is-variable is-2">
+                <div class="column is-two-thirds-tablet is-9-desktop is-7-widescreen is-three-fifths-fullhd has-order-2 column-main">
+                    
+<div class="card">
+    
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    40 分钟 读完 (大约 5928 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                鱼眼图像投影模型及使用
+            
+        </h1>
+        <div class="content">
+            <h3 id="前序">前序</h3>
+<p>​
+简单介绍一下目前的相机种类，主要是对相机镜头按照焦距及视角的大小，可分为标准镜头、广角镜头和鱼眼镜头。他们的一些特点如下：</p>
+<ul>
+<li><p>焦距：鱼眼镜头（小于等于16<span class="math inline">\(mm\)</span>）&lt;广角镜头&lt;普通标准镜头（50<span class="math inline">\(mm\)</span>）。</p></li>
+<li><p>视场角：鱼眼镜头（接近或者大于180°，工程上大于140°的就算）&gt;广角镜头&gt;普通标准镜头。</p></li>
+<li><p>畸变：鱼眼镜头&gt;广角镜头&gt;普通标准镜头。</p></li>
+</ul>
+<h2 id="普通单目相机">普通单目相机</h2>
+<h3 id="简介">简介</h3>
+<p>​
+一般常见的普通小孔成像相机的成像模型如下所示，小孔相机模型采用相似成像的方式（入射角和出射角等大），内参包括焦距<span class="math inline">\(f_x,f_y\)</span>和主点偏差<span class="math inline">\(c_x,c_y\)</span>。如果焦距一定，那么图像传感器像素平面的面积直接决定了相机视场角的大小，超过这个视场角范围的物体不会被镜头获取到。因此基于透镜成像原理的相机，视场角无法做到足够大，水平视场角一般小于140°。在某些时候，比如气象科学空间观测、太阳能辐射研究计算天空视角系数、安防视频监控等实际场景中可能会需要更大视场角的相机，那么这时候广角相机-鱼眼相机就出现了。</p>
+<div data-align="center">
+<img src="/blogs/.io//pinhole_perspective_camera.png" width="0.05%" height="0.05%">
+</div>
+<div data-align="center">
+透视成像的小孔成像相机模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a>
+</div>
+<h3 id="投影模型">投影模型</h3>
+<p><span class="math display">\[
+r_d=f \cdot tan \theta
+\]</span></p>
+<a id="more"></a>
+<h3 id="投影和反投影过程">投影和反投影过程</h3>
+<p>​
+<strong>不考虑图像畸变的情况下</strong>，透视（小孔）成像的相机投影过程（3D-&gt;2D）如下，<span class="math inline">\(u,v\)</span>为<strong>图像像素坐标</strong>，<span class="math inline">\(X,Y,Z\)</span>为相机坐标系下的坐标。 <span class="math display">\[
+\begin{align}
+\label{pinhole_projection}
+u &amp;= \frac{f_x X}{Z}+c_x \\
+v &amp;= \frac{f_y Y}{Z}+c_y
+\end{align}
+\]</span> ​ 其对应相机反投影过程（2D-&gt;3D）如下，<span class="math inline">\(\bar{X},\bar{Y}\)</span>为归一化坐标（即相机坐标系下的坐标变换到归一化相机坐标系）。
+<span class="math display">\[
+\begin{align}
+\label{pinhole_inverse_projection}
+\bar{X} &amp;= \frac{u-c_x}{f_x} \\
+\bar{Y} &amp;= \frac{v-c_y}{f_y}
+\end{align}
+\]</span></p>
+<h2 id="广角相机">广角相机</h2>
+<p>​ 为了获得更大视角，出现了广角相机。根据==Davide
+Scaramuzza==大神写的“Omnidirectional
+Camera”一文，有三种镜头聚光方式：第一种通过透镜折射实现；第二种通过使用标准相机加一个面镜实现；第三种通过多个相机<strong>共心</strong>组装而成（测绘中常见这种，拼接出全景图像）。如下图所示：</p>
+<div data-align="center">
+<img src="/blogs/.io//omnidirectional_camera_paper_fig_1.png" width="0.05%" height="0.05%">
+</div>
+<p>​
+传统广角相机的镜头一般由多个镜头组成，如下图所示为几种镜头的结构方式及其参数：</p>
+<div data-align="center">
+<img src="/blogs/.io//Nature_Electron_wide_angle_carema.png" width="0.05%" height="0.05%">
+</div>
+<div data-align="center">
+广角镜头示意图，图源于An aquatic-vision-inspired camera based on a
+monocentric lens and a silicon nanorod photodiode array
+</div>
+<h2 id="鱼眼相机">鱼眼相机</h2>
+<h3 id="简介-1">简介</h3>
+<p>​
+广角相机的视场角也没有超过180°，人们为了获得更大的视场角，根据<strong>斯内尔（Snell's
+law）现象</strong>发明了鱼眼相机，又因为其镜头和鱼眼非常接近，因此取名鱼眼相机。鱼眼相机拥有更大的球面弧度（<strong>超广角</strong>），成像平面离透镜更近（<strong>短焦距</strong>）。为了获得更加的视场角，鱼眼相机只能牺牲一部分精度，引入一些畸变（主要是径向畸变）的同时压缩边缘。</p>
+<p>​ 鱼眼镜头属于一种特殊的超广角镜头。</p>
+<p>​
+鱼眼镜头采用<strong>非相似成像</strong>（入射角比出射角大）。其镜头组成如下图所示：</p>
+<div data-align="center">
+<img src="/blogs/.io//fisheye_lenses.png" style="zoom:100%;">
+</div>
+<div data-align="center">
+鱼眼相机的镜头组成，图源于<a href="https://mp.weixin.qq.com/s/TffJXlFjGwOKC1kIFs3sjQ">这里</a>
+</div>
+<p>​
+鱼眼相机的成像方式可以看成是<strong>先将3d点投影到单位球面</strong>，单位球上的点在以偏离<span class="math inline">\(z\)</span>轴<span class="math inline">\(\xi(或f)\)</span>处通过针孔模型进行投影，这样水平入射的光线也能投影到图像的像素区域内。其成像模型如下所示。单位半球面上的点<span class="math inline">\(q\)</span>投影到相机成像平面上的点<span class="math inline">\(r_d\)</span>的过程是一个非线性过程，此时折射角<span class="math inline">\(\theta_d\)</span>小于入射角<span class="math inline">\(\theta\)</span>。成像模型也称投影模型。投影模型要表征的就是成像平面的像高<span class="math inline">\(r_d\)</span>和入射角<span class="math inline">\(\theta\)</span>之间的映射关系。</p>
+<div data-align="center">
+<img src="/blogs/.io//fisheye_carema_projection_model.png" style="zoom:100%;">
+</div>
+<div data-align="center">
+鱼眼相机的成像模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a>
+</div>
+<p>​ 鱼眼相机根据不同的投影方式可以分为以下几种：<span class="math inline">\(\theta\)</span>为入射光线与鱼眼相机光轴之间的夹角（入射角），<span class="math inline">\(f\)</span>为焦距，<span class="math inline">\(r_d\)</span>为像点至畸变中心的距离。</p>
+<table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">等距投影</th>
+<th style="text-align: center;">等立体角投影</th>
+<th style="text-align: center;">体视投影</th>
+<th style="text-align: center;">正交投影</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><img src="/blogs/.io//fisheye_carema_projection_model_1.png"></td>
+<td style="text-align: center;"><img src="/blogs/.io//fisheye_carema_projection_model_2.png"></td>
+<td style="text-align: center;"><img src="/blogs/.io//fisheye_carema_projection_model_3.png"></td>
+<td style="text-align: center;"><img src="/blogs/.io//fisheye_carema_projection_model_4.png"></td>
+</tr>
+<tr>
+<td style="text-align: center;">畸变量适中，最常用</td>
+<td style="text-align: center;">相等立体角的入射面会产生相等面积的像</td>
+<td style="text-align: center;">保角不变投影</td>
+<td style="text-align: center;">畸变最大，但不会产生透射导致的近大远小</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(r_d=f \cdot
+\theta\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_d=2 \cdot
+f \cdot sin(\theta/2)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_d=2 \cdot
+f \cdot tan(\theta/2)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_d=f \cdot
+sin(\theta)\)</span></td>
+</tr>
+</tbody>
+</table>
+<div data-align="center">
+鱼眼相机的成像模型分类，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a>
+</div>
+<h3 id="通用相机模型">通用相机模型</h3>
+<p>​
+鱼眼相机是由多个镜头组成的，上面的投影方式还是过于简单了，理论计算出来的结果和实际差很多，因此出现了一些对鱼眼相机进行建模的方案。常见的有Kannala-Brandt模型、Mei模型、Scaramuzza模型、PolyFisheye模型等。</p>
+<h4 id="kannala-brandt-模型">Kannala-Brandt 模型</h4>
+<p>​ Kannala-Brandt 模型发表于TPAMI2006的“A Generic Camera Model and
+Calibration Method for Conventional, Wide-Angle, and Fish-Eye
+Lenses”，作者将普通小孔成像、广角、超广角、鱼眼相机模型统一起来。同时统一了畸变的建模方式。通过将不同投影模型的函数，如<span class="math inline">\(\sin,\tan\)</span>进行泰勒展开，发现遵循一个相似的多项式方程，因此Kannala-Brandt
+模型采用了多项式来近似畸变。原始论文中给出了径向畸变、切向畸变等模型，但是实际中发现只选取多项式的前几项即可得到不错的精度，因此后续的代码库中均存在不同程度的简化和近似。如<a href="https://github.com/hengli/camodocal">camodocal</a>和<a href="https://docs.opencv.org/4.x/db/d58/group__calib3d__fisheye.html">OpenCV</a>中均采用了8参数模型(固定<span class="math inline">\(k_0=1\)</span>，<span class="math inline">\(k_1,k_2,k_3,k_4,f_x,f_y,c_x,c_y\)</span>)，如下为OpenCV中实现的通用相机去畸变模型，由于只是兼容鱼眼相机，因此其中充满小孔成像的影子。
+<span class="math display">\[
+\begin{align}
+世界坐标系X\rightarrow相机坐标系X_c &amp;:\left[\begin{array}{c} X_c \\
+Y_c \\ Z_c \end{array} \right] = RX+t \\
+归一化相机坐标系p_c &amp;: x_c = \frac{X_c}{Z_c},\ y_c=\frac{Y_c}{Z_c}\\
+&amp; \theta = arctan(r),r^2 = x^2_c + y^2_c\\
+畸变模型 &amp;: \theta _d =
+\theta(k_0+k_1\theta^2+k_2\theta^4+k_3\theta^6+k_4\theta^8)\\
+去畸变之后的点p_{u} :&amp; x_d=\frac{\theta_d}{r}x_c, \
+y_d=\frac{\theta_d}{r}y_c\\
+归一化相机坐标系\rightarrow 像素坐标系 &amp;:u=f_xx_d+c_x, \
+v=f_yy_d+c_y
+\end{align}
+\]</span></p>
+<p>​ but there still are some paper use the following model, and i don't
+know why... <span class="math display">\[
+\begin{align}
+r_d &amp; = f \theta_{distorted} \\
+k_0\theta + k_1 \theta^3 + k_2 \theta^5 + k_3 \theta^7 + k_4 \theta^9
+\end{align}
+\]</span></p>
+<p>​ KB模型需要5个参数就能实现畸变校正，<span class="math inline">\(k_0,k_1,k_2,k_3,k_4\)</span>。但KB模型仍遵循针孔成像的基本假设，导致该模型存在奇点（水平入射的光线将被投影到无穷远），因此Mei模型就出现了。</p>
+<ul>
+<li>In practice, most systems will characterize Kannala-Brandt
+distortions purely in terms of the <strong>symmetric radial
+distortion</strong>, as that distortion is significantly larger in
+magnitude and will be the leading kind of distortion in wider-angle
+lenses.</li>
+</ul>
+<h4 id="scaramuzza模型">Scaramuzza模型</h4>
+<p>​ Scaramuzza大神在IROS 2006的文章“A Toolbox for Easy Calibrating
+Omnidirectional Cameras”中提出的的鱼眼相机模型。</p>
+<h4 id="mei模型">Mei模型</h4>
+<p>​ Mei模型是在ICRA2007中的“Single View Point Omnidirectional Camera
+Calibration from Planar
+Grids”一文中专门针对鱼眼相机提出的模型，也称为Unified Camera
+Model（或者unified omnidirectional camera
+model），同时被VINS-Fusion、VINS-Mono、鱼眼DSO采用，KITTI360数据集中提供的鱼眼相机也采用了这种模型。这种通用的相机模型可以模拟小孔成像的相机模型，也可以模拟鱼眼相机的成像模型。当<span class="math inline">\(\xi\)</span>=0时，鱼眼相机模型就退化为了小孔相机模型。优点（源于<a href="https://mp.weixin.qq.com/s/aMJnwTvI87YrBKkmMaGQbQ">这里</a>）是它能精确的模拟各种图像设备和畸变的几何图像生成过程，（2）它的反投影是一个闭式解。</p>
+<div data-align="center">
+<img src="/blogs/.io//Mei_model.jpg" width="0.05%" height="0.05%">
+</div>
+<p>​ 鱼眼相机的投影过程为<span class="math inline">\(\pi_c:\mathbb{R}^3
+\rightarrow \Omega\)</span>：</p>
+<p>0.将世界坐标系下的点转到相机坐标系下，需要<span class="math inline">\(R,T\)</span>;</p>
+<p>1.设原点为<span class="math inline">\(C_m\)</span>的相机坐标系中的一个三维点为<span class="math inline">\(\mathcal{X}(X,Y,Z)\)</span>，先将其坐标归一化，即将其坐标缩放到单位球面上，得到<span class="math inline">\(\mathcal{X_s}=\frac{\mathcal{X}}{|\mathcal{X}|}=(X_s,Y_s,Z_s)^{T}\)</span>，<span class="math inline">\(|\mathcal{X}|=\sqrt{X^2+Y^2+Z^2}\)</span>;</p>
+<p>2.随后改变坐标系，设现在坐标系为<span class="math inline">\(C_p\)</span>， <span class="math inline">\(C_p\)</span>相对于坐标系<span class="math inline">\(C_m\)</span>在<span class="math inline">\(z\)</span>轴方向上有一个负方向的平移<span class="math inline">\(\xi\)</span>，相当于形成一个虚拟的光心（坐标系原点），这样导致<span class="math inline">\(\mathcal{X_s}\)</span>在新坐标系中的坐标为<span class="math inline">\((X_s,Y_s,Z_s+\xi)^{T}\)</span>；</p>
+<p>3.随后将新的<span class="math inline">\(\mathcal{X_s}\)</span>投影到归一化平面上，得到三维点<span class="math inline">\(\mathbf{m}_u(x,y,1)\)</span>: <span class="math display">\[
+\begin{align}
+\label{fisheye_normalized_point}
+\mathbf{m}_u=(\frac{X_s}{Z_s+\xi},\frac{Y_s}{Z_s+\xi},1)^{T}=(\frac{X}{Z+\xi
+|\mathcal{X}|},\frac{Y}{Z+\xi |\mathcal{X}|},1)^T=h(\mathcal{X_s})
+\end{align}
+\]</span>
+4.引入径向畸变和切向畸变参数（这里采用一般的标准相机、广角相机畸变模型<strong>Brown
+and Conrady
+模型</strong>，也可以是其他畸变校正模型）后，得到去畸变之后的点坐标<span class="math inline">\(\mathbf{m}_d(x_{distorted},y_{distorted},1)\)</span>：
+<span class="math display">\[
+\begin{align}
+x_{distorted} &amp;=
+x+k_1\rho^2+k_2\rho^4+k_3\rho^6+2p_1xy+p_2(\rho^2+2x^2) \\
+y_{distorted} &amp;=
+y+k_1\rho^2+k_2\rho^4+k_3\rho^6+p_1(\rho^2+2y^2)+2p_2xy \\
+\mathbf{m}_d &amp;=
+\mathbf{m}_u+D(\mathbf{m}_u,V),\rho=\sqrt{x^2+y^2},V=(k_1,k_2,k_3,p_1,p_2)
+\end{align}
+\]</span> 5.最后将去畸变之后的归一化平面坐标系中的坐标<span class="math inline">\(\mathbf{m}_d\)</span>用一个类似于针孔相机的内参的<span class="math inline">\(K\)</span>矩阵投影到像素平面上。即最终的像素点<span class="math inline">\(\mathbf{p}(u,v)\)</span>: <span class="math display">\[
+\begin{align}
+\mathbf{p}=K\mathbf{m}_d=\left[ \begin{array}{ccc} f_x &amp; \alpha
+&amp; u_0 \\ 0 &amp; f_y &amp; v_0 \\ 0 &amp; 0 &amp; 1 \end{array}
+\right]
+\end{align}
+\]</span> ​ Mei模型下的鱼眼图像在标定时只需要知道<span class="math inline">\(\xi\)</span>，内参矩阵<span class="math inline">\(K\)</span>（其中<span class="math inline">\(\alpha\)</span>为坐标轴倾斜参数，理想情况为0）以及图像畸变参数<span class="math inline">\(k_1,k_2,p_1,p_2\)</span>。但也正因为相比于针孔相机模型，仅仅多了一个参数<span class="math inline">\(\xi\)</span>，因此一些图像边缘处高畸变的像素的矫正并不是很准。</p>
+<h5 id="投影和反投影过程-1">投影和反投影过程</h5>
+<p>​
+<strong>不考虑图像畸变的情况下</strong>。Mei模型的<strong>投影过程（3D-&gt;2D）</strong>如下：
+<span class="math display">\[
+\begin{align}
+\label{uocm_projection}
+\left[ \begin{array}{c}u \\ v \end{array} \right] &amp;=
+\left[ \begin{array}{c}f_x\frac{X}{\xi d+Z}+c_x \\ f_y\frac{Y}{\xi
+d+Z}+c_y \end{array} \right] \\
+d &amp;= \sqrt{X^2+Y^2+Z^2}
+\end{align}
+\]</span></p>
+<p>​
+<strong>反投影过程（2D-&gt;3D）</strong>：(提供额外深度信息时才能得到实际的三维坐标，否则只能得到归一化平面上的点的三维点坐标)
+<span class="math display">\[
+\begin{align}
+\label{uocm_inverse_projection2}
+\left[ \begin{array}{c}\tilde{u} \\ \tilde{v} \end{array} \right] &amp;=
+\left[ \begin{array}{c}\frac{(u-c_x)}{f_x} \\ \frac{v-c_y}{f_y}
+\end{array} \right]\\
+\pi_u^{-1}(u)&amp;=\frac{\xi+\sqrt{1+(1-\xi^2)(\tilde{u}^2+\tilde{v}^2)}}{\tilde{u}^2+\tilde{v}^2+1}\left[
+\begin{array}{c}\tilde{u} \\ \tilde{v} \\1\end{array} \right]-\left[
+\begin{array}{c}0 \\ 0 \\ \xi \end{array} \right]
+\end{align}
+\]</span></p>
+<p>​ 根据上述<span class="math inline">\(\ref{fisheye_normalized_point}\)</span>中的<span class="math inline">\(\mathbf{m}_u(x,y,1)\)</span>，对于<span class="math inline">\(x,y\)</span>轴，只需要计算一个<span class="math inline">\(\lambda= \frac{Z+\xi
+|\mathcal{X}|}{|\mathcal{X}|}\)</span>结合内参矩阵<span class="math inline">\(K\)</span>即可实现从像素坐标系坐标<span class="math inline">\(\mathbf{p}(u,v)\)</span>到归一化平面系坐标<span class="math inline">\(\mathbf{m}_u(x,y,1)\)</span>向归一化球面系坐标<span class="math inline">\(\mathcal{X_s}\)</span>的转换；对于<span class="math inline">\(z\)</span>轴，则差了一个<span class="math inline">\(\frac{Z}{|\mathcal{X}|}=\lambda-\xi\)</span>，因此核心在于找到<span class="math inline">\(\lambda\)</span>到底应该是多少。转换过程：<span class="math inline">\(\mathbf{m}_u \rightarrow \mathcal{X}_{C_p}
+\rightarrow \mathcal{X}_{C_m}\)</span>，推导过程如下： <span class="math display">\[
+\begin{align}
+\label{fisheye_2d_to_3d}
+\mathbf{m}_u &amp;= (x,y,1)^T = K^{-1}\mathbf{p} \\
+multiply: \quad \lambda &amp;  \Downarrow\\
+\mathcal{X}_{C_p} &amp;=
+(\frac{X}{|\mathcal{X}|},\frac{Y}{|\mathcal{X}|},\frac{Z}{|\mathcal{X}|}+\xi)^{T}
+\\
+minus: \quad \xi &amp; \Downarrow \\
+\mathcal{X}_{C_m} &amp;=
+\frac{\mathcal{X}}{|\mathcal{X}|}=(\frac{X}{|\mathcal{X}|},\frac{Y}{|\mathcal{X}|},\frac{Z}{|\mathcal{X}|})^{T}
+\end{align}
+\]</span> ​ <span class="math inline">\(\lambda\)</span>的计算方法如下：
+<span class="math display">\[
+\begin{align}
+\label{lambda}
+\lambda &amp;= \frac{Z+\xi |\mathcal{X}|}{|\mathcal{X}|} \\
+&amp;= \frac{1}{\sqrt{(\frac{X}{Z+\xi |\mathcal{X}|})^2+(\frac{Y}{Z+\xi
+|\mathcal{X}|})^2+(\frac{Z}{Z+\xi |\mathcal{X}|})^2}} \\
+&amp;= \frac{1}{\sqrt{(\frac{X}{Z+\xi |\mathcal{X}|})^2+(\frac{Y}{Z+\xi
+|\mathcal{X}|})^2+(\frac{Z+\xi |\mathcal{X}|-\xi |\mathcal{X}|}{Z+\xi
+|\mathcal{X}|})^2}} \\
+\label{lambda_3}
+&amp;= \frac{1}{\sqrt{(\frac{X}{Z+\xi |\mathcal{X}|})^2+(\frac{Y}{Z+\xi
+|\mathcal{X}|})^2+(1-\frac{\xi}{\lambda})^2}} \\
+&amp;= \frac{1}{\sqrt{x^2+y^2+(1-\frac{\xi}{\lambda})^2}} \\
+\end{align}
+\]</span> ​ 将上式转成二元一次方程求解<span class="math inline">\(\lambda\)</span>的解析解如下： <span class="math display">\[
+\begin{align}
+(x^2+y^2)\lambda^2+(\lambda-\xi)^2 &amp;= 1 \\
+\Downarrow &amp; \\
+(1+x^2+y^2)\lambda^2-2\xi \lambda+(-1+\xi^2) &amp;= 0 \\
+\Downarrow &amp; \\
+\lambda &amp;= \frac{\xi+\sqrt{\xi^2+(1+x^2+y^2)(1-\xi^2)}}{(1+x^2+y^2)}
+\\
+&amp;= \frac{\xi+\sqrt{1+(x^2+y^2)(1-\xi^2)}}{(1+x^2+y^2)}
+\end{align}
+\]</span> ​
+<strong>2D-&gt;3D的射线变换</strong>为：从图像上任意像素为起点，方向朝向空间中的点，此射线上的所有点的归一化平面坐标均为<span class="math inline">\(\mathbf{m}_u(x,y,1)\)</span>，按照<span class="math inline">\(\ref{fisheye_2d_to_3d}\)</span>中将归一化平面坐标系下的坐标变换到归一化球面坐标系下坐标有<span class="math inline">\(\ref{fisheye_3d_to_2d}\)</span>的假设。 <span class="math display">\[
+\begin{align}
+\label{fisheye_3d_to_2d}
+(\lambda x, \lambda y,\lambda - \xi)^T \backsimeq (x,y,m)^T
+\end{align}
+\]</span> ​ 结合<span class="math inline">\(\ref{fisheye_normalized_point}\)</span>和<span class="math inline">\(\ref{lambda_3}\)</span>可以得出<span class="math inline">\(m=1-\xi/\lambda=1-\xi
+\frac{(1+x^2+y^2)}{\xi+\sqrt{\xi^2+(1+x^2+y^2)(1-\xi^2)}}\)</span>，即：
+<span class="math display">\[
+\begin{align}
+\label{fisheye_3d_to_2d2}
+(x,y, 1-\xi \frac{(1+x^2+y^2)}{\xi+\sqrt{\xi^2+(1+x^2+y^2)(1-\xi^2)}})^T
+\end{align}
+\]</span></p>
+<h4 id="polyfisheye模型">PolyFisheye模型</h4>
+<p>​ PolyFisheye模型是在IROS2017中的Dual-Fisheye Omnidirectional
+Stereo中提出的。</p>
+<div data-align="center">
+<img src="/blogs/.io//polyfisheye.png" width="0.05%" height="0.05%">
+</div>
+<p>​ 从模型图上看基本和Mei模型一模一样，唯一的不同是，假设空间点<span class="math inline">\(\mathcal{P}^c\)</span>最终投影得到的像素点为<span class="math inline">\(u\)</span>，他们认为<span class="math inline">\(u\)</span>到光心<span class="math inline">\(O_i\)</span>的距离<span class="math inline">\(\mathcal{R}\)</span>并不是直接等于沿着<span class="math inline">\(\theta_r\)</span>方向上投影过来的大小，而是和<span class="math inline">\(O^{cl}\)</span>到<span class="math inline">\(u\)</span>的距离存在一个关于<span class="math inline">\(\theta\)</span>的七次多项式的多项式倍数关系。这样就相比Mei模型多了七个参数来刻画鱼眼相机，自然就更准了。
+<span class="math display">\[
+\begin{align}
+\mathcal{R}(\theta)=[1+\mathcal{D}(\theta)]
+\mathcal{R}_{ref}(\theta)=f\Sigma_{i=0}^N \eta_i \theta^i
+\end{align}
+\]</span> ​ 鱼眼相机的投影模型分为三步：1）<span class="math inline">\(\mathcal{P}^c \rightarrow
+\bar{\mathcal{P}^c}\)</span>相机坐标系中的点转换到单位球面上；2）<span class="math inline">\(\bar{\mathcal{P}}^c \rightarrow
+\overrightarrow{O^{cl}\mathbf{u}}\)</span>
+单位球面上的点进行光线的折射变换;3）<span class="math inline">\(\overrightarrow{O^{cl}\mathbf{u}} \rightarrow
+\mathbf{u}\)</span>将光线投影到像平面空间。其中<span class="math inline">\(\mathcal{R}(\theta)=\overrightarrow{O_i\mathbf{u}}\)</span>就是实际入射光线折射之后投影到相平面坐标系的长度，存在畸变，而<span class="math inline">\(\mathcal{R}_{ref}\)</span>就是无畸变的投影向量，具体如下：</p>
+<p>1.将相机坐标系中的点归一化到单位球面<span class="math inline">\(\bar{\mathcal{P}}^c=-\mathcal{P}^c/||\mathcal{P}^c||=[\bar{x}^c,\bar{y}^c,\bar{z}^c]^T\)</span>;</p>
+<p>2.将单位球面上的点转换到球面坐标系<span class="math inline">\(\cos(\theta)=\bar{z}^c,\tan(\varphi)=\bar{y}^c/\bar{x}^c\)</span>，<span class="math inline">\(\bar{x}^c=0\)</span>时<span class="math inline">\(\varphi=0\)</span>；</p>
+<p>3.根据<span class="math inline">\(\theta\)</span>构建与成像系统无关的镜头光学模型<span class="math inline">\(\mathcal{R}_0(\theta)=\Sigma_{i=0}^N \eta_i
+\theta^i\)</span>;</p>
+<p>4.通过焦距<span class="math inline">\(f\)</span>将光线投影到像素坐标系<span class="math inline">\(\mathbf{u}=f\mathcal{R}_0(\theta)\left[
+\begin{array}{c} \cos(\varphi) \\ \sin(\varphi) \end{array} \right] +
+\left[\begin{array}{c} c_x \\ c_y \end{array} \right]\)</span>；</p>
+<p>5.综上所示，将焦距<span class="math inline">\(f\)</span>表示成矩阵形式<span class="math inline">\(A_f\)</span>,则投影过程为： <span class="math display">\[
+\begin{align}
+\label{polyfiseye}
+\mathbf{u}=\Sigma_{i} \eta_i \theta^i A_f \left[ \begin{array}{c}
+\cos(\varphi) \\ \sin(\varphi) \end{array} \right] +
+\left[\begin{array}{c} c_x \\ c_y \end{array} \right]，A_f=\left[
+\begin{array}{cc} A_{11} &amp; A_{12} \\ 0 &amp; A_{22} \end{array}
+\right]
+\end{align}
+\]</span></p>
+<ul>
+<li>同样由于现代工艺的提升，镜头的切向畸变已经很小了，相比于径向畸变，可以忽略不计。出自TPAMI2013的文章“Calibration
+of ultrawide fisheye lens cameras by eigenvalue minimization”。</li>
+</ul>
+<h4 id="相关实现">相关实现</h4>
+<p>​ 主要依赖HKUST航空机器人所开源的一系列代码实现。真强</p>
+<table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">Kannala-Brandt</th>
+<th style="text-align: center;">Scaramuzza模型</th>
+<th style="text-align: center;">Mei模型</th>
+<th style="text-align: center;">PolyFisheye模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Lionel Heng博士的<a href="https://github.com/hengli/camodocal">CamOdoCal</a></td>
+<td style="text-align: center;">高文良博士的<a href="https://github.com/gaowenliang/camera_model">camera_model</a></td>
+<td style="text-align: center;">Lionel Heng博士的<a href="https://github.com/hengli/camodocal">CamOdoCal</a></td>
+<td style="text-align: center;">高文良博士的<a href="https://github.com/gaowenliang/camera_model">camera_model</a></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="https://docs.opencv.org/4.x/db/d58/group__calib3d__fisheye.html">OpenCV</a></td>
+<td style="text-align: center;"><a href="https://ww2.mathworks.cn/help/vision/ug/fisheye-calibration-basics.html#References">MATLAB鱼眼图像标定</a></td>
+<td style="text-align: center;"><a href="https://github.com/ethz-asl/kalibr/wiki/Supported-models">Kalibr</a></td>
+<td style="text-align: center;">EpsAvlc的<a href="https://github.com/EpsAvlc/EpsAvlc_toys/blob/master/fisheye_to_pinhole/src/fisheye_to_pinhole.cpp">小项目</a></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="https://github.com/ethz-asl/kalibr/wiki/Supported-models">Kalibr</a></td>
+<td style="text-align: center;">yangzhenfei的<a href="https://github.com/dvorak0/camera_model">carema_model</a></td>
+<td style="text-align: center;"><a href="https://docs.opencv.org/4.x/dd/d12/tutorial_omnidir_calib_main.html">OpenCV</a><code>cv::omnidir::calibrate</code></td>
+<td style="text-align: center;">HKUST的xuhao开源的<a href="https://github.com/HKUST-Aerial-Robotics/VINS-Fisheye">Vins-fisheye</a>,许久未更新</td>
+</tr>
+<tr>
+<td style="text-align: center;">yangzhenfei的<a href="https://github.com/dvorak0/camera_model">carema_model</a></td>
+<td style="text-align: center;"><a href="https://github.com/urbste/MultiCol-SLAM">MultiCol-SLAM</a></td>
+<td style="text-align: center;">yangzhenfei的<a href="https://github.com/dvorak0/camera_model">carema_model</a></td>
+<td style="text-align: center;"><a href="https://github.com/xuhao1/VINS-Fisheye">项目，还在维护</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>高文良博士的camera_model是在Lionel
+Heng博士的CamOdoCal基础以及yangzhenfei的carema_model优化的基础上改进的。</li>
+<li>VINS-Fusion、VINS-Mono、VINS-Fisheye、GVINS等项目都是基于yangzhenfei的carema_model改进的。</li>
+<li>VINS-Mono中提供了Mei模型，针孔相机模型，Scaramuzza模型和KB模型。其中的<code>CataCamera</code>就是Mei相机模型。</li>
+<li>相比VINS-Mono，VINS-Fusion中的相机模型种类多了一种<code>PinholeFullCamera</code>模型。</li>
+<li>高文良博士的camera_model更是多了<code>PolyFisheyeCarema</code>和<code>SplineCamera</code>。因此，如果只用相机模型，选择这个是最佳的。如果想用SLAM系统则选择其他repo。</li>
+<li>而GVINS中还是使用了VINS-Mono中的相机模型种类。</li>
+<li>OpenCV、Kalibr中关于Mei模型的实现也是基于Lionel
+Heng博士的CamOdoCal基础上完成的。</li>
+</ul>
+<h3 id="鱼眼图像转换">鱼眼图像转换</h3>
+<h4 id="鱼眼图像转普通框幅式图像">鱼眼图像转普通（框幅式）图像</h4>
+<p>​
+一般的V-SLAM或者基于视觉的场景感知任务中使用的都是普通的单目相机，因此需要进行畸变矫正转成框幅式图像。</p>
+<div data-align="center">
+<img src="/blogs/.io//fisheye2pinhole.png">
+</div>
+<div data-align="center">
+鱼眼图像转框幅式图像，图源于<a href="https://epsavlc.github.io/2019/10/21/fisheye_calib.html#fn:1">这里</a>
+</div>
+<p>​
+转成框幅式图像，首先需要虚拟一个框幅式（小孔成像）相机的内参，然后通过归一化平面作为桥梁，构建鱼眼图像每个像素与框幅式图像每个像素之间的关系。步骤：</p>
+<p>1.先确定虚拟相机的内参（<span class="math inline">\(f_x,f_y,c_x,c_y\)</span>）与相对于鱼眼相机的外参。</p>
+<p>2.对于虚拟相机的每个像素点<span class="math inline">\(p_{pinhole}\)</span>，将像素点反投影到归一化平面，得到三维点<span class="math inline">\(\mathcal{X}_{s}\)</span>（z=1）。</p>
+<p>3.将三维点根据鱼眼相机模型，投影到鱼眼相机上，得到鱼眼相机上的像素点<span class="math inline">\(p_{fisheye}\)</span>。</p>
+<p>4.将鱼眼图像的对应位置像素赋给框幅式图像。</p>
+<h5 id="细节补充">细节补充</h5>
+<ul>
+<li>虚拟相机的视场角是由虚拟相机内参(<span class="math inline">\(f_x,f_y\)</span>)控制的，<span class="math inline">\(f_x=width/2\)</span>时视场角刚好为90°。<span class="math inline">\(width\)</span>为图像的像素宽度。</li>
+<li>映射关系可以先算出来做成Lookup
+table，然后处理鱼眼图像时再直接查表即可。</li>
+</ul>
+<h4 id="全景图像转鱼眼图像">全景图像转鱼眼图像</h4>
+<p>​
+与全景图像转成框幅式图像的原理类似。就是找到鱼眼图像上每个像素与全景图像上的对应映射关系即可，<a href="https://mp.weixin.qq.com/s/ygI6BC1JXcSP7QAwKa_Vqg">可见</a>。这里简单列一下要点：</p>
+<p>1.以下图的全景图像为例，将其转换为右侧的鱼眼图像，鱼眼相机的中心指向天空，那么全景图像的底边宽<span class="math inline">\(W_c\)</span>对应了鱼眼相机圆形视角的周长，而顶边则压缩为了一个中心点，鱼眼图像的半径<span class="math inline">\(r_0\neq H_c\)</span>；</p>
+<div data-align="center">
+<img src="/blogs/.io//panorama2fisheye_1.jpg">
+</div>
+<p>2.因此鱼眼图像的半径只能通过全景图像的底边<span class="math inline">\(W_c\)</span>来计算，鱼眼图像的中心位置<span class="math inline">\(C_x,C_y\)</span>就知道了；</p>
+<div data-align="center">
+<img src="/blogs/.io//panorama2fisheye_2.jpg">
+</div>
+<p>3.全景与鱼眼图像像素映射关系是从鱼眼图像的坐标开始，找到每一个像素<span class="math inline">\(x_f,y_f\)</span>与全景图像上对应像素之间的关系<span class="math inline">\(x_c,y_c\)</span>，为了不产生空洞，因此是遍历鱼眼图像像素开始，找到对应的全景图像像素，赋值颜色即可。映射关系中有一个<span class="math inline">\(\theta\)</span>需要根据所处的鱼眼图像坐标象限来判断才能展开到<span class="math inline">\(2\pi\)</span>空间。</p>
+<div data-align="center">
+<img src="/blogs/.io//panorama2fisheye_3.jpg">
+</div>
+<h5 id="细节补充-1">细节补充</h5>
+<p>​
+试验了一下发现部分全景图像转换的结果不是很好。尤其是第二章的鱼眼图像边缘不平滑。全景图像本身有问题的话，转出来的鱼眼图像也不好。</p>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">全景图像</th>
+<th style="text-align: center;">鱼眼图像</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><img src="/blogs/.io//panorama2fisheye_src.jpg"></td>
+<td style="text-align: center;"><img src="/blogs/.io//panorama2fisheye_tgt.jpg"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><img src="/blogs/.io//panorama2fisheye_src2.jpg"></td>
+<td style="text-align: center;"><img src="/blogs/.io//panorama2fisheye_tgt2.jpg"></td>
+</tr>
+</tbody>
+</table>
+<h5 id="其他">其他</h5>
+<ul>
+<li><label><input type="checkbox">https://stackoverflow.com/questions/56901894/c-algorithm-to-convert-a-fisheye-image-to-an-equirectangular-image-with-opencv?rq=1</label></li>
+<li>[ ]</li>
+</ul>
+<h2 id="可视化工具">可视化工具</h2>
+<ul>
+<li><a href="https://renderstuff.com/tools/360-panorama-web-viewer/">web端展示</a>，导入全景图像，输出可以360展示的VR视角图像。</li>
+</ul>
+<h2 id="相近名词解释">相近名词解释</h2>
+<p><a href="https://en.wikipedia.org/wiki/Omnidirectional_(360-degree)_camera">omnidirectional
+camera</a>：
+在一个水平面有360度视野的相机，或视野能覆盖半个球或近似整个球的相机；</p>
+<p>Panoramic camera：全景相机</p>
+<p>spherical camera：球面相机</p>
+<p>catadioptric
+camera：结合了透镜和面镜的相机。广角相机的第二种类型。</p>
+<p>fisheye camera：鱼眼相机</p>
+<p>wide-angle camera：广角相机</p>
+<h2 id="全景相机品牌">全景相机品牌</h2>
+<p>GoPro Max、Insta360 （One X2，X3，RS 1-inch，RS Twin）、Ricoh Theta
+（X，Z1）、Trisio Lite2、Kandao QooCam 8K 360。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>https://mp.weixin.qq.com/s/0U4_jj1wrggVGY_1uvQXmw</li>
+<li>https://mp.weixin.qq.com/s/aMJnwTvI87YrBKkmMaGQbQ
+（其中鱼眼相机2D到3D的变换公式存在错误）</li>
+<li>https://mp.weixin.qq.com/s/TffJXlFjGwOKC1kIFs3sjQ</li>
+<li>https://mp.weixin.qq.com/s/GwZ_NaG8u4q2odIS6sORAw</li>
+<li>https://mp.weixin.qq.com/s/fo3CaWwtAvb6oUR3qt87Tw</li>
+<li>https://mp.weixin.qq.com/s/zPvvAWFxWJxom6TJW7diIw</li>
+<li>https://mp.weixin.qq.com/s/efiANlLdrcig6aDCrmeC4w</li>
+<li>https://mp.weixin.qq.com/s/ygI6BC1JXcSP7QAwKa_Vqg</li>
+<li>https://zhuanlan.zhihu.com/p/317673040</li>
+<li>https://epsavlc.github.io/2019/10/21/fisheye_calib.html</li>
+<li>https://jiangren.work/2019/09/13/%E9%B1%BC%E7%9C%BC%E9%95%9C%E5%A4%B4%E6%A8%A1%E5%9E%8B/</li>
+<li>Mei的主页：https://www.robots.ox.ac.uk/~cmei/Toolbox.html</li>
+<li>Omnidirectional DSO: Direct Sparse Odometry With Fisheye
+Cameras</li>
+</ul>
+
+        </div>
+        
+           <div class="my_post_copyright">
+    <div style="text-align:center" class="menu-label">------ copyright ------</div>
+    <p style="text-align:center" class="menu-label"> 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank"><i class="fab fa-creative-commons" style="color:#29a329"></a></i> 许可协议</p>  
+
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <div class="has-text-grey is-size-7 is-block">
+    <p><span>title:</span><a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/">鱼眼图像投影模型及使用</a></p>
+    <p><span>author:</span><a href="/">AmazingHao</a></p>
+    <p>
+        <span>link:</span><a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" title="鱼眼图像投影模型及使用 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/"  aria-label="复制成功！"></i></span>
+    </p>
+    <p><span>publish time:</span>2025-02-08</p>
+    <p><span>update time:</span>2025-02-08</p>
+    </div>
+</div>
+<!-- <ul class="post-copyright">
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/">鱼眼图像投影模型及使用</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/">http://whu-lyh.github.io/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/</a></li>
+    <li><strong>发布时间：</strong>2025-02-08</li>
+    <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+    </li>
+</ul> -->
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+        clipboard.on('success', function(){
+            swal({   
+                title: "",   
+                text: '复制成功',
+                icon: "success", 
+                showConfirmButton: true
+            });
+         });
+    });  
+</script>
+        
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" rel="tag">鱼眼图像</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">超算服务器使用记录</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/">
+                <span class="level-item">ALS数据采集成果制作要求</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+                    
+                    
+                </div>
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd is-hidden-touch  is-hidden-desktop-only has-order-3 column-left is-sticky">    
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="/blogs/images/Title_image.jpg" alt="AmazingHao">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        AmazingHao
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Engineer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Wuhan, Chongqing, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/blogs/archives">
+                        <p class="title has-text-weight-normal">
+                            36
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/blogs/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/blogs/tags">
+                        <p class="title has-text-weight-normal">
+                            26
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/whu-lyh" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/qq_38827743" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/blogs/categories/MathUtilities/">
+            <span class="level-start">
+                <span class="level-item">MathUtilities</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
+            <span class="level-start">
+                <span class="level-item">专业应用</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">传感器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">写作工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">实用工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
+            <span class="level-start">
+                <span class="level-item">开源库</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">科研神器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%AE%97%E6%B3%95/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+    </div>
+</div>
+    
+    
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd  has-order-1 column-right ">    
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#前序">
+        <span class="has-mr-6">1.1</span>
+        <span>前序</span>
+        </a></li></ul><li>
+        <a class="is-flex" href="#普通单目相机">
+        <span class="has-mr-6">2</span>
+        <span>普通单目相机</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#简介">
+        <span class="has-mr-6">2.1</span>
+        <span>简介</span>
+        </a></li><li>
+        <a class="is-flex" href="#投影模型">
+        <span class="has-mr-6">2.2</span>
+        <span>投影模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#投影和反投影过程">
+        <span class="has-mr-6">2.3</span>
+        <span>投影和反投影过程</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#广角相机">
+        <span class="has-mr-6">3</span>
+        <span>广角相机</span>
+        </a></li><li>
+        <a class="is-flex" href="#鱼眼相机">
+        <span class="has-mr-6">4</span>
+        <span>鱼眼相机</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#简介-1">
+        <span class="has-mr-6">4.1</span>
+        <span>简介</span>
+        </a></li><li>
+        <a class="is-flex" href="#通用相机模型">
+        <span class="has-mr-6">4.2</span>
+        <span>通用相机模型</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#kannala-brandt-模型">
+        <span class="has-mr-6">4.2.1</span>
+        <span>Kannala-Brandt 模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#scaramuzza模型">
+        <span class="has-mr-6">4.2.2</span>
+        <span>Scaramuzza模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#mei模型">
+        <span class="has-mr-6">4.2.3</span>
+        <span>Mei模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#polyfisheye模型">
+        <span class="has-mr-6">4.2.4</span>
+        <span>PolyFisheye模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#相关实现">
+        <span class="has-mr-6">4.2.5</span>
+        <span>相关实现</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#鱼眼图像转换">
+        <span class="has-mr-6">4.3</span>
+        <span>鱼眼图像转换</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#鱼眼图像转普通框幅式图像">
+        <span class="has-mr-6">4.3.1</span>
+        <span>鱼眼图像转普通（框幅式）图像</span>
+        </a></li><li>
+        <a class="is-flex" href="#全景图像转鱼眼图像">
+        <span class="has-mr-6">4.3.2</span>
+        <span>全景图像转鱼眼图像</span>
+        </a></li></ul></li></ul></li><li>
+        <a class="is-flex" href="#可视化工具">
+        <span class="has-mr-6">5</span>
+        <span>可视化工具</span>
+        </a></li><li>
+        <a class="is-flex" href="#相近名词解释">
+        <span class="has-mr-6">6</span>
+        <span>相近名词解释</span>
+        </a></li><li>
+        <a class="is-flex" href="#全景相机品牌">
+        <span class="has-mr-6">7</span>
+        <span>全景相机品牌</span>
+        </a></li><li>
+        <a class="is-flex" href="#参考资料">
+        <span class="has-mr-6">8</span>
+        <span>参考资料</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/Windows-BoostUp/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Windows-BoostUp">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T08:21:18.000Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/Windows-BoostUp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Windows-BoostUp</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.995Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="超算服务器使用记录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">超算服务器使用记录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            related posts
+        </h3>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.995Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5dbucqf8hsc&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
+    
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/blogs/">
+                
+                    <img src="/blogs/images/logo.svg" alt="鱼眼图像投影模型及使用" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2025 AmazingHao&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+			<style>
+				.copyright{line-height:24px}
+			</style>
+			<div class="copyright">
+			<span id="busuanzi_container_site_pv" style='display:none'> 
+                <i class="fa fa-heart-o"></i> 
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span> 
+            </span>
+			<span id="busuanzi_container_site_uv" style='display:none'> 
+            人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人. 
+            </span>
+            <span id="sitetime"></span>
+			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+			</script>
+		</div>
+    </div>
+</footer>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 02, 23, 10, 00, 00); //北京时间2020-2-23 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://whu-lyh.github.io/blogs',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/blogs/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/blogs/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/blogs/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+
+<script src="/blogs/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/blogs/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/blogs/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blogs/css/search.css">
+<link rel="stylesheet" href="/blogs/css/insight.css">
+    
+
+	<!-- 雪花特效 -->
+    <script type="text/javascript">
+      var windowWidth = $(window).width();
+      if (windowWidth > 480) {
+        document.write('<script type="text/javascript" src="/js/snow.js"><\/script>');
+      }
+    </script>
+
+</body>
+</html>

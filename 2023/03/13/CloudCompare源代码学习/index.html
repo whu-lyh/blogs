@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<script src="/js/click.js"></script>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>CloudCompare源代码学习 - AmazingHao&#39;s Free Space</title>
+
+
+    <meta name="description" content="目的 想使用一下CloudCompare自带的八叉树，替换掉nanoflann。nanoflann在某些特殊场景下返回的结果是有问题的，导致程序出现异常。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CloudCompare源代码学习">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="AmazingHao&#39;s Free Space">
+<meta property="og:description" content="目的 想使用一下CloudCompare自带的八叉树，替换掉nanoflann。nanoflann在某些特殊场景下返回的结果是有问题的，导致程序出现异常。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://whu-lyh.github.io/blogs/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/cc-logo.png">
+<meta property="article:published_time" content="2023-03-13T11:58:06.000Z">
+<meta property="article:modified_time" content="2025-02-08T04:06:31.751Z">
+<meta property="article:author" content="AmazingHao">
+<meta property="article:tag" content="CloudCompare">
+<meta property="article:tag" content="Point Cloud">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://whu-lyh.github.io/blogs/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/cc-logo.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/blogs/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+<link rel="stylesheet" href="/blogs/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/blogs/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+
+
+<link rel="stylesheet" href="/blogs/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/blogs/">
+            
+                <img src="/blogs/images/logo.svg" alt="CloudCompare源代码学习" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/blogs/">Home</a>
+                
+                <a class="navbar-item"
+                href="/blogs/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/blogs/categories">Categories</a>
+                
+                <a class="navbar-item"
+                href="/blogs/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/blogs/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/whu-lyh">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    <br/>
+    <center>
+        <span id="jinrishici-sentence" style="font-size:14px"></span>
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <div id="poem_sentence"></div>
+        <div id="poem_info"></div>
+        <script type="text/javascript">
+          jinrishici.load(function(result) {
+            var sentence = document.querySelector("#poem_sentence")
+            var info = document.querySelector("#poem_info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = '------【' + result.data.origin.dynasty + '】' + result.data.origin.author + '《' + result.data.origin.title + '》'
+          });
+        </script>  
+    </center>
+
+    
+
+    <section class="section">
+        <div>
+            <div class="columns is-centered is-variable is-2">
+                <div class="column is-two-thirds-tablet is-9-desktop is-7-widescreen is-three-fifths-fullhd has-order-2 column-main">
+                    
+<div class="card">
+    
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/cc-logo.png" alt="CloudCompare源代码学习">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2023-03-13T11:58:06.000Z">2023-03-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 分钟 读完 (大约 1462 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                CloudCompare源代码学习
+            
+        </h1>
+        <div class="content">
+            <h3 id="目的">目的</h3>
+<p>想使用一下CloudCompare自带的八叉树，替换掉nanoflann。nanoflann在某些特殊场景下返回的结果是有问题的，导致程序出现异常。</p>
+<a id="more"></a>
+<h2 id="nanoflann返回值出现异常">nanoflann返回值出现异常</h2>
+<p>​
+用于最邻近搜索，在radiussearch下，如果能找到最近点，那么确实找到的是最近点，如果找不到最近点，那么就会出现问题，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++">nanoflann::KdTreeFLANN&lt;PB::pmPointXYZ&gt;::Ptr kdtree = <span class="hljs-built_in">std</span>::make_shared&lt;nanoflann::KdTreeFLANN&lt;PB::pmPointXYZ&gt;&gt;();<br><span class="hljs-keyword">if</span> (!kdtree) &#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cerr</span> &lt;&lt; <span class="hljs-string">"KD tree build failed!"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;<br>    <span class="hljs-keyword">return</span>;<br>&#125;<br>kdtree-&gt;setInputCloud(cloud);<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; checkcorrs.<span class="hljs-built_in">size</span>(); ++i) &#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; searchIndexes;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;SCALAR_TYPE&gt; distances;<br>    SCALAR_TYPE *search_pt = <span class="hljs-keyword">new</span> SCALAR_TYPE[<span class="hljs-number">3</span>];<br>    search_pt[<span class="hljs-number">0</span>] = checkcorrs[i].x;<br>    search_pt[<span class="hljs-number">1</span>] = checkcorrs[i].y;<br>    search_pt[<span class="hljs-number">2</span>] = checkcorrs[i].z;<br>    kdtree-&gt;radiusSearch(search_pt, <span class="hljs-number">2.0</span>, searchIndexes, distances);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​
+在for循环中，每次更新query的点坐标，然后试图从点云中返回其最近的2.0m范围内的点，如果query点周围没有符合条件的点，那么就会返回上一次for循环的值。详见<a href="https://github.com/jlblancoc/nanoflann/issues/196">issue</a>。</p>
+<h2 id="使用cloudcompare自带的octree">使用CloudCompare自带的Octree</h2>
+<ul>
+<li>核心为直接接入cc内部的octree实现最近点的索引，位于<code>#include &lt;DgmOctree.h&gt;</code>，这样检索速度大大加快。过程如下：</li>
+</ul>
+<ol type="1">
+<li>首先找到当前选中哪些entity，此时需要引用主窗口的头文件并获取全局静态变量<code>#include &lt;mainwindow.h&gt;</code>；</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">const</span> ccHObject::Container &amp;selectedEntities = MainWindow::TheInstance()-&gt;getSelectedEntities();<br></code></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>遍历每个选中的entity，并将其转换为点云类型，需要<code>#include &lt;ccHObjectCaster.h&gt;</code>头文件；</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span> (ccHObject* ent : selectedEntities)<br>&#123;<br>	ccPointCloud* pc = ccHObjectCaster::ToPointCloud(ent);<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>获取ccPointCloud点云类中的八叉树索引，如果未构建，则重新构建；</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++">ccOctree::Shared octree = pc-&gt;getOctree();<br><span class="hljs-keyword">if</span> (!octree)<br>&#123;<br>    octree = pc-&gt;computeOctree();<br>    <span class="hljs-keyword">if</span> (!octree)<br>    &#123;<br>    	ccLog::LogMessage(QString::fromLocal8Bit(<span class="hljs-string">"索引构建失败，"</span>) + ent-&gt;getName(), ccLog::LOG_ERROR);<br>    	<span class="hljs-keyword">continue</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li>开始索引，测试了有两种方式，一种是使用<code>DgmOctree</code>的<code>findNeighborsInASphereStartingFromCell</code>，另一种是使用<code>DgmOctree</code>的<code>getPointsInSphericalNeighbourhood</code>。这里的<code>PointCoordinateType</code>是cc内部定义的数值变量的类型，默认为float型。检索出来的邻域点存放在<code>CCLib::DgmOctree::NeighboursSet</code>中，通过源码可以看出就是描述点信息的vector向量。需要注意的是，这两个方式都需要提前知道八叉树的层级，通过<code>octree-&gt;findBestLevelForAGivenNeighbourhoodSizeExtraction</code>得到当前半径下需要在哪一层level做检索。<code>NearestNeighboursSphericalSearchStruct</code>中的参数设置没搞明白，就先不用了。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++">PointCoordinateType search_radius = <span class="hljs-number">1.0</span>;<br><span class="hljs-comment">// @1</span><br><span class="hljs-comment">//CCLib::DgmOctree::NearestNeighboursSphericalSearchStruct nnsss;</span><br><span class="hljs-comment">//nnsss.queryPoint = search_pt;</span><br><span class="hljs-comment">//CCLib::DgmOctree::NeighboursSet neighbour_pts = nnsss.pointsInNeighbourhood;</span><br><span class="hljs-comment">//int ret_pt_num = octree-&gt;findNeighborsInASphereStartingFromCell(nnsss, search_radius, true);</span><br><span class="hljs-comment">// @2</span><br><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> level = octree-&gt;findBestLevelForAGivenNeighbourhoodSizeExtraction(search_radius);<br>CCVector3 search_pt = CCVector3(checkcorrs[i].ctrl_pt.x + global_offset.x,checkcorrs[i].ctrl_pt.y + global_offset.y, checkcorrs[i].ctrl_pt.z + global_offset.z);<br>CCLib::DgmOctree::NeighboursSet neighbour_pts;         <br><span class="hljs-keyword">int</span> ret_pt_num = octree-&gt;getPointsInSphericalNeighbourhood(search_pt, search_radius, neighbour_pts, level);<br></code></pre></td></tr></table></figure>
+<p>​
+使用cc自带的八叉树之后，发现检索速度非常快（由于八叉树cell分区的原因，虽然返回的值可能不准确，但足够用了）。部分核心代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// qCC_db</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ccHObjectCaster.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ccPointCloud.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;DgmOctree.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mainwindow.h&gt;</span></span><br><span class="hljs-comment">// 控制点类</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ControlPoint</span> :</span> <span class="hljs-keyword">public</span> CCVector3d<br>&#123;<br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> gcp_name; <span class="hljs-comment">// gcp name</span><br>    <span class="hljs-keyword">int</span> id; <span class="hljs-comment">// gcp index</span><br>    <span class="hljs-comment">// operator &lt;&lt; overwrite</span><br>    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">friend</span> <span class="hljs-built_in">std</span>::ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(<span class="hljs-built_in">std</span>::ostream &amp;os, <span class="hljs-keyword">const</span> ControlPoint &amp;pt) &#123;<br>        os &lt;&lt; <span class="hljs-built_in">std</span>::setprecision(<span class="hljs-number">10</span>) &lt;&lt; <span class="hljs-string">"gcp_name: "</span> &lt;&lt; pt.gcp_name<br>            &lt;&lt; <span class="hljs-string">", x = "</span> &lt;&lt; pt.x &lt;&lt; <span class="hljs-string">" , y = "</span> &lt;&lt; pt.y &lt;&lt; <span class="hljs-string">" , z = "</span> &lt;&lt; pt.z;<br>        <span class="hljs-keyword">return</span> os;<br>    &#125;<br>&#125;;<br><span class="hljs-keyword">typedef</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;ControlPoint&gt; ControlPointVec;<br><span class="hljs-comment">// 同名点类</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">HomonymPoint</span> :</span> <span class="hljs-keyword">public</span> CCVector3d<br>&#123;<br>    <span class="hljs-keyword">double</span> gps_time; <span class="hljs-comment">// gpstime from origin las point cloud file</span><br>    HomonymPoint() :CCVector3d(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>), gps_time(<span class="hljs-number">0.0</span>) &#123;&#125;<br>    <span class="hljs-comment">// container stores the nearest points located inside a certain radius for coordinate interpolation</span><br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;P2M::BaseType::Point3D&gt; nearest_pts;<br>    HomonymPoint(<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> x_, <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> y_, <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> z_)<br>        :CCVector3d(x_, y_, z_), gps_time(<span class="hljs-number">0.0</span>)<br>    &#123;&#125;<br>    <span class="hljs-comment">// operator &lt;&lt; overwrite</span><br>    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">friend</span> <span class="hljs-built_in">std</span>::ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(<span class="hljs-built_in">std</span>::ostream &amp;os, <span class="hljs-keyword">const</span> HomonymPoint &amp;pt)<br>    &#123;<br>        os &lt;&lt; <span class="hljs-built_in">std</span>::setprecision(<span class="hljs-number">10</span>) &lt;&lt; <span class="hljs-string">"Correspondence point gps time stamp: "</span> &lt;&lt; pt.gps_time<br>            &lt;&lt; <span class="hljs-string">", x = "</span> &lt;&lt; pt.x &lt;&lt; <span class="hljs-string">" , y = "</span> &lt;&lt; pt.y &lt;&lt; <span class="hljs-string">" , z = "</span> &lt;&lt; pt.z;<br>        <span class="hljs-keyword">return</span> os;<br>    &#125;<br>&#125;;<br><span class="hljs-keyword">typedef</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;HomonymPoint&gt; HomonymPointVec;<br><span class="hljs-comment">// 对应关系类</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">checkCorrespondence</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> id;<br>    ControlPoint ctrl_pt;<br>    HomonymPoint corr_pt;<br>    <span class="hljs-keyword">bool</span> isChecked;<br>    <span class="hljs-comment">// for point cloud surface fitting, Coordinates of data points.</span><br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;mba::<span class="hljs-built_in">point</span>&lt;2&gt;&gt; coo;<br>    <span class="hljs-comment">// Data values.</span><br>    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">double</span>&gt; val;<br>    <span class="hljs-comment">// statistic info</span><br>    <span class="hljs-keyword">float</span> dist;<br>    <span class="hljs-keyword">float</span> dist_x;<br>    <span class="hljs-keyword">float</span> dist_y;<br>    <span class="hljs-keyword">float</span> dist_z;<br>&#125;;<br><span class="hljs-keyword">typedef</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;checkCorrespondence&gt; checkCorrespondences;<br><span class="hljs-comment">// get local part of ALS point cloud</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">getCorrespondPoints</span><span class="hljs-params">(checkCorrespondences &amp;checkcorrs, CCVector3d &amp;global_offset)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">const</span> ccHObject::Container &amp;selectedEntities = MainWindow::TheInstance()-&gt;getSelectedEntities();<br>    <span class="hljs-keyword">if</span> (selectedEntities.empty())<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    <span class="hljs-comment">// global shift check, note that offset may be incorrected</span><br>    <span class="hljs-keyword">const</span> ccShiftedObject* shifted = ccHObjectCaster::ToShifted(selectedEntities[<span class="hljs-number">0</span>]);<br>    <span class="hljs-keyword">if</span> (shifted)<br>    &#123;<br>        global_offset = shifted-&gt;getGlobalShift();<br>    &#125;<br>    <span class="hljs-keyword">for</span> (ccHObject* ent : selectedEntities)<br>    &#123;<br>        ccPointCloud* pc = ccHObjectCaster::ToPointCloud(ent);<br>        <span class="hljs-keyword">if</span> (!pc)<br>        &#123;<br>            ccLog::LogMessage(QString::fromLocal8Bit(<span class="hljs-string">"未选中有效点云，"</span>) + ent-&gt;getName(), ccLog::LOG_ERROR);<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        ccOctree::Shared octree = pc-&gt;getOctree();<br>        <span class="hljs-keyword">if</span> (!octree)<br>        &#123;<br>            octree = pc-&gt;computeOctree();<br>            <span class="hljs-keyword">if</span> (!octree)<br>            &#123;<br>                ccLog::LogMessage(QString::fromLocal8Bit(<span class="hljs-string">"索引构建失败，"</span>) + ent-&gt;getName(), ccLog::LOG_ERROR);<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>        &#125;<br>        Q_ASSERT(octree != <span class="hljs-literal">nullptr</span>);<br>        <span class="hljs-comment">//CCLib::DgmOctree::NearestNeighboursSphericalSearchStruct nnsss;</span><br>        PointCoordinateType search_radius = <span class="hljs-number">1.0</span>;<br>        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> level = octree-&gt;findBestLevelForAGivenNeighbourhoodSizeExtraction(search_radius);<br>        <span class="hljs-comment">// find correspondence and calculate</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; checkcorrs.<span class="hljs-built_in">size</span>(); ++i) <br>        &#123;<br>            CCVector3 search_pt = CCVector3(checkcorrs[i].ctrl_pt.x + global_offset.x,<br>                checkcorrs[i].ctrl_pt.y + global_offset.y, checkcorrs[i].ctrl_pt.z + global_offset.z);<br>            <span class="hljs-comment">//nnsss.queryPoint = search_pt;</span><br>            <span class="hljs-comment">//int ret_pt_num = octree-&gt;findNeighborsInASphereStartingFromCell(nnsss, search_radius, true);</span><br>            <span class="hljs-comment">//CCLib::DgmOctree::NeighboursSet neighbour_pts = nnsss.pointsInNeighbourhood;</span><br>            CCLib::DgmOctree::NeighboursSet neighbour_pts;         <br>            <span class="hljs-keyword">int</span> ret_pt_num = octree-&gt;getPointsInSphericalNeighbourhood(search_pt, search_radius, neighbour_pts, level);<br>            <span class="hljs-keyword">if</span> (ret_pt_num &lt; <span class="hljs-number">1</span>)<br>                <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-comment">// get the nearest point</span><br>            <span class="hljs-keyword">if</span> (neighbour_pts[<span class="hljs-number">0</span>].squareDistd &lt; checkcorrs[i].dist)<br>            &#123;<br>                <span class="hljs-keyword">const</span> CCVector3 *ret_pt0 = neighbour_pts[<span class="hljs-number">0</span>].<span class="hljs-built_in">point</span>;<br>                checkcorrs[i].corr_pt = HomonymPoint(ret_pt0-&gt;x - global_offset.x, ret_pt0-&gt;y - global_offset.y, ret_pt0-&gt;z - global_offset.z);<br>            &#125;<br>            <span class="hljs-comment">// get the set of neighbour pts</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> pt: neighbour_pts)<br>            &#123;<br>                checkcorrs[i].isChecked = <span class="hljs-literal">true</span>;<br>                <span class="hljs-keyword">const</span> CCVector3 *ret_pt = pt.<span class="hljs-built_in">point</span>;              <br>                <span class="hljs-comment">// copy to fitting data container</span><br>                checkcorrs[i].coo.push_back(mba::<span class="hljs-built_in">point</span>&lt;<span class="hljs-number">2</span>&gt;&#123;ret_pt-&gt;x, ret_pt-&gt;y&#125;);<br>                checkcorrs[i].val.emplace_back(ret_pt-&gt;z);<br>            &#125; <br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br><span class="hljs-comment">// interpolate the height value based on nearest points</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">interpolateCoordinate</span><span class="hljs-params">(checkCorrespondence &amp;corr, <span class="hljs-keyword">const</span> CCVector3d &amp;global_offset)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// get coarse boundary</span><br>    <span class="hljs-keyword">double</span> minx = <span class="hljs-number">0.0</span>, maxx = <span class="hljs-number">0.0</span>, miny = <span class="hljs-number">0.0</span>, maxy = <span class="hljs-number">0.0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> pt : corr.coo)<br>    &#123;<br>        minx = (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">min</span>)(minx, pt[<span class="hljs-number">0</span>]);<br>        maxx = (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">max</span>)(maxx, pt[<span class="hljs-number">0</span>]);<br>        miny = (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">min</span>)(miny, pt[<span class="hljs-number">1</span>]);<br>        maxy = (<span class="hljs-built_in">std</span>::<span class="hljs-built_in">max</span>)(maxy, pt[<span class="hljs-number">1</span>]);<br>    &#125;<br>    mba::<span class="hljs-built_in">point</span>&lt;<span class="hljs-number">2</span>&gt; lo = &#123; minx - <span class="hljs-number">3.0</span>, miny - <span class="hljs-number">3.0</span> &#125;;<br>    mba::<span class="hljs-built_in">point</span>&lt;<span class="hljs-number">2</span>&gt; hi = &#123; maxx + <span class="hljs-number">3.0</span>, maxy + <span class="hljs-number">3.0</span> &#125;;<br>    <span class="hljs-comment">// Initial grid size.</span><br>    mba::index&lt;<span class="hljs-number">2</span>&gt; grid = &#123; <span class="hljs-number">5</span>, <span class="hljs-number">5</span> &#125;;<br>    <span class="hljs-function">mba::MBA&lt;2&gt; <span class="hljs-title">interp</span><span class="hljs-params">(lo, hi, grid, corr.coo, corr.val)</span></span>;<br>    <span class="hljs-comment">// residual between gt and measurement</span><br>    corr.corr_pt.z = interp(mba::<span class="hljs-built_in">point</span>&lt;<span class="hljs-number">2</span>&gt;&#123;corr.ctrl_pt.x + global_offset.x, corr.ctrl_pt.y + global_offset.y&#125;);<br>    corr.dist_z = corr.ctrl_pt.z - corr.corr_pt.z;<br>&#125;<br><span class="hljs-comment">// for interpolating the position of target gcp points</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">qualityCheck</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> &amp;gcp_path, <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> &amp;output_path)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">namespace</span> PB = P2M::BaseType;<br>    <span class="hljs-comment">// load gcps</span><br>    <span class="hljs-keyword">if</span> (!P2M::Util::FileUtility::FileExist(output_path)) &#123;<br>        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cerr</span> &lt;&lt; <span class="hljs-string">"Output Path: "</span> &lt;&lt; output_path &lt;&lt; <span class="hljs-string">" doesn't exist!"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    checkCorrespondences checkcorrs;<br>    <span class="hljs-function">CCVector3d <span class="hljs-title">global_offset</span><span class="hljs-params">(<span class="hljs-number">0.0</span>,<span class="hljs-number">0.0</span>,<span class="hljs-number">0.0</span>)</span></span>;<br>    <span class="hljs-comment">// load check gcp points</span><br>    loadGcpFile(gcp_path, checkcorrs, global_offset);<br>    <span class="hljs-comment">// get loca part of ALS point clouds</span><br>    getCorrespondPoints(checkcorrs, global_offset);<br>    <span class="hljs-comment">// get height difference based on surface fitting</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;checkcorr : checkcorrs)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (checkcorr.isChecked)<br>        &#123;<br>            interpolateCoordinate(checkcorr, global_offset);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+        </div>
+        
+           <div class="my_post_copyright">
+    <div style="text-align:center" class="menu-label">------ copyright ------</div>
+    <p style="text-align:center" class="menu-label"> 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank"><i class="fab fa-creative-commons" style="color:#29a329"></a></i> 许可协议</p>  
+
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <div class="has-text-grey is-size-7 is-block">
+    <p><span>title:</span><a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/">CloudCompare源代码学习</a></p>
+    <p><span>author:</span><a href="/">AmazingHao</a></p>
+    <p>
+        <span>link:</span><a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" title="CloudCompare源代码学习 - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/"  aria-label="复制成功！"></i></span>
+    </p>
+    <p><span>publish time:</span>2023-03-13</p>
+    <p><span>update time:</span>2025-02-08</p>
+    </div>
+</div>
+<!-- <ul class="post-copyright">
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/">CloudCompare源代码学习</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/">http://whu-lyh.github.io/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/</a></li>
+    <li><strong>发布时间：</strong>2023-03-13</li>
+    <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+    </li>
+</ul> -->
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+        clipboard.on('success', function(){
+            swal({   
+                title: "",   
+                text: '复制成功',
+                icon: "success", 
+                showConfirmButton: true
+            });
+         });
+    });  
+</script>
+        
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/blogs/tags/CloudCompare/" rel="tag">CloudCompare</a>, <a class="has-link-grey -link" href="/blogs/tags/Point-Cloud/" rel="tag">Point Cloud</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blogs/2023/04/17/NVIDIA-Driver-Installer/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Nvidia Driver Installation</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2023/03/06/Zotero/">
+                <span class="level-item">Zotero食用指南</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+                    
+                    
+                </div>
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd is-hidden-touch  is-hidden-desktop-only has-order-3 column-left is-sticky">    
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="/blogs/images/Title_image.jpg" alt="AmazingHao">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        AmazingHao
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Engineer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Wuhan, Chongqing, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/blogs/archives">
+                        <p class="title has-text-weight-normal">
+                            36
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/blogs/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/blogs/tags">
+                        <p class="title has-text-weight-normal">
+                            26
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/whu-lyh" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/qq_38827743" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/blogs/categories/MathUtilities/">
+            <span class="level-start">
+                <span class="level-item">MathUtilities</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
+            <span class="level-start">
+                <span class="level-item">专业应用</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">传感器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">写作工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">实用工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
+            <span class="level-start">
+                <span class="level-item">开源库</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">科研神器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%AE%97%E6%B3%95/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+    </div>
+</div>
+    
+    
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd  has-order-1 column-right ">    
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><ul class="menu-list"><li>
+        <a class="is-flex" href="#目的">
+        <span class="has-mr-6">1.1</span>
+        <span>目的</span>
+        </a></li></ul><li>
+        <a class="is-flex" href="#nanoflann返回值出现异常">
+        <span class="has-mr-6">2</span>
+        <span>nanoflann返回值出现异常</span>
+        </a></li><li>
+        <a class="is-flex" href="#使用cloudcompare自带的octree">
+        <span class="has-mr-6">3</span>
+        <span>使用CloudCompare自带的Octree</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/Windows-BoostUp/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Windows-BoostUp">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T08:21:18.000Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/Windows-BoostUp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Windows-BoostUp</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.995Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="超算服务器使用记录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">超算服务器使用记录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            related posts
+        </h3>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/Hdl_graph_slam/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_回环检测">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.754Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/Hdl_graph_slam/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_回环检测</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/Hdl_graph_slam2/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Hdl_graph_slam论文及代码解析_后端优化">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.754Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/Hdl_graph_slam2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hdl_graph_slam论文及代码解析_后端优化</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="MLS position inconsistency correction">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2023-09-30T08:17:40.000Z">2023-09-30</time></div>
+                        <a href="/blogs/2023/09/30/MLS-position-inconsistency-correction/" class="title has-link-black-ter is-size-6 has-text-weight-normal">MLS position inconsistency correction</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            <article class="media"> <a href="/blogs/2025/02/08/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="关于控制点检核的一些思考">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.787Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/%E5%85%B3%E4%BA%8E%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" class="title has-link-black-ter is-size-6 has-text-weight-normal">关于控制点检核的一些思考</a>
+                    </div>
+                </div>
+            </article>
+         
+            <article class="media"> <a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="pcl中的体素滤波">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-11T11:24:21.000Z">2020-06-11</time></div>
+                        <a href="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">pcl中的体素滤波</a>
+                    </div>
+                </div>
+            </article>
+         
+            <article class="media"> <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
+                        <p class="image is-64x64">
+                            <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
+                        </p>
+                    </a><div class="media-content">
+                    <div class="content">
+                        <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
+                        <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
+                    </div>
+                </div>
+            </article>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5dbucqf8hsc&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
+    
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/blogs/">
+                
+                    <img src="/blogs/images/logo.svg" alt="CloudCompare源代码学习" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2025 AmazingHao&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+			<style>
+				.copyright{line-height:24px}
+			</style>
+			<div class="copyright">
+			<span id="busuanzi_container_site_pv" style='display:none'> 
+                <i class="fa fa-heart-o"></i> 
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span> 
+            </span>
+			<span id="busuanzi_container_site_uv" style='display:none'> 
+            人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人. 
+            </span>
+            <span id="sitetime"></span>
+			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+			</script>
+		</div>
+    </div>
+</footer>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 02, 23, 10, 00, 00); //北京时间2020-2-23 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://whu-lyh.github.io/blogs',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/blogs/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/blogs/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/blogs/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+
+<script src="/blogs/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/blogs/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/blogs/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blogs/css/search.css">
+<link rel="stylesheet" href="/blogs/css/insight.css">
+    
+
+	<!-- 雪花特效 -->
+    <script type="text/javascript">
+      var windowWidth = $(window).width();
+      if (windowWidth > 480) {
+        document.write('<script type="text/javascript" src="/js/snow.js"><\/script>');
+      }
+    </script>
+
+</body>
+</html>

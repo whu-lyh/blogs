@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<script src="/js/click.js"></script>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Rotation Average - AmazingHao&#39;s Free Space</title>
+
+
+    <meta name="description" content="What is Rotation Averaging? Problem1 Given a set of rotation matrices \(C_i, i&#x3D;\{1,2,...,n\}\), the average of them is ? Rotation Averaging is to calculate the average of a set of rotation matric">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rotation Average">
+<meta property="og:url" content="http://whu-lyh.github.io/blogs/2023/02/09/Rotation-Average/index.html">
+<meta property="og:site_name" content="AmazingHao&#39;s Free Space">
+<meta property="og:description" content="What is Rotation Averaging? Problem1 Given a set of rotation matrices \(C_i, i&#x3D;\{1,2,...,n\}\), the average of them is ? Rotation Averaging is to calculate the average of a set of rotation matric">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
+<meta property="article:published_time" content="2023-02-09T02:08:24.000Z">
+<meta property="article:modified_time" content="2025-02-08T04:06:31.767Z">
+<meta property="article:author" content="AmazingHao">
+<meta property="article:tag" content="Geometry">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/blogs/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+<link rel="stylesheet" href="/blogs/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/blogs/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+
+
+<link rel="stylesheet" href="/blogs/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/blogs/">
+            
+                <img src="/blogs/images/logo.svg" alt="Rotation Average" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/blogs/">Home</a>
+                
+                <a class="navbar-item"
+                href="/blogs/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/blogs/categories">Categories</a>
+                
+                <a class="navbar-item"
+                href="/blogs/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/blogs/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/whu-lyh">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    <br/>
+    <center>
+        <span id="jinrishici-sentence" style="font-size:14px"></span>
+        <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+        <div id="poem_sentence"></div>
+        <div id="poem_info"></div>
+        <script type="text/javascript">
+          jinrishici.load(function(result) {
+            var sentence = document.querySelector("#poem_sentence")
+            var info = document.querySelector("#poem_info")
+            sentence.innerHTML = result.data.content
+            info.innerHTML = '------【' + result.data.origin.dynasty + '】' + result.data.origin.author + '《' + result.data.origin.title + '》'
+          });
+        </script>  
+    </center>
+
+    
+
+    <section class="section">
+        <div>
+            <div class="columns is-centered is-variable is-2">
+                <div class="column is-two-thirds-tablet is-9-desktop is-7-widescreen is-three-fifths-fullhd has-order-2 column-main">
+                    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2023-02-09T02:08:24.000Z">2023-02-09</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/MathUtilities/">MathUtilities</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 分钟 读完 (大约 1158 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Rotation Average
+            
+        </h1>
+        <div class="content">
+            <h2 id="what-is-rotation-averaging">What is Rotation Averaging?</h2>
+<h3 id="problem1">Problem<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h3>
+<p>Given a set of rotation matrices <span class="math inline">\(C_i,
+i=\{1,2,...,n\}\)</span>, the average of them is ? <strong>Rotation
+Averaging</strong> is to calculate the average of a set of rotation
+matrices. Averaging is to get the <strong>best estimate</strong> of all
+rotations. (Single rotation averaging)</p>
+<p>Or equivalently, <strong>Rotation Averaging</strong> is the problem
+of estimating a set of <span class="math inline">\(n\)</span> unknown
+orientations <span class="math inline">\(R_1,...,R_n \in SO(d)\)</span>
+from noisy measurements <span class="math inline">\(\bar{R} \in
+SO(d)\)</span> of the relative rotations <span class="math inline">\(R_i^{-1}R_j\)</span> between them. (Multi rotation
+averaging)</p>
+<p>In practical the rotation averaging problem could be categoried into
+: Single rotation averaging、Multi rotation averaging and Conjugate
+rotation averaging.</p>
+<a id="more"></a>
+<ul>
+<li>Single rotation averaging: for instance,</li>
+</ul>
+<blockquote>
+<p>used in the case where <strong>several measurements of a single
+rotation R are given</strong>. These may be for instance measurements of
+the orientation of an object, derived from measurements taken with
+different cameras in a <strong>calibrated network</strong>. If the
+measurements are noisy, they can be <strong>averaged to find a
+mean</strong>.</p>
+</blockquote>
+<ul>
+<li>Multi rotation averaging: for instance,</li>
+</ul>
+<blockquote>
+<p>estimate the rotation of camera in <strong>SFM</strong>. More
+practical applications in OpenMVG.</p>
+</blockquote>
+<ul>
+<li>conjugate rotation averaging: for instance,</li>
+</ul>
+<blockquote>
+<p><strong>hand-eye coordinate problem</strong>, that is, consider a
+robot manipulating some object, which is also observed by a stationary
+camera. The orientation of the object can be computed at each moment
+through knowledge of the geometry of the robot (for instance, joint
+angles). At the same time, the orientation of the object can be computed
+from the images taken from the camera. This gives two separate estimates
+of the orientation of the object (expressed as a rotation), but these
+are in <strong>different coordinate frames</strong>. By solving the
+conjugate rotation problem, one can compute the
+<strong>relationship</strong> between the robot and camera frames.</p>
+</blockquote>
+<p>For all these problems, <strong>Rotation Averaging</strong> is to
+find provably optimal and convergent solutions.</p>
+<h2 id="rotation-averaging12">Rotation
+Averaging<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></h2>
+<p>Assume the average rotation matrix is <span class="math inline">\(\bar{C}\)</span>, The angle <span class="math inline">\(\Delta \delta_i\)</span> between <span class="math inline">\(\bar{C}\)</span> and <span class="math inline">\(C_i\)</span> , <span class="math inline">\(C_i
+\mbox{ and }\bar{C} \in SO(3)\)</span>, could be calculated as
+followings: <span class="math display">\[
+\Delta C_i=\bar{C}^TC_i
+\]</span> The cosine value of <span class="math inline">\(\Delta
+\delta_i\)</span> is: <span class="math display">\[
+\begin{align}
+cos \Delta \delta_i &amp;= \frac{tr(\Delta C_i)-1}{2} \\
+&amp;=\frac{tr(\bar{C}^TC_i)-1}{2} \\
+\end{align}
+\]</span> The sum of all cosine value of <span class="math inline">\(\Delta \delta\)</span>, also known as <span class="math inline">\(Karcher\)</span> mean: <span class="math display">\[
+\begin{align}
+\Sigma_i^n cos \Delta \delta_i &amp;=
+\Sigma_i^n\frac{1}{2}(tr(\bar{C}^TC_i)-1) \\
+&amp;=\frac{1}{2} \Sigma_i^ntr(\bar{C}^TC_i)-\frac{n}{2}
+\end{align}
+\]</span> Minimize the sum of angles between <span class="math inline">\(\bar{C}\)</span> and <span class="math inline">\(C_i\)</span> is to maximize <span class="math inline">\(\Sigma_i^ntr(\bar{C}^TC_i)\)</span>. ==??? why
+minimize??? to get the best estimate== <span class="math display">\[
+\begin{align}
+\Sigma_i^ntr(\bar{C}^TC_i) &amp;= tr(\Sigma_i^n \bar{C}^TC_i) \\
+&amp;=tr( \bar{C}^T \Sigma_i^nC_i) \mbox{ // trace operator} \\
+&amp;=tr( \bar{C}^T U\Sigma V^T)  \mbox{ // why?}\\
+&amp;=tr(  V^T\bar{C}^T U\Sigma) \mbox{ // trace operator}
+\end{align}
+\]</span> where <span class="math inline">\(V^T,U,\bar{C}^T\)</span> are
+orthogonal matrices[^ 3].</p>
+<p>Then set <span class="math inline">\(O=tr(V^T \bar{C}^T U)\)</span>，
+it is also orthogonal matrix. <span class="math display">\[
+\begin{align}
+tr(V^T\bar{C}^T U\Sigma) &amp;= tr(O \Sigma) \\
+&amp;= tr( \left[\begin{array}{ccc}
+O_{11} &amp; O_{12} &amp; O_{13} \\
+O_{21} &amp; O_{22} &amp; O_{23} \\
+O_{31} &amp; O_{32} &amp; O_{33}
+\end{array}
+\right]
+\left[\begin{array}{ccc}
+\delta_{11} &amp;  &amp;  \\
+&amp; \delta_{22} &amp; \\
+&amp;  &amp; \delta_{33}
+\end{array}
+\right]
+) \\
+&amp;= O_{11} \delta_1 + O_{22} \delta_2 + O_{33} \delta_3
+\end{align}
+\]</span> where <span class="math inline">\(O\)</span> is orthogonal
+matrix, means <span class="math inline">\(\Sigma_{j=1}^3 O_{jk}^2=1,
+\mbox{ for} \quad k=1,2,3\)</span>. And the <span class="math inline">\(O_{11} \leq 1,O_{22} \leq 1,O_{33} \leq
+1\)</span>.</p>
+<p>Let <span class="math inline">\(O_{11} = 1,O_{22} = 1,O_{33} =
+1\)</span>, Then <span class="math display">\[
+O=\left[\begin{array}{ccc}
+1 &amp;  &amp;  \\
+&amp; 1 &amp; \\
+&amp;  &amp; 1
+\end{array}
+\right]
+=I
+\]</span> then $V^T {C}^T U=I {C}<sup>T=VU</sup>T {C} =UV^T $.</p>
+<p>Then check the determinant of <span class="math inline">\(UV^T\)</span>, which should be 1. <span class="math display">\[
+\bar{C}=U \left[
+\begin{array}{ccc}
+1 &amp;  &amp;  \\
+&amp; 1 &amp; \\
+&amp;  &amp; det(UV^T)
+\end{array}
+\right] V^T \mbox{ // why?}
+\]</span></p>
+<h3 id="code">Code</h3>
+<p><a href="https://github.com/openMVG/openMVG/blob/08ac7746d2b98318e9308fb4e6bb81509d7cd1b0/src/openMVG/multiview/rotation_averaging_test.cpp">OpenMVG</a>
+&amp; Ceres for LM optimization.</p>
+<p>Simplest toy code test:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// Rotation averaging in a triplet:</span><br><span class="hljs-comment">// 0_______2</span><br><span class="hljs-comment">//  \     /</span><br><span class="hljs-comment">//   \   /</span><br><span class="hljs-comment">//    \ /</span><br><span class="hljs-comment">//     1</span><br>TEST (rotation_averaging, RotationLeastSquare_3_Camera)<br>&#123;<br>  <span class="hljs-comment">//--</span><br>  <span class="hljs-comment">// Setup 3 camera that have a relative orientation of 120 degree</span><br>  <span class="hljs-comment">// Set Z axis as UP Vector for the rotation</span><br>  <span class="hljs-comment">// They are in the same plane and looking in O=&#123;0,0,0&#125;</span><br>  <span class="hljs-comment">//--</span><br>  <span class="hljs-keyword">const</span> Mat3 R01 = RotationAroundZ(<span class="hljs-number">2.</span>*M_PI/<span class="hljs-number">3.0</span>); <span class="hljs-comment">//120 degree</span><br>  <span class="hljs-keyword">const</span> Mat3 R12 = RotationAroundZ(<span class="hljs-number">2.</span>*M_PI/<span class="hljs-number">3.0</span>); <span class="hljs-comment">//120 degree</span><br>  <span class="hljs-keyword">const</span> Mat3 R20 = RotationAroundZ(<span class="hljs-number">2.</span>*M_PI/<span class="hljs-number">3.0</span>); <span class="hljs-comment">//120 degree</span><br><br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;RelativeRotation&gt; vec_relativeRotEstimate;<br>  vec_relativeRotEstimate.push_back(RelativeRotation(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>, R01));<br>  vec_relativeRotEstimate.push_back(RelativeRotation(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>, R12));<br>  vec_relativeRotEstimate.push_back(RelativeRotation(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>, R20));<br><br>  <span class="hljs-comment">//- Solve the global rotation estimation problem :</span><br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Mat3&gt; vec_globalR;<br>  <span class="hljs-comment">// More in header file</span><br>  L2RotationAveraging(<span class="hljs-number">3</span>, vec_relativeRotEstimate, vec_globalR);<br>  EXPECT_EQ(<span class="hljs-number">3</span>, vec_globalR.<span class="hljs-built_in">size</span>());<br>  <span class="hljs-comment">// Check that the loop is closing</span><br>  EXPECT_MATRIX_NEAR(Mat3::Identity(), (vec_globalR[<span class="hljs-number">0</span>]*vec_globalR[<span class="hljs-number">1</span>]*vec_globalR[<span class="hljs-number">2</span>]), <span class="hljs-number">1e-8</span>);<br><br>  <span class="hljs-comment">//--</span><br>  <span class="hljs-comment">// Check that the found relative rotation matrix give the expected rotation.</span><br>  <span class="hljs-comment">//  -&gt; the started relative rotation (used in the action matrix).</span><br>  <span class="hljs-comment">//// /!\ Translations are not checked they are 0 by default.</span><br>  <span class="hljs-comment">//--</span><br>  Mat3 R;<br>  Vec3 t, t0 = Vec3::Zero(), t1 = Vec3::Zero();<br>  RelativeCameraMotion(vec_globalR[<span class="hljs-number">0</span>], t0, vec_globalR[<span class="hljs-number">1</span>], t1, &amp;R, &amp;t);<br>  EXPECT_NEAR(<span class="hljs-number">0</span>, FrobeniusDistance( R01, R), <span class="hljs-number">1e-2</span>);<br><br>  RelativeCameraMotion(vec_globalR[<span class="hljs-number">1</span>], t0, vec_globalR[<span class="hljs-number">2</span>], t1, &amp;R, &amp;t);<br>  EXPECT_NEAR(<span class="hljs-number">0</span>, FrobeniusDistance( R12, R), <span class="hljs-number">1e-2</span>);<br><br>  RelativeCameraMotion(vec_globalR[<span class="hljs-number">2</span>], t0, vec_globalR[<span class="hljs-number">0</span>], t1, &amp;R, &amp;t);<br>  EXPECT_NEAR(<span class="hljs-number">0</span>, FrobeniusDistance( R20, R), <span class="hljs-number">1e-2</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="shonan-rotation-averaging4">Shonan Rotation
+Averaging<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></h2>
+<p>This is a fast, simple, and elegant rotation averaging algorithm that
+is guaranteed to recover globally optimal solutions under mild
+assumptions on the measurement noise. The method employs semidefinite
+relaxation in order to recover provably globally optimal solutions of
+the rotation averaging problem.</p>
+<h3 id="code-1">Code</h3>
+<p>Already inside GTSAM-4.1</p>
+<h2 id="rcd-rotation-coordinate-descent5">RCD: Rotation Coordinate
+Descent<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup></h2>
+<p>RCD is a fast rotation averaging algorithm that achieves global
+optimality under mild noise conditions on the noise level of the
+measurements.</p>
+<h3 id="code-2">Code</h3>
+<p><a href="https://github.com/sfchng/Rotation_Coordinate_Descent">RCD</a></p>
+<h2 id="hybrid-rotation-averaging-a-fast-and-robust-rotation-averaging-approach7">Hybrid
+Rotation Averaging: A Fast and Robust Rotation Averaging
+Approach<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup></h2>
+<h3 id="code-3">Code</h3>
+<p><a href="https://github.com/whu-lyh/GraphOptim">Graph Optimizer</a>:
+This library contains not only rotation averaging solvers, but also some
+popular methods in 3D vision, such as translation averaging, clustering,
+etc. The library is designed to deal with large scale optimization
+problems, and is easy to extend.</p>
+<h2 id="irotavg6">iRotAvg<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup></h2>
+<p>incrementally solves rotation averaging.</p>
+<h3 id="code-4">Code</h3>
+<p><a href="https://github.com/ajparra/iRotAvg">iRotAvg</a></p>
+<h2 id="diff">Diff</h2>
+<p>What is the difference between rotation averaging and SLAM ? Or
+status estimation? SLAM tries to estimate both translation and
+rotation,while rotation averaging estimate the optimal rotation
+only.</p>
+<h2 id="others">Others</h2>
+<p>rotation averaging used by Fast Point Transformer, is a post-process
+optimization scheme? Perhaps yes.</p>
+<h2 id="reference">Reference</h2>
+<div id="footnotes">
+<hr>
+<div id="footnotelist">
+<ol>
+<li id="fn:1">
+Hartley R, Trumpf J, Dai Y, et al. Rotation averaging[J]. International
+journal of computer vision, 2013, 103:
+267-305.<a href="#fnref:1" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:2">
+https://www.cnblogs.com/JingeTU/p/16818609.html<a href="#fnref:2" rev="footnote">
+↩︎</a>
+</li>
+<li id="fn:3">
+https://en.wikipedia.org/wiki/Orthogonal_matrix<a href="#fnref:3" rev="footnote">
+↩︎</a>
+</li>
+<li id="fn:4">
+Shonan Rotation Averaging: Global Optimality by Surfing <span class="math inline">\(SO(p)^n\)</span>, ECCV
+2020<a href="#fnref:4" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:5">
+Rotation Coordinate Descent for Fast Globally Optimal Rotation
+Averaging, CVPR 2021<a href="#fnref:5" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:6">
+Visual SLAM: Why bundle adjust?, ICRA
+2019<a href="#fnref:6" rev="footnote"> ↩︎</a>
+</li>
+<li id="fn:7">
+Hybrid Rotation Averaging: A Fast and Robust Rotation Averaging
+Approach, CVPR 2021<a href="#fnref:7" rev="footnote"> ↩︎</a>
+</li>
+</ol>
+</div>
+</div>
+
+
+        </div>
+        
+           <div class="my_post_copyright">
+    <div style="text-align:center" class="menu-label">------ copyright ------</div>
+    <p style="text-align:center" class="menu-label"> 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank"><i class="fab fa-creative-commons" style="color:#29a329"></a></i> 许可协议</p>  
+
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+    <div class="has-text-grey is-size-7 is-block">
+    <p><span>title:</span><a href="/blogs/2023/02/09/Rotation-Average/">Rotation Average</a></p>
+    <p><span>author:</span><a href="/">AmazingHao</a></p>
+    <p>
+        <span>link:</span><a href="/blogs/2023/02/09/Rotation-Average/" title="Rotation Average - AmazingHao&#39;s Free Space">http://whu-lyh.github.io/blogs/2023/02/09/Rotation-Average/</a>
+        <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2023/02/09/Rotation-Average/"  aria-label="复制成功！"></i></span>
+    </p>
+    <p><span>publish time:</span>2023-02-09</p>
+    <p><span>update time:</span>2025-02-08</p>
+    </div>
+</div>
+<!-- <ul class="post-copyright">
+    <li><strong>本文标题：</strong><a href="http://whu-lyh.github.io/blogs/2023/02/09/Rotation-Average/">Rotation Average</a></li>
+     <li><strong>本文作者：</strong><a href="http://whu-lyh.github.io/blogs">AmazingHao</a></li>
+    <li><strong>本文链接：</strong><a href="http://whu-lyh.github.io/blogs/2023/02/09/Rotation-Average/">http://whu-lyh.github.io/blogs/2023/02/09/Rotation-Average/</a></li>
+    <li><strong>发布时间：</strong>2023-02-09</li>
+    <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+    </li>
+</ul> -->
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+        clipboard.on('success', function(){
+            swal({   
+                title: "",   
+                text: '复制成功',
+                icon: "success", 
+                showConfirmButton: true
+            });
+         });
+    });  
+</script>
+        
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/blogs/tags/Geometry/" rel="tag">Geometry</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blogs/2023/02/09/B-spline-Interpolation/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">B-spline Interpolation</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blogs/2023/01/16/ROS%20basic%20manager/">
+                <span class="level-item">ROS basic usage and manager</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span> visits</span>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+                    
+                    
+                </div>
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd is-hidden-touch  is-hidden-desktop-only has-order-3 column-left is-sticky">    
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="/blogs/images/Title_image.jpg" alt="AmazingHao">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        AmazingHao
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Engineer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Wuhan, Chongqing, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/blogs/archives">
+                        <p class="title has-text-weight-normal">
+                            36
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/blogs/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/blogs/tags">
+                        <p class="title has-text-weight-normal">
+                            26
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/whu-lyh" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/qq_38827743" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">CSDN</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/blogs/categories/MathUtilities/">
+            <span class="level-start">
+                <span class="level-item">MathUtilities</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">
+            <span class="level-start">
+                <span class="level-item">专业应用</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">传感器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">写作工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">
+            <span class="level-start">
+                <span class="level-item">实用工具</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
+            <span class="level-start">
+                <span class="level-item">开源库</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
+            <span class="level-start">
+                <span class="level-item">科研神器</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blogs/categories/%E7%AE%97%E6%B3%95/">
+            <span class="level-start">
+                <span class="level-item">算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+    </div>
+</div>
+    
+    
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-one-third-tablet is-3-desktop is-one-fifth-widescreen is-one-fifth-fullhd  has-order-1 column-right ">    
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#what-is-rotation-averaging">
+        <span class="has-mr-6">1</span>
+        <span>What is Rotation Averaging?</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#problem1">
+        <span class="has-mr-6">1.1</span>
+        <span>Problem1</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#rotation-averaging12">
+        <span class="has-mr-6">2</span>
+        <span>Rotation
+Averaging12</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#code">
+        <span class="has-mr-6">2.1</span>
+        <span>Code</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#shonan-rotation-averaging4">
+        <span class="has-mr-6">3</span>
+        <span>Shonan Rotation
+Averaging4</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#code-1">
+        <span class="has-mr-6">3.1</span>
+        <span>Code</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#rcd-rotation-coordinate-descent5">
+        <span class="has-mr-6">4</span>
+        <span>RCD: Rotation Coordinate
+Descent5</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#code-2">
+        <span class="has-mr-6">4.1</span>
+        <span>Code</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#hybrid-rotation-averaging-a-fast-and-robust-rotation-averaging-approach7">
+        <span class="has-mr-6">5</span>
+        <span>Hybrid
+Rotation Averaging: A Fast and Robust Rotation Averaging
+Approach7</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#code-3">
+        <span class="has-mr-6">5.1</span>
+        <span>Code</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#irotavg6">
+        <span class="has-mr-6">6</span>
+        <span>iRotAvg6</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#code-4">
+        <span class="has-mr-6">6.1</span>
+        <span>Code</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#diff">
+        <span class="has-mr-6">7</span>
+        <span>Diff</span>
+        </a></li><li>
+        <a class="is-flex" href="#others">
+        <span class="has-mr-6">8</span>
+        <span>Others</span>
+        </a></li><li>
+        <a class="is-flex" href="#reference">
+        <span class="has-mr-6">9</span>
+        <span>Reference</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/Windows-BoostUp/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Windows-BoostUp">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T08:21:18.000Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/Windows-BoostUp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Windows-BoostUp</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.995Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="超算服务器使用记录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">超算服务器使用记录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
+                    <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            related posts
+        </h3>
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2023/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2023</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2021/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=5dbucqf8hsc&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-420&amp;ly=420&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80" async="async"></script>
+    
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/blogs/">
+                
+                    <img src="/blogs/images/logo.svg" alt="Rotation Average" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2025 AmazingHao&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+			<style>
+				.copyright{line-height:24px}
+			</style>
+			<div class="copyright">
+			<span id="busuanzi_container_site_pv" style='display:none'> 
+                <i class="fa fa-heart-o"></i> 
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span> 
+            </span>
+			<span id="busuanzi_container_site_uv" style='display:none'> 
+            人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人. 
+            </span>
+            <span id="sitetime"></span>
+			<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+			</script>
+		</div>
+    </div>
+</footer>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 02, 23, 10, 00, 00); //北京时间2020-2-23 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " +diffYears+" 年 "+diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://whu-lyh.github.io/blogs',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/blogs/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/blogs/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/blogs/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+
+
+
+<script src="/blogs/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/blogs/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/blogs/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blogs/css/search.css">
+<link rel="stylesheet" href="/blogs/css/insight.css">
+    
+
+	<!-- 雪花特效 -->
+    <script type="text/javascript">
+      var windowWidth = $(window).width();
+      if (windowWidth > 480) {
+        document.write('<script type="text/javascript" src="/js/snow.js"><\/script>');
+      }
+    </script>
+
+</body>
+</html>
