@@ -149,6 +149,75 @@
     
 <div class="card">
     
+    <div class="card-image">
+        <a href="/blogs/2025/02/08/B-Spline/" class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2023/03/06/B-Spline/viz_ctrlpt.svg" alt="B-Spline探秘">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2025-02-08T04:06:31.746Z">2025-02-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/MathUtilities/">MathUtilities</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    18 分钟 读完 (大约 2632 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/blogs/2025/02/08/B-Spline/">B-Spline探秘</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="b-splinebasic-spline">B-Spline（=Basic Spline）</h2>
+<h3 id="需求">需求</h3>
+<ul>
+<li>需要利用样条函数拟合<a href="https://github.com/whu-lyh/PoseSpline">时相连续的数据</a>，e.g.
+IMU data。</li>
+<li>利用样条函数拟合散点，做表面拟合，e.g.
+构建mesh或者其他光滑的表面。</li>
+<li><a href="https://zhuanlan.zhihu.com/p/159192419">路径规划</a>中使用样条线对A*算法进行优化，得到更加平滑的路径。</li>
+<li>多传感器融合任务中，e.g.<a href="https://github.com/ethz-asl/kalibr.git">多传感器标定</a>时，为了内插任意时刻的状态，实现多传感器的时间对齐，使用B-spline做内插。</li>
+</ul>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2025/02/08/B-Spline/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -365,73 +434,6 @@ SCI1-TOP, IF=12.7.</p>
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2023-09-25T01:44:08.000Z">2023-09-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    25 分钟 读完 (大约 3688 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2023/09/25/Linux-BoostUp/">Linux BoostUp</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="common-product-tool">Common Product Tool</h1>
-<h2 id="gpu-burn">GPU-Burn</h2>
-<ul>
-<li>GPU压力测试。</li>
-</ul>
-<h2 id="tmux">Tmux</h2>
-<ul>
-<li>Linux终端，一个好处是只需要开一个终端window就可以通过tmux开很多个pane这样，通过tab切换不同的应用程序，使用pane在一个窗口内切换不同的pane。</li>
-<li>tmux可以在后台运行，即使关闭终端window，后台的程序也不会断开。</li>
-</ul>
-<h3 id="安装方法">安装方法</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install -y tmux<br></code></pre></td></tr></table></figure>
-<h3 id="使用">使用</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 新建一个后台终端</span><br>tmux new -t <span class="hljs-string">"session name"</span><br><span class="hljs-comment"># 附加在现存的终端上</span><br>tmux attach -t <span class="hljs-string">"session name"</span><br><span class="hljs-comment"># 列出所有的session</span><br>tmux ls<br><span class="hljs-comment"># 关闭session</span><br>tmux <span class="hljs-built_in">kill</span>-session -t <span class="hljs-string">"session name"</span><br></code></pre></td></tr></table></figure>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2023/09/25/Linux-BoostUp/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -507,7 +509,7 @@ SCI1-TOP, IF=12.7.</p>
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            36
+                            37
                         </p>
                     </a>
                 </div>
@@ -531,7 +533,7 @@ SCI1-TOP, IF=12.7.</p>
                     </p>
                     <a href="/blogs/tags">
                         <p class="title has-text-weight-normal">
-                            26
+                            27
                         </p>
                     </a>
                 </div>
@@ -595,7 +597,7 @@ SCI1-TOP, IF=12.7.</p>
                 <span class="level-item">专业应用</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">
@@ -656,7 +658,7 @@ SCI1-TOP, IF=12.7.</p>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 10px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
     </div>
 </div>
     
@@ -670,6 +672,25 @@ SCI1-TOP, IF=12.7.</p>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/04/10/%E7%94%B5%E5%8A%9B%E7%BA%BF%E8%B5%B0%E5%BB%8A%E7%82%B9%E4%BA%91%E5%88%87%E6%A1%A3/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="电力线走廊点云切档">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-04-10T07:17:11.000Z">2025-04-10</time></div>
+                    <a href="/blogs/2025/04/10/%E7%94%B5%E5%8A%9B%E7%BA%BF%E8%B5%B0%E5%BB%8A%E7%82%B9%E4%BA%91%E5%88%87%E6%A1%A3/" class="title has-link-black-ter is-size-6 has-text-weight-normal">电力线走廊点云切档</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -694,7 +715,7 @@ SCI1-TOP, IF=12.7.</p>
             
             <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
+                    <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
                 </p>
             </a>
             
@@ -732,7 +753,7 @@ SCI1-TOP, IF=12.7.</p>
             
             <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+                    <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
                 </p>
             </a>
             
@@ -742,25 +763,6 @@ SCI1-TOP, IF=12.7.</p>
                     <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
                     </p>
                 </div>
             </div>
@@ -778,6 +780,17 @@ SCI1-TOP, IF=12.7.</p>
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2025/02/">
@@ -962,6 +975,25 @@ SCI1-TOP, IF=12.7.</p>
         
         <article class="media">
             
+            <a href="/blogs/2025/04/10/%E7%94%B5%E5%8A%9B%E7%BA%BF%E8%B5%B0%E5%BB%8A%E7%82%B9%E4%BA%91%E5%88%87%E6%A1%A3/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="电力线走廊点云切档">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-04-10T07:17:11.000Z">2025-04-10</time></div>
+                    <a href="/blogs/2025/04/10/%E7%94%B5%E5%8A%9B%E7%BA%BF%E8%B5%B0%E5%BB%8A%E7%82%B9%E4%BA%91%E5%88%87%E6%A1%A3/" class="title has-link-black-ter is-size-6 has-text-weight-normal">电力线走廊点云切档</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2025/02/08/Windows-BoostUp/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Windows-BoostUp">
@@ -983,7 +1015,7 @@ SCI1-TOP, IF=12.7.</p>
             
             <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
+                    <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
                 </p>
             </a>
             
@@ -1021,7 +1053,7 @@ SCI1-TOP, IF=12.7.</p>
             
             <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2023/04/10/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+                    <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
                 </p>
             </a>
             
@@ -1031,25 +1063,6 @@ SCI1-TOP, IF=12.7.</p>
                     <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="ALS数据采集成果制作要求">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.788Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/%E6%8E%A7%E5%88%B6%E7%82%B9%E6%A3%80%E6%A0%B8-ALS%E9%87%87%E9%9B%86%E7%B2%BE%E5%BA%A6%E8%A6%81%E6%B1%82/" class="title has-link-black-ter is-size-6 has-text-weight-normal">ALS数据采集成果制作要求</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
                     </p>
                 </div>
             </div>
@@ -1067,6 +1080,17 @@ SCI1-TOP, IF=12.7.</p>
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2025/02/">
