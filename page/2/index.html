@@ -149,6 +149,87 @@
     
 <div class="card">
     
+    <div class="card-image">
+        <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    40 分钟 读完 (大约 5928 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/">鱼眼图像投影模型及使用</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="前序">前序</h3>
+<p>​
+简单介绍一下目前的相机种类，主要是对相机镜头按照焦距及视角的大小，可分为标准镜头、广角镜头和鱼眼镜头。他们的一些特点如下：</p>
+<ul>
+<li><p>焦距：鱼眼镜头（小于等于16<span class="math inline">\(mm\)</span>）&lt;广角镜头&lt;普通标准镜头（50<span class="math inline">\(mm\)</span>）。</p></li>
+<li><p>视场角：鱼眼镜头（接近或者大于180°，工程上大于140°的就算）&gt;广角镜头&gt;普通标准镜头。</p></li>
+<li><p>畸变：鱼眼镜头&gt;广角镜头&gt;普通标准镜头。</p></li>
+</ul>
+<h2 id="普通单目相机">普通单目相机</h2>
+<h3 id="简介">简介</h3>
+<p>​
+一般常见的普通小孔成像相机的成像模型如下所示，小孔相机模型采用相似成像的方式（入射角和出射角等大），内参包括焦距<span class="math inline">\(f_x,f_y\)</span>和主点偏差<span class="math inline">\(c_x,c_y\)</span>。如果焦距一定，那么图像传感器像素平面的面积直接决定了相机视场角的大小，超过这个视场角范围的物体不会被镜头获取到。因此基于透镜成像原理的相机，视场角无法做到足够大，水平视场角一般小于140°。在某些时候，比如气象科学空间观测、太阳能辐射研究计算天空视角系数、安防视频监控等实际场景中可能会需要更大视场角的相机，那么这时候广角相机-鱼眼相机就出现了。</p>
+<div data-align="center">
+<img src="pinhole_perspective_camera.png" width="0.05%" height="0.05%">
+</div>
+<div data-align="center">
+透视成像的小孔成像相机模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a>
+</div>
+<h3 id="投影模型">投影模型</h3>
+<p><span class="math display">\[
+r_d=f \cdot tan \theta
+\]</span></p>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -402,65 +483,6 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2025-02-08T04:06:31.754Z">2025-02-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    19 分钟 读完 (大约 2819 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2025/02/08/Hdl_graph_slam2/">Hdl_graph_slam论文及代码解析_后端优化</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="针对性设计的平面提取方法">1. 针对性设计的平面提取方法</h2>
-<p>​
-因为这里使用的传感器其实一个组装的VLP16型多线激光雷达+相机+imu的背包激光扫描仪，作者考虑到LiDAR有一定的安置误差(提前肯定标定了的，e.g.倾角)，而本文使用的又是室内场景平面，因此需要根据一个仪器安装的先验确定z轴方向指向哪里（默认传感器的坐标系为右前上，z轴指向天空）。得到这个倾角主要是为了修正LiDAR坐标系的z轴方向。这对后续的高度滤波和地面点判断都有一定的影响。</p>
-<p>​
-在提取平面时，为了提升效率，首先基于扫描仪的高度，通过高度滤波将一定高度之外的点去掉，同时对剩下的点云计算法向量（通过提前性的点云剔除，可以提升这里的计算效率）进行过滤，和z方向进行比较，保留地面点（和z轴夹角小就说明方向近似），用RANSAC的方式拟合平面参数方程。
-这样就可以以较快的速度从单帧点云中提取出一个合适的平面。注意：原文中写的是直接用RANSAC提取平面的，这个非常的费时间，实际操作并不是这样子来的。</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2025/02/08/Hdl_graph_slam2/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -534,7 +556,7 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            37
+                            38
                         </p>
                     </a>
                 </div>
@@ -654,7 +676,7 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
                 <span class="level-item">开源库</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E7%A7%91%E7%A0%94%E7%A5%9E%E5%99%A8/">
@@ -683,7 +705,7 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 10px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 10px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 10px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
     </div>
 </div>
     
@@ -697,6 +719,25 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/04/10/pcl%E4%B8%AD%E7%9A%84%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/pcl-logo.png" alt="pcl中的点云配准">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-04-10T14:56:43.000Z">2025-04-10</time></div>
+                    <a href="/blogs/2025/04/10/pcl%E4%B8%AD%E7%9A%84%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" class="title has-link-black-ter is-size-6 has-text-weight-normal">pcl中的点云配准</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -774,25 +815,6 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -812,7 +834,7 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
                     <span class="level-item">四月 2025</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1000,6 +1022,25 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
         
         <article class="media">
             
+            <a href="/blogs/2025/04/10/pcl%E4%B8%AD%E7%9A%84%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/pcl-logo.png" alt="pcl中的点云配准">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-04-10T14:56:43.000Z">2025-04-10</time></div>
+                    <a href="/blogs/2025/04/10/pcl%E4%B8%AD%E7%9A%84%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" class="title has-link-black-ter is-size-6 has-text-weight-normal">pcl中的点云配准</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">开源库</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2025/04/10/%E7%94%B5%E5%8A%9B%E7%BA%BF%E8%B5%B0%E5%BB%8A%E7%82%B9%E4%BA%91%E5%88%87%E6%A1%A3/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="电力线走廊点云切档">
@@ -1074,25 +1115,6 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像投影模型及使用">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像投影模型及使用</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1112,7 +1134,7 @@ review<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h2>
                     <span class="level-item">四月 2025</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
