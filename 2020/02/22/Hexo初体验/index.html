@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/hexo-logo.png">
 <meta property="article:published_time" content="2020-02-22T07:38:32.000Z">
-<meta property="article:modified_time" content="2025-04-10T09:52:06.491Z">
+<meta property="article:modified_time" content="2025-04-10T13:38:55.716Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -174,7 +174,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    35 分钟 读完 (大约 5313 个字)
+                    36 分钟 读完 (大约 5332 个字)
                 </span>
                 
                 
@@ -193,10 +193,10 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
 <h3 id="node.js-安装">1、Node.js 安装</h3>
 <p>首先搭建hexo个人博客网站需要电脑中有Node.js环境，而Node.js即使是一个没有写过前端界面的人也可以完全傻瓜式安装完成的。参照官网下载对应版本<a href="https://nodejs.org/en/download/"><strong>Node.js</strong></a>。</p>
 <a id="more"></a>
-<p><img src="/blogs/.io//Nodejs.png">
+<p><img src="/blogs/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/Nodejs.png">
 另外如果你想要进一步学习Node.js这个强大的服务器端的JavaScript绚丽技术以及体验高性能服务配置技术，请移步<a href="https://www.runoob.com/nodejs/nodejs-tutorial.html"><strong>这里</strong></a>
 ,一路Next安装即可。最后在控制台或bash命令行上输入：<code>node --version(或node -v)</code>，以查看Node.js版本来验证否配置完成。</p>
-<p><img src="/blogs/.io//Nodejs2.png"></p>
+<p><img src="/blogs/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/Nodejs2.png"></p>
 <p>npm的install或者uninstall需要在安装Nodejs的目录下才能行，需要有package.json存在。</p>
 <p>如果是在新电脑上安装之前的环境，直接npm
 install就能根据打包好的包的名字进行安装。<code>npm install</code>即可。</p>
@@ -209,9 +209,9 @@ Line Interface为命令行界面。</p>
 <code>hexo init NotesRecording</code>，然后输入:
 <code>hexo --version</code>即可查看Hexo版本，如下: (这里采用了 <a href="https://github.com/ppoffice/hexo-theme-icarus"><strong>icarus</strong></a>
 主题，因此和你现在能看到的可能有所出入。)</p>
-<p><img src="/blogs/.io//hexo-v.jpg"></p>
+<p><img src="/blogs/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/hexo-v.jpg"></p>
 <p>在控制台或bash命令行输入：<code>npm install</code>，指定文件夹目录下有：
-<img src="/blogs/.io//notesrecording.jpg" alt="notesrecording"></p>
+<img src="/blogs/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/notesrecording.jpg" alt="notesrecording"></p>
 <blockquote>
 <p>node_modules: Hexo的依赖包，和插件</p>
 <p>public：存放生成的页面,这些index.html都是要上传到服务器端的</p>
@@ -313,7 +313,7 @@ hexo-renderer-marked、hexo-renderer-stylus、hexo-renderer-inferno等。<a href
 <blockquote>
 <p>后来喜欢用github的图床实现图片保存，但是后面发现图片数量增加时，图片保存的时候，名字不好取，而且非常不好管理，容易出现冲突，因此后面是否继续使用，打个问号。</p>
 </blockquote>
-<p>但是hexo部署之后，网页端就打不开了，本地预览也不行。</p>
+<p>但是hexo部署之后，网页端就打不开了，本地预览也不行。（出现问题的原因为图片的链接不正确。）</p>
 <blockquote>
 <p>hexo部署带有图床链接的图片时，也会自动重新拷贝一份图像到新的文件夹下，并不会直接使用图床链接。图片依旧加载不出来。</p>
 </blockquote>

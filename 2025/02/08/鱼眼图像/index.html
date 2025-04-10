@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg">
 <meta property="article:published_time" content="2025-02-08T04:06:31.883Z">
-<meta property="article:modified_time" content="2025-04-10T09:44:07.114Z">
+<meta property="article:modified_time" content="2025-04-10T13:10:12.943Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="鱼眼图像">
 <meta name="twitter:card" content="summary">
@@ -200,7 +200,7 @@
 <p>​
 一般常见的普通小孔成像相机的成像模型如下所示，小孔相机模型采用相似成像的方式（入射角和出射角等大），内参包括焦距<span class="math inline">\(f_x,f_y\)</span>和主点偏差<span class="math inline">\(c_x,c_y\)</span>。如果焦距一定，那么图像传感器像素平面的面积直接决定了相机视场角的大小，超过这个视场角范围的物体不会被镜头获取到。因此基于透镜成像原理的相机，视场角无法做到足够大，水平视场角一般小于140°。在某些时候，比如气象科学空间观测、太阳能辐射研究计算天空视角系数、安防视频监控等实际场景中可能会需要更大视场角的相机，那么这时候广角相机-鱼眼相机就出现了。</p>
 <div data-align="center">
-<img src="/blogs/.io//pinhole_perspective_camera.png" width="0.05%" height="0.05%">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/pinhole_perspective_camera.png" width="0.05%" height="0.05%">
 </div>
 <div data-align="center">
 透视成像的小孔成像相机模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a>
@@ -231,12 +231,12 @@ v &amp;= \frac{f_y Y}{Z}+c_y
 Scaramuzza==大神写的“Omnidirectional
 Camera”一文，有三种镜头聚光方式：第一种通过透镜折射实现；第二种通过使用标准相机加一个面镜实现；第三种通过多个相机<strong>共心</strong>组装而成（测绘中常见这种，拼接出全景图像）。如下图所示：</p>
 <div data-align="center">
-<img src="/blogs/.io//omnidirectional_camera_paper_fig_1.png" width="0.05%" height="0.05%">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/omnidirectional_camera_paper_fig_1.png" width="0.05%" height="0.05%">
 </div>
 <p>​
 传统广角相机的镜头一般由多个镜头组成，如下图所示为几种镜头的结构方式及其参数：</p>
 <div data-align="center">
-<img src="/blogs/.io//Nature_Electron_wide_angle_carema.png" width="0.05%" height="0.05%">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/Nature_Electron_wide_angle_carema.png" width="0.05%" height="0.05%">
 </div>
 <div data-align="center">
 广角镜头示意图，图源于An aquatic-vision-inspired camera based on a
@@ -251,7 +251,7 @@ law）现象</strong>发明了鱼眼相机，又因为其镜头和鱼眼非常�
 <p>​
 鱼眼镜头采用<strong>非相似成像</strong>（入射角比出射角大）。其镜头组成如下图所示：</p>
 <div data-align="center">
-<img src="/blogs/.io//fisheye_lenses.png" style="zoom:100%;">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_lenses.png" style="zoom:100%;">
 </div>
 <div data-align="center">
 鱼眼相机的镜头组成，图源于<a href="https://mp.weixin.qq.com/s/TffJXlFjGwOKC1kIFs3sjQ">这里</a>
@@ -259,7 +259,7 @@ law）现象</strong>发明了鱼眼相机，又因为其镜头和鱼眼非常�
 <p>​
 鱼眼相机的成像方式可以看成是<strong>先将3d点投影到单位球面</strong>，单位球上的点在以偏离<span class="math inline">\(z\)</span>轴<span class="math inline">\(\xi(或f)\)</span>处通过针孔模型进行投影，这样水平入射的光线也能投影到图像的像素区域内。其成像模型如下所示。单位半球面上的点<span class="math inline">\(q\)</span>投影到相机成像平面上的点<span class="math inline">\(r_d\)</span>的过程是一个非线性过程，此时折射角<span class="math inline">\(\theta_d\)</span>小于入射角<span class="math inline">\(\theta\)</span>。成像模型也称投影模型。投影模型要表征的就是成像平面的像高<span class="math inline">\(r_d\)</span>和入射角<span class="math inline">\(\theta\)</span>之间的映射关系。</p>
 <div data-align="center">
-<img src="/blogs/.io//fisheye_carema_projection_model.png" style="zoom:100%;">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model.png" style="zoom:100%;">
 </div>
 <div data-align="center">
 鱼眼相机的成像模型，图源于<a href="https://mp.weixin.qq.com/s/CE9PHZ1IDbA7YA_FmiKRYw">这里</a>
@@ -282,10 +282,10 @@ law）现象</strong>发明了鱼眼相机，又因为其镜头和鱼眼非常�
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><img src="/blogs/.io//fisheye_carema_projection_model_1.png"></td>
-<td style="text-align: center;"><img src="/blogs/.io//fisheye_carema_projection_model_2.png"></td>
-<td style="text-align: center;"><img src="/blogs/.io//fisheye_carema_projection_model_3.png"></td>
-<td style="text-align: center;"><img src="/blogs/.io//fisheye_carema_projection_model_4.png"></td>
+<td style="text-align: center;"><img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model_1.png"></td>
+<td style="text-align: center;"><img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model_2.png"></td>
+<td style="text-align: center;"><img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model_3.png"></td>
+<td style="text-align: center;"><img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye_carema_projection_model_4.png"></td>
 </tr>
 <tr>
 <td style="text-align: center;">畸变量适中，最常用</td>
@@ -355,7 +355,7 @@ Grids”一文中专门针对鱼眼相机提出的模型，也称为Unified Came
 Model（或者unified omnidirectional camera
 model），同时被VINS-Fusion、VINS-Mono、鱼眼DSO采用，KITTI360数据集中提供的鱼眼相机也采用了这种模型。这种通用的相机模型可以模拟小孔成像的相机模型，也可以模拟鱼眼相机的成像模型。当<span class="math inline">\(\xi\)</span>=0时，鱼眼相机模型就退化为了小孔相机模型。优点（源于<a href="https://mp.weixin.qq.com/s/aMJnwTvI87YrBKkmMaGQbQ">这里</a>）是它能精确的模拟各种图像设备和畸变的几何图像生成过程，（2）它的反投影是一个闭式解。</p>
 <div data-align="center">
-<img src="/blogs/.io//Mei_model.jpg" width="0.05%" height="0.05%">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/Mei_model.jpg" width="0.05%" height="0.05%">
 </div>
 <p>​ 鱼眼相机的投影过程为<span class="math inline">\(\pi_c:\mathbb{R}^3
 \rightarrow \Omega\)</span>：</p>
@@ -470,7 +470,7 @@ minus: \quad \xi &amp; \Downarrow \\
 <p>​ PolyFisheye模型是在IROS2017中的Dual-Fisheye Omnidirectional
 Stereo中提出的。</p>
 <div data-align="center">
-<img src="/blogs/.io//polyfisheye.png" width="0.05%" height="0.05%">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/polyfisheye.png" width="0.05%" height="0.05%">
 </div>
 <p>​ 从模型图上看基本和Mei模型一模一样，唯一的不同是，假设空间点<span class="math inline">\(\mathcal{P}^c\)</span>最终投影得到的像素点为<span class="math inline">\(u\)</span>，他们认为<span class="math inline">\(u\)</span>到光心<span class="math inline">\(O_i\)</span>的距离<span class="math inline">\(\mathcal{R}\)</span>并不是直接等于沿着<span class="math inline">\(\theta_r\)</span>方向上投影过来的大小，而是和<span class="math inline">\(O^{cl}\)</span>到<span class="math inline">\(u\)</span>的距离存在一个关于<span class="math inline">\(\theta\)</span>的七次多项式的多项式倍数关系。这样就相比Mei模型多了七个参数来刻画鱼眼相机，自然就更准了。
 <span class="math display">\[
@@ -564,7 +564,7 @@ Heng博士的CamOdoCal基础上完成的。</li>
 <p>​
 一般的V-SLAM或者基于视觉的场景感知任务中使用的都是普通的单目相机，因此需要进行畸变矫正转成框幅式图像。</p>
 <div data-align="center">
-<img src="/blogs/.io//fisheye2pinhole.png">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/fisheye2pinhole.png">
 </div>
 <div data-align="center">
 鱼眼图像转框幅式图像，图源于<a href="https://epsavlc.github.io/2019/10/21/fisheye_calib.html#fn:1">这里</a>
@@ -586,15 +586,15 @@ table，然后处理鱼眼图像时再直接查表即可。</li>
 与全景图像转成框幅式图像的原理类似。就是找到鱼眼图像上每个像素与全景图像上的对应映射关系即可，<a href="https://mp.weixin.qq.com/s/ygI6BC1JXcSP7QAwKa_Vqg">可见</a>。这里简单列一下要点：</p>
 <p>1.以下图的全景图像为例，将其转换为右侧的鱼眼图像，鱼眼相机的中心指向天空，那么全景图像的底边宽<span class="math inline">\(W_c\)</span>对应了鱼眼相机圆形视角的周长，而顶边则压缩为了一个中心点，鱼眼图像的半径<span class="math inline">\(r_0\neq H_c\)</span>；</p>
 <div data-align="center">
-<img src="/blogs/.io//panorama2fisheye_1.jpg">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_1.jpg">
 </div>
 <p>2.因此鱼眼图像的半径只能通过全景图像的底边<span class="math inline">\(W_c\)</span>来计算，鱼眼图像的中心位置<span class="math inline">\(C_x,C_y\)</span>就知道了；</p>
 <div data-align="center">
-<img src="/blogs/.io//panorama2fisheye_2.jpg">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_2.jpg">
 </div>
 <p>3.全景与鱼眼图像像素映射关系是从鱼眼图像的坐标开始，找到每一个像素<span class="math inline">\(x_f,y_f\)</span>与全景图像上对应像素之间的关系<span class="math inline">\(x_c,y_c\)</span>，为了不产生空洞，因此是遍历鱼眼图像像素开始，找到对应的全景图像像素，赋值颜色即可。映射关系中有一个<span class="math inline">\(\theta\)</span>需要根据所处的鱼眼图像坐标象限来判断才能展开到<span class="math inline">\(2\pi\)</span>空间。</p>
 <div data-align="center">
-<img src="/blogs/.io//panorama2fisheye_3.jpg">
+<img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_3.jpg">
 </div>
 <h5 id="细节补充-1">细节补充</h5>
 <p>​
@@ -612,12 +612,12 @@ table，然后处理鱼眼图像时再直接查表即可。</li>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;"><img src="/blogs/.io//panorama2fisheye_src.jpg"></td>
-<td style="text-align: center;"><img src="/blogs/.io//panorama2fisheye_tgt.jpg"></td>
+<td style="text-align: center;"><img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_src.jpg"></td>
+<td style="text-align: center;"><img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg"></td>
 </tr>
 <tr>
-<td style="text-align: center;"><img src="/blogs/.io//panorama2fisheye_src2.jpg"></td>
-<td style="text-align: center;"><img src="/blogs/.io//panorama2fisheye_tgt2.jpg"></td>
+<td style="text-align: center;"><img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_src2.jpg"></td>
+<td style="text-align: center;"><img src="/blogs/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt2.jpg"></td>
 </tr>
 </tbody>
 </table>
@@ -1237,8 +1237,6 @@ Cameras</li>
          
             
          
-            
-         
             <article class="media"> <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
                         <p class="image is-64x64">
                             <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
@@ -1250,6 +1248,8 @@ Cameras</li>
                     </div>
                 </div>
             </article>
+         
+            
         
     </div>
 </div>

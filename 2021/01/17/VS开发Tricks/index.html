@@ -184,7 +184,7 @@
             <h4 id="用户宏">用户宏</h4>
 <p>  由于在开发时不可避免的会遇到多个环境，在不同环境之间进行切换是一个很麻烦的事情，因此使用用户宏可以很好的帮助我们进行环境切换和别名替换，便于多人协同开发。<br>
 在属性管理器中选中任意配置环境中的<code>Microsoft.Cpp.x64.user</code>
-，弹出如下页面： <img src="/blogs/.io//用户宏.png" alt="用户宏">
+，弹出如下页面： <img src="/blogs/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/用户宏.png" alt="用户宏">
 <a id="more"></a> 用一个你知道的缩写来作为名字，e.g.
 ThirdParty，对应的本地路径作为值即可。<br>
 在后续其他工程使用时可以使用$(ThirdParty)来表示该本地路径。非常方便。</p>
@@ -196,7 +196,7 @@ ThirdParty，对应的本地路径作为值即可。<br>
 -
 使用Cmake管理工程项目；（这里已经使用VS管理了，就先不介绍这种方法啊，具体可以参考CMake-practice这个文档）
 - 可以尝试使用 <strong>生成事件</strong>, 如下图所示：<br>
-<img src="/blogs/.io//生成事件.jpg" alt="生成事件"><br>
+<img src="/blogs/blogs/2021/01/17/VS%E5%BC%80%E5%8F%91Tricks/生成事件.jpg" alt="生成事件"><br>
 其实这里生成事件使用的就是Windows自带的DOS控制台<a href="https://whu-lyh.github.io/2020/03/21/WindowBat/">WindowsBat</a>的命令。<br>
 1.
 例如你要将本工程中的.h文件拷贝到上述自定义宏路径<code>$(ThirdParty)\include</code>下。
