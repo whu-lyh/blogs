@@ -174,7 +174,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 513 个字)
+                    3 分钟 读完 (大约 514 个字)
                 </span>
                 
                 
@@ -195,33 +195,17 @@
 <blockquote>
 <p>注意可能Typora打开会出现乱码，直接重新保存成UTF8就行了。</p>
 </blockquote>
-<h4 id="解决步骤">解决步骤</h4>
-<p>打开Sublime Text，按 <strong>ctrl+`</strong> 或者点击菜单栏
-<strong>View</strong>下的<strong>Show Console</strong>
-调出控制台终端界面</p>
-<ul>
-<li>== Sublime Text2 对于Sublime
-Text2，输入粘贴以下代码到底部命令行，并回车</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">import urllib2,os,hashlib; h = <span class="hljs-string">'df21e130d211cfc94d9b0905775a7c0f'</span> + <span class="hljs-string">'1e3d39e33b79698005270310898eea76'</span>; pf = <span class="hljs-string">'Package Control.sublime-package'</span>; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) <span class="hljs-keyword">if</span> not os.path.exists(ipp) <span class="hljs-keyword">else</span> None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( <span class="hljs-string">'http://packagecontrol.io/'</span> + pf.replace(<span class="hljs-string">' '</span>, <span class="hljs-string">'%20'</span>)).<span class="hljs-built_in">read</span>(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), <span class="hljs-string">'wb'</span> ).write(by) <span class="hljs-keyword">if</span> dh == h <span class="hljs-keyword">else</span> None; <span class="hljs-built_in">print</span>(<span class="hljs-string">'Error validating download (got %s instead of %s), please try manual install'</span> % (dh, h) <span class="hljs-keyword">if</span> dh != h <span class="hljs-keyword">else</span> <span class="hljs-string">'Please restart Sublime Text to finish installation'</span>)<br></code></pre></td></tr></table></figure>
-<ul>
-<li>== Sublime Text3 对于Sublime
-Text3，输入粘贴以下代码到底部命令行，并回车</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">import urllib.request,os,hashlib; h = <span class="hljs-string">'df21e130d211cfc94d9b0905775a7c0f'</span> + <span class="hljs-string">'1e3d39e33b79698005270310898eea76'</span>; pf = <span class="hljs-string">'Package Control.sublime-package'</span>; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( <span class="hljs-string">'http://packagecontrol.io/'</span> + pf.replace(<span class="hljs-string">' '</span>, <span class="hljs-string">'%20'</span>)).<span class="hljs-built_in">read</span>(); dh = hashlib.sha256(by).hexdigest(); <span class="hljs-built_in">print</span>(<span class="hljs-string">'Error validating download (got %s instead of %s), please try manual install'</span> % (dh, h)) <span class="hljs-keyword">if</span> dh != h <span class="hljs-keyword">else</span> open(os.path.join( ipp, pf), <span class="hljs-string">'wb'</span> ).write(by)<br></code></pre></td></tr></table></figure>
-<p>等待一会儿之后<code>Ctrl+Shift+P</code> 打开Package
-Control来安装插件，打开之后输入install，选择Install
-Package，然后选择<strong>ConvertToUTF8</strong>插件。</p>
-<p><a href="https://www.cnblogs.com/1693977889zz/p/14089625.html">参考链接</a></p>
-<h3 id="gpu压力测试工具">GPU压力测试工具</h3>
-<p><a href="https://geeks3d.com/furmark/">FurMark2</a>
-提供界面，测试GPU在不同工号下是否有问题。</p>
-<h3 id="内存压力测试工具">内存压力测试工具</h3>
-<p><a href="https://www.mersenne.org/download/">Prime95</a>可通过计算一个Prime相关的数学问题来，验证内存和CPU是否有问题，但是不建议长时间的测试，一方面会过度损耗电脑，另一方面还比较耗电。。</p>
-
         </div>
         
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/blogs/2025/02/08/Windows-BoostUp/#more">阅读更多</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
