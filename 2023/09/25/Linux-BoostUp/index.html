@@ -20,7 +20,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/blogs/2023/09/25/Linux-BoostUp/linux-logo.png">
 <meta property="article:published_time" content="2023-09-25T01:44:08.000Z">
-<meta property="article:modified_time" content="2025-04-10T15:26:14.305Z">
+<meta property="article:modified_time" content="2025-05-21T08:04:26.585Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -170,7 +170,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    27 分钟 读完 (大约 3979 个字)
+                    27 分钟 读完 (大约 4031 个字)
                 </span>
                 
                 
@@ -336,13 +336,17 @@ Monitor</h2>
 <ul class="task-list">
 <li><label><input type="checkbox" checked>除了使用filezilla还可以使用putty和服务器之间传输数据，也很方便，比如传文件<code>pscp -r 目录 用户名@LinuxIP:目录</code>，也可以有界面</label></li>
 </ul>
-<h2 id="vscode服务器连接">VSCode服务器连接</h2>
+<h2 id="vscode">VSCode</h2>
+<h3 id="连接服务器">连接服务器</h3>
 <ul class="task-list">
 <li><label><input type="checkbox" checked>服務器上輸出了loss等日誌，但是沒有開tensorboard的結構，如何通過ssh訪問呢？解決方案參考<a href="https://blog.yyliu.net/remote-tensorboard/">這裏</a>：</label></li>
 </ul>
 <p>在本地雞上使用<code>ssh -L 10008:127.0.0.1:10008 root@IP</code>將服務器的端口映射到本地，（windows不需要这一步就可以做到，直接vscode连接了之后就行）</p>
 <p>在服務器上使用<code>tensorboard --logdir='/root/lyh/code/AE-CrossModal/log/checkpoints/May17_11_25_14_spherical' --port=10008</code>打開tensorboard。</p>
 <p>這樣本地才能通過瀏覽器http://localhost:10008看到。</p>
+<h3 id="配置c开发环境">配置C++开发环境</h3>
+<p>在vscode中可以以直接运行的方式跑C++程序，前提是按照如下的方式配置：</p>
+<p><img src="VScode写c代码时的环境配置.jpg"></p>
 <h2 id="fuser">fuser</h2>
 <h2 id="git">Git</h2>
 <p>出现代码没有修改，但是<code>git diff</code>提示很多改动。如下：</p>
@@ -442,7 +446,7 @@ xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下�
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2023/09/25/Linux-BoostUp/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2023-09-25</p>
-    <p><span>update time:</span>2025-04-10</p>
+    <p><span>update time:</span>2025-05-21</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -559,7 +563,7 @@ xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下�
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            39
+                            40
                         </p>
                     </a>
                 </div>
@@ -647,7 +651,7 @@ xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下�
                 <span class="level-item">专业应用</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E4%BC%A0%E6%84%9F%E5%99%A8/">
@@ -708,7 +712,7 @@ xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下�
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 12.5px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 17.5px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 10px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 12.5px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 17.5px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 12.5px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
     </div>
 </div>
     
@@ -733,16 +737,35 @@ xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下�
         
         <article class="media">
             
+            <a href="/blogs/2025/05/21/%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="点云数据处理">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-05-21T08:17:38.000Z">2025-05-21</time></div>
+                    <a href="/blogs/2025/05/21/%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" class="title has-link-black-ter is-size-6 has-text-weight-normal">点云数据处理</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2025/05/21/SLAM-union/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="SLAM_union">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="SLAM要点">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-05-21T03:22:03.000Z">2025-05-21</time></div>
-                    <a href="/blogs/2025/05/21/SLAM-union/" class="title has-link-black-ter is-size-6 has-text-weight-normal">SLAM_union</a>
+                    <a href="/blogs/2025/05/21/SLAM-union/" class="title has-link-black-ter is-size-6 has-text-weight-normal">SLAM要点</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     </p>
@@ -807,25 +830,6 @@ xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下�
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/panorama2fisheye_tgt.jpg" alt="鱼眼图像转等距投影图像">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.995Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%AD%89%E8%B7%9D%E6%8A%95%E5%BD%B1%E5%9B%BE%E5%83%8F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">鱼眼图像转等距投影图像</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -835,6 +839,8 @@ xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下�
         <h3 class="menu-label">
             related posts
         </h3>
+         
+            
          
             
          
@@ -962,7 +968,7 @@ xx.py之前添加<code>HF_ENDPOINT=https://hf-mirror.com</code>可以提升下�
                     <span class="level-item">五月 2025</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
