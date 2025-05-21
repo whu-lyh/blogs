@@ -150,6 +150,90 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/blogs/2023/04/17/NVIDIA-Driver-Installer/" class="image is-7by1">
+            <img class="thumbnail" src="/blogs/2023/04/17/NVIDIA-Driver-Installer/nvidia-logo.png" alt="Nvidia Driver Installation">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2023-04-17T15:37:44.000Z">2023-04-17</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 356 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/blogs/2023/04/17/NVIDIA-Driver-Installer/">Nvidia Driver Installation</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="初始教程">初始教程</h3>
+<ol start="0" type="1">
+<li>查看系统显卡 <code>lspci | grep -i vga</code>，会弹出设备编号，在<a href="https://admin.pci-ids.ucw.cz/mods/PC/10de/2208">这里</a>找到对应的型号，然后在这里<a href="https://www.nvidia.cn/download/driverResults.aspx/209273/cn/">下载</a>。</li>
+<li>下载对应驱动
+位于Downloads路径下的NVIDIA-Linux-x86_64-450.80.02.run</li>
+</ol>
+<ul>
+<li>tips: 检查cuda版本和显卡驱动的<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">对应关系</a>.</li>
+</ul>
+<ol start="2" type="1">
+<li>卸载之前的显卡驱动
+<code>sudo apt-get automove --purge nvidia-×</code></li>
+<li>给.run文件权限 <code>sudo chmod a+x xxx.run</code></li>
+<li>关闭图形界面 ctrl+alt+f1</li>
+<li>关闭lightdm服务 <code>sudo service lightdm stop</code></li>
+<li>安装驱动
+<code>sudo xxx.run -no-x-check -no-nouveau-check -no-opengl-files</code></li>
+<li>打开lightdm <code>sudo service lightdm start</code></li>
+<li>如果没反应，再试试 <code>sudo syetemctl start gdm.service</code> or
+<code>sudo syetemctl enable gdm.service</code></li>
+<li>打开图形化界面 <code>ctrl+alt+f7</code></li>
+<li>重启</li>
+</ol>
+<h3 id="最近更新">最近更新</h3>
+<ul>
+<li><p>Ubuntu22.04似乎不用这么麻烦了，直接重装完之后就有显卡驱动了，试图卸载过，但是重装失败，还不如直接用预先安装好的。</p></li>
+<li><p>ubuntu电脑自动开启Security
+Boot之后显卡驱动会挂掉，需要进入bios，在Security 中找到Security
+Boot，调整成为Disable，然后显卡驱动就又好了。</p></li>
+</ul>
+<p>Secure
+Boot本来是个好事，但是在linux下面似乎不太行，尤其是那种独立带界面的主机。参考<a href="https://www.cnblogs.com/harrymore/p/17653991.html">这里</a>。</p>
+
+        </div>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="image is-7by1">
             <img class="thumbnail" src="/blogs/2023/03/13/CloudCompare%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0/cc-logo.png" alt="CloudCompare源代码学习">
         </a>
@@ -418,75 +502,6 @@ pages的博客搭建部署流程</a>，hexo的<strong>博客主页</strong>会�
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2023-02-09T02:08:24.000Z">2023-02-09</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/MathUtilities/">MathUtilities</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 分钟 读完 (大约 1158 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2023/02/09/Rotation-Average/">Rotation Average</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="what-is-rotation-averaging">What is Rotation Averaging?</h2>
-<h3 id="problem1">Problem<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></h3>
-<p>Given a set of rotation matrices <span class="math inline">\(C_i,
-i=\{1,2,...,n\}\)</span>, the average of them is ? <strong>Rotation
-Averaging</strong> is to calculate the average of a set of rotation
-matrices. Averaging is to get the <strong>best estimate</strong> of all
-rotations. (Single rotation averaging)</p>
-<p>Or equivalently, <strong>Rotation Averaging</strong> is the problem
-of estimating a set of <span class="math inline">\(n\)</span> unknown
-orientations <span class="math inline">\(R_1,...,R_n \in SO(d)\)</span>
-from noisy measurements <span class="math inline">\(\bar{R} \in
-SO(d)\)</span> of the relative rotations <span class="math inline">\(R_i^{-1}R_j\)</span> between them. (Multi rotation
-averaging)</p>
-<p>In practical the rotation averaging problem could be categoried into
-: Single rotation averaging、Multi rotation averaging and Conjugate
-rotation averaging.</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2023/02/09/Rotation-Average/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -564,7 +579,7 @@ rotation averaging.</p>
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            38
+                            39
                         </p>
                     </a>
                 </div>
@@ -700,7 +715,7 @@ rotation averaging.</p>
                 <span class="level-item">算法</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li>
             </ul>
@@ -713,7 +728,7 @@ rotation averaging.</p>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 10px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 15px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 10px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 12.5px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 17.5px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 10px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
     </div>
 </div>
     
@@ -727,6 +742,25 @@ rotation averaging.</p>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/05/21/SLAM-union/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="SLAM_union">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-05-21T03:22:03.000Z">2025-05-21</time></div>
+                    <a href="/blogs/2025/05/21/SLAM-union/" class="title has-link-black-ter is-size-6 has-text-weight-normal">SLAM_union</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -804,25 +838,6 @@ rotation averaging.</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="超算服务器使用记录">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">超算服务器使用记录</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -835,6 +850,17 @@ rotation averaging.</p>
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2025/04/">
@@ -1030,6 +1056,25 @@ rotation averaging.</p>
         
         <article class="media">
             
+            <a href="/blogs/2025/05/21/SLAM-union/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="SLAM_union">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-05-21T03:22:03.000Z">2025-05-21</time></div>
+                    <a href="/blogs/2025/05/21/SLAM-union/" class="title has-link-black-ter is-size-6 has-text-weight-normal">SLAM_union</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E7%AE%97%E6%B3%95/">算法</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2025/04/10/pcl%E4%B8%AD%E7%9A%84%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/2020/06/11/pcl%E4%B8%AD%E7%9A%84%E4%BD%93%E7%B4%A0%E6%BB%A4%E6%B3%A2/pcl-logo.png" alt="pcl中的点云配准">
@@ -1104,25 +1149,6 @@ rotation averaging.</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="超算服务器使用记录">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T04:06:31.883Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/%E8%B6%85%E7%AE%97%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">超算服务器使用记录</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1135,6 +1161,17 @@ rotation averaging.</p>
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2025/04/">
