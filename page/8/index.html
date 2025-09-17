@@ -149,6 +149,60 @@
     
 <div class="card">
     
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-21T08:21:12.000Z">2020-03-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 250 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/blogs/2020/03/21/WindowBat%E5%AE%9E%E6%88%98/">WindowBat实战</a>
+            
+        </h1>
+        <div class="content">
+            <ul>
+<li>自动拷贝文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">@<span class="hljs-built_in">echo</span> off<br>cls<br><span class="hljs-built_in">cd</span> ./bin<br><br>REM 打印当前文件夹中的dll名称<br>dir *.dll<br><br><span class="hljs-keyword">for</span> /r %%j <span class="hljs-keyword">in</span> (*.dll) <span class="hljs-keyword">do</span> (<br>	REM 拷贝Release版的dll到指定目录<br>	<span class="hljs-built_in">echo</span> %%j | find <span class="hljs-string">"_d"</span> || xcopy %%j E:path\Release\ /Y<br>	REM 拷贝Debug版的dll到指定目录<br>	<span class="hljs-built_in">echo</span> %%j | find <span class="hljs-string">"_d"</span> &amp;&amp; xcopy %%j E:path\Debug\ /Y<br>)<br><br>PAUSE<br></code></pre></td></tr></table></figure>
+<ul>
+<li>批量自动移动文件并自动建立同名文件夹</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">@<span class="hljs-built_in">echo</span> off<br>REM 首先遍历最外层的文件夹，<br><span class="hljs-keyword">for</span> /f  %%i <span class="hljs-keyword">in</span> (<span class="hljs-string">'"dir /ad/b/on *.*"'</span>) <span class="hljs-keyword">do</span> (  <br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">"First Dir: %%~fi"</span><br>	REM MKDIR OF DESTINATION<br>	md E:\Destination\%%i<br>	<span class="hljs-built_in">cd</span> %%~<span class="hljs-keyword">fi</span><br>    REM 获取到子文件夹之后再递归遍历子文件夹<br>	<span class="hljs-keyword">for</span> /f  %%j <span class="hljs-keyword">in</span> (<span class="hljs-string">'"dir /ad/b/on *.*"'</span>) <span class="hljs-keyword">do</span> (  <br>		<span class="hljs-built_in">echo</span>  <span class="hljs-string">"Second Dir:%%~fj"</span><br>		REM MKDIR OF DESTINATION<br>		md E:\Destination\%%i\%%j<br>		<span class="hljs-built_in">cd</span> %%~fj<br>		REM 拷贝每个文件到预定的路径中<br>		<span class="hljs-keyword">for</span> %%k <span class="hljs-keyword">in</span> (*.las) <span class="hljs-keyword">do</span> ( <br>			<span class="hljs-built_in">echo</span> <span class="hljs-string">"Third Dir:%%~fk"</span><br>			REM COPY EACH LAS FILE<br>			xcopy %%k E:\Destination\%%i\%%j\ /E /D /R /Y<br>		)<br>		REM 返回到上层文件夹，继续后续的遍历<br>		<span class="hljs-built_in">cd</span> ..<br>	)<br>	REM 同理<br>	<span class="hljs-built_in">cd</span> ..<br>)<br>REM 脚本运行完之后不退出<br>pause<br></code></pre></td></tr></table></figure>
+
+        </div>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
     <div class="card-image">
         <a href="/blogs/2020/03/11/OSG%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB/" class="image is-7by1">
             <img class="thumbnail" src="/blogs/2020/03/11/OSG%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB/osg-logo.png" alt="OSG中的坐标系">
@@ -443,70 +497,6 @@ Linux 机器上，也可以实现虚拟化。</p>
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/" class="image is-7by1">
-            <img class="thumbnail" src="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/hexo-logo.png" alt="Hexo初体验">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-22T07:38:32.000Z">2020-02-22</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blogs/categories/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/">写作工具</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    36 分钟 读完 (大约 5334 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/">Hexo初体验</a>
-            
-        </h1>
-        <div class="content">
-            <p><font color="red"><strong>Hexo</strong></font>本身是一个<strong>静态博客</strong>生成工具，具备编译
-Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
-等基本功能。本博客将不会介绍git实用技巧而是着重于介绍在Windows上hexo的搭建及测试过程</p>
-<h3 id="node.js-安装">1、Node.js 安装</h3>
-<p>首先搭建hexo个人博客网站需要电脑中有Node.js环境，而Node.js即使是一个没有写过前端界面的人也可以完全傻瓜式安装完成的。参照官网下载对应版本<a href="https://nodejs.org/en/download/"><strong>Node.js</strong></a>。</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blogs/2020/02/22/Hexo%E5%88%9D%E4%BD%93%E9%AA%8C/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -514,7 +504,7 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
         <div class="pagination-previous">
             <a class="is-flex-grow has-text-black-ter" href="/blogs/page/7/">上一页</a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
+        <div class="pagination-next">
             <a class="is-flex-grow has-text-black-ter" href="/blogs/page/9/">下一页</a>
         </div>
         <ul class="pagination-list is-hidden-mobile">
@@ -526,6 +516,8 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
             <li><a class="pagination-link has-text-black-ter" href="/blogs/page/7/">7</a></li>
             
             <li><a class="pagination-link is-current" href="/blogs/page/8/">8</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/blogs/page/9/">9</a></li>
             
         </ul>
     </nav>
@@ -578,7 +570,7 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            40
+                            41
                         </p>
                     </a>
                 </div>
@@ -602,7 +594,7 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
                     </p>
                     <a href="/blogs/tags">
                         <p class="title has-text-weight-normal">
-                            27
+                            28
                         </p>
                     </a>
                 </div>
@@ -690,7 +682,7 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
                 <span class="level-item">实用工具</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">14</span>
+                <span class="level-item tag">15</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
@@ -727,7 +719,7 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 12.5px;">Geometry</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 17.5px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 12.5px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 12.5px;">Geometry</a> <a href="/blogs/tags/Hardwares/" style="font-size: 10px;">Hardwares</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 17.5px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 12.5px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
     </div>
 </div>
     
@@ -741,6 +733,25 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/09/17/PC-hardwares/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="PC_hardwares">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-09-17T03:12:14.588Z">2025-09-17</time></div>
+                    <a href="/blogs/2025/09/17/PC-hardwares/" class="title has-link-black-ter is-size-6 has-text-weight-normal">PC_hardwares</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -818,25 +829,6 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/Windows-BoostUp/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Windows-BoostUp">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T08:21:18.000Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/Windows-BoostUp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Windows-BoostUp</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -849,6 +841,17 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2025/05/">
@@ -1055,6 +1058,25 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
         
         <article class="media">
             
+            <a href="/blogs/2025/09/17/PC-hardwares/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="PC_hardwares">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-09-17T03:12:14.588Z">2025-09-17</time></div>
+                    <a href="/blogs/2025/09/17/PC-hardwares/" class="title has-link-black-ter is-size-6 has-text-weight-normal">PC_hardwares</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blogs/2025/05/21/%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="点云数据处理">
@@ -1129,25 +1151,6 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2025/02/08/Windows-BoostUp/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="Windows-BoostUp">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-02-08T08:21:18.000Z">2025-02-08</time></div>
-                    <a href="/blogs/2025/02/08/Windows-BoostUp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Windows-BoostUp</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1160,6 +1163,17 @@ Markdown、拼接主题模板、生成 HTML、上传 Git 或 FTP
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blogs/archives/2025/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2025</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/blogs/archives/2025/05/">
