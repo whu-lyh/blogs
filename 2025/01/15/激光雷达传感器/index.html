@@ -11,16 +11,16 @@
 <title>激光雷达传感器 - AmazingHao&#39;s Free Space</title>
 
 
-    <meta name="description" content="记录几种常见的激光雷达类型 机械式、固态式、半固态、单线激光雷达">
+    <meta name="description" content="记录几种常见的激光雷达类型 单线激光雷达、机械式、固态式、半固态">
 <meta property="og:type" content="article">
 <meta property="og:title" content="激光雷达传感器">
 <meta property="og:url" content="http://whu-lyh.github.io/blogs/2025/01/15/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%E4%BC%A0%E6%84%9F%E5%99%A8/index.html">
 <meta property="og:site_name" content="AmazingHao&#39;s Free Space">
-<meta property="og:description" content="记录几种常见的激光雷达类型 机械式、固态式、半固态、单线激光雷达">
+<meta property="og:description" content="记录几种常见的激光雷达类型 单线激光雷达、机械式、固态式、半固态">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://whu-lyh.github.io/blogs/images/og_image.png">
 <meta property="article:published_time" content="2025-01-15T14:21:58.000Z">
-<meta property="article:modified_time" content="2025-04-10T13:11:45.578Z">
+<meta property="article:modified_time" content="2025-09-28T15:29:43.244Z">
 <meta property="article:author" content="AmazingHao">
 <meta property="article:tag" content="激光雷达">
 <meta name="twitter:card" content="summary">
@@ -168,7 +168,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 分钟 读完 (大约 139 个字)
+                    15 分钟 读完 (大约 2216 个字)
                 </span>
                 
                 
@@ -182,19 +182,114 @@
         </h1>
         <div class="content">
             <h2 id="记录几种常见的激光雷达类型">记录几种常见的激光雷达类型</h2>
-<p>机械式、固态式、半固态、单线激光雷达</p>
+<p>单线激光雷达、机械式、固态式、半固态</p>
 <a id="more"></a>
+<h3 id="机械式激光雷达的原理">机械式激光雷达的原理</h3>
+<p>下图显示了2D（单线）激光雷达通过绕着Z轴旋转，从而生成三维激光点云的基本原理。</p>
+<p><img src="LiDAR_rotation.png" style="zoom:47%;"></p>
+<h3 id="单线激光雷达">单线激光雷达</h3>
+<p>下图源于Riegl公司的两款单线激光雷达，固定不动的话，在一个平行于设备纵轴的方向扫描，TLS通过水平旋转之后得到360°的三维点云，MLS则通过水平运动采集三维点云。</p>
+<table>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: center;">MLS</th>
+<th style="text-align: center;">TLS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><img src="RIEGL_VMQ-1HA.png" style="zoom: 33%;"></td>
+<td style="text-align: center;"><img src="VMZ_with_VZ-400i.JPG" style="zoom: 8%;"></td>
+</tr>
+</tbody>
+</table>
 <h3 id="禾赛pandar40">禾赛Pandar40</h3>
 <p>从下图可以看出它的线束在纵向方向是不均匀分布的。</p>
-<p><img src="Pandar40.png"></p>
+<p><img src="Pandar40.png" style="zoom:67%;"></p>
 <p>其基本参数如下所示：</p>
-<p><img src="Pandar40_parameter.png"></p>
-<h3 id="mid360">MID360</h3>
-<p><video src="./激光雷达传感器/MID360.mp4" controls><a href="./激光雷达传感器/MID360.mp4">Video</a></video></p>
-<h3 id="不同类型传感器获取的数据对比">不同类型传感器获取的数据对比</h3>
-<p><img src="Livox-VLP-Comparsion%20Spherical%20projection%20results%20of%20different%20LiDARs%20within%200.1%20second%20integration%20time.jpg"></p>
-<h3 id="单线激光雷达">单线激光雷达</h3>
-<p><img src="RIEGL_VMQ-1HA.png" style="zoom:50%;"></p>
+<p><img src="Pandar40_parameter.png" style="zoom: 29%;"></p>
+<h3 id="livox">Livox</h3>
+<h4 id="mid360">MID360</h4>
+<p>Mid-360
+采用巧妙而可靠的光学和结构设计实现了非重复扫描，能探测更丰富的细节，可适应不同的应用场景。Mid-360
+采用 Livox 自研混合固态技术，首次将水平视场角提升至 360°
+的同时，垂直视场角也高达 59°。</p>
+<p><img src="MID360.gif"></p>
+<p>非重复扫描模式下，Mid-360
+具有较高的视场覆盖率。随着积分时间的增大，视场覆盖率也会显著增大，探测到视场中的更多细节。下图所示为非重复扫描模式下不同积分时间内（分别为
+0.1s，0.2s，0.5s 和 1s）的点云图。</p>
+<p><img src="Mid360_01_02_05_1s.png"></p>
+<p><img src="MID360_FOV.png"></p>
+<p>请注意，Mid-360 的有效量程在不同的 FOV 区域内有所区别。在竖直方向的
+FOV
+范围内，越靠近上方有效量程越短，越靠近下方有效量程越长，可参考下图。使用时请格外注意有效量程的范围。如上图所示，当目标物体的反射率为
+10% 时，竖直方向的 FOV 范围内，最下方的最远探测距离为 40 m
+左右;越靠近上方，最远探测距离将会相应缩短，在使用时请注意。</p>
+<p>坐标系定义</p>
+<ul>
+<li>应避免跟其他激光雷达 FOV 重叠，激光对射可能会造成 Mid-360
+产生不可逆损坏。</li>
+<li>激光探测测距仪内部集成了 IMU芯片(3轴加速度计和3轴陀螺仪)，内置IMU
+型号:ICM40609，默认情况下，上电后即开始以 200 Hz 频率推送 IMU
+数据(可通过上位机开启或关闭)。数据内容包括3轴加速度以及3轴角速度，方向与点云坐标系相同，在点云坐标系下IMU
+芯片的位置为(x=11.0 mm，y=23.29 mm, z=-44.12 mm)。</li>
+</ul>
+<h4 id="hap">HAP</h4>
+<p>Livox HAP 是 Livox 首款面向智能辅助驾驶市场研发的车规级激光雷达。HAP
+于 2021 年在全新自建的车规级智能制造中心进行批量生产，可满足 74
+项严苛的车规可靠性要求。HAP
+已成功为小鹏汽车、一汽解放等商乘用车项目批量供货。HAP 角分辨率高达
+0.18°*0.23°, 其中感兴趣区域（ROI, Region of Interest） 的点云密度可等效
+144
+线激光雷达。更密的点云输出带来更丰富的环境感知，让算法可以更精准地检测到远处行人、自行车、雪糕桶等细小目标物体。</p>
+<h4 id="mid-70">Mid-70</h4>
+<p>Mid-70 延续 Livox
+高性价比的优势，更针对低速自动驾驶、移动机器人等应用领域进行优化设计，大幅提升垂直与水平方向视场角、减小盲区、提高近处精度，为机器人带来更全面的视野。Mid-70
+的圆形视场角在水平和垂直方向上均可达 70.4 度，近处盲区大幅度降至 5
+厘米。更大视场角和更小盲区帮助机器人更全面探测周遭环境，及时避开细小障碍物，让机器人在机场、商超、医院等拥挤复杂环境下安全运行。为普及激光雷达技术在移动式机器人、低速物流无人配送车等行业中的应用，Livox
+Mid 系列避开价格高昂的激光发射器及尚不成熟的 MEMS
+扫描仪，用成本较低的半导体元件实现激光生成和探测。包括扫描单元在内的整个光学系统，都采用经过验证、易于获得且在光学透镜行业中广泛应用的光学元件。</p>
+<ul>
+<li>可用于补盲。</li>
+</ul>
+<h4 id="tele-15">TELE-15</h4>
+<p>泰览 Tele-15 激光雷达专为远距离、高精度探测打造，可感知 500
+米外的障碍物，且体积小巧、可靠性强。可在高速行驶中为车辆带来更充裕的响应时间，保障安全。泰览-15
+的角度精度达 0.03°，光束发散角低至 0.12°（垂直）x
+0.02°（水平），如此高的点云精度将帮助泰览-15精确探测远处视场中的物体位置，轻松分辨远处物体轮廓。
+泰览可感知距离远至 500 米@ 50%
+反射率；而面对反射率较低的黑色轿车，即使位于 500 米开外，仍可在 100 ms
+内探测到14个点，满足一般算法对点云数量的要求。Livox 泰览-15
+采用独特的光电系统设计方案，本身无任何旋转、运动的电子器件，使用过程中故障率低，稳定可靠。其光学结构有很强的抗热变形能力，能够通过车规级（VW
+80000 / ISO
+16750等）温度耐久可靠性测试，满足10年车规寿命要求，MTTF达40000小时。点云性能和可靠性等级等综合指标满足
+L3/L4 自动驾驶车辆需求。</p>
+<p>Tele-15 内置型号为 BMI088 的惯性测量单元并以 200 Hz 的频率推送 IMU
+数据，包括时间戳信息以及状态指示码信息。用户在构建运动补偿、SLAM
+等算法时将更加得心应手。</p>
+<h4 id="mid-40">Mid-40</h4>
+<p>觅道 Mid-40 是 Livox 研发的高性价比激光雷达，可探测远至 260
+米的物体。独特的非重复采样策略，助其精确探测视场中每个细节。而这一切都蕴含于小巧的机身中，可轻松嵌入各种平台。觅道-40
+现已实现大规模量产，可立即供货，助力移动机器人、园区物流、车路协同、测绘、安防等领域从小批量测试走向大规模应用。Livox
+激光雷达采用独特的非重复扫描方式，视场覆盖率将随时间推移而显著提高，可减小视场内物体被漏检的概率。
+当积分时间为 0.1 s 秒时，觅道-40 的视场覆盖率与 32
+线产品相近；当积分时间为 0.5 s 秒时，觅道-40 的视场覆盖率与 64
+线产品相当。而随着积分时间增加，且覆盖率随积分时间增加而接近 100%。</p>
+<h4 id="avia">Avia</h4>
+<p>傲览 Avia
+激光雷达轻巧紧凑的外形下探测距离及效率全面提升，FOV超过70°，支持三回波与双扫描模式，可广泛适用于电力、林业、泛测绘、智慧城市等等应用场合。傲览Avia根据环境光强弱，在保证极低噪点率的同时调节探测距离。低照度环境（如阴天、室内、夜晚等）的量程表现提升到450m，可让测绘设备在更高的航行高度进行作业，提升效率的同时不遗漏远距离物体细节。Avia在工作时可射出多路激光同时进行高速扫描，点云数据率达240,000点/秒，可配置三回波获得更深层的点云信息。为适配不同作业场景，Avia提供非重复扫描及重复扫描两种扫描模式。Avia
+有着不足500g的轻巧身板，还提供板端连接器方案，方便集成到空间需求苛刻的应用场景。产品内置imu可持续输出空间位姿与加速度，提供必要的冗余数据。</p>
+<h4 id="不同类型传感器获取的数据对比">不同类型传感器获取的数据对比</h4>
+<p><img src="Livox-VLP-Comparsion Spherical projection results of different LiDARs within 0.1 second integration time.jpg" style="zoom: 50%;"></p>
+<h4 id="livox国内产品对比">Livox国内产品对比</h4>
+<p>单激光雷达的价格分别是：</p>
+<p>3999-7999-5999-8999-9999-3999元</p>
+<p>近处盲区分别是0.1m、?、0.02m、?</p>
+<p><img src="国内产品对比图.jpeg"></p>
 
         </div>
         
@@ -211,7 +306,7 @@
         <span class="copy-path"  title="Click to Copy Link"><i class="fa fa-clipboard" data-clipboard-text="http://whu-lyh.github.io/blogs/2025/01/15/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%E4%BC%A0%E6%84%9F%E5%99%A8/"  aria-label="复制成功！"></i></span>
     </p>
     <p><span>publish time:</span>2025-01-15</p>
-    <p><span>update time:</span>2025-04-10</p>
+    <p><span>update time:</span>2025-09-28</p>
     </div>
 </div>
 <!-- <ul class="post-copyright">
@@ -328,7 +423,7 @@
                     </p>
                     <a href="/blogs/archives">
                         <p class="title has-text-weight-normal">
-                            41
+                            42
                         </p>
                     </a>
                 </div>
@@ -352,7 +447,7 @@
                     </p>
                     <a href="/blogs/tags">
                         <p class="title has-text-weight-normal">
-                            28
+                            29
                         </p>
                     </a>
                 </div>
@@ -440,7 +535,7 @@
                 <span class="level-item">实用工具</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">15</span>
+                <span class="level-item tag">16</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/blogs/categories/%E5%BC%80%E6%BA%90%E5%BA%93/">
@@ -477,7 +572,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 12.5px;">Geometry</a> <a href="/blogs/tags/Hardwares/" style="font-size: 10px;">Hardwares</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 17.5px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 12.5px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
+        <a href="/blogs/tags/B-Spline/" style="font-size: 15px;">B-Spline</a> <a href="/blogs/tags/CloudCompare/" style="font-size: 10px;">CloudCompare</a> <a href="/blogs/tags/Docker/" style="font-size: 17.5px;">Docker</a> <a href="/blogs/tags/FFMPEG/" style="font-size: 10px;">FFMPEG</a> <a href="/blogs/tags/Geometics/" style="font-size: 10px;">Geometics</a> <a href="/blogs/tags/Geometry/" style="font-size: 12.5px;">Geometry</a> <a href="/blogs/tags/Hardwares/" style="font-size: 10px;">Hardwares</a> <a href="/blogs/tags/Hexo/" style="font-size: 12.5px;">Hexo</a> <a href="/blogs/tags/IMU/" style="font-size: 10px;">IMU</a> <a href="/blogs/tags/LiDAR-SLAM/" style="font-size: 17.5px;">LiDAR_SLAM</a> <a href="/blogs/tags/Linux/" style="font-size: 17.5px;">Linux</a> <a href="/blogs/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/blogs/tags/Mathemetics/" style="font-size: 10px;">Mathemetics</a> <a href="/blogs/tags/OSG/" style="font-size: 10px;">OSG</a> <a href="/blogs/tags/PCL/" style="font-size: 12.5px;">PCL</a> <a href="/blogs/tags/PaperReview/" style="font-size: 10px;">PaperReview</a> <a href="/blogs/tags/Point-Cloud/" style="font-size: 20px;">Point Cloud</a> <a href="/blogs/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/blogs/tags/ROS/" style="font-size: 10px;">ROS</a> <a href="/blogs/tags/Softwares/" style="font-size: 10px;">Softwares</a> <a href="/blogs/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/blogs/tags/VS/" style="font-size: 10px;">VS</a> <a href="/blogs/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/blogs/tags/WindowsScript/" style="font-size: 12.5px;">WindowsScript</a> <a href="/blogs/tags/Zotero/" style="font-size: 10px;">Zotero</a> <a href="/blogs/tags/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/" style="font-size: 12.5px;">专业应用</a> <a href="/blogs/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 10px;">服务器</a> <a href="/blogs/tags/%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE/" style="font-size: 10px;">激光雷达</a> <a href="/blogs/tags/%E9%B1%BC%E7%9C%BC%E5%9B%BE%E5%83%8F/" style="font-size: 12.5px;">鱼眼图像</a>
     </div>
 </div>
     
@@ -505,22 +600,54 @@
         <span class="has-mr-6">1</span>
         <span>记录几种常见的激光雷达类型</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#禾赛pandar40">
+        <a class="is-flex" href="#机械式激光雷达的原理">
         <span class="has-mr-6">1.1</span>
-        <span>禾赛Pandar40</span>
-        </a></li><li>
-        <a class="is-flex" href="#mid360">
-        <span class="has-mr-6">1.2</span>
-        <span>MID360</span>
-        </a></li><li>
-        <a class="is-flex" href="#不同类型传感器获取的数据对比">
-        <span class="has-mr-6">1.3</span>
-        <span>不同类型传感器获取的数据对比</span>
+        <span>机械式激光雷达的原理</span>
         </a></li><li>
         <a class="is-flex" href="#单线激光雷达">
-        <span class="has-mr-6">1.4</span>
+        <span class="has-mr-6">1.2</span>
         <span>单线激光雷达</span>
-        </a></li></ul></li></ul>
+        </a></li><li>
+        <a class="is-flex" href="#禾赛pandar40">
+        <span class="has-mr-6">1.3</span>
+        <span>禾赛Pandar40</span>
+        </a></li><li>
+        <a class="is-flex" href="#livox">
+        <span class="has-mr-6">1.4</span>
+        <span>Livox</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#mid360">
+        <span class="has-mr-6">1.4.1</span>
+        <span>MID360</span>
+        </a></li><li>
+        <a class="is-flex" href="#hap">
+        <span class="has-mr-6">1.4.2</span>
+        <span>HAP</span>
+        </a></li><li>
+        <a class="is-flex" href="#mid-70">
+        <span class="has-mr-6">1.4.3</span>
+        <span>Mid-70</span>
+        </a></li><li>
+        <a class="is-flex" href="#tele-15">
+        <span class="has-mr-6">1.4.4</span>
+        <span>TELE-15</span>
+        </a></li><li>
+        <a class="is-flex" href="#mid-40">
+        <span class="has-mr-6">1.4.5</span>
+        <span>Mid-40</span>
+        </a></li><li>
+        <a class="is-flex" href="#avia">
+        <span class="has-mr-6">1.4.6</span>
+        <span>Avia</span>
+        </a></li><li>
+        <a class="is-flex" href="#不同类型传感器获取的数据对比">
+        <span class="has-mr-6">1.4.7</span>
+        <span>不同类型传感器获取的数据对比</span>
+        </a></li><li>
+        <a class="is-flex" href="#livox国内产品对比">
+        <span class="has-mr-6">1.4.8</span>
+        <span>Livox国内产品对比</span>
+        </a></li></ul></li></ul></li></ul>
             </div>
         </div>
     </div>
@@ -531,6 +658,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/blogs/2025/09/26/PC-softwares/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="PC-softwares">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-09-26T06:47:56.000Z">2025-09-26</time></div>
+                    <a href="/blogs/2025/09/26/PC-softwares/" class="title has-link-black-ter is-size-6 has-text-weight-normal">PC-softwares</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blogs/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/">实用工具</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -608,25 +754,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/blogs/2025/04/10/%E7%94%B5%E5%8A%9B%E7%BA%BF%E8%B5%B0%E5%BB%8A%E7%82%B9%E4%BA%91%E5%88%87%E6%A1%A3/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/blogs/images/thumbnail.svg" alt="电力线走廊点云切档">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2025-04-10T07:17:11.000Z">2025-04-10</time></div>
-                    <a href="/blogs/2025/04/10/%E7%94%B5%E5%8A%9B%E7%BA%BF%E8%B5%B0%E5%BB%8A%E7%82%B9%E4%BA%91%E5%88%87%E6%A1%A3/" class="title has-link-black-ter is-size-6 has-text-weight-normal">电力线走廊点云切档</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blogs/categories/%E4%B8%93%E4%B8%9A%E5%BA%94%E7%94%A8/">专业应用</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -636,6 +763,8 @@
         <h3 class="menu-label">
             related posts
         </h3>
+         
+            
          
             
          
@@ -737,7 +866,7 @@
                     <span class="level-item">九月 2025</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
